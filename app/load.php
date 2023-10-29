@@ -9,10 +9,9 @@
 
 // Autoload Core Libraries
    
-    spl_autoload_register(function($className){
-        require_once "models/" . $className . ".php";
-    });
-
+   
+        require_once "models/User.php";
+   
 
 
 

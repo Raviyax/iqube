@@ -1,10 +1,11 @@
 <?php
 class Signup extends Controller {
 
-  
+    private $userModel;
+
     public function __construct()
     {
-       
+        $this->userModel = $this->model('User');
 
     }
    
@@ -33,6 +34,12 @@ class Signup extends Controller {
             if(empty($data['email'])){
                 $data['email_err'] = 'Please enter email';
             }
+            else{
+                //check email
+                if($this->userModel->findUserByEmail($data['email'])){
+                    $data['email_err'] = 'Email is already taken';
+                }
+            }
            // validate password
               if(empty($data['password'])){
                 $data['password_err'] = 'Please enter password';
@@ -52,10 +59,20 @@ class Signup extends Controller {
                 //make sure errors are empty
                 if(empty($data['name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
                  //validated
-                 die('SUCCESS');
+                    //hash password
+                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                    //register user
+                    if($this->userModel->register($data)){
+                        header('location: ' . URLROOT . '/Login');
+                       
+                    }else{
+                        die('Something went wrong');
+                    }
+                 
                  }
                     else{
                         //load view with errors
+
                         $this->view('Signup', $data);
                     }
                  

@@ -2,8 +2,7 @@
 <?php $data['title'] = 'Home'; $this->view('inc/header',$data) ?>
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/Landing.css">
 <body>
-    <div class="container">
-   
+    <div class="container"> 
     <?php $this->view('inc/sidebar') ?>
 
         <!-- start of main part -->
