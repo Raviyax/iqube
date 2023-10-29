@@ -8,6 +8,10 @@
     require_once "lib/Core.php";
 
 // Autoload Core Libraries
+   
+    spl_autoload_register(function($className){
+        require_once "models/" . $className . ".php";
+    });
 
 
 
