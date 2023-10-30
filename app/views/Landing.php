@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/Landing.css">
 <body>
     <div class="container"> 
-    <?php $this->view('inc/sidebar') ?>
+    <?php $this->view('inc/Landing.sidebar') ?>
 
         <!-- start of main part -->
         <div id="main" class="main">

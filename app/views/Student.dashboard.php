@@ -8,6 +8,7 @@
 
         <!-- start of main part -->
         <div id="main" class="main">
+            
             <!-- start of navbar -->
             <?php $this->view('inc/navbar',$data) ?>
             <!-- end of navbar -->
