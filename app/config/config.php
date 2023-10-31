@@ -1,5 +1,5 @@
 <?php
-// DB Params
+// DB Params test
 if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DB_HOST','localhost');
     define('DB_USER','root');
