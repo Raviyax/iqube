@@ -11,11 +11,14 @@
                 'created_at' => $row->date,
                 
             ];
+        if( $_SESSION['USER_DATA']['role'] == 'subject_admin'){
+            $_SESSION['USER_DATA']['role'] = 'subject_admin';
+        }
        
         }
     }
 
-    public static function logged_in(){
+    public static function is_logged_in(){
         if(!empty($_SESSION['USER_DATA'])){
             return true;
         }

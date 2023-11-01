@@ -22,9 +22,9 @@
             <h5>Login</h5>
             <p>New to IQube? <br><a href="<?php echo URLROOT;?>/Signup">Create Your Account</a> </p>
             <div class="inputs">
-            <input type="email" name="email" placeholder = "<?php print (empty($data['errors']['email_err']))?"Email":$data['errors']['email_err'];?>?>" >
+            <input type="email" name="email" placeholder = "<?php print (empty($data['errors']['email_err']))?"Email":$data['errors']['email_err'];?>" >
                 <br>
-                <input type="password"  name="password" placeholder = "">
+                <input type="password"  name="password" placeholder = "Password">
             </div>
                 
                 <br><br>
@@ -39,7 +39,7 @@
             </div>
                 
                 <br>
-                <button>Login</button>
+                <button >Login</button>
         
         </form>
 

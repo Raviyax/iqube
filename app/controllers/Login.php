@@ -18,6 +18,7 @@ class Login extends Controller
                 if(password_verify($_POST['password'], $row->password)){
                     Auth::authenticate($row);
                   if( Auth::is_tutor()){ header('location:'.URLROOT.'/tutor');}
+                    if( Auth::is_admin()){ header('location:'.URLROOT.'/admin');}
                   
                    
                    

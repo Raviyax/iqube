@@ -4,12 +4,15 @@
                 </div>
 
                 <div class="dashboardtype">
-                    <label>
-                        <?php echo $data['user_role']?> Dashboard
+                    <label> <?php if(!Auth::is_logged_in()){?>
+                        About Us
+                        <?php }else{?>
+                        <?php echo ucwords($_SESSION['USER_DATA']['role'])?> <?php echo ucwords($data['view'])?>
+                        <?php }?>
                     </label>
                 </div>
 
                 <div class="user">
-                    <img src="assets/imgs/customer01.jpg" alt="">
+                    
                 </div>
             </div>

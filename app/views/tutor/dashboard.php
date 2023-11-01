@@ -1,5 +1,4 @@
-<?php $this->view('inc/header'); ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<?php $this->view('inc/header',$data); ?>
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/tutor/dashboard.css">
     <div class="container">
         <!-- start of sidebar -->
@@ -9,21 +8,7 @@
         <!-- start of main part -->
         <div id="main" class="main">
             <!-- start of navbar -->
-            <div class="topbar">
-                <div class="toggle" onclick="openNav()">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
-
-                <div class="dashboardtype">
-                    <label>
-                        Tutor Dashboard
-                    </label>
-                </div>
-
-                <div class="user">
-                    <img src="assets/imgs/customer01.jpg" alt="">
-                </div>
-            </div>
+            <?php $this->view('inc/navbar',$data); ?>  
 
             <!-- end of navbar -->
 

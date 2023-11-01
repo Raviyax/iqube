@@ -1,26 +1,14 @@
 
-<?php $data['title'] = 'Home'; $this->view('inc/header',$data) ?>
+<?php  $this->view('inc/header',$data) ?>
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/Landing.css">
 <body>
     <div class="container"> 
-    <?php $this->view('inc/Landing.sidebar') ?>
+    <?php $this->view('inc/sidebar') ?>
 
         <!-- start of main part -->
         <div id="main" class="main">
             <!-- start of navbar -->
-            <div class="topbar">
-                <div class="toggle" onclick="openNav()">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
-
-                <!-- <div class="dashboardtype">
-                    <label>
-                        Tutor Dashboard
-                    </label>
-                </div> -->
-
-                
-            </div>
+            <?php $this->view('inc/navbar') ?>
             <!-- end of navbar -->
              <!-- start -->
     
