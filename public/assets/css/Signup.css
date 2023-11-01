@@ -235,9 +235,7 @@ body {
     transition: all 0.2s linear;
   }
   
-  label input[type="checkbox"] {
-    display: none;
-  }
+ 
   
   /* =============== welcome back ================ */
   .animate-charcter

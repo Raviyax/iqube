@@ -1,10 +1,11 @@
 <?php
-// DB Params test
+// DB Params 
 if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DB_HOST','localhost');
     define('DB_USER','root');
     define('DB_PASS','');
     define('DB_NAME','iqube');
+    define('DBDRIVER','mysql');
 }else{
 
 }

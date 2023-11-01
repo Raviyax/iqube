@@ -1,52 +1,50 @@
 <?php
- class User {
-    private $db;
-    public function __construct()
+class User extends Model
+{
+    
+    public $errors = [];
+    
+
+    public function validate($data)
     {
-        $this->db = new Database;
-    }
+        $this->errors = [];
 
-    //register user
-    public function register($data){
-        $this->db->query('INSERT INTO users (name, email, password) VALUES(:name, :email, :password)');
-        //bind values
-        $this->db->bind(':name', $data['name']);
-        $this->db->bind(':email',$data['email']);
-        $this->db->bind(':password',$data['password']);
-        //execute
-        if($this->db->execute()){
+        if (empty($data['name'])) {
+            $this->errors['name_err'] = '*Enter name';
+        }
+        $query = "SELECT * FROM users WHERE email = :email";
+
+        if (!filter_var($data['email'],FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email_err'] = '*Invalid Email';
+        } elseif ($this->query($query, ['email' => $data['email']])) {
+            $this->errors['email_err'] = '*Email already taken';
+        }
+
+        if (empty($data['password'])) {
+            $this->errors['password_err'] = '*Please enter password';
+        } elseif (strlen($data['password']) < 6) {
+            $this->errors['password_err'] = '*Password must be at least 6 characters';
+        }
+
+        if (empty($data['confirm_password'])) {
+            $this->errors['confirm_password_err'] = '*Please confirm password';
+        } else {
+            if ($data['password'] != $data['confirm_password']) {
+                $this->errors['confirm_password_err'] = '*Passwords do not match';
+            }
+        }
+
+        if (empty($data['terms'])) {
+            $this->errors['terms_err'] = '*Please accept terms and conditions';
+        }
+
+
+
+        if (empty($this->errors)) {
             return true;
-        }else{
-            return false;
         }
-
+        return false;
     }
 
-    //login user
-    public function login($email, $password){
-        $this->db->query('SELECT * FROM users WHERE email = :email');
-        //bind value
-        $this->db->bind(':email', $email);
-        $row = $this->db->single();
-        $hashed_password = $row->password;
-        if(password_verify($password, $hashed_password)){
-            return $row;
-        }else{
-            return false;
-        }
-    }
-
-    //find user by email
-    public function findUserByEmail($email){
-        $this->db->query('SELECT * FROM users WHERE email = :email');
-        //bind value
-        $this->db->bind(':email', $email);
-        $row = $this->db->single();
-        //check row
-        if($this->db->rowCount() > 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
- }
+   
+}

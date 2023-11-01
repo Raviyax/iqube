@@ -17,13 +17,15 @@
             <h5>Let Us Guide You</h5>
             
             <div class="inputs">
-                <input type="text"  name="name" placeholder = "<?php echo (!empty($data['name_err']))?$data['name_err']:'Username';?>" value="<?php echo $data['name'];?>">
+                <input type="text"  name="name" placeholder = <?php print (empty($data['errors']['name_err']))?"Username":$data['errors']['name_err'];?> value="<?=set_value('name')?>">
+                
+                
                 <br>
-                <input type="email" name="email" placeholder = "<?php echo (!empty($data['email_err']))?$data['email_err']:'Email';?>" value="<?php echo $data['email'];?>" >
+                <input type="email" name="email" placeholder = "<?php print (empty($data['errors']['email_err']))?"Email":$data['errors']['email_err'];?>" value="<?=set_value('email')?>" >
                 <br>
-                <input type="password"  name="password" placeholder = "<?php echo (!empty($data['password_err']))?$data['password_err']:'Password';?>" value="<?php echo $data['password'];?>">
+                <input type="password"  name="password" placeholder = "<?php print (empty($data['errors']['password_err']))?"Password":$data['errors']['password_err'];?>" value="<?=set_value('password')?>">
                 <br>
-                <input type="password" name="rpassword" placeholder = "<?php echo (!empty($data['confirm_password_err']))?$data['confirm_password_err']:'Confirm Password';?>" value="<?php echo $data['confirm_password'];?>">
+                <input type="password" name="confirm_password" placeholder = "<?php print (empty($data['errors']['confirm_password_err']))?"Confirm Password":$data['errors']['confirm_password_err'];?>" value="<?=set_value('confirm_password')?>">
                 
             </div>
                 
@@ -32,8 +34,8 @@
             <div class="remember-me--forget-password">
                     
         <label>
-            <input type="checkbox" name="item" checked/>
-            <span class="text-checkbox">Agree to terms and conditions</span>
+            <input <?=set_value('terms')?'checked':''?> type="checkbox" name="terms" value="1" checked ="checked"/>
+            <span class="text-checkbox"><?php print (empty($data['errors']['terms_err']))?"Agree to terms and conditions":$data['errors']['terms_err'];?></span>
         </label>
         <p>Already have an account? <br><a href="<?php echo URLROOT;?>/Login">Login</a> </p>
             </div>

@@ -136,7 +136,7 @@ body {
 /* ===================== Main ===================== */
 .main {
   position: absolute;
-  width: 100%;
+  width: calc(100% - 60px);
   left: 60px;
   min-height: 100vh;
   background: rgb(255, 255, 255);
