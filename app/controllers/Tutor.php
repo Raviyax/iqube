@@ -36,6 +36,10 @@ class Tutor extends Controller {
 
     }
     public function upload(){
+
+        
+
+
         
         $data = [
             'title' => 'Tutor',

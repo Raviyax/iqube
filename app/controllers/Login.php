@@ -19,6 +19,7 @@ class Login extends Controller
                     Auth::authenticate($row);
                   if( Auth::is_tutor()){ header('location:'.URLROOT.'/tutor');}
                     if( Auth::is_admin()){ header('location:'.URLROOT.'/admin');}
+                    if( Auth::is_student()){ header('location:'.URLROOT.'/student');}
                   
                    
                    
