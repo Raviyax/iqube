@@ -1,6 +1,7 @@
 <?php
 class Tutor extends Controller {
 
+    public $Crud;
     public function index(){
         
         $data = [
@@ -25,10 +26,17 @@ class Tutor extends Controller {
 
     }
     public function lessons(){
+
+        $this->Crud = $this->model('Crud');
+        $result = $this->Crud->readData('courses');
+        print_r($result);
+        
+        
         
         $data = [
             'title' => 'Tutor',
-            'view' => 'lessons'
+            'view' => 'lessons',
+            'result' => $result
         ];
         $this->view('tutor/Lessons', $data);
        

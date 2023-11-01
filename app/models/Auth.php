@@ -11,9 +11,7 @@
                 'created_at' => $row->date,
                 
             ];
-        if( $_SESSION['USER_DATA']['role'] == 'subject_admin'){
-            $_SESSION['USER_DATA']['role'] = 'subject_admin';
-        }
+      
        
         }
     }

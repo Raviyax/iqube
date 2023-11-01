@@ -75,6 +75,7 @@
 
 
                     <div class="job_cards">
+                        <?php $resut = $data['result']; ?>
                         <div class="job_card">
                             <div class="job_details">
                                 <div class="img">

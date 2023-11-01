@@ -4,6 +4,7 @@
     require_once "config/config.php";
     require_once "config/functions.php";
     require_once "models/Auth.php";
+    require_once "models/Crud.php";
 
 //load libraries
      require_once "lib/Database.php";
