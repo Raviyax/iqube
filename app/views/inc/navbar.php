@@ -7,7 +7,7 @@
                     <label> <?php if(!Auth::is_logged_in()){?>
                         About Us
                         <?php }else{?>
-                            <?php if(!Auth::is_subject_admin()){?>
+                            <?php if(!Auth::is_subject_admin() && Auth::is_logged_in()){?>
                         <?php echo ucwords($_SESSION['USER_DATA']['role'])?> <?php echo ucwords($data['view'])?>
                         <?php } else{?>
                           Subject Admin <?php echo ucwords($data['view'])?>

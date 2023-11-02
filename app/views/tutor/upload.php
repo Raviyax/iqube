@@ -126,7 +126,7 @@
                     </div>
               
                     <div>
-                      <button class="formbold-btn w-full">Send File</button>
+                      <button class="formbold-btn w-full" name="submit" value="submit">Submit</button>
                     </div>
                   </form>
                 </div>

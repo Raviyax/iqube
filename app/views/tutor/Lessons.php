@@ -78,12 +78,14 @@
                     <div class="job_cards">
                         <?php $results = $data['result'];
                         foreach ($results as $result) {
+                            $courseid = $result['id'];
 
                            $chapter = $result['chapter'];
                            $price = $result['price'];
                            $stcount = $result['stcount'];
                            
                          ?>
+                         <form method="post" action="<?php echo URLROOT;?>/tutor/lessons">
                         <div class="job_card">
                             <div class="job_details">
                                 <div class="img">
@@ -99,8 +101,11 @@
                             <div class="job_salary">
                                 <h4>Rs.<?php echo $price ?></h4>
                                 <span>1 days ago</span>
+                        </br>
+                                <button class="button-two" name="delete" value=<?php echo $courseid?>><span>Delete</span></button>
                             </div>
                         </div>
+                        </form>
                             <?php } ?>
                     
                     </div>

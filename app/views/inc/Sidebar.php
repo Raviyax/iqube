@@ -61,9 +61,7 @@
 
                         <?php if (Auth::is_admin()) { ?>
                                 <a href="#news"><span class="naviconBx"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Subject Admins</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-child-reaching"></i></span><span class="naviconBx">Students</span></a>
+                                <a href="<?php echo URLROOT; ?>/Admin/users"><span class="naviconBx"><i class="fa-solid fa-users"></i></span><span class="naviconBx">Users</span></a>
                                 <a href="#news"><span class="naviconBx"><i class="fa-solid fa-book-open"></i></span><span class="naviconBx">Subjects</span></a>
                                 <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
                                 <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>

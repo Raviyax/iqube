@@ -29,6 +29,20 @@ class Tutor extends Controller {
 
         $this->Crud = $this->model('Crud');
         $result = $this->Crud->readData('courses');
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if(isset($_POST['delete'])){
+                $condition ='id = :id';
+
+                $conditionparams = [
+                    'id' => $_POST['delete'],
+                ];
+                $this->Crud->deleteData('courses',$condition,$conditionparams);
+               
+                header('location:' . URLROOT . '/tutor/lessons');
+            }
+        }
+
         
         
         
@@ -63,7 +77,9 @@ class Tutor extends Controller {
                 
                 
             ];
+            
             $this->Crud->insertData('courses', $data);
+            header('location:' . URLROOT . '/tutor/lessons');
            
            }
        
