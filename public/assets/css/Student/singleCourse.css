@@ -1,0 +1,229 @@
+/* ===== detail ===== */
+/* General styles */
+.bg{
+    background-color: #f0f8ff;
+}
+
+.course-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.course-content{
+    display: flex;
+    padding-bottom: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 4px;
+    width : 100%
+}
+/* Course Title */
+.course-title {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: 12px;
+    /* Heading/03 */
+    font-family: "Poppins", sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 40px; /* 125% */
+    letter-spacing: -0.32px;
+    color: #021024;
+}
+
+/* Course Subtitle */
+.course-subtitle {
+    font: 400 20px/32px "Poppins", sans-serif; /* Condensed properties for font */
+}
+
+/* Course Information */
+.course-info {
+    display: flex;
+    width: 872px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Course Tutor */
+.course-tutor {
+    font: 500 16px/22px "Poppins", sans-serif; /* Condensed properties for font */
+}
+
+/* Course Rating */
+.course-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars{
+    display: flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Course Description */
+.course-description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 4px;
+    width : 100%
+}
+
+/* Curriculum */
+.curriculum {
+    display: flex;
+    width: 872px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Facts */
+.facts {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+/* Fact Text */
+.facts .text {
+    font: 400 14px/22px "Poppins", sans-serif; /* Condensed properties for font */
+    letter-spacing: -0.14px;
+}
+
+
+/*===== video container =====*/
+.course-trailer {
+    width: 100%; /* Adjust the width as needed */
+    max-width: 800px; /* Maximum width for responsiveness */
+    margin: 0 auto; /* Center the video */
+}
+
+/* Style the video element */
+video {
+    width: 100%; /* Make the video responsive */
+    display: block; /* Remove any default inline styling */
+}
+
+/* Style the video controls */
+video::-webkit-media-controls {
+    display: none; /* Hide default controls on webkit browsers (Safari) */
+}
+
+.purchase-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db; /* Button background color */
+    color: #fff; /* Button text color */
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: po"Poppins", sans-serif;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.purchase-btn:hover {
+    background-color: #2980b9; /* Button background color on hover */
+    transform: scale(1.05); /* Button scaling effect on hover */
+}
+
+/* Style a custom play button */
+.custom-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: po"Poppins", sans-serif;
+}
+
+/* ===== modal window ===== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+/* Style for the modal content */
+.modal-content {
+    background-color: #3498db;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* Close button style */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: po"Poppins", sans-serif;
+}
+
+/* Form input styles */
+form {
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Submit button style */
+.submit-button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: po"Poppins", sans-serif;
+    margin-top: 20px;
+}
+
+/* Hover effect for submit button */
+.submit-button:hover {
+    background-color: #c0392b;
+}
