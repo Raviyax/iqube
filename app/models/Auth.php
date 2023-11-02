@@ -1,8 +1,9 @@
 <?php
  class Auth {
+   
     public static function authenticate($row){
 
-        if(is_object($row )){
+        if(is_object($row)){
             $_SESSION['USER_DATA'] = [
                 'id' => $row->id,
                 'name' => $row->name,

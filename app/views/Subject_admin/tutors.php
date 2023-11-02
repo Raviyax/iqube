@@ -49,15 +49,18 @@
             <div class="modal-content">
                 <span class="close" onclick="closeCreateForm()">&times;</span>
                 <h3>Create New Tutor</h3>
-                <form id="createForm">
+                <form id="createForm" method="post" action="<?php echo URLROOT;?>/subject_admin/tutors">
                     <label for="tutorName">Tutor Name:</label>
-                    <input type="text" id="tutorName" required><br><br>
+                    <input type="text" name="name" required><br><br>
                     
                     <label for="tutorSubject">Subject:</label>
-                    <input type="text" id="tutorSubject" required><br><br>
+                    <input type="text" name="subject" required><br><br>
                     
-                    <label for="tutorCourses">Courses:</label>
-                    <input type="text" id="tutorCourses" required><br><br>
+                    <label for="tutorCourses">email</label>
+                    <input type="email" name="email" required><br><br>
+
+                    <label for="tutorCourses">Password</label>
+                    <input type="password" name="password" required><br><br>
                     
                     <button type="submit">Add Tutor</button>
                 </form>

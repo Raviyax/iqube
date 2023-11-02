@@ -53,7 +53,7 @@ class Tutor extends Controller {
             'title' => 'Tutor',
             'view' => 'Upload New'
         ];
-        $this->view('tutor/upload', $data);
+        $this->view('tutor/upload', $data); 
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
