@@ -1,5 +1,6 @@
 <?php
 class Student extends Controller {
+    
 
     public $Crud;
 
@@ -36,9 +37,12 @@ class Student extends Controller {
     }
 
     public function singleCourse(){
+        $this->Crud = $this->model('Crud');
+        $result = $this->Crud->readData('courses');
         $data = [
             'title' => 'Student',
-            'view' => 'singleCourse'
+            'view' => 'Courses',
+            'result' => $result
         ];
         $this->view('Student/singleCourse', $data);
 
@@ -100,5 +104,16 @@ class Student extends Controller {
         $this->view('Student/settings', $data);
     }
 
-    
+    // Within your Controller, handle the AJAX request to add the Gantt task
+// public function addGanttTask() {
+//     // Get the JSON data from the request
+//     $taskData = json_decode(file_get_contents('php://input'), true);
+
+//     // Call the Model's function to insert the task into the database
+//     $taskId = $this->Gantt->insertGanttTask($taskData);
+
+//     // Return the new task ID
+//     echo json_encode(['taskId' => $taskId]);
+// }
+
 }

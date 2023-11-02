@@ -1,7 +1,10 @@
 /* ===== detail ===== */
 /* General styles */
-.bg{
-    background-color: #f0f8ff;
+
+/* Adjust overall font and color scheme */
+body {
+    font-family: 'Roboto', sans-serif; /* Replace with a modern font */
+    color: #333; /* Adjust text color to be more readable */
 }
 
 .course-detail {
@@ -9,120 +12,99 @@
     flex-direction: column;
     gap: 40px;
     align-items: flex-start;
+    border-radius: 10px;
+    padding: 20px;
+    background: #f9f9f9; /* Light gray background */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.course-content{
-    display: flex;
-    padding-bottom: 0px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    background: rgba(255, 255, 255, 0.22);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter: blur(5.5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 4px;
-    width : 100%
-}
 /* Course Title */
 .course-title {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    gap: 12px;
-    /* Heading/03 */
-    font-family: "Poppins", sans-serif;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 40px; /* 125% */
-    letter-spacing: -0.32px;
+    font-size: 2em; /* Increase title font size */
+    font-weight: bold;
     color: #021024;
+    margin-bottom: 10px;
 }
 
 /* Course Subtitle */
 .course-subtitle {
-    font: 400 20px/32px "Poppins", sans-serif; /* Condensed properties for font */
+    font-weight: 400;
+    font-size: 1.2em;
 }
 
 /* Course Information */
 .course-info {
     display: flex;
-    width: 872px;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 400px;
 }
 
 /* Course Tutor */
 .course-tutor {
-    font: 500 16px/22px "Poppins", sans-serif; /* Condensed properties for font */
+    font-weight: 500;
+    font-size: 0.9em;
 }
 
 /* Course Rating */
 .course-rating {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 8px;
-}
-
-.stars{
-    display: flex;
-    width: 24px;
-    height: 24px;
-    justify-content: center;
-    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
 }
 
 /* Course Description */
 .course-description {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-    background: rgba(255, 255, 255, 0.22);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5.5px);
-    -webkit-backdrop-filter: blur(5.5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 4px;
-    width : 100%
+    padding: 20px;
+    border-radius: 10px;
+    background: #f9f9f9; /* Light gray background */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Curriculum */
 .curriculum {
     display: flex;
-    width: 872px;
-    justify-content: space-between;
     align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 400px;
 }
 
 /* Facts */
 .facts {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
+    align-items: center;
+    gap: 10px;
 }
 
 /* Fact Text */
 .facts .text {
-    font: 400 14px/22px "Poppins", sans-serif; /* Condensed properties for font */
-    letter-spacing: -0.14px;
+    font-weight: 400;
+    font-size: 0.9em;
+    color: #555; /* Adjust text color */
 }
 
-
-/*===== video container =====*/
+/* Video container */
 .course-trailer {
-    width: 100%; /* Adjust the width as needed */
-    max-width: 800px; /* Maximum width for responsiveness */
-    margin: 0 auto; /* Center the video */
+    max-width: 100%; /* Allow video to be responsive */
+    width: 800px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the video horizontally */
+    align-items: center; /* Center the video vertically */
+    margin-top: 20px; /* Add some spacing */
 }
 
 /* Style the video element */
 video {
-    width: 100%; /* Make the video responsive */
-    display: block; /* Remove any default inline styling */
+    width: 100%; /* Make the video take the full width of its container */
+    display: block;
+    border-radius: 10px; /* Apply border radius to match the container */
 }
 
 /* Style the video controls */
@@ -130,34 +112,34 @@ video::-webkit-media-controls {
     display: none; /* Hide default controls on webkit browsers (Safari) */
 }
 
+
+/* Purchase Button */
 .purchase-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3498db; /* Button background color */
-    color: #fff; /* Button text color */
-    text-decoration: none;
+    padding: 15px 30px;
+    width: 200px;
+    background-color: #3498db; /* Blue color */
+    color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
-    cursor: po"Poppins", sans-serif;
+    font-size: 1em;
+    cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    text-transform: uppercase;
 }
 
 .purchase-btn:hover {
-    background-color: #2980b9; /* Button background color on hover */
-    transform: scale(1.05); /* Button scaling effect on hover */
+    background-color: #2980b9;
+    transform: scale(1.05);
 }
 
-/* Style a custom play button */
-.custom-play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: po"Poppins", sans-serif;
+/* Video container */
+.course-trailer {
+    max-width: 100%; /* Allow video to be responsive */
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-/* ===== modal window ===== */
+/* Modal window */
 .modal {
     display: none;
     position: fixed;
@@ -183,22 +165,22 @@ video::-webkit-media-controls {
 
 /* Close button style */
 .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     font-size: 24px;
-    cursor: po"Poppins", sans-serif;
+    cursor: pointer;
 }
 
 /* Form input styles */
 form {
     text-align: left;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 label {
     display: block;
-    margin-top: 10px;
+    margin: 10px 0;
     font-weight: bold;
+    color: #333; /* Adjust label color */
 }
 
 input[type="text"],
@@ -206,7 +188,7 @@ input[type="email"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: none;
+    border: 1px solid #ccc; /* Add border */
     border-radius: 5px;
     font-size: 16px;
 }
@@ -215,15 +197,14 @@ input[type="email"] {
 .submit-button {
     background-color: #e74c3c;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 5px;
     font-size: 18px;
-    cursor: po"Poppins", sans-serif;
+    cursor: pointer;
     margin-top: 20px;
 }
 
-/* Hover effect for submit button */
 .submit-button:hover {
     background-color: #c0392b;
 }

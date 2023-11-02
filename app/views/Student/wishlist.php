@@ -28,6 +28,7 @@
             <input type="text" name="course_id" id="course_id" placeholder="Enter Course ID">
             <button type="submit" name="enroll_course">Enroll</button>
         </form>
+        <?php } ?>
     </div>
         </div>
 

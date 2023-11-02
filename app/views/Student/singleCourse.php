@@ -13,10 +13,34 @@
         <!-- end of navbar -->
 
         <!-- start of content -->
+        
         <div class="content">
+         <?php
+            try {
+                $db = new PDO('mysql:host=localhost;dbname=iqube', 'root', '');
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Database connection failed: " . $e->getMessage());
+            }
+            if (isset($_GET['course_id'])) {
+                $courseid = $_GET['course_id'];
+
+                $query = "SELECT chapter, price, stcount, description FROM courses WHERE id = :courseid";
+                $statement = $db->prepare($query);
+                $statement->bindParam(':courseid', $courseid);
+                $statement->execute();
+                $courseDetails = $statement->fetch(PDO::FETCH_ASSOC);
+
+                
+                $chapter = $courseDetails['chapter'];
+                $price = $courseDetails['price'];
+                $stcount = $courseDetails['stcount'];
+                $desc = $courseDetails['description'];
+            }
+            ?> 
         <div class="course-detail">
             <div class="course-content">
-                <div class="course-title">Mechanics for G.C.E. A/L 2025</div>
+                <div class="course-title"><?php echo $chapter;?></div>
                 <div class="course-subtitle">A crash course</div>
                 <div class="course-info">
                     <div class="course-tutor">Created by: <br>Hanafe Mira</div>
@@ -29,15 +53,13 @@
             </div>
             <div class="course-trailer">
                 <video controls>
-                    <source src="../public/assets/img/video.mp4" type="video/mp4">
+                    <source src="https://youtu.be/dJ4AiARvyBc" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
             <div class="course-description">
                 <strong>Description</strong>
-                <p>It gives you a huge self-satisfaction when you look at your work and say, "I made this!". I love that feeling after I'm done working on something. When I lean back in my chair, look at the final result with a smile, and have this little "spark joy" moment. It's especially satisfying when I know I just made $5,000.</p>
-                <p>I do! And that's why I got into this field. Not for the love of Web Design, which I do now. But for the LIFESTYLE! There are many ways one can achieve this lifestyle. This is my way. This is how I achieved a lifestyle I've been fantasizing about for five years. And I'm going to teach you the same. Often people think Web Design is complicated. That it needs some creative talent or knack for computers. Sure, a lot of people make it very complicated. People make the simplest things complicated. Like most subjects taught in the universities. But I don't like complicated. I like easy. I like life hacks. I like to take the shortest and simplest route to my destination. I haven't gone to an art school or have a computer science degree. I'm an outsider to this field who hacked himself into it, somehow ending up being a sought-after professional. That's how I'm going to teach you Web Design. So you're not demotivated on your way with needless complexity. So you enjoy the process because it's simple and fun. So you can become a Freelance Web Designer in no time.
-                </p>
+                <p><?php echo $desc; ?></p>
             </div>
             <div class="curriculum">
                 <div class="facts">
@@ -47,8 +69,9 @@
                     <div class="text">19h 31m</div>
                 </div>
             </div>
-        </div>
-        <div class="purchase-btn" id="purchaseButton">Purchase Now</div>
+            <div class="card">Price: Rs. <?php echo $price; ?> /=</div>
+            <div class="card">Students Enrolled: <?php echo $stcount; ?></div>
+            <div class="purchase-btn" id="purchaseButton">Purchase Now</div>
         <div id="purchaseModal" class="modal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
@@ -56,52 +79,62 @@
                 <form id="purchaseForm">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
-    
+
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-    
+
                     <button type="submit" class="submit-button">Submit</button>
                 </form>
             </div>
         </div>
         </div>
-    
-    <script>
-        // Get the modal and buttons
+        <!-- Your HTML content -->
+        
+
+<script>
     var purchaseButton = document.getElementById("purchaseButton");
     var purchaseModal = document.getElementById("purchaseModal");
     var closeModal = document.getElementById("closeModal");
     var purchaseForm = document.getElementById("purchaseForm");
 
-    // Add event listener to open the modal when the "Purchase Now" button is clicked
+    // Event listener to open the modal
     purchaseButton.addEventListener("click", function() {
-    purchaseModal.style.display = "block";
+        purchaseModal.style.display = "block";
     });
 
-    // Close the modal when the close button is clicked
+    // Event listener to close the modal
     closeModal.addEventListener("click", function() {
-    purchaseModal.style.display = "none";
-    });
-
-    // Close the modal when clicking outside the modal content
-    window.addEventListener("click", function(event) {
-    if (event.target == purchaseModal) {
         purchaseModal.style.display = "none";
-    }
     });
 
-    // Handle form submission
+    window.addEventListener("click", function(event) {
+        if (event.target == purchaseModal) {
+            purchaseModal.style.display = "none";
+        }
+    });
+
+    // Event listener to handle form submission
     purchaseForm.addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent the form from submitting
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
+        event.preventDefault(); // Prevent form submission
+        
+        // Get form data
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
 
-    // Process the form data (you can customize this part)
-    alert("Purchase information submitted:\nName: " + name + "\nEmail: " + email);
-
-    // Close the modal after form submission
-    purchaseModal.style.display = "none";
+        // AJAX submission to process form data
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "purchase_handler.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Close modal and handle success message
+                purchaseModal.style.display = "none";
+                alert("Purchase information submitted:\nName: " + name + "\nEmail: " + email);
+            }
+        };
+        var formData = "name=" + name + "&email=" + email;
+        xhr.send(formData);
     });
+</script>
 
-    </script>
 <?php $this->view('inc/footer'); ?>

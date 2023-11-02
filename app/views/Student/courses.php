@@ -45,9 +45,10 @@
                   $chapter = $result['chapter'];
                   $price = $result['price'];
                   $stcount = $result['stcount'];
+                  $course_id = $result['id'];
               ?>
                   <div class="courseCard">
-                      <a href="<?= URLROOT ?>/Student/singleCourse">
+                      <a href="<?= URLROOT ?>/Student/singleCourse?course_id=<?php echo $course_id;?>">
                           <div class="img">
                               <img src="<?= URLROOT ?>/assets/img/Student/physics.png" alt="">
                           </div>

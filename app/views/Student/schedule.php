@@ -25,30 +25,46 @@
     <script>
             gantt.config.xml_date = "%Y-%m-%d %H:%i";
             gantt.init("gantt_here");
-            gantt.parse({
-                data: [
-                    { id: 1, text: "Task #1", start_date: "2023-10-01 00:00", duration: 3, progress: 0.6 },
-                    // Add more tasks in a similar format
-                ]
-            });
+            // gantt.load('http://localhost/dhtmlxGantt/data.php');
+            // gantt.parse({
+            //     data: [
+            //         { id: 1, text: "Task #1", start_date: "2023-10-01 00:00", duration: 3, progress: 0.6 },
+            //         // Add more tasks in a similar format
+            //     ]
+            // });
 
-            fetch('http://yourbackend/api/ganttData') // Replace with your actual API endpoint
-        .then(response => response.json())
-        .then(data => {
-            gantt.parse({ data: data });
-        })
-        .catch(error => {
-            console.error('Error fetching Gantt data:', error);
-        });
+//             fetch('http://localhost/iqube/app/models/Gantt.php')
+//   .then(response => response.json())
+//   .then(data => {
+//     gantt.parse(data);
+//   })
+//   .catch(error => {
+//     console.error('Error fetching Gantt data:', error);
+//   });
+
 
             gantt.attachEvent("onBeforeTaskAdd", function(id,task){
                 task.sortorder = 0;
                 return true;
             });
-            gantt.attachEvent("onAfterTaskAdd", function(id, item){
-                // Handle the event after a task is added
-                console.log("New task added", id, item);
-            });
+//             gantt.attachEvent("onAfterTaskAdd", function(id, item) {
+//     fetch('/Student/addGanttTask', {
+//         method: 'POST',
+//         body: JSON.stringify(item),
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('New task ID:', data.taskId);
+//         // Now, using the received task ID, insert link data or perform any other required actions
+//     })
+//     .catch(error => {
+//         console.error('Error adding Gantt task:', error);
+//     });
+// });
+
 
         </script>
 
