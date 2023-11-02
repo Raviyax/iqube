@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?php echo URLROOT; ?>/assets/css/Student/schedule.css">
 <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
 <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
-
+<script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt_connector.js"></script>
     
 <div class="container">
     <!-- start of sidebar -->
@@ -20,8 +20,7 @@
         <div class="content">
             <div id="gantt_here" style='width:100%; height:500px;'></div>
         </div>
-        
-        
+
     </div>
     <script>
             gantt.config.xml_date = "%Y-%m-%d %H:%i";
@@ -33,6 +32,19 @@
                 ]
             });
 
+            fetch('http://yourbackend/api/ganttData') // Replace with your actual API endpoint
+        .then(response => response.json())
+        .then(data => {
+            gantt.parse({ data: data });
+        })
+        .catch(error => {
+            console.error('Error fetching Gantt data:', error);
+        });
+
+            gantt.attachEvent("onBeforeTaskAdd", function(id,task){
+                task.sortorder = 0;
+                return true;
+            });
             gantt.attachEvent("onAfterTaskAdd", function(id, item){
                 // Handle the event after a task is added
                 console.log("New task added", id, item);

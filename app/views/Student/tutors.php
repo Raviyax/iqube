@@ -45,7 +45,7 @@
                           <span class="students">students</span>
                       </div>
                       <button class="sendMessageButton">Send message</button>
-                  </div> -->
+                  </div> 
               </div> -->
               <!-- Additional cards for most active tutors will be added dynamically -->
           </section>

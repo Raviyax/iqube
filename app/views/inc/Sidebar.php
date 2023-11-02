@@ -44,7 +44,7 @@
                                 <a href="<?php echo URLROOT; ?>/Student/schedule"><span class="naviconBx"><i class="fa-solid fa-calendar-days"></i></span><span class="naviconBx">Study Plan</span></a>
                                 <a href="<?php echo URLROOT; ?>/Student/tutors"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
                                 <a href="<?php echo URLROOT; ?>/Student/Messages"><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Messages</span></a>
-                                <a href="<?php echo URLROOT; ?>/Student/settings"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/wishlist"><span class="naviconBx"><i class="fa-solid fa-cart-arrow-down"></i></span><span class="naviconBx">WishList</span></a>
                                 <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
                                 
 
