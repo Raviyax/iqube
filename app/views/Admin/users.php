@@ -26,8 +26,8 @@
 	<!-- CONTENT -->
 	<div class="content" style="margin-top: 100px;">
     <div class="admin-panel">
-            <h2>Physical-Science Admin Panel</h2>
-            <button onclick="openCreateForm()">Create New Tutor</button>
+            <h2>Manage Users</h2>
+            <button onclick="openCreateForm()">Create New User</button>
             <form method="post" action="<?php echo URLROOT;?>/admin/users">
             <table class="tutors-table">
                 <thead>
@@ -47,6 +47,7 @@
                             
                             $email = $result['email'];
                             $role = $result['role'];
+                           
                            
                          ?>
                 <tr>
@@ -72,18 +73,20 @@
             <div class="modal-content">
                 <span class="close" onclick="closeCreateForm()">&times;</span>
                 <h3>Create New Tutor</h3>
-                <form id="createForm" method="post" action="<?php echo URLROOT;?>/subject_admin/tutors">
+                <form id="createForm" method="post" action="<?php echo URLROOT;?>/admin/users">
                     <label for="tutorName">Username</label>
                     <input type="text" name="name" required><br><br>
                     
                     <label for="tutorSubject">Role</label>
-                    <select name="type" id="">
+                    <select name="role" id="">
                             
                            
-                            <option>Video</option>
-                            <option>Model Papers</option>
+                            <option value="student">Student</option>
+                            <option value="admin">admin</option>
+                            <option value="subject_admin">Subject Admin</option>
 
                         </select>
+                        <br>
                     
                     <label for="tutorCourses">email</label>
                     <input type="email" name="email" required><br><br>
@@ -91,7 +94,7 @@
                     <label for="tutorCourses">Password</label>
                     <input type="password" name="password" required><br><br>
                     
-                    <button type="submit">Add Tutor</button>
+                    <button type="submit">Add User</button>
                 </form>
             </div>
         </div>

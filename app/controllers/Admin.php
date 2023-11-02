@@ -25,21 +25,16 @@ class Admin extends Controller {
             //view tutors
             
             $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $inserttutor = [
-                'name' => $_POST['name'],
-                'subject' => $_POST['subject'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password']
-            ];
+           
 
             $insertuser = [
                 'name' => $_POST['name'],
                 'email' => $_POST['email'],
                 'password' => $_POST['password'],
-                'role' => 'tutor'
+                'role' => $_POST['role']
             ];
 
-            $this->Crud->insertData('tutors', $inserttutor);
+           
             $this->Crud->insertData('users', $insertuser);
             header('location:' . URLROOT . '/admin/users');
 //delete tutor
