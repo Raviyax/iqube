@@ -15,96 +15,62 @@
         <!-- start of content -->
         
 
-        <div class="main-content">
-            <header>
-                <div class="header-wrapper">
-                    <label for="menu-toggle">
-                        <span class="las la-bars"></span>
-                    </label>
-                    <div class="header-title">
-                        <h1>Analytics</h1>
-                        <p>Display analytics about your Channel <span class="las la-chart-line"></span></p>
-                    </div>
+        <div class="content">
+        <div class="dashboard">
+            <!-- chosen subjects -->
+            <div class="course-overview">
+                <h2 class="section-title">Subject Overview</h2>
+                <div class="courses" id="coursesContainer">
+                    <!-- Courses will be dynamically added here using js -->
                 </div>
-                <div class="header-action">
-                    <button class="btn btn-main">
-                        <span class="las la-video"></span>
-                        Upload
-                    </button>
+            </div>
+
+            <div class="progress-summary" id="syllabusProgress">
+                <h2>Syllabus Progress</h2>
+            </div>
+
+            <div class="course-completion">
+                <h2>Course Completion</h2>
+                <div class="course-cards">
+                    <div class="course-card">
+                        <h3>Matter and Radiation</h3>
+                        <div class="course-progress">60% completed</div>
+                    </div>
+                    <!-- More course cards -->
                 </div>
-            </header>
-            <main>
-                <section>
-                    <h3 class="section-head">Overview</h3>
-                    <div class="analytics">
-                        <div class="analytic">
-                            <div class="analytic-icon"><span class="las la-eye"></span></div>
-                            <div class="analytic-info">
-                                <h4>Total views</h4>
-                                <h1>10.3M</h1>
-                            </div>
-                        </div>
-                        <div class="analytic">
-                            <div class="analytic-icon"><span class="las la-clock"></span></div>
-                            <div class="analytic-info">
-                                <h4>Watch time (hrs)</h4>
-                                <h1>20.9k <small class="text-danger">5%</small></h1>
-                            </div>
-                        </div>
-                        <div class="analytic">
-                            <div class="analytic-icon"><span class="las la-users"></span></div>
-                            <div class="analytic-info">
-                                <h4>Subscribers</h4>
-                                <h1>1.3k <small class="text-success">12%</small></h1>
-                            </div>
-                        </div>
-                        <div class="analytic">
-                            <div class="analytic-icon"><span class="las la-heart"></span></div>
-                            <div class="analytic-info">
-                                <h4>Total likes</h4>
-                                <h1>3.4M </h1>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="block-grid">
-                        <div class="revenue-card">
-                            <h3 class="section-head">Total Revenue</h3>
-                            <div class="rev-content">
-                                <img src="https://media-exp1.licdn.com/dms/image/C4D03AQF9R2lxnH4fOw/profile-displayphoto-shrink_800_800/0/1639841285929?e=1654128000&v=beta&t=QvocDiNfivbaAzHjsX9fnl9eFa1ZSo4SBHeH4jZANEk" alt="profile">
-                                <div class="rev-info">
-                                    <h3>Mohsen Alizade</h3>
-                                    <h1>3.5M <small>Subscribers</small></h1>
-                                </div>
-                                <div class="rev-sum">
-                                    <h4>Total income</h4>
-                                    <h2>$70.859</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="graph-card">
-                            <h3 class="section-head">Graph</h3>
-                            <div class="graph-content">
-                                <div class="graph-head">
-                                    <div class="icon-wrapper">
-                                        <div class="icon"><span class="las la-eye text-main"></span></div>
-                                        <div class="icon"><span class="las la-clock text-success"></span></div>
-                                    </div>
-                                    <div class="graph-select">
-                                        <select name="" id="">
-                                            <option value="">Septamber</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="graph-board">
-                                    <canvas id="revenueChart" width="100%"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </main>
+            </div>
+
+            <div class="performance-metrics">
+                <h2>Performance Metrics</h2>
+                <div class="metric-charts">
+                    <canvas id="grades-chart" width="400" height="200"></canvas>
+                    <canvas id="time-spent-chart" width="400" height="200"></canvas>
+                    <!-- Add more canvas elements for additional charts -->
+                </div>
+            </div>
+        </div>
+
+        <div class="achievements-section">
+            <div class="card">
+                <h2 class="card-header">Achievements</h2>
+                <a href="#" class="btn">View All</a>
+                <ul class="achievements-list">
+                    <li>
+                        <span class="achievement-title">Completed 3 Courses</span>
+                        <p class="achievement-description">Successfully finished 3 courses</p>
+                    </li>
+                    <li>
+                        <span class="achievement-title">Completed 10 Quizzes</span>
+                        <p class="achievement-description">Finished 10 quizzes with good scores</p>
+                    </li>
+                    <li>
+                        <span class="achievement-title">Rapid Learner</span>
+                        <p class="achievement-description">Recognized for fast learning pace</p>
+                    </li>
+                    <!-- Add more achievements as needed -->
+                </ul>
+            </div>
+        </div>
         </div>
 
 
@@ -114,4 +80,99 @@
 </div>
 
 <!-- =========== Scripts =========  -->
+<script>
+                // Simulated data - Replace with actual data retrieval logic
+        const syllabusProgress = 70; // Example syllabus completion percentage
+        const subjectsProgress = [50, 80, 60]; // Example progress for subjects
+
+        // Update overall syllabus progress bar
+        const progressElement = document.querySelector('.progress-bar');
+        progressElement.style.width = syllabusProgress + '%';
+
+        // Create subject progress bars
+        const subjectProgress = document.querySelector('.subject-progress');
+        subjectsProgress.forEach(progress => {
+            const subjectBar = document.createElement('div');
+            subjectBar.classList.add('subject-bar');
+            subjectBar.style.width = progress + '%';
+            subjectProgress.appendChild(subjectBar);
+        });
+
+        // Simulated course data
+        const courses = [
+            { name: 'Course 1', completion: 80 },
+            { name: 'Course 2', completion: 60 },
+            // Add more course data
+        ];
+
+        // Display course cards
+        const courseCards = document.querySelector('.course-cards');
+        courses.forEach(course => {
+            const card = document.createElement('div');
+            card.classList.add('course-card');
+            card.textContent = `${course.name} - ${course.completion}% completed`;
+            courseCards.appendChild(card);
+        });
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+                // Wait for the DOM content to load
+        document.addEventListener("DOMContentLoaded", function() {
+            // Chart.js initialization
+            var gradesCtx = document.getElementById("grades-chart").getContext("2d");
+            var timeSpentCtx = document.getElementById("time-spent-chart").getContext("2d");
+
+            // Dummy data for the charts
+            var gradesData = {
+                labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+                datasets: [{
+                    label: "Grades",
+                    data: [80, 85, 78, 92, 88], // Replace with actual data
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1
+                }]
+            };
+
+            var timeSpentData = {
+                labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+                datasets: [{
+                    label: "Time Spent (hours)",
+                    data: [15, 20, 18, 22, 19], // Replace with actual data
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1
+                }]
+            };
+
+            // Create dummy line charts
+            var gradesChart = new Chart(gradesCtx, {
+                type: "line",
+                data: gradesData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            var timeSpentChart = new Chart(timeSpentCtx, {
+                type: "line",
+                data: timeSpentData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+    <script src="<?php echo URLROOT;?>/assets/js/Student/dashboard.js"></script>
 <?php $this->view('inc/footer'); ?>

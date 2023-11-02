@@ -1,0 +1,401 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+
+/* =============== Globals ============== */
+* {
+  font-family: "Ubuntu", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+}
+
+:root {
+  --blue: #2a2185;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #F1F4FA;
+}
+
+/* .container {
+  position: relative;
+  width: 100%;
+  background-color: #052659;
+} */
+
+/* =============== Navigation ================
+/* Navigation 
+.sidebar {
+  width: 240px;
+  height: 100%;
+  position: fixed;
+  background-color: white;
+  overflow: auto;
+  overflow-x: hidden;
+  transition: width 0.3s;
+}
+
+/* Sidebar Top 
+.sidebar-top {
+  width: 100%;
+  top: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #292185d1;
+}
+
+.usericon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.usericon:hover {
+  background-color: #fff;
+  transform: scale(1.1);
+}
+
+.usericon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.userdetails {
+  margin-left: 20px;
+  color: #fff;
+}
+
+.userdetails ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.userdetails li {
+  font-size: larger;
+  opacity: 0.7;
+  margin-bottom: 5px;
+}
+
+/* Sidebar Links 
+.sidebar a {
+  display: block;
+  color: var(--light-version-text, #06152B);
+  padding: 16px;
+  text-decoration: none;
+  text-align: left;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #052659;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+/* Active Link 
+.sidebar a.active {
+  background: #052759a1;
+  opacity: 1;
+  color: #fff;
+  border-radius: 10px;
+}
+.sidebar a.active:hover{
+  background-color: #999;
+}
+
+/* Navicon Box 
+.naviconBx {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.naviconBx .icon {
+  margin-bottom: 5px; 
+}
+
+.naviconBx .text {
+  text-align: center;
+}
+
+/* Improved transitions for elements 
+.sidebar a, .usericon {
+  transition: background-color 0.3s, transform 0.3s, color 0.3s;
+}
+
+/* Expand sidebar on hover 
+.sidebar.expanded {
+  width: 240px;
+}
+
+/* Full text for menu items on hover 
+.sidebar.expanded .menu li {
+  padding: 10px;
+} */
+
+
+/* ===================== Main ===================== */
+/* Main Container */
+.main {
+  position: absolute;
+  width: calc(100% - 240px); /* Adjust sidebar width */
+  left: 240px; /* Adjust sidebar width */
+  min-height: 100vh;
+  /* background-image: repeating-linear-gradient(to top right, #C1E8FF, #05275960); */
+  background-color: aliceblue;
+  padding: 20px;
+  transition: width 0.5s, left 0.5s; /* Add transitions for smooth effects */
+}
+
+.content{
+  margin-top: 100px;
+  width: 100%;
+}
+
+.title{
+  text-align: center; /* Center the title horizontally */
+    font-size: 24px; /* Adjust the font size */
+    font-weight: bold; /* Apply a bold font weight */
+    padding: 20px 0; /* Add padding for spacing */
+    background-color: #f0f0f0; /* Optional background color */
+    color: #333; /* Text color */
+    border-bottom: 1px solid #ccc; 
+}
+
+.main.active {
+  width: calc(100% - 80px); /* Adjust sidebar width */
+  left: 80px; /* Adjust sidebar width */
+}
+
+/* Top Bar
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; 
+  z-index: 5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  color: var(--black1); 
+} */
+
+/* Toggle Button */
+/* .toggle {
+  width: 40px; /* Adjust size for better aesthetics */
+  height: 40px; /* Adjust size for better aesthetics */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem; /* Adjust font size for better aesthetics */
+  cursor: pointer;
+} */
+
+/* Dashboard Type */
+/* .dashboardtype {
+  width: 100%;
+  padding: 10px 20px; /* Increase padding for better spacing */
+  font-size: 1.2rem; /* Adjust font size for better aesthetics */
+  font-weight: 600;
+  background: #fff; /* Background color */
+  border-bottom: 1px solid #ddd; /* Add a subtle border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  color: #2a2185; /* Text color */
+  text-align: center;
+} */
+
+/* User Avatar */
+.user {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.user img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s; /* Add a slight zoom effect on hover */
+}
+
+.user:hover img {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+
+
+/* ======================= Cards ====================== */
+.cardBox {
+  position: relative;
+  top: 60px;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+  background-color: #F1F4FA;
+}
+
+.cardBox .card {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+.cardBox .card .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+  font-size: 3.5rem;
+  color: var(--black2);
+}
+
+.cardBox .card:hover {
+  background: var(--blue);
+}
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+  color: var(--white);
+}
+
+
+
+/* ====================== Progress Tracker ========================== */
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.progress-fill {
+  width: 60%; /* Adjust this value to change the progress */
+  height: 100%;
+  background-color: #777d07; /* Change the color to match your design */
+  border-radius: 10px;
+  transition: width 1s ease-in-out; /* Add a smooth animation effect */
+}
+
+/* ====================== BAdges and achievements ========================== */
+
+.achievements-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.achievements-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  color: #222;
+}
+
+.achievements-list li:last-child {
+  border-bottom: none; /* Remove the border from the last item */
+}
+
+/* Add a badge icon or image to each list item if desired */
+.achievements-list li::before {
+  content: "🏅"; /* Use an appropriate Unicode character or image URL */
+  margin-right: 10px;
+}
+
+
+/* ====================== Responsive Design ========================== */
+@media (max-width: 991px) {
+
+  .main {
+    max-width: 100%;
+    left: 60px;
+  }
+  .main.active {
+    left: 300px;
+  }
+  .cardBox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sidebar_top{
+    display: none;
+  }
+  .usericon {
+    display: none;
+  }
+  .userdetails {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+  .recentOrders {
+    overflow-x: auto;
+  }
+  .status.inProgress {
+    white-space: nowrap;
+  }
+
+  .sidebar a {float: left;}
+}
+
+@media (max-width: 480px) {
+  .cardBox {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .cardHeader h2 {
+    font-size: 20px;
+  }
+ 
+  .toggle {
+    z-index: 10001;
+  }
+  .main.active .toggle {
+    color: #fff;
+    position: fixed;
+    right: 0;
+    left: initial;
+  }  
+}

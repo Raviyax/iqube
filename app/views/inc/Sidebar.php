@@ -38,22 +38,23 @@
 
 
                         <?php if (Auth::is_student()) { ?>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chart-line"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-brands fa-leanpub"></i></span><span class="naviconBx">Courses</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-book"></i></span><span class="naviconBx">Syllabus</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-calendar-days"></i></span><span class="naviconBx">Study Plan</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student"><span class="naviconBx"><i class="fa-solid fa-chart-line"></i></span><span class="naviconBx">Dashboard</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/courses"><span class="naviconBx"><i class="fa-brands fa-leanpub"></i></span><span class="naviconBx">Courses</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/syllabus"><span class="naviconBx"><i class="fa-solid fa-book"></i></span><span class="naviconBx">Syllabus</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/schedule"><span class="naviconBx"><i class="fa-solid fa-calendar-days"></i></span><span class="naviconBx">Study Plan</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/tutors"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/Messages"><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Messages</span></a>
+                                <a href="<?php echo URLROOT; ?>/Student/settings"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
                                 <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
                                 
 
                         <?php } ?>
 
                         <?php if (Auth::is_subject_admin()) { ?>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
-                                <a href=""><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Complains</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
+                                <a href="<?php echo URLROOT; ?>/Subject_admin"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Dashboard</span></a>
+                                <a href="<?php echo URLROOT; ?>/Subject_admin/tutors"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
+                                <a href="<?php echo URLROOT; ?>/Subject_admin/complaints"><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Complaints</span></a>
+                                <a href="<?php echo URLROOT; ?>/Subject_admin/settings"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
                                 <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
 
                         <?php } ?>
