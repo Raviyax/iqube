@@ -75,6 +75,35 @@ class Crud {
             return false; // Insert failed due to an error.
         }
     }
+
+    function deleteData($tableName, $condition, $conditionParams = []) {
+        try {
+            // Create a PDO connection to the database.
+            $db = new Database();
+            $pdo = $db->connect();
+    
+            // Construct the SQL query.
+            $query = "DELETE FROM $tableName WHERE $condition";
+    
+            // Prepare the statement.
+            $stmt = $pdo->prepare($query);
+    
+            // Bind parameters for the condition.
+            foreach ($conditionParams as $paramName => $paramValue) {
+                $stmt->bindParam($paramName, $paramValue);
+            }
+    
+            // Execute the query.
+            if ($stmt->execute()) {
+                return true; // Delete successful.
+            } else {
+                return false; // Delete failed.
+            }
+        } catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+            return false; // Delete failed due to an error.
+        }
+    }
     
     
 }

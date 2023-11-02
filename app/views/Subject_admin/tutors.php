@@ -28,20 +28,42 @@
     <div class="admin-panel">
             <h2>Physical-Science Admin Panel</h2>
             <button onclick="openCreateForm()">Create New Tutor</button>
+            <form method="post" action="<?php echo URLROOT;?>/subject_admin/tutors">
             <table class="tutors-table">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Subject</th>
-                        <th>Courses</th>
+                        <th>Email</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                <?php $results = $data['result'];
+                        foreach ($results as $result) {
+                            $id = $result['id'];
+                           $name = $result['name'];
+                            $subject = $result['subject'];
+                            $email = $result['email'];
+                           
+                         ?>
+                <tr>
+                <td><?php echo $id?></td>
+                    <td><?php echo $name?></td>
+                    <td><?php echo $subject?></td>
+                    <td><?php echo $email?></td>
+                    <td>
+                        <button onclick="">Edit</button>
+                        <button name="delete" value="$emai" onclick="">Delete</button>
+                    </td>
+                    </tr>
+                    <?php } ?>
+                    
                     <!-- Tutor data will be populated dynamically here -->
                 </tbody>
             </table>
+            </form>
         </div>
 
         <!-- Modal for creating new tutor -->
@@ -79,74 +101,6 @@
 
     <!-- =========== Scripts =========  -->
     <script>
-        // Sample tutor data (can be fetched from a server)
-        const tutorsData = [
-            { id: 1, name: "Hanafe Mira", subject: "Physics", courses: ["Mechanics", "Optics"] },
-            { id: 2, name: "Ravishan Jayathilake", subject: "Mathematics", courses: ["Algebra", "Calculus"] },
-            { id: 3, name: "Rishmi Dissanayake", subject: "Chemistry", courses: ["Bonding", "Organics"] },
-            { id: 4, name: "Madasha Liyanage", subject: "ICT", courses: ["Programming Concepts", "Database"] },
-        ];
-
-        // Function to display tutors in the admin panel
-        function displayTutors() {
-            const tutorsList = document.querySelector('.tutors-list');
-            tutorsList.innerHTML = '';
-
-            tutorsData.forEach(tutor => {
-                const tutorElement = document.createElement('div');
-                tutorElement.classList.add('tutor-item');
-                tutorElement.innerHTML = `
-                    <h3>${tutor.name}</h3>
-                    <p>Subject: ${tutor.subject}</p>
-                    <p>Courses: ${tutor.courses.join(', ')}</p>
-                    <button class="view-details-btn" data-tutor-id="${tutor.id}">View Details</button>
-                `;
-                tutorsList.appendChild(tutorElement);
-            });
-
-            // Add event listeners to each "View Details" button
-            const viewDetailsButtons = document.querySelectorAll('.view-details-btn');
-            viewDetailsButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    const tutorId = event.target.getAttribute('data-tutor-id');
-                    const selectedTutor = tutorsData.find(tutor => tutor.id == tutorId);
-
-                    if (selectedTutor) {
-                        // In this example, it displays the tutor name. You can extend it further.
-                        alert(`Selected tutor: ${selectedTutor.name}`);
-                    }
-                });
-            });
-        }
-
-        // Display tutors when the page loads
-        document.addEventListener("DOMContentLoaded", function() {
-            displayTutors();
-        });
-
-    </script>
-    <script>
-        const tutorsTable = document.querySelector('.tutors-table');
-
-        // Function to display tutors in the table
-        function displayTutors() {
-            tutorsTable.querySelector('tbody').innerHTML = '';
-
-            tutorsData.forEach(tutor => {
-                const row = tutorsTable.insertRow();
-
-                row.innerHTML = `
-                    <td>${tutor.id}</td>
-                    <td>${tutor.name}</td>
-                    <td>${tutor.subject}</td>
-                    <td>${tutor.courses.join(', ')}</td>
-                    <td>
-                        <button onclick="editTutor(${tutor.id})">Edit</button>
-                        <button onclick="deleteTutor(${tutor.id})">Delete</button>
-                    </td>
-                `;
-            });
-        }
 
         // Function to open create new tutor modal
         function openCreateForm() {
