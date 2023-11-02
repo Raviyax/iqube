@@ -20,7 +20,7 @@
         if(!empty($_SESSION['USER_DATA'])){
             return true;
         }
-        return false;
+        return false;   
     }
 
     public static function logout(){

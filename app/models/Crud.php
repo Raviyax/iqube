@@ -41,5 +41,40 @@ class Crud {
             return false; // Query failed due to an error.
         }
     }
+
+    function insertData($tableName, $data) {
+        try {
+            // Create a PDO connection to the database.
+            $db = new Database();
+            $pdo = $db->connect();
+    
+            $sql = 'INSERT INTO ' . $tableName . ' (';
+            $sql .= '`' . implode('`,`', array_keys($data)) . '`) VALUES (';
+    
+            $params = array();
+            $index = 0; // Initialize index.
+    
+            foreach ($data as $column => $value) {
+                $sql .= ':' . $column . $index . ',';
+                $params[':' . $column . $index] = $value;
+                $index++; // Increment the index for each parameter.
+            }
+    
+            $sql = rtrim($sql, ',');
+            $sql .= ')';
+    
+            $stmt = $pdo->prepare($sql);
+    
+            if ($stmt->execute($params)) {
+                // Insert successful
+            } else {
+                // Insert failed
+            }
+        } catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+            return false; // Insert failed due to an error.
+        }
+    }
+    
     
 }

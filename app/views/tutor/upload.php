@@ -23,7 +23,7 @@
                             Upload Course Material
                         </label>
                     </div>
-                  <form >
+                  <form  action="<?php echo URLROOT;?>/Tutor/upload" method = "post" >
                    
                     <div class="formbold-mb-5">
                         <label for="email" class="formbold-form-label">
@@ -31,8 +31,8 @@
                         </label>
                         <input
                           type="text"
-                          name="email"
-                          id="email"
+                          name="chapter"
+                          id="chapter"
                           placeholder="Course chapter"
                           class="formbold-form-input"
                         />
@@ -41,7 +41,7 @@
                         <label for="email" class="formbold-form-label">
                           Material Type
                         </label>
-                        <select name="" id="">
+                        <select name="type" id="">
                             
                            
                             <option>Video</option>
@@ -55,8 +55,8 @@
                         </label>
                         <input
                           type="text"
-                          name="email"
-                          id="email"
+                          name="price"
+                          id="price"
                           placeholder="Price in LKR"
                           class="formbold-form-input"
                         />
@@ -68,8 +68,8 @@
                         </label>
                         <input
                           type="textarea"
-                          name="email"
-                          id="email"
+                          name="description"
+                          id="description"
                           placeholder="Describe about the course material"
                           class="description-input"
                         />
