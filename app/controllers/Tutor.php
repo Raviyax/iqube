@@ -29,7 +29,7 @@ class Tutor extends Controller {
 
         $this->Crud = $this->model('Crud');
         $result = $this->Crud->readData('courses');
-        print_r($result);
+        
         
         
         
@@ -47,13 +47,25 @@ class Tutor extends Controller {
 
         
 
-
+        $this->Crud = $this->model('Crud');
         
         $data = [
             'title' => 'Tutor',
             'view' => 'Upload New'
         ];
         $this->view('tutor/upload', $data);
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $data = [
+                'chapter' => $_POST['chapter'],
+                'type' => $_POST['type'],
+                'price' => $_POST['price'],
+                
+                
+            ];
+            $this->Crud->insertData('courses', $data);
+           
+           }
        
 
 
