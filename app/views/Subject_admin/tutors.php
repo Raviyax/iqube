@@ -54,7 +54,7 @@
                     <td><?php echo $subject?></td>
                     <td><?php echo $email?></td>
                     <td>
-                        <button onclick="">Edit</button>
+                       
                         <button name="delete" value=<?php echo $email?> onclick="">Delete</button>
                     </td>
                     </tr>

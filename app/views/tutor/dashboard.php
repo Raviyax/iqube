@@ -162,7 +162,7 @@
             <table>
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer01.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Hanafe Mira <br> <span>1050 Points</span></h4>
@@ -171,7 +171,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer01.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Ravishan jayathilake <br> <span>984 Points</span></h4>
@@ -180,7 +180,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer02.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Madasha Liyanage<br> <span>950 Points</span></h4>
@@ -189,7 +189,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer01.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Rumal Hettiarachchi<br> <span>875 Points</span></h4>
@@ -198,7 +198,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer02.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Nisal Wishwajith<br> <span>850 Points</span></h4>
@@ -207,7 +207,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer01.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Rishmi Dissanayake<br> <span>799 Points</span></h4>
@@ -216,7 +216,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer02.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Raveen Dalpatadu<br> <span>750 Points</span></h4>
@@ -225,7 +225,7 @@
 
                 <tr>
                     <td width="60px">
-                        <div class="imgBx"><img src="../Dashboard/assets/imgs/customer01.jpg" alt=""></div>
+                        <div class="imgBx"><img src="assets/img/landing/user.jpg" alt=""></div>
                     </td>
                     <td>
                         <h4>Ashan Lakshitha<br> <span>800 Points</span></h4>

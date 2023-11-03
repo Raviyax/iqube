@@ -56,7 +56,7 @@
                     <td><?php echo $email?></td>
                     <td><?php echo $role?></td>
                     <td>
-                        <button onclick="">Edit</button>
+                        
                         <button name="delete" value=<?php echo $email?> onclick="">Delete</button>
                     </td>
                     </tr>
@@ -72,7 +72,7 @@
         <div class="modal" id="createTutorModal">
             <div class="modal-content">
                 <span class="close" onclick="closeCreateForm()">&times;</span>
-                <h3>Create New Tutor</h3>
+                <h3>Create New User</h3>
                 <form id="createForm" method="post" action="<?php echo URLROOT;?>/admin/users">
                     <label for="tutorName">Username</label>
                     <input type="text" name="name" required><br><br>

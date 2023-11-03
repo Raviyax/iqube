@@ -25,8 +25,11 @@ class Login extends Controller
                    
                    
                 }
+                else{
+                    $data['errors']['email_err'] = '*Wrong Email or Password';
+                }
 
-                $data['errors']['email_err'] = '*Wrong Email or Password';
+               
 
             }
         }

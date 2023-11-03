@@ -1,6 +1,6 @@
 <div id="mySidebar" class="sidebar">
         <div class="sidebar-top" id="sidebar_top">
-                <div class="usericon" id="usericon" href="#home"><img src="assets/imgs/user.jpg" alt=""></div>
+                <div class="usericon" id="usericon" href="#home"><img src="<?php echo URLROOT;?>/assets/img/landing/user.jpg" alt=""></div>
                 <div class="userdetails" id="userdetails" href="#home">
                         <ul>
                                 
