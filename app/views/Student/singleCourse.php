@@ -16,6 +16,14 @@
         
         <div class="content">
          <?php
+        //  $results = $data['result'];
+        //  foreach ($results as $result) {
+        //      $courseid = $result['id'];
+
+        //     $chapter = $result['chapter'];
+        //     $price = $result['price'];
+        //     $stcount = $result['stcount'];
+        //     $desc = $result['description'];
             try {
                 $db = new PDO('mysql:host=localhost;dbname=iqube', 'root', '');
                 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -38,6 +46,7 @@
                 $desc = $courseDetails['description'];
             }
             ?> 
+            
         <div class="course-detail">
             <div class="course-content">
                 <div class="course-title"><?php echo $chapter;?></div>
@@ -53,7 +62,7 @@
             </div>
             <div class="course-trailer">
                 <video controls>
-                    <source src="https://youtu.be/dJ4AiARvyBc" type="video/mp4">
+                    <source src="<?=URLROOT?>/assets/img/measurements.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -72,6 +81,10 @@
             <div class="card">Price: Rs. <?php echo $price; ?> /=</div>
             <div class="card">Students Enrolled: <?php echo $stcount; ?></div>
             <div class="purchase-btn" id="purchaseButton">Purchase Now</div>
+            <form  method="post" action="<?=URLROOT?>/Student/wishlist">
+                <input type="hidden" name="course_id" value="<?php echo $result['id']; ?>"> 
+                <button class="purchase-btn" type="submit" name="add_to_wishlist">Add to Wishlist</button>
+            </form>
         <div id="purchaseModal" class="modal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
@@ -87,6 +100,7 @@
                 </form>
             </div>
         </div>
+
         </div>
         <!-- Your HTML content -->
         

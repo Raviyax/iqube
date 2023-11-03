@@ -46,6 +46,25 @@ class Student extends Controller {
         ];
         $this->view('Student/singleCourse', $data);
 
+        $user_id = $_SESSION['USER_DATA']['id'];
+        $course_id = $_POST('course_id');
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            // if(isset($_POST['add'])){
+                if($user_id && $course_id){
+                    $data = [
+                        'user_id' => $user_id,
+                        'course_id' => $course_id
+                        
+                    ];
+                    
+                    $this->Crud->insertData('enrolled_courses', $data);
+                    header('location:' . URLROOT . '/Student/wishlist');
+                   
+                   }
+            // }
+        }
+        
     }
 
     public function syllabus(){
