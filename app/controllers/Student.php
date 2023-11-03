@@ -1,6 +1,8 @@
 <?php
 class Student extends Controller {
 
+    public $Crud;
+
     public function index(){
         
         $data = [
@@ -23,9 +25,12 @@ class Student extends Controller {
         }
 
     public function courses(){
+        $this->Crud = $this->model('Crud');
+        $result = $this->Crud->readData('courses');
         $data = [
             'title' => 'Student',
-            'view' => 'Courses'
+            'view' => 'Courses',
+            'result' => $result
         ];
         $this->view('Student/courses', $data);
     }
@@ -48,6 +53,9 @@ class Student extends Controller {
     }
 
     public function schedule(){
+        $this->Crud = $this->model('Crud');
+        $result = $this->Crud->readData('gantt_tasks');
+
         $data = [
             'title' => 'Student',
             'view' => 'schedule'
@@ -62,6 +70,17 @@ class Student extends Controller {
         ];
         $this->view('Student/tutors', $data);
     }
+
+    public function wishlist(){
+
+        $this->Crud = $this->model('Crud');
+        $result = $this->Crud->readData('enrolled_courses');
+        $data = [
+            'title'=> 'Student',
+            'view'=> 'wishlist'
+            ];
+            $this->view('Student/wishlist', $data);
+        }
 
     public function messages(){
         

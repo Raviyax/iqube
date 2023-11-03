@@ -10,6 +10,7 @@
   /* Course Category Details */
   .coursePane {
     display: flex;
+    flex-wrap:wrap;
     align-items: flex-start;
     gap: 24px;
     padding: 50px;
@@ -50,6 +51,10 @@
     height: 162px; /* Added max-height to prevent oversized images */
     width: 294px;
     box-shadow: 0px -1px 0px 0px #E9EAF0 inset;
+  }
+
+  a{
+    text-decoration: none;
   }
   
   .course-info {
