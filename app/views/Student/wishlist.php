@@ -14,21 +14,20 @@
 
         <!-- start of content -->
         <div class="content">
-            <?php $results = $data['result'];
-                        foreach ($results as $result) {
+        <h1>Enrolled Courses</h1>
 
-                            $student = $result['name'];
-                           $course = $result['chapter'];
-                           
-                         ?>
-
-        <!-- Enroll in a New Course Form -->
-        <form method="post" action="enrolled_courses_view.php" class="enroll-form">
-            <label for="course_id">Course ID:</label>
-            <input type="text" name="course_id" id="course_id" placeholder="Enter Course ID">
-            <button type="submit" name="enroll_course">Enroll</button>
-        </form>
-        <?php } ?>
+<?php if (!empty($enrolled_courses)) : ?>
+    <ul>
+        <?php foreach ($enrolled_courses as $course) : ?>
+            <li>
+                <strong>Course Name:</strong> <?php echo $course['course_name']; ?><br>
+                <span>Other Course Details: <?php echo $course['other_details']; ?></span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else : ?>
+    <p>No enrolled courses found.</p>
+<?php endif; ?>
     </div>
         </div>
 
