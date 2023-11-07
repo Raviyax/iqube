@@ -8,6 +8,7 @@ class Landing extends Controller {
             
         ];
         $this->view('Landing',$data);
+        //
        
 
 
