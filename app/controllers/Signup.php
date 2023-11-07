@@ -13,7 +13,7 @@ class Signup extends Controller {
             $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $this->User->insert($_POST);
           
-            header('location:'.URLROOT.'/login');
+            header('location:'.URLROOT.'/Login');
             }else{
                 $data['errors'] = $this->User->errors;
                 $data['title'] = 'Signup';

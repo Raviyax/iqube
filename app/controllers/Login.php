@@ -33,7 +33,7 @@ class Login extends Controller
 
             }
         }
-        $this->view('login', $data);
+        $this->view('Login', $data);
         
         
 }

@@ -8,7 +8,7 @@ class Tutor extends Controller {
             'title' => 'Tutor',
             'view' => 'Dashboard'
         ];
-        $this->view('tutor/dashboard', $data);
+        $this->view('Tutor/Dashboard', $data);
        
 
 
@@ -20,7 +20,7 @@ class Tutor extends Controller {
             'title' => 'Tutor',
             'view' => 'messages'
         ];
-        $this->view('tutor/messages', $data);
+        $this->view('Tutor/Messages', $data);
        
 
 
@@ -39,7 +39,7 @@ class Tutor extends Controller {
                 ];
                 $this->Crud->deleteData('courses',$condition,$conditionparams);
                
-                header('location:' . URLROOT . '/tutor/lessons');
+                header('location:' . URLROOT . '/Tutor/Lessons');
             }
         }
 
@@ -67,7 +67,7 @@ class Tutor extends Controller {
             'title' => 'Tutor',
             'view' => 'Upload New'
         ];
-        $this->view('tutor/upload', $data); 
+        $this->view('Tutor/Upload', $data); 
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [

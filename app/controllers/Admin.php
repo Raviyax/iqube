@@ -9,7 +9,7 @@ class Admin extends Controller {
             'title' => 'Admin',
             'view' => 'Dashboard'
         ];
-        $this->view('Admin/dashboard', $data);
+        $this->view('Admin/Dashboard', $data);
        
 
 
@@ -36,7 +36,7 @@ class Admin extends Controller {
 
            
             $this->Crud->insertData('users', $insertuser);
-            header('location:' . URLROOT . '/admin/users');
+            header('location:' . URLROOT . '/Admin/Users');
 //delete tutor
             if(isset($_POST['delete'])){
                 $condition ='email = :email';
@@ -46,7 +46,7 @@ class Admin extends Controller {
                 ];
                 $this->Crud->deleteData('tutors',$condition,$conditionparams);
                 $this->Crud->deleteData('users',$condition,$conditionparams);
-                header('location:' . URLROOT . '/admin/users');
+                header('location:' . URLROOT . '/Admin/Users');
             }
         }
         $data = [
@@ -55,7 +55,7 @@ class Admin extends Controller {
             'result' => $result
         ];
 
-        $this->view('admin/users', $data);
+        $this->view('Admin/Users', $data);
     }
 
     

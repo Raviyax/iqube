@@ -10,7 +10,7 @@ class Student extends Controller {
             'title' => 'Student',
             'view' => 'Dashboard'
         ];
-        $this->view('Student/dashboard', $data);
+        $this->view('Student/Dashboard', $data);
        
 
 
@@ -21,7 +21,7 @@ class Student extends Controller {
             'title'=> 'Student',
             'view'=> 'Profile',
             ];
-            $this->view('Student/profile', $data);
+            $this->view('Student/Profile', $data);
 
         }
 
@@ -33,7 +33,7 @@ class Student extends Controller {
             'view' => 'Courses',
             'result' => $result
         ];
-        $this->view('Student/courses', $data);
+        $this->view('Student/Courses', $data);
     }
 
     public function singleCourse(){
@@ -44,10 +44,10 @@ class Student extends Controller {
             'view' => 'Courses',
             'result' => $result
         ];
-        $this->view('Student/singleCourse', $data);
+        $this->view('Student/SingleCourse', $data);
 
         $user_id = $_SESSION['USER_DATA']['id'];
-       
+        $course_id = $_POST('course_id');
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // if(isset($_POST['add'])){
@@ -72,7 +72,7 @@ class Student extends Controller {
             'title' => 'Student',
             'view' => 'syllabus'
         ];
-        $this->view('Student/syllabus', $data);
+        $this->view('Student/Syllabus', $data);
     }
 
     public function schedule(){
@@ -83,7 +83,7 @@ class Student extends Controller {
             'title' => 'Student',
             'view' => 'schedule'
         ];
-        $this->view('Student/schedule', $data);
+        $this->view('Student/Schedule', $data);
     }
 
     public function tutors(){
@@ -91,7 +91,7 @@ class Student extends Controller {
             'title' => 'Student',
             'view' => 'tutors'
         ];
-        $this->view('Student/tutors', $data);
+        $this->view('Student/Tutors', $data);
     }
 
     public function wishlist(){
@@ -102,7 +102,7 @@ class Student extends Controller {
             'title'=> 'Student',
             'view'=> 'wishlist'
             ];
-            $this->view('Student/wishlist', $data);
+            $this->view('Student/Wishlist', $data);
         }
 
     public function messages(){
@@ -111,7 +111,7 @@ class Student extends Controller {
             'title' => 'Student',
             'view' => 'messages'
         ];
-        $this->view('Student/messages', $data);
+        $this->view('Student/Messages', $data);
 
     }
 
@@ -120,7 +120,7 @@ class Student extends Controller {
             'title' => 'Student',
             'view' => 'settings'
         ];
-        $this->view('Student/settings', $data);
+        $this->view('Student/Settings', $data);
     }
 
     // Within your Controller, handle the AJAX request to add the Gantt task

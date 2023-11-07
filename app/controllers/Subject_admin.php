@@ -12,7 +12,7 @@ class Subject_admin extends Controller
             'title' => 'Subject Admin',
             'view' => 'Dashboard'
         ];
-        $this->view('Subject_admin/dashboard', $data);
+        $this->view('Subject_admin/Dashboard', $data);
     }
 
     public function tutors()
@@ -60,7 +60,7 @@ class Subject_admin extends Controller
             'result' => $result
         ];
 
-        $this->view('Subject_admin/tutors', $data);
+        $this->view('Subject_admin/Tutors', $data);
     }
 
     public function complaints()
@@ -69,7 +69,7 @@ class Subject_admin extends Controller
             'title' => 'Subject Admin',
             'view' => 'Complaints'
         ];
-        $this->view('Subject_admin/complaints', $data);
+        $this->view('Subject_admin/Complaints', $data);
     }
 
     public function settings()
@@ -78,6 +78,6 @@ class Subject_admin extends Controller
             'title' => 'Subject Admin',
             'view' => 'Settings'
         ];
-        $this->view('Subject_admin/settings', $data);
+        $this->view('Subject_admin/Settings', $data);
     }
 }
