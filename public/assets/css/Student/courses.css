@@ -1,0 +1,235 @@
+/* Variables */
+:root {
+    --blue: #2a2185;
+    --white: #fff;
+    --gray: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+  }
+  
+  /* Course Category Details */
+  .coursePane {
+    display: flex;
+    flex-wrap:wrap;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 50px;
+  }
+  
+  .course-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .courseCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    background: #7DAOCA;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    padding: 20px; /* Added padding for better spacing */
+    transition: transform 0.3s;
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .courseCard:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    transform: scale(1.015); /* Enlarge the card on hover */
+  }
+  
+  .courseCard img {
+    width: 100%; /* Adjusted image width to be responsive */
+    height: 162px; /* Added max-height to prevent oversized images */
+    width: 294px;
+    box-shadow: 0px -1px 0px 0px #E9EAF0 inset;
+  }
+
+  a{
+    text-decoration: none;
+  }
+  
+  .course-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .course-info .tag {
+    display: flex;
+    width: 100%; /* Adjusted width to be responsive */
+    padding: 0px 18px;
+    justify-content: space-between;
+    
+  }
+  
+  .course-info .tag .categ {
+    display: flex;
+    padding: 4px 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--gray); /* Added background color to tags */
+    border-radius: 4px; /* Added border-radius for rounded tags */
+  }
+  
+  .course-info .tag .price {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--blue); /* Adjusted text color */
+  }
+  
+  .course-info .name {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+  }
+  
+  .courseFoot {
+    display: flex;
+    width: 100%; /* Adjusted width to be responsive */
+    padding: 0px 18px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .courseFoot .rate {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .courseFoot .rate .star {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .courseFoot .rate .rating {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+    color: var(--black1); /* Adjusted text color */
+  }
+  
+  .courseFoot .stu {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .courseFoot .stu .stu-icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .courseFoot .stu .stu-cnt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .courseFoot .stu .stu-cnt .no {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+  }
+  
+  .courseFoot .stu .stu-cnt .stu-tag {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.14px;
+    padding-left: 5px;
+    color: var(--black2); /* Adjusted text color */
+  }
+
+
+  .filter-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Filter component */
+.filter {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.filter .content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+}
+
+/* Search component */
+.search {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.search .info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333;
+}
+
+/* Input box styles */
+.searchbar {
+    border: none;
+    outline: none;
+    width: 150px;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Icon styles */
+.icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #1D2026;
+}
+
+/* Hover effects */
+.filter:hover, .search:hover {
+    border-color: #1D2026;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
