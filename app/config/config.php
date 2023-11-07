@@ -13,7 +13,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
 // app root - use something in app root
 define('APPROOT',dirname(dirname(__FILE__)));
 // URL root - use something in public root
-define('URLROOT','http://150.230.141.154/');
+define('URLROOT','http://150.230.141.154/iqube');
 // Site name
 define('SITENAME','IQube');
 
