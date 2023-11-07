@@ -1,15 +1,15 @@
-<?php $this->view('inc/header', $data); ?>
+<?php $this->view('Inc/Header', $data); ?>
 <link rel="stylesheet" href="<?php echo URLROOT; ?>/assets/css/Subject_admin/dashboard.css">
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 <div class="container">
     <!-- start of sidebar -->
-    <?php $this->view('inc/sidebar'); ?>
+    <?php $this->view('Inc/Sidebar'); ?>
     <!-- end of sidebar -->
 
     <!-- start of main part -->
     <div id="main" class="main">
         <!-- start of navbar -->
-        <?php $this->view('inc/navbar', $data); ?>
+        <?php $this->view('Inc/Navbar', $data); ?>
 
         <!-- end of navbar -->
 
@@ -165,4 +165,4 @@ new Chart(document.getElementById('achievementsChart').getContext('2d'), {
     }
 });
 </script>
-    <?php $this->view('inc/footer'); ?>
+    <?php $this->view('Inc/Footer'); ?>

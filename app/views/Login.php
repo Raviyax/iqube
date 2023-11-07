@@ -57,4 +57,4 @@
         
     </div>
     
-    <?php $this->view('inc/footer') ?>
+    <?php $this->view('Inc/Footer') ?>

@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data); ?>
+<?php $this->view('Inc/Header', $data); ?>
 <link rel="stylesheet" href="<?php echo URLROOT; ?>/assets/css/Student/schedule.css">
 <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
 <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
@@ -6,13 +6,13 @@
     
 <div class="container">
     <!-- start of sidebar -->
-    <?php $this->view('inc/sidebar'); ?>
+    <?php $this->view('Inc/Sidebar'); ?>
     <!-- end of sidebar -->
 
     <!-- start of main part -->
     <div id="main" class="main">
         <!-- start of navbar -->
-        <?php $this->view('inc/navbar', $data); ?>
+        <?php $this->view('Inc/Navbar', $data); ?>
 
         <!-- end of navbar -->
 
@@ -68,4 +68,4 @@
 
         </script>
 
-<?php $this->view('inc/footer'); ?>
+<?php $this->view('Inc/Footer'); ?>
