@@ -47,7 +47,7 @@ class Student extends Controller {
         $this->view('Student/singleCourse', $data);
 
         $user_id = $_SESSION['USER_DATA']['id'];
-        $course_id = $_POST('course_id');
+       
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // if(isset($_POST['add'])){
