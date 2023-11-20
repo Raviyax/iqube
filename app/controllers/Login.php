@@ -4,6 +4,10 @@ class Login extends Controller
    
 
     public function index(){
+
+        if(!Auth::is_logged_in()){
+           
+        
         $row = [];
         $data['title'] = 'Login';
         $data['errors'] = [];
@@ -33,5 +37,11 @@ class Login extends Controller
         $this->view('login', $data);
         
         
+}
+    
+    else{
+        header('location:'.URLROOT.'/Landing');
+    }
+    
 }
 }

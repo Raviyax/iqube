@@ -57,7 +57,7 @@
                                         <a class="dropdown-link" href="#mac-windows"><i class="fa-solid fa-gear"></i>Account Settings</a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href="#linux"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
+                                        <a class="dropdown-link" href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
                                     </li>
                                 </ul>
 

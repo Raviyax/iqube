@@ -34,7 +34,7 @@
                         <?php } ?>
 
                         <?php if (Auth::is_subject_admin()) { ?>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Dashboard</span></a>
+                                <a href="<?php echo URLROOT; ?>/subjectadmin"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Dashboard</span></a>
                                 <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
                                 <a href=""><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Complains</span></a>
                                 <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
