@@ -6,3 +6,8 @@ function set_value($key){
     return '';
 }
 
+function redirect($path){
+    header("Location: " . URLROOT . $path);
+    exit();
+}
+

@@ -1,20 +1,5 @@
 <div id="mySidebar" class="sidebar">
-        <div class="sidebar-top" id="sidebar_top">
-                <div class="usericon" id="usericon" href="#home"><img src="assets/imgs/user.jpg" alt=""></div>
-                <div class="userdetails" id="userdetails" href="#home">
-                        <ul>
-                                
-                                <?php if (Auth::is_logged_in()) { ?>
-                                        <li><?php echo ucfirst($_SESSION['USER_DATA']['name']) ?></li>
-                                <li style="font-size: 10px; opacity: 0.5;"><?php echo ucfirst($_SESSION['USER_DATA']['role']) ?></li>
-                                <?php } ?>
-                                <?php if (!Auth::is_logged_in()) { ?>
-                                        <li>User</li>
-                                <li style="font-size: 10px; opacity: 0.5;"><a href="<?php echo URLROOT?>/Login">Login</a></li>
-                                <?php } ?>
-                        </ul>
-                </div>
-        </div>
+     
 
         <div class="sidebar_content">
                 <?php if (!Auth::is_logged_in()) { ?>

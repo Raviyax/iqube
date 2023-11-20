@@ -1,53 +1,74 @@
 <?php
-class Tutor extends Controller {
+class Tutor extends Controller
+{
 
-    public function index(){
-        
-        $data = [
-            'title' => 'Tutor',
-            'view' => 'Dashboard'
-        ];
-        $this->view('tutor/dashboard', $data);
-       
+    public function index()
+    {
+
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+
+
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'Dashboard'
+            ];
+            $this->view('tutor/dashboard', $data);
+        }
+        else{
+            redirect('/Login');
+        }
+
+    }
+
+    public function messages()
+    {
+
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'messages'
+            ];
+            $this->view('tutor/messages', $data);
+        }
+        else{
+            redirect('/Login');
+        }
 
 
     }
+    public function lessons()
+    {
 
-    public function messages(){
-        
-        $data = [
-            'title' => 'Tutor',
-            'view' => 'messages'
-        ];
-        $this->view('tutor/messages', $data);
-       
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
 
-
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'lessons'
+            ];
+            $this->view('tutor/Lessons', $data);
+        }
+        else{
+            redirect('/Login');
+        }
     }
-    public function lessons(){
-        
-        $data = [
-            'title' => 'Tutor',
-            'view' => 'lessons'
-        ];
-        $this->view('tutor/Lessons', $data);
-       
+    public function upload()
+    {
+
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
 
 
-    }
-    public function upload(){
-
-        
 
 
-        
-        $data = [
-            'title' => 'Tutor',
-            'view' => 'Upload New'
-        ];
-        $this->view('tutor/upload', $data);
-       
 
-
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'Upload New'
+            ];
+            $this->view('tutor/upload', $data);
+        }
+        else{
+            redirect('/Login');
+        }
     }
 }
