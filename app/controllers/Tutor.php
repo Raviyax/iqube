@@ -79,7 +79,8 @@ class Tutor extends Controller {
             ];
             
             $this->Crud->insertData('courses', $data);
-            header('location:' . URLROOT . '/tutor/lessons');
+            header('location:' . URLROOT . '/tutor/l
+            essons');
            
            }
        

@@ -20,16 +20,12 @@ class Login extends Controller
                   if( Auth::is_tutor()){ header('location:'.URLROOT.'/tutor');}
                     if( Auth::is_admin()){ header('location:'.URLROOT.'/admin');}
                     if( Auth::is_student()){ header('location:'.URLROOT.'/student');}
-                    if( Auth::is_subject_admin()){ header('location:'.URLROOT.'/subject_admin');}
                   
                    
                    
                 }
-                else{
-                    $data['errors']['email_err'] = '*Wrong Email or Password';
-                }
 
-               
+                $data['errors']['email_err'] = '*Wrong Email or Password';
 
             }
         }

@@ -1,9 +1,8 @@
 <?php
  class Auth {
-   
     public static function authenticate($row){
 
-        if(is_object($row)){
+        if(is_object($row )){
             $_SESSION['USER_DATA'] = [
                 'id' => $row->id,
                 'name' => $row->name,
@@ -12,7 +11,9 @@
                 'created_at' => $row->date,
                 
             ];
-      
+        if( $_SESSION['USER_DATA']['role'] == 'subject_admin'){
+            $_SESSION['USER_DATA']['role'] = 'subject_admin';
+        }
        
         }
     }
@@ -21,7 +22,7 @@
         if(!empty($_SESSION['USER_DATA'])){
             return true;
         }
-        return false;   
+        return false;
     }
 
     public static function logout(){

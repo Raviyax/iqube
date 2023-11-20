@@ -23,7 +23,7 @@
                             Upload Course Material
                         </label>
                     </div>
-                  <form  action="<?php echo URLROOT;?>/Tutor/upload" method = "post" >
+                  <form >
                    
                     <div class="formbold-mb-5">
                         <label for="email" class="formbold-form-label">
@@ -31,8 +31,8 @@
                         </label>
                         <input
                           type="text"
-                          name="chapter"
-                          id="chapter"
+                          name="email"
+                          id="email"
                           placeholder="Course chapter"
                           class="formbold-form-input"
                         />
@@ -41,7 +41,7 @@
                         <label for="email" class="formbold-form-label">
                           Material Type
                         </label>
-                        <select name="type" id="">
+                        <select name="" id="">
                             
                            
                             <option>Video</option>
@@ -55,8 +55,8 @@
                         </label>
                         <input
                           type="text"
-                          name="price"
-                          id="price"
+                          name="email"
+                          id="email"
                           placeholder="Price in LKR"
                           class="formbold-form-input"
                         />
@@ -68,8 +68,8 @@
                         </label>
                         <input
                           type="textarea"
-                          name="description"
-                          id="description"
+                          name="email"
+                          id="email"
                           placeholder="Describe about the course material"
                           class="description-input"
                         />
@@ -126,7 +126,7 @@
                     </div>
               
                     <div>
-                      <button class="formbold-btn w-full" name="submit" value="submit">Submit</button>
+                      <button class="formbold-btn w-full">Send File</button>
                     </div>
                   </form>
                 </div>
