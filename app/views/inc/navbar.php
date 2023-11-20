@@ -5,9 +5,7 @@
             <a class="toggle" onclick="openNav()">
                 <i class="fa-solid fa-bars"></i>
             </a>
-            <a class="logo" href="/">
-                <img src="<?php echo URLROOT; ?>/assets/img/iqube.png" width="35" height="35" alt="Inc Logo" />
-            </a>
+           
         </div>
 
         <div class="nav-end">
@@ -47,21 +45,19 @@
                                         <span class="dropdown-link-title"><?php echo $_SESSION['USER_DATA']['email']; ?></span>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href="#branding">Branding</a>
+                                        <a class="dropdown-link" href="#branding"><i class="fa-solid fa-user"></i>View Profile</a>
                                     </li>
-                                    <li role="menuitem">
-                                        <a class="dropdown-link" href="#illustrations">Illustration</a>
-                                    </li>
+                                 
                                 </ul>
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">Download App</span>
+                                        <span class="dropdown-link-title">More</span>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href="#mac-windows">MacOS & Windows</a>
+                                        <a class="dropdown-link" href="#mac-windows"><i class="fa-solid fa-gear"></i>Account Settings</a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href="#linux">Linux</a>
+                                        <a class="dropdown-link" href="#linux"><i class="fa-solid fa-arrow-right-from-bracket"></i>Sign Out</a>
                                     </li>
                                 </ul>
 
@@ -79,6 +75,9 @@
                     }  ?>
                     <button class="userbtn btn-primary"><?php echo ucwords($role); ?></button>
                 <?php } ?>
+                <a class="logo" href="<?php echo URLROOT; ?>/Landing">
+                <img src="<?php echo URLROOT; ?>/assets/img/iqube.png" width="35" height="35" alt="Inc Logo" />
+            </a>
 
 
                 <!-- test -->
@@ -86,9 +85,7 @@
 
             </div>
 
-            <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
-                <i class="bx bx-menu" aria-hidden="true"></i>
-            </button>
+           
         </div>
     </div>
 </header>
