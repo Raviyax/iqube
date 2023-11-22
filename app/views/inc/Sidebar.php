@@ -1,59 +1,126 @@
-<div id="mySidebar" class="sidebar">
-     
-
-        <div class="sidebar_content">
-                <?php if (!Auth::is_logged_in()) { ?>
-
-                        <a class="active" href="#home"><span class="naviconBx"><i class="fa-solid fa-cube"></i></i> </span><span class="naviconBx">Dashboard</span></a>
-                        <a href="<?php echo URLROOT?>/Login"><span class="naviconBx"><i class="fa-solid fa-arrow-right-to-bracket"></i></span><span class="naviconBx">Login</span></a>
-                <?php } ?>
-
-
-                <?php if (Auth::is_logged_in()) { ?>
-
-                        <?php if (Auth::is_tutor()) { ?>
-                                <a href="<?php echo URLROOT; ?>/Tutor"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="<?php echo URLROOT; ?>/Tutor/Lessons"><span class="naviconBx"><i class="fa-solid fa-person-chalkboard"></i></span><span class="naviconBx">My Lessons</span></a>
-                                <a href="#contact"><span class="naviconBx"><i class="fa-solid fa-download"></i></span><span class="naviconBx">My Status</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-graduation-cap"></i></span><span class="naviconBx">My Students</span></a>
-                                <a href="<?php echo URLROOT; ?>/Tutor/Messages"><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Messages</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
-                                <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
-                        <?php } ?>
-
-
-                        <?php if (Auth::is_student()) { ?>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chart-line"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-brands fa-leanpub"></i></span><span class="naviconBx">Courses</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-book"></i></span><span class="naviconBx">Syllabus</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-calendar-days"></i></span><span class="naviconBx">Study Plan</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
-                                <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
-
-                        <?php } ?>
-
-                        <?php if (Auth::is_subject_admin()) { ?>
-                                <a href="<?php echo URLROOT; ?>/subjectadmin"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
-                                <a href=""><span class="naviconBx"><i class="fa-solid fa-comment-dots"></i></span><span class="naviconBx">Complains</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
-                                <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
-
-                        <?php } ?>
-
-                        <?php if (Auth::is_admin()) { ?>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-screwdriver-wrench"></i></span><span class="naviconBx">Dashboard</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-chalkboard-user"></i></span><span class="naviconBx">Tutors</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-headset"></i></span><span class="naviconBx">Subject Admins</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-child-reaching"></i></span><span class="naviconBx">Students</span></a>
-                                <a href="#news"><span class="naviconBx"><i class="fa-solid fa-book-open"></i></span><span class="naviconBx">Subjects</span></a>
-                                <a href="#about"><span class="naviconBx"><i class="fa-solid fa-gear"></i></span><span class="naviconBx">Settings</span></a>
-                                <a href="<?php echo URLROOT; ?>/Logout"><span class="naviconBx"><i class="fa-solid fa-right-from-bracket"></i></span><span class="naviconBx">Logout</span></a>
-
-                        <?php } ?>
-
-
-                <?php } ?>
+<div class="sidebar ">
+    <div class="logo-details">
+      <i class='bx bxl-c-plus-plus'></i>
+      <span class="logo_name">CodingLab</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="#">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Category</a></li>
+        </ul>
+      </li>
+      <li class="active">
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-collection' ></i>
+            <span class="link_name">Category</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
         </div>
-</div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Category</a></li>
+          <li><a href="#">HTML & CSS</a></li>
+          <li><a href="#">JavaScript</a></li>
+          <li><a href="#">PHP & MySQL</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-book-alt' ></i>
+            <span class="link_name">Posts</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Posts</a></li>
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">Login Form</a></li>
+          <li><a href="#">Card Design</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-pie-chart-alt-2' ></i>
+          <span class="link_name">Analytics</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Analytics</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-line-chart' ></i>
+          <span class="link_name">Chart</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Chart</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-plug' ></i>
+            <span class="link_name">Plugins</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Plugins</a></li>
+          <li><a href="#">UI Face</a></li>
+          <li><a href="#">Pigments</a></li>
+          <li><a href="#">Box Icons</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-compass' ></i>
+          <span class="link_name">Explore</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Explore</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-history'></i>
+          <span class="link_name">History</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">History</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">
+          <i class='bx bx-cog' ></i>
+          <span class="link_name">Setting</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Setting</a></li>
+        </ul>
+      </li>
+      <li>
+ 
+  </li>
+</ul>
+  </div>
+
+  
+  
+  <script>let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+   let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+   arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });</script>

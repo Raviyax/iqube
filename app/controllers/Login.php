@@ -14,9 +14,8 @@ class Login extends Controller
         $user = $this->model('User');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $row = $user->first([
-                'email' => $_POST['email']
-                
-            ]);     
+                   'email' => $_POST['email']],'users','user_id');
+               
             if($row){
                 
                 if(password_verify($_POST['password'], $row->password)){

@@ -27,7 +27,7 @@
                         <li>
                             <?php if (Auth::is_logged_in()) { ?>
 
-                                <button class="nav-link dropdown-btn" data-dropdown="dropdown2" aria-haspopup="true" aria-expanded="false" aria-label="discover">
+                                <button class="nav-link2 dropdown-btn" data-dropdown="dropdown2" aria-haspopup="true" aria-expanded="false" aria-label="discover">
                                     <?php echo ucwords($_SESSION['USER_DATA']['name']); ?>
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>

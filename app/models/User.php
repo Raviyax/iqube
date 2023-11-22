@@ -9,7 +9,7 @@ class User extends Model
     {
         $this->errors = [];
 
-        if (empty($data['name'])) {
+        if (empty($data['username'])) {
             $this->errors['name_err'] = '*Enter name';
         }
         $query = "SELECT * FROM users WHERE email = :email";

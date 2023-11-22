@@ -2,35 +2,31 @@
 class Model extends Database
 {
 
-    protected $table = 'users';
 
-
-    protected $allowedColumns = ['name', 'email', 'password'];
-
-    public function insert($data)
+    public function insert($data , $table , $allowedColumns)
     {
-        if (!empty($this->allowedColumns)) {
+        if (!empty($allowedColumns)) {
             foreach ($data as $key => $value) {
-                if (!in_array($key, $this->allowedColumns)) {
+                if (!in_array($key, $allowedColumns)) {
                     unset($data[$key]);
                 }
             }
         }
 
-        $query = "INSERT INTO " . $this->table . " (" . implode(',', array_keys($data)) . ") VALUES (:" . implode(',:', array_keys($data)) . ")";
+        $query = "INSERT INTO " . $table . " (" . implode(',', array_keys($data)) . ") VALUES (:" . implode(',:', array_keys($data)) . ")";
 
         $this->query($query, $data);
     }
-
-    public function first($data)
+   
+    public function first($data,$table,$orderby)
     {
         $keys = array_keys($data);
-        $query = "SELECT * FROM " . $this->table . " WHERE ";
+        $query = "SELECT * FROM " . $table . " WHERE ";
         $conditions = [];
         foreach ($keys as $key) {
             $conditions[] = $key . "=:" . $key;
         }
-        $query .= implode(' AND ', $conditions) . ' ORDER BY id DESC LIMIT 1';
+        $query .= implode(' AND ', $conditions) . ' ORDER BY '.$orderby.' DESC LIMIT 1';
     
         $res = $this->query($query, $data);
     

@@ -8,12 +8,12 @@
                 'name' => $row->name,
                 'email' => $row->email,
                 'role' => $row->role,
-                'created_at' => $row->date,
+                'created_at' => $row->created_at,
+                'updated_at' => $row->updated_at
+                
+                
                 
             ];
-        if( $_SESSION['USER_DATA']['role'] == 'subject_admin'){
-            $_SESSION['USER_DATA']['role'] = 'subject_admin';
-        }
        
         }
     }
