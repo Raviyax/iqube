@@ -17,7 +17,7 @@
             <h5>Let Us Guide You</h5>
             
             <div class="inputs">
-                <input type="text"  name="username" placeholder = <?php print (empty($data['errors']['name_err']))?"Username":$data['errors']['name_err'];?> value="<?=set_value('name')?>">
+                <input type="text"  name="name" placeholder = <?php print (empty($data['errors']['name_err']))?"Username":$data['errors']['name_err'];?> value="<?=set_value('name')?>">
                 
                 
                 <br>

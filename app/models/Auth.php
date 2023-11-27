@@ -4,8 +4,8 @@
 
         if(is_object($row )){
             $_SESSION['USER_DATA'] = [
-                'id' => $row->id,
-                'name' => $row->name,
+                'user_id' => $row->user_id,
+                'username' => $row->username,
                 'email' => $row->email,
                 'role' => $row->role,
                 'created_at' => $row->created_at,
