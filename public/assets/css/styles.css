@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
 
 :root {
-   --main-color: #8e44ad;
-   --red: #e74c3c;
-   --oragen: #f39c12;
+   --main-color: #559bfb;
+   --color2: #816bff;
+   --color3: #2c3782;
    --white: #fff;
-   --black: #2c3e50;
-   --light-color: #888;
-   --light-bg: #eee;
-   --border: .1rem solid rgba(0, 0, 0, .2);
+   --color4: #000000;
+   --light-color: #545454;
+   --light-bg: #ebeef2;
+   --border: 1px solid #e5e9f2;
 }
 
 * {
@@ -19,6 +19,7 @@
    outline: none;
    border: none;
    text-decoration: none;
+   
 }
 
 *::selection {
@@ -40,19 +41,20 @@
 }
 
 html {
-   font-size: 62.5%;
+   font-size: 50%;
    overflow-x: hidden;
 }
 
 body {
    background-color: var(--light-bg);
    padding-left: 30rem;
+   
    /* padding-bottom: 7rem; */
 }
 
 body.dark {
    --white: #222;
-   --black: #fff;
+   --color4: #fff;
    --light-color: #aaa;
    --light-bg: #333;
    --border: .1rem solid rgba(255, 255, 255, .2);
@@ -70,7 +72,7 @@ section {
 
 .option-btn-active {
    border-color: var(--white) !important;
-   background-color: var(--red) !important;
+   background-color: var(--color3) !important;
    border-style: solid !important;
    border-width: 5px !important;
    border-radius: 0px 0px 0px 0px !important;
@@ -113,12 +115,12 @@ section {
 
 .option-btn,
 .inline-option-btn {
-   background-color: var(--oragen);
+   background-color: var(--color3);
 }
 
 .delete-btn,
 .inline-delete-btn {
-   background-color: var(--red);
+   background-color: var(--color2);
 }
 
 .btn:hover,
@@ -127,7 +129,7 @@ section {
 .inline-btn:hover,
 .inline-option-btn:hover,
 .inline-delete-btn:hover {
-   background-color: var(--black);
+   background-color: var(--color4);
    color: var(--white);
 }
 
@@ -157,12 +159,12 @@ section {
 
 .message span {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
 }
 
 .message i {
    font-size: 2.5rem;
-   color: var(--red);
+   color: var(--color2);
    cursor: pointer;
    transition: .2s linear;
 }
@@ -178,14 +180,14 @@ section {
    text-align: center;
    width: 100%;
    font-size: 2rem;
-   color: var(--red);
+   color: var(--color2);
 }
 
 .heading {
    padding-bottom: 1.8rem;
-   border-bottom: var(--border);
+   border-bottom: 1px solid rgb(157, 153, 153);
    font-size: 2.5rem;
-   color: var(--black);
+   color: var(--color4);
    text-transform: capitalize;
    margin-bottom: 2rem;
 }
@@ -198,10 +200,11 @@ section {
    left: 0;
    right: 0;
    z-index: 1000;
+   box-shadow: 0 1px 3px 0 rgba(54,74,99,.05);
 }
 
 .header .flex {
-   padding: 1.5rem 2rem;
+   padding: 0.5rem 2rem;
    position: relative;
    display: flex;
    align-items: center;
@@ -210,7 +213,7 @@ section {
 
 .header .flex .logo {
    font-size: 2.5rem;
-   color: var(--black);
+   color: var(--color4);
    font-weight: bolder;
 }
 
@@ -220,7 +223,7 @@ section {
    display: flex;
    align-items: center;
    gap: 2rem;
-   padding: 1.5rem 2rem;
+   padding: 0.5rem 2rem;
    background-color: var(--light-bg);
 }
 
@@ -228,12 +231,12 @@ section {
    width: 100%;
    background: none;
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
 }
 
 .header .flex .search-form button {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    cursor: pointer;
    background: none;
 }
@@ -244,7 +247,7 @@ section {
 
 .header .flex .icons div {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    border-radius: .5rem;
    height: 4.5rem;
    cursor: pointer;
@@ -256,7 +259,7 @@ section {
 }
 
 .header .flex .icons div:hover {
-   background-color: var(--black);
+   background-color: var(--color4);
    color: var(--white);
 }
 
@@ -292,7 +295,7 @@ section {
 
 .header .flex .profile h3 {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
 }
 
 .header .flex .profile span {
@@ -329,13 +332,13 @@ section {
    font-size: 2.5rem;
    color: #fff;
    cursor: pointer;
-   background-color: var(--red);
+   background-color: var(--color2);
    text-align: center;
    border-radius: .5rem;
 }
 
 .side-bar .close-side-bar i:hover {
-   background-color: var(--black);
+   background-color: var(--color4);
 }
 
 .side-bar .profile {
@@ -353,7 +356,7 @@ section {
 
 .side-bar .profile h3 {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
 }
 
 .side-bar .profile span {
@@ -419,7 +422,7 @@ section {
    text-align: center;
    font-size: 2.5rem;
    margin-bottom: 1rem;
-   color: var(--black);
+   color: var(--color4);
    text-transform: capitalize;
 }
 
@@ -430,7 +433,7 @@ section {
 }
 
 .form-container form p span {
-   color: var(--red);
+   color: var(--color2);
 }
 
 .form-container .link {
@@ -444,7 +447,7 @@ section {
 }
 
 .form-container .link a:hover {
-   color: var(--black);
+   color: var(--color4);
    text-decoration: underline;
 }
 
@@ -453,7 +456,7 @@ section {
    border-radius: .5rem;
    margin: 1rem 0;
    font-size: 1.8rem;
-   color: var(--black);
+   color: var(--color4);
    padding: 1.4rem;
    background-color: var(--light-bg);
 }
@@ -486,7 +489,7 @@ section {
 .dashboard .box-container .box h3 {
    margin-bottom: .5rem;
    font-size: 2.5rem;
-   color: var(--black);
+   color: var(--color4);
    margin-bottom: 1.5rem;
 }
 
@@ -520,7 +523,7 @@ section {
 
 .tutor-profile .details .tutor h3 {
    font-size: 2.5rem;
-   color: var(--black);
+   color: var(--color4);
    margin: .5rem 0;
 }
 
@@ -553,7 +556,7 @@ section {
 
 .tutor-profile .details .flex .box p {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    padding: .5rem 0;
 }
 
@@ -573,7 +576,7 @@ section {
 }
 
 .playlist-form form p span {
-   color: var(--red);
+   color: var(--color2);
 }
 
 .playlist-form form .box {
@@ -581,7 +584,7 @@ section {
    border-radius: .5rem;
    padding: 1.4rem;
    font-size: 1.8rem;
-   color: var(--black);
+   color: var(--color4);
    background: var(--light-bg);
    width: 100%;
 }
@@ -674,7 +677,7 @@ section {
 
 .playlists .box-container .box .title {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    margin-bottom: 1rem;
    text-overflow: ellipsis;
    white-space: nowrap;
@@ -693,7 +696,8 @@ section {
 
 .video-form form {
    max-width: 50rem;
-   margin: 0 auto;
+   margin: 10% auto 0;
+
    background-color: var(--white);
    border-radius: .5rem;
    padding: 2rem;
@@ -707,7 +711,7 @@ section {
 }
 
 .video-form form p span {
-   color: var(--red);
+   color: var(--color2);
 }
 
 .video-form form .box {
@@ -716,7 +720,7 @@ section {
    background-color: var(--light-bg);
    padding: 1.4rem;
    font-size: 1.8rem;
-   color: var(--black);
+   color: var(--color4);
    margin: 1rem 0;
 }
 
@@ -795,7 +799,7 @@ section {
 
 .playlist-details .row .details .title {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    padding-bottom: .5rem;
 }
 
@@ -851,7 +855,7 @@ section {
 
 .contents .box-container .box .title {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    line-height: 1.5;
    text-overflow: ellipsis;
    overflow-x: hidden;
@@ -887,7 +891,7 @@ section {
 
 .view-content .container .title {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    padding: .5rem 0;
 }
 
@@ -949,7 +953,7 @@ section {
 
 .comments .show-comments .user h3 {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    margin-bottom: .2rem;
 }
 
@@ -964,7 +968,7 @@ section {
 
 .comments .show-comments .content p {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--color4);
    padding: 0 1rem;
    display: inline-block;
 }
@@ -987,7 +991,7 @@ section {
    border-radius: .5rem;
    background-color: var(--light-bg);
    padding: 1rem 1.5rem;
-   color: var(--black);
+   color: var(--color4);
    margin: .5rem 0;
    position: relative;
    z-index: 0;
@@ -1028,7 +1032,7 @@ section {
    border-top: var(--border);
    padding: 2.5rem 2rem;
    text-align: center;
-   color: var(--black);
+   color: var(--color4);
    font-size: 2rem;
    margin-top: 2rem;
    z-index: 1000;
@@ -1128,3 +1132,41 @@ section {
    }
 
 }
+
+.overlay{
+   z-index: 100;
+   top:0%; 
+   left:0%; 
+   position:absolute; 
+   background-color:rgba(0, 0, 0, 0.291);
+   width:100%; 
+   height:auto; 
+   display:none;
+   
+   
+   
+}
+
+#table {
+   font-family: Arial, Helvetica, sans-serif;
+   border-collapse: collapse;
+   width: 100%;
+   font-size: medium;
+ }
+ 
+ #table td, #customers th {
+   border: 1px solid #ddd;
+   padding: 8px;
+ }
+ 
+ #table tr:nth-child(even){background-color: #f2f2f2;}
+ 
+ #table tr:hover {background-color: #ddd; cursor:pointer;}
+ 
+ #table th {
+   padding-top: 12px;
+   padding-bottom: 12px;
+   text-align: center;
+   background-color:var(--main-color);
+   color: white;
+ }

@@ -12,16 +12,22 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 
 </head>
 
-<body>
+<body >
 <header class="header">
 
     <section class="flex">
         <div class="icons">
-
+    
             <div id="menu-btn" class="fas fa-bars"></div>
+            
+            
         </div>
 
 
@@ -30,14 +36,15 @@
             <input type="text" name="search" placeholder="search here..." required maxlength="100">
             <button type="submit" class="fas fa-search" name="search_btn"></button>
         </form>
-        <a href="dashboard.php" class="logo"><?php echo  $_SESSION['USER_DATA']['role'];?></a>
+        
 
         <div class="icons">
-
+        <a href="dashboard.php" class="logo"><?php echo  ucfirst($_SESSION['USER_DATA']['role']);?></a>
             <div id="search-btn" class="fas fa-search"></div>
             <div id="user-btn" class="fas fa-user"></div>
             <div id="toggle-btn" class="fas fa-sun"></div>
             <div id="notification-btn" class="fa-regular fa-bell"></div>
+            <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
         </div>
 
         <div class="profile">
