@@ -28,16 +28,12 @@ class Admin extends Controller
             $this->Subjectadmin = $this->model('Subjectadmin');
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($this->Subjectadmin->validate($_POST)) {
-                    $row = $this->Subjectadmin->first([
-                        'email' => $_POST['email']
-                    ], 'users', 'user_id');
-                    $_POST['user_id'] = $row->user_id;
+                   
     
     
-    
-    
+                    $_POST['role'] = 'subject_admin';
                     $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                    $this->Subjectadmin->insert($_POST, 'users', ['username', 'email', 'password']);
+                    $this->Subjectadmin->insert($_POST, 'users', ['username', 'email', 'password', 'role']);
                     $row = $this->Subjectadmin->first([
                         'email' => $_POST['email']
                     ], 'users', 'user_id');
@@ -46,7 +42,7 @@ class Admin extends Controller
     
     
     
-                    header('location:' . URLROOT . '/Admin/Users');
+                   
                 } else {
                     $data['errors'] = $this->Subjectadmin->errors;
                     $data['title'] = 'Signup';

@@ -8,8 +8,23 @@ class Subjectadmin extends Controller
             $data = [
                 'title' => 'Subject Admin',
                 'view' => 'Dashboard'
+                
             ];
-            $this->view('Subjectadmin/dashboard', $data);
+            $this->view('Subject_admin/Dashboard', $data);
+        } else {
+            redirect('/Login');
+        }
+    }
+
+    public function profile()
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $data = [
+                'title' => 'Subject Admin',
+                'view' => 'My Profile'
+                
+            ];
+            $this->view('Subject_admin/Profile', $data);
         } else {
             redirect('/Login');
         }

@@ -1,21 +1,46 @@
 <?php
  class Auth {
-    public static function authenticate($row){
+    public $user;
+    public static function authenticate($row, $subjectadmindata, $studentdata, $tutordata){
+        
 
         if(is_object($row )){
-            $_SESSION['USER_DATA'] = [
-                'user_id' => $row->user_id,
-                'username' => $row->username,
-                'email' => $row->email,
-                'role' => $row->role,
-                'created_at' => $row->created_at,
-                'updated_at' => $row->updated_at
-                
-                
-                
-            ];
+
+            if($row->role == 'subject_admin'){
+                $_SESSION['USER_DATA'] = [
+                    'user_id' => $row->user_id,
+                    'username' => $row->username,
+                    'email' => $row->email,
+                    'role' => $row->role,
+                    'created_at' => $row->created_at,
+                    'updated_at' => $row->updated_at,
+                    'fname' => $subjectadmindata->fname,
+                    'lname' => $subjectadmindata->lname,
+                    'cno' => $subjectadmindata->cno,
+                    'username' => $subjectadmindata->username,
+                    'subject' => $subjectadmindata->subject,
+                    'subject_admin_id' => $subjectadmindata->subject_admin_id,
+              
+                ];
+            }
+            if($row->role == 'admin'){
+                $_SESSION['USER_DATA'] = [
+                    'user_id' => $row->user_id,
+                    'username' => $row->username,
+                    'email' => $row->email,
+                    'role' => $row->role,
+                    'created_at' => $row->created_at,
+                    'updated_at' => $row->updated_at,
+                    
+              
+                ];
+            }
+
+         
        
         }
+
+        
     }
 
     public static function is_logged_in(){

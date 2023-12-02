@@ -13,10 +13,7 @@ class Signup extends Controller
         $this->User = $this->model('User');
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($this->User->validate($_POST)) {
-                $row = $this->User->first([
-                    'email' => $_POST['email']
-                ], 'users', 'user_id');
-                $_POST['user_id'] = $row->user_id;
+              
 
 
 
@@ -28,12 +25,15 @@ class Signup extends Controller
                 ], 'users', 'user_id');
                 $_POST['user_id'] = $row->user_id;
                 $this->User->insert($_POST, 'students', ['user_id', 'username', 'email']);
+                
+                
 
 
 
                 header('location:' . URLROOT . '/login');
             } else {
                 $data['errors'] = $this->User->errors;
+              
                 $data['title'] = 'Signup';
                 $this->view('Signup', $data);
             }
