@@ -59,7 +59,7 @@
 
         <div class="profile">
 
-            <img src="../uploaded_files/" alt="">
+            <img src="<?php echo "data:image/jpg;base64,".$data['profilepic'];?>" alt="">
             <h3><?php echo  $_SESSION['USER_DATA']['email'];?></h3>
             <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']);?></span>
             <a href="<?php echo URLROOT?>/subjectadmin/profile" class="btn">View Profile</a>
@@ -89,7 +89,7 @@
 
     <div class="profile">
 
-        <img src="../uploaded_files/" alt="">
+        <img src="<?php echo "data:image/jpg;base64,".$data['profilepic'];?>" alt="">
         <h3></h3>
         <span></span>
         <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname'])." ".ucfirst($_SESSION['USER_DATA']['lname']);?></a>

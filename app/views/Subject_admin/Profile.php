@@ -9,7 +9,11 @@
 
    <div class="details">
       <div class="tutor">
-         <img src="../uploaded_files/" alt="">
+    
+        
+        
+         <img src=<?php echo "data:image/jpg;base64,".$data['profilepic'];?> alt="profile" >
+
          <h3><?php echo ucwords($_SESSION['USER_DATA']['fname']." ".$_SESSION['USER_DATA']['lname']);?></h3>
          
             
@@ -69,7 +73,7 @@
     <section class="video-form">
 
 
-        <form action="<?php echo URLROOT?>/admin/users" method="post" enctype="multipart/form-data">
+        <form action="<?php echo URLROOT?>/subjectadmin/profile" method="post" enctype="multipart/form-data">
             <div class="flex-btn" style="justify-content: flex-end;">
 
 
@@ -79,12 +83,12 @@
 
             <div class="profile">
 
-<img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
+<img src="<?php echo "data:image/jpg;base64,".$data['profilepic'];?>" alt="">
 
 
 
  <p style="text-align: center;">Change Profile Picture</p>
-      <input type="file" name="thumb" accept="image/*" required class="box">
+      <input type="file" name="image" accept="image/*" required class="box">
       
 
 

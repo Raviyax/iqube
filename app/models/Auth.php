@@ -20,6 +20,7 @@
                     'username' => $subjectadmindata->username,
                     'subject' => $subjectadmindata->subject,
                     'subject_admin_id' => $subjectadmindata->subject_admin_id,
+                    'image' => $subjectadmindata->image,
               
                 ];
             }

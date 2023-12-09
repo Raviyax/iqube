@@ -3,6 +3,8 @@ class Subjectadmin extends Controller
 
 {
     public $tutor;
+    
+    private $me;
 
     public function index()
     {
@@ -21,12 +23,31 @@ class Subjectadmin extends Controller
     public function profile()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $profilepic = Database::get_image($_SESSION['USER_DATA']['image'],"/uploads/userimages/");
+
             $data = [
                 'title' => 'Subject Admin',
-                'view' => 'My Profile'
+                'view' => 'My Profile',
+                'profilepic' => $profilepic
+
+
                 
             ];
+
+          
             $this->view('Subject_admin/Profile', $data);
+            $this->me = $this->model('User');
+
+
+            if (isset($_POST["submit"])) {
+
+               
+               $image = $this->me->update_image($_FILES["image"],APPROOT."/uploads/userimages/",'subject_admins',$_SESSION['USER_DATA']['user_id']);
+               $_SESSION['USER_DATA']['image'] = $image;
+              
+               
+
+            }
         } else {
             redirect('/Login');
         }
