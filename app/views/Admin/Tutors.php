@@ -114,6 +114,8 @@ function search(){
     }       
   }
 }
+
+
 </script>
 <?php $this->view('inc/footer') ?>
 

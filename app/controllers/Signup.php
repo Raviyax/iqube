@@ -9,7 +9,7 @@ class Signup extends Controller
     {
         $data['errors'] = [];
         $data['title'] = 'Signup';
-        $this->view('Signup', $data);
+        
         $this->User = $this->model('User');
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($this->User->validate($_POST)) {
@@ -32,11 +32,20 @@ class Signup extends Controller
 
                 header('location:' . URLROOT . '/login');
             } else {
-                $data['errors'] = $this->User->errors;
-              
+                
                 $data['title'] = 'Signup';
+                $data['errors'] = $this->User->errors;
+                
+
+               
+               
+              
+               
                 $this->view('Signup', $data);
+                
             }
         }
+        $this->view('Signup', $data);
+       
     }
 }

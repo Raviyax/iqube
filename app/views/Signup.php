@@ -17,15 +17,22 @@
             <h5>Let Us Guide You</h5>
             
             <div class="inputs">
-                <input type="text"  name="username" placeholder = <?php print (empty($data['errors']['name_err']))?"Username":$data['errors']['name_err'];?> value="<?=set_value('name')?>">
                 
                 
+                <input type="text"  name="username" placeholder ="Username" value="<?=set_value('name')?>">
+                <span style="color: red;"><?php print (empty($data['errors']['name_err']))?"":$data['errors']['name_err'];?></span>
+               
+                
                 <br>
-                <input type="email" name="email" placeholder = "<?php print (empty($data['errors']['email_err']))?"Email":$data['errors']['email_err'];?>" value="<?=set_value('email')?>" >
+                <input type="email" name="email" placeholder = "Email" value="<?=set_value('email')?>" >
+                <span style="color: red;"><?php print (empty($data['errors']['email_err']))?"":$data['errors']['email_err'];?></span>
                 <br>
-                <input type="password"  name="password" placeholder = "<?php print (empty($data['errors']['password_err']))?"Password":$data['errors']['password_err'];?>" value="<?=set_value('password')?>">
+                <input type="password"  name="password" placeholder = "Password" value="<?=set_value('password')?>">
+                <span style="color: red;"><?php print (empty($data['errors']['password_err']))?"":$data['errors']['password_err'];?></span>
                 <br>
-                <input type="password" name="confirm_password" placeholder = "<?php print (empty($data['errors']['confirm_password_err']))?"Confirm Password":$data['errors']['confirm_password_err'];?>" value="<?=set_value('confirm_password')?>">
+                <input type="password" name="confirm_password" placeholder = "Confirm Password" value="<?=set_value('confirm_password')?>">
+                <span style="color: red;"><?php print (empty($data['errors']['confirm_password_err']))?"":$data['errors']['confirm_password_err'];?></span>
+               
                 
             </div>
                 
@@ -35,7 +42,10 @@
                     
         <label>
             <input <?=set_value('terms')?'checked':''?> type="checkbox" name="terms" value="1" checked ="checked"/>
-            <span class="text-checkbox"><?php print (empty($data['errors']['terms_err']))?"Agree to terms and conditions":$data['errors']['terms_err'];?></span>
+            <span class="text-checkbox">Agree to terms and conditions</span>
+            <span style="color: red;"><?php print (empty($data['errors']['terms_err']))?"":$data['errors']['terms_err'];?></span>
+
+
         </label>
         <p>Already have an account? <br><a href="<?php echo URLROOT;?>/Login">Login</a> </p>
             </div>

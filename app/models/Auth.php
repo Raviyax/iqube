@@ -36,6 +36,24 @@
                 ];
             }
 
+            if($row->role == 'tutor'){
+                $_SESSION['USER_DATA'] = [
+                    'user_id' => $row->user_id,
+                    'username' => $row->username,
+                    'email' => $row->email,
+                    'role' => $row->role,
+                    'created_at' => $row->created_at,
+                    'updated_at' => $row->updated_at,
+                    'fname' => $tutordata->fname,
+                    'lname' => $tutordata->lname,
+                    'cno' => $tutordata->cno,
+                    'username' => $tutordata->username,
+                    'subject' => $tutordata->subject,
+                    'tutor_id' => $tutordata->tutor_id,
+              
+                ];
+            }
+
          
        
         }

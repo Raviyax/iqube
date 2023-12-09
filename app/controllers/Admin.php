@@ -20,12 +20,16 @@ class Admin extends Controller
     public function users()
     {
         if (Auth::is_logged_in() && Auth::is_admin()) {
+
+           
+      
+
            
 
             $data['errors'] = [];
             $data['title'] = 'Users';
             $this->view('Admin/Users', $data);
-            $this->Subjectadmin = $this->model('Subjectadmin');
+            $this->Subjectadmin = $this->model('Subjectadmins');
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($this->Subjectadmin->validate($_POST)) {
                    
@@ -57,40 +61,17 @@ class Admin extends Controller
     }
 
     
-    public function subject_admins()
+    
+    public function profile($id = null)
     {
         if (Auth::is_logged_in() && Auth::is_admin()) {
+          
+            
             $data = [
-                'title' => 'Admin',
-                'view' => 'Dashboard'
+                'title' => 'Profile',
+                
             ];
-            $this->view('Admin/Subjectadmins', $data);
-        } else {
-            redirect('/Login');
-        }
-    }
-
-    public function tutors()
-    {
-        if (Auth::is_logged_in() && Auth::is_admin()) {
-            $data = [
-                'title' => 'Admin',
-                'view' => 'Dashboard'
-            ];
-            $this->view('Admin/tutors', $data);
-        } else {
-            redirect('/Login');
-        }
-    }
-
-    public function students()
-    {
-        if (Auth::is_logged_in() && Auth::is_admin()) {
-            $data = [
-                'title' => 'Admin',
-                'view' => 'Dashboard'
-            ];
-            $this->view('Admin/students', $data);
+            $this->view('Admin/profile', $data);
         } else {
             redirect('/Login');
         }

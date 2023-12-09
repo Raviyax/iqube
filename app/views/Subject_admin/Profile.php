@@ -15,7 +15,8 @@
             
             <span></span>
             
-         <a href="update.php" class="inline-btn">update profile</a>
+         <a class="inline-btn" onclick="openedit()"><i class="fa-solid fa-user-pen" ></i> Edit Profile</a>
+         <a href="" class="inline-btn"><i class="fa-solid fa-lock"></i> Change Password</a>
       </div>
       <div class="flex">
             <div class="box">
@@ -63,6 +64,60 @@
    </div>
 
 </section>
+
+<div id="editprofile" class="overlay">
+    <section class="video-form">
+
+
+        <form action="<?php echo URLROOT?>/admin/users" method="post" enctype="multipart/form-data">
+            <div class="flex-btn" style="justify-content: flex-end;">
+
+
+                <button class="option-btn" onclick="closeedit()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <h1 class="heading">Edit My Profile</h1>
+
+            <div class="profile">
+
+<img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
+
+
+
+ <p style="text-align: center;">Change Profile Picture</p>
+      <input type="file" name="thumb" accept="image/*" required class="box">
+      
+
+
+
+</div>
+            <p>Firstname</p>
+            <input type="text" name="fname" maxlength="100" required placeholder="Enter first name" class="box" value="<?php echo  $_SESSION['USER_DATA']['fname'];?>">
+            <p>Lastname</p>
+            <input type="text" name="lname" maxlength="100" required placeholder="Enter Last Name" class="box" value="<?php echo  $_SESSION['USER_DATA']['lname'];?>">
+            <p>Email</p>
+            <input type="email" maxlength="100" required placeholder="<?php echo  $_SESSION['USER_DATA']['email'];?>" class="box" disabled >
+
+            <p>Contact Number</p>
+            <input type="text" name="cno" maxlength="100" required placeholder="Enter Contact Number" class="box" value="<?php echo  $_SESSION['USER_DATA']['cno'];?>">
+
+            <p>Username</p>
+            <input type="text" name="username" maxlength="100" required placeholder="Enter username" class="box" value="<?php echo  $_SESSION['USER_DATA']['username'];?>">
+          
+
+            <input type="submit" value="Save" name="submit" class="btn">
+        </form>
+    </section>
+</div>
+
+<script>
+    function openedit() {
+        document.getElementById("editprofile").style.display = "block";
+    }
+
+    function closeedit() {
+        document.getElementById("editprofile").style.display = "none";
+    } 
+</script>
 
 
 

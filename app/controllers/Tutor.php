@@ -12,7 +12,7 @@ class Tutor extends Controller
                 'title' => 'Tutor',
                 'view' => 'Dashboard'
             ];
-            $this->view('tutor/dashboard', $data);
+            $this->view('Tutor/Dashboard', $data);
         }
         else{
             redirect('/Login');
@@ -20,55 +20,4 @@ class Tutor extends Controller
 
     }
 
-    public function messages()
-    {
-
-        if (Auth::is_logged_in() && Auth::is_tutor()) {
-
-            $data = [
-                'title' => 'Tutor',
-                'view' => 'messages'
-            ];
-            $this->view('tutor/messages', $data);
-        }
-        else{
-            redirect('/Login');
-        }
-
-
-    }
-    public function lessons()
-    {
-
-        if (Auth::is_logged_in() && Auth::is_tutor()) {
-
-            $data = [
-                'title' => 'Tutor',
-                'view' => 'lessons'
-            ];
-            $this->view('tutor/Lessons', $data);
-        }
-        else{
-            redirect('/Login');
-        }
-    }
-    public function upload()
-    {
-
-        if (Auth::is_logged_in() && Auth::is_tutor()) {
-
-
-
-
-
-            $data = [
-                'title' => 'Tutor',
-                'view' => 'Upload New'
-            ];
-            $this->view('tutor/upload', $data);
-        }
-        else{
-            redirect('/Login');
-        }
-    }
 }

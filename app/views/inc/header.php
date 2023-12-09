@@ -5,9 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php if(Auth::is_logged_in()){$role = $_SESSION['USER_DATA']['role'];} else $role ="";?>
-    <?php if($_SESSION['USER_DATA']['role'] == 'subject_admin'){$role = "Subject Admin";}?>
+    <?php if(Auth::is_logged_in()){$role = $_SESSION['USER_DATA']['role']; if($_SESSION['USER_DATA']['role'] == 'subject_admin'){$role = "Subject Admin";}} else $role ="";?>
+  
+    <?php if(Auth::is_logged_in()) {?>
     <title><?php echo (SITENAME." ".$role." ". ucwords($data['view']));?></title>
+    <?php } else {?>
+    <title><?php echo (SITENAME." ". ucwords($data['view']));?></title>
+    <?php } ?>
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -25,7 +29,7 @@
 
  <!-- subject admin header  -->
     <?php if(Auth::is_logged_in() && Auth::is_subject_admin()){?>
-<header class="header">
+<header class="header" style="z-index: 1500;">
 
     <section class="flex">
         <div class="icons">
@@ -49,6 +53,7 @@
             <div id="user-btn" class="fas fa-user"></div>
             <div id="toggle-btn" class="fas fa-sun"></div>
             <div id="notification-btn" class="fa-regular fa-bell"></div>
+            <div id = "tutor-request-btn" class="fa-solid fa-user-plus"></div>
             <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
         </div>
 
@@ -95,9 +100,12 @@
 
     <nav class="navbar">
         <a href="<?php echo URLROOT;?>/subjectadmin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-        <a href="<?php echo URLROOT;?>/admin/users"><i class="fa-solid fa-users"></i><span>Users</span></a>
+        <a href="<?php echo URLROOT;?>/Subjectadmin/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
+        <a href="<?php echo URLROOT;?>/Subjectadmin/students"><i class="fa-solid fa-user-pen"></i><span>Students</span></a>
+
         <a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a>
-        <a href="comments.php"><i class="fa-solid fa-gear"></i><span>Site Settings</span></a>
+        <a href="comments.php"><i class="fa-solid fa-person-circle-question"></i><span>Complaints</span></a>
+        
         <a href="<?php echo URLROOT;?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </nav>
 
@@ -187,53 +195,52 @@
         <a href="<?php echo URLROOT;?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
     </nav>
 
-</div><header class="header">
+</div><?php } ?>
 
-<section class="flex">
-    <div class="icons">
-
-        <div id="menu-btn" class="fas fa-bars"></div>
-        
-        
-    </div>
-
-
-
-    <form action="search_page.php" method="post" class="search-form">
-        <input type="text" name="search" placeholder="search here..." required maxlength="100">
-        <button type="submit" class="fas fa-search" name="search_btn"></button>
-    </form>
+<!-- landing header  -->
     
 
-    <div class="icons">
-    <a href="dashboard.php" class="logo"><?php echo  ucfirst($role);?></a>
-        <div id="search-btn" class="fas fa-search"></div>
-        <div id="user-btn" class="fas fa-user"></div>
-        <div id="toggle-btn" class="fas fa-sun"></div>
-        <div id="notification-btn" class="fa-regular fa-bell"></div>
-        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    </div>
+<?php if(!Auth::is_logged_in() ){?>
+<header class="header" style="z-index: 1500;">
 
-    <div class="profile">
-
-        <img src="../uploaded_files/" alt="">
-        <h3>ggg</h3>
-        <span>gg7</span>
-        <a href="profile.php" class="btn"><?php echo  $_SESSION['USER_DATA']['username'];?></a>
-        <div class="flex-btn">
-            <a href="login.php" class="option-btn">login</a>
-            <a href="register.php" class="option-btn">register</a>
+    <section class="flex">
+        <div class="icons">
+    
+            <div id="menu-btn" class="fas fa-bars"></div>
+            
+            
         </div>
-        <a href="<?php echo URLROOT;?>/Logout" class="delete-btn">logout</a>
+
+
+
+        
+        
+
+        <div class="icons">
+        <a href="dashboard.php" class="logo">Welcome to IQube!</a>
+            
+            <div id="user-btn" class="fas fa-user"></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            
+            
+           
+        </div>
+
+        <div class="profile">
+
+            <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
+            <h3>Hello User</h3>
+          
+            <a href="<?php echo URLROOT;?>/Login" class="delete-btn">Login</a>
 
 
 
 
 
 
-    </div>
+        </div>
 
-</section>
+    </section>
 
 </header>
 
@@ -243,32 +250,112 @@
 
 <div class="side-bar">
 
-<div class="close-side-bar">
-    <i class="fas fa-times"></i>
-</div>
+    <div class="close-side-bar">
+        <i class="fas fa-times"></i>
+    </div>
 
-<div class="profile">
+    <div class="profile">
 
-    <img src="../uploaded_files/" alt="">
-    <h3></h3>
-    <span></span>
-    <a href="profile.php" class="btn"><?php echo  $_SESSION['USER_DATA']['username'];?></a>
+        <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
+        <h3></h3>
+        <span></span>
+        <a href="<?php echo URLROOT;?>/Login" class="btn">Login</a>
 
 
 
-</div>
+    </div>
 
-<nav class="navbar">
-    <a href="<?php echo URLROOT;?>/admin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-    <a href="<?php echo URLROOT;?>/admin/users"><i class="fa-solid fa-users"></i><span>Users</span></a>
-    <a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a>
-    <a href="comments.php"><i class="fa-solid fa-gear"></i><span>Site Settings</span></a>
-    <a href="<?php echo URLROOT;?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
-</nav>
+    <nav class="navbar">
+        <a href="#/"><i class="fa-solid fa-cube"></i><span>About Us</span></a>
+        <a href="#/"><i class="fa-solid fa-book"></i><span>Study Materials</span></a>
+     
+        <a href="<?php echo URLROOT;?>/Login"><i class="fa-solid fa-right-to-bracket"></i><span>Login</span></a>
+    </nav>
 
 </div>
 <?php } ?>
 
- 
+<!-- tutor header  -->
 
-<!-- side bar section ends -->
+<?php if(Auth::is_logged_in() && Auth::is_tutor()){?>
+<header class="header" style="z-index: 1500;">
+
+    <section class="flex">
+        <div class="icons">
+    
+            <div id="menu-btn" class="fas fa-bars"></div>
+            
+            
+        </div>
+
+
+
+        <form action="search_page.php" method="post" class="search-form">
+            <input type="text" name="search" placeholder="search here..." required maxlength="100">
+            <button type="submit" class="fas fa-search" name="search_btn"></button>
+        </form>
+        
+
+        <div class="icons">
+        <a href="dashboard.php" class="logo"><?php echo  ucfirst($role);?></a>
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+            <div id="notification-btn" class="fa-regular fa-bell"></div>
+         
+            <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        </div>
+
+        <div class="profile">
+
+            <img src="../uploaded_files/" alt="">
+            <h3><?php echo  $_SESSION['USER_DATA']['email'];?></h3>
+            <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']);?> Tutor</span>
+            <a href="<?php echo URLROOT?>/Tutor/profile" class="btn">View Profile</a>
+          
+            <a href="<?php echo URLROOT;?>/Logout" class="delete-btn">logout</a>
+
+
+
+
+
+
+        </div>
+
+    </section>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- side bar section starts  -->
+
+<div class="side-bar">
+
+    <div class="close-side-bar">
+        <i class="fas fa-times"></i>
+    </div>
+
+    <div class="profile">
+
+        <img src="../uploaded_files/" alt="">
+        <h3></h3>
+        <span></span>
+        <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname'])." ".ucfirst($_SESSION['USER_DATA']['lname']);?></a>
+
+
+
+    </div>
+
+    <nav class="navbar">
+        <a href="<?php echo URLROOT;?>/Tutor/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+        <a href="<?php echo URLROOT;?>/Tutor/students"><i class="fa-solid fa-user-pen"></i><span>My Students</span></a>
+        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-book"></i><span>My Contents</span></a>
+
+        
+        <a href="<?php echo URLROOT;?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    </nav>
+
+</div>
+<?php } ?>
+

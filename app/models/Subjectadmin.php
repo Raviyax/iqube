@@ -1,5 +1,5 @@
 <?php
-class Subjectadmin extends Model
+class Subjectadmins extends Model
 {
     
     public $errors = [];

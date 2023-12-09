@@ -1,5 +1,5 @@
 <?php
-class User extends Model
+class Tutors extends Model
 {
     
     public $errors = [];
@@ -9,17 +9,26 @@ class User extends Model
     {
         $this->errors = [];
 
-        $query = "SELECT * FROM users WHERE username = :username";
-
         if (empty($data['username'])) {
             $this->errors['name_err'] = '*Enter name';
         }
-        elseif ($this->query($query, ['username' => $data['username']])) {
-            $this->errors['name_err'] = '*Username already taken';
+
+        if (empty($data['fname'])) {
+            $this->errors['name_err'] = '*Enter First name';
         }
 
-        $query = "SELECT * FROM users WHERE email = :email";
+        if (empty($data['lname'])) {
+            $this->errors['name_err'] = '*Enter Last name';
+        }
 
+        if (empty($data['cno'])) {
+            $this->errors['name_err'] = '*Enter Contact Number';
+        }
+
+        
+
+
+        $query = "SELECT * FROM users WHERE email = :email";
 
         if (!filter_var($data['email'],FILTER_VALIDATE_EMAIL)) {
             $this->errors['email_err'] = '*Invalid Email';
@@ -41,9 +50,7 @@ class User extends Model
             }
         }
 
-        if (empty($data['terms'])) {
-            $this->errors['terms_err'] = '*Please accept terms and conditions';
-        }
+      
 
 
 

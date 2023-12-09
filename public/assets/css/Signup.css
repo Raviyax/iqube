@@ -41,8 +41,9 @@ body {
   
   .box-form .img_container {
     color: #FFFFFF;
-    background-size: cover;
+    background-size: contain;
     background-image: url("../img/Login/iqube.png");
+    background-repeat: no-repeat;
     overflow: hidden;
     width: 100%;
     display: flex;
