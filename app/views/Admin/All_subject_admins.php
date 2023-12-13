@@ -1,7 +1,7 @@
 <?php $this->view('inc/header') ?>
 <section class="dashboard" id="section">
 
-    <h1 class="heading"><?php echo $_SESSION['USER_DATA']['subject'];?> Tutors</h1>
+    <h1 class="heading">All Subject Admins</h1>
     <header class="header">
 
     <section class="flex">
@@ -14,7 +14,7 @@
             <button type="submit" class="fas fa-search" name="search_btn" ></button>
         </form>
 
-        <a href="#" class="btn" onclick="addnewsubjectadmin()" style="width: fit-content;"><i class="fa-solid fa-user-plus"></i> Add New Tutor</a>
+        <a href="#" class="btn" onclick="addnewsubjectadmin()" style="width: fit-content;"><i class="fa-solid fa-user-plus"></i> Add New Subject Admin</a>
         
         
 
@@ -28,23 +28,23 @@
     <table id="table">
         
   <tr>
-    <th>Tutor ID</th>
+    <th>Subject Admin ID</th>
     <th>Name</th>
     <th>Email</th>
     
     
 
   </tr>
-    <?php foreach($data['tutors'] as $tutor): ?>
-  <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutorprofile/<?php echo $tutor->tutor_id; ?>'">
+    <?php foreach($data['subjectadmins'] as $subjectadmin): ?>
+  <tr onclick="window.location='<?php echo URLROOT?>/Admin/Subject_admin_profile/<?php echo $subjectadmin->subject_admin_id; ?>'">
     <td>
-        <?php echo $tutor->tutor_id; ?>
+        <?php echo $subjectadmin->subject_admin_id; ?>
     </td>
     <td>
-        <?php echo $tutor->fname." ".$tutor->lname; ?>
+        <?php echo $subjectadmin->fname." ".$subjectadmin->lname; ?>
     </td>
     <td>
-        <?php echo $tutor->email; ?>
+        <?php echo $subjectadmin->email; ?>
     </td>
     
   </tr>
@@ -60,18 +60,21 @@
     <section class="video-form">
 
 
-        <form action="<?php echo URLROOT?>/Subjectadmin/tutors" method="post" enctype="multipart/form-data">
+        <form action="<?php echo URLROOT?>/Admin/all_subject_admins" method="post" enctype="multipart/form-data">
             <div class="flex-btn" style="justify-content: flex-end;">
 
 
-                <button class="option-btn" onclick="closeadd()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></button>
+                <button class="option-btn" onclick="closeadd()" style="width: fit-content;" ><i class="fa-solid fa-xmark"></i></button>
             </div>
             <h1 class="heading">Add New Subject Admin</h1>
 
             <p>Subject <span>*</span></p>
             <select name="subject" class="box" required>
-                <option value="<?php echo ucwords($_SESSION['USER_DATA']['subject']);?>"><?php echo ucwords($_SESSION['USER_DATA']['subject']);?></option>
+                <option value="" selected disabled>-- select subject</option>
+                <?php foreach ($data['subjects'] as $subject) : ?>
+                <option value="<?php echo $subject->subject_name;?>"><?php echo ucwords($subject->subject_name);?></option>
                 
+                <?php endforeach; ?>
             </select>
             <p>Firstname <span>*</span></p>
             <input type="text" name="fname" maxlength="100" required placeholder="Enter first name" class="box">
@@ -92,7 +95,7 @@
             <input type="password" name="confirm_password" maxlength="100" required placeholder="Enter Password" class="box">
 
 
-            <input type="submit" value="Add Tutor" name="submit" class="btn">
+            <input type="submit" value="Add Subject Admin" name="submit" class="btn">
         </form>
     </section>
 </div>

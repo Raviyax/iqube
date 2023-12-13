@@ -51,10 +51,13 @@
                     'username' => $tutordata->username,
                     'subject' => $tutordata->subject,
                     'tutor_id' => $tutordata->tutor_id,
+                    'image' => $tutordata->image,   
+
               
                 ];
             }
-
+            if(!empty($_SESSION['USER_DATA']['image'])){$_SESSION['USER_DATA']['image'] = Database::get_image($_SESSION['USER_DATA']['image'],"/uploads/userimages/");} 
+   
          
        
         }
@@ -64,6 +67,7 @@
 
     public static function is_logged_in(){
         if(!empty($_SESSION['USER_DATA'])){
+            
             return true;
         }
         return false;

@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+
     <?php if(Auth::is_logged_in()){$role = $_SESSION['USER_DATA']['role']; if($_SESSION['USER_DATA']['role'] == 'subject_admin'){$role = "Subject Admin";}} else $role ="";?>
   
-    <?php if(Auth::is_logged_in()) {?>
+    <?php if(Auth::is_logged_in()) {
+?>
     <title><?php echo (SITENAME." ".$role." ". ucwords($data['view']));?></title>
     <?php } else {?>
     <title><?php echo (SITENAME." ". ucwords($data['view']));?></title>
@@ -59,7 +62,7 @@
 
         <div class="profile">
 
-            <img src="<?php echo "data:image/jpg;base64,".$data['profilepic'];?>" alt="">
+            <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
             <h3><?php echo  $_SESSION['USER_DATA']['email'];?></h3>
             <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']);?></span>
             <a href="<?php echo URLROOT?>/subjectadmin/profile" class="btn">View Profile</a>
@@ -89,7 +92,7 @@
 
     <div class="profile">
 
-        <img src="<?php echo "data:image/jpg;base64,".$data['profilepic'];?>" alt="">
+        <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
         <h3></h3>
         <span></span>
         <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname'])." ".ucfirst($_SESSION['USER_DATA']['lname']);?></a>
@@ -145,14 +148,11 @@
 
         <div class="profile">
 
-            <img src="../uploaded_files/" alt="">
-            <h3>ggg</h3>
-            <span>gg7</span>
-            <a href="profile.php" class="btn"><?php echo  $_SESSION['USER_DATA']['username'];?></a>
-            <div class="flex-btn">
-                <a href="login.php" class="option-btn">login</a>
-                <a href="register.php" class="option-btn">register</a>
-            </div>
+            <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
+            <h3><?php echo ucfirst($_SESSION['USER_DATA']['username']);?></h3>
+            <span><?php echo ucfirst($_SESSION['USER_DATA']['email']);?></span>
+            <a href="profile.php" class="btn">View Profile</a>
+            
             <a href="<?php echo URLROOT;?>/Logout" class="delete-btn">logout</a>
 
 
@@ -178,7 +178,7 @@
 
     <div class="profile">
 
-        <img src="../uploaded_files/" alt="">
+        <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
         <h3></h3>
         <span></span>
         <a href="profile.php" class="btn"><?php echo  $_SESSION['USER_DATA']['username'];?></a>
@@ -308,7 +308,7 @@
 
         <div class="profile">
 
-            <img src="../uploaded_files/" alt="">
+            <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
             <h3><?php echo  $_SESSION['USER_DATA']['email'];?></h3>
             <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']);?> Tutor</span>
             <a href="<?php echo URLROOT?>/Tutor/profile" class="btn">View Profile</a>
@@ -338,7 +338,8 @@
 
     <div class="profile">
 
-        <img src="../uploaded_files/" alt="">
+        <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
+        <?php echo $_SESSION['USER_DATA']['image'];?>
         <h3></h3>
         <span></span>
         <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname'])." ".ucfirst($_SESSION['USER_DATA']['lname']);?></a>

@@ -7,7 +7,7 @@
         <a class="option-btn" onclick="displaystudents()">Students</a>
     </div>
     <div class="box-container" id="view" style=" display:flex">
-        <a href="<?php echo URLROOT?>/admin/subject_admins" class="btn" style="width: fit-content;display:none;" id="viewallsubjectadminsbtn">View All Subject Admins</a>
+        <a href="<?php echo URLROOT?>/admin/All_subject_admins" class="btn" style="width: fit-content;display:none;" id="viewallsubjectadminsbtn">View All Subject Admins</a>
         <a href="<?php echo URLROOT?>/admin/tutors" class="btn" style="width: fit-content;" id="viewalltutorsbtn">View All Tutors</a>
         <a href="<?php echo URLROOT?>/admin/students" class="btn" style="width: fit-content;display:none;" id="viewallstudentsbtn">View All Students</a>
     </div>
@@ -24,34 +24,19 @@
         </div>
     </div>
     <div class="box-container" id="subjectadminlist" style=" display:none;">
+   
         <div class="box">
             <button class="btn" onclick="addnewsubjectadmin()"><i class="fa-solid fa-square-plus"></i> Add New Subject Admin</button>
         </div>
+    
+        <?php foreach ($data['subjects'] as $subject) : ?>
         <div class="box">
-            <h3>Combined Mathematics</h3>
-            <p>2 Subject Admins</p>
+            <h3><?php echo ucfirst($subject->subject_name) ?></h3>
+            <p> <?php $count=0; $i = 0; while($i < sizeof($data['subjectadmins'])) {if($data['subjectadmins'][$i]->subject == $subject->subject_name){$count++;} $i++;}echo $count;?> Subject Admins</p>
             <a href="#" class="btn">View</a>
         </div>
-        <div class="box">
-            <h3>Biology</h3>
-            <p>1 Subject Admins</p>
-            <a href="#" class="btn">View</a>
-        </div>
-        <div class="box">
-            <h3>Chemistry</h3>
-            <p>3 Subject Admins</p>
-            <a href="#" class="btn">View</a>
-        </div>
-        <div class="box">
-            <h3>Chemistry</h3>
-            <p>3 Subject Admins</p>
-            <a href="#" class="btn">View</a>
-        </div>
-        <div class="box">
-            <h3>Chemistry</h3>
-            <p>3 Subject Admins</p>
-            <a href="#" class="btn">View</a>
-        </div>
+        <?php endforeach; ?>
+      
     </div>
     <div class="box-container" id="studentlist" style=" display:none;">
         <div class="box">
@@ -79,13 +64,23 @@
                 <button class="option-btn" onclick="closeadd()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></button>
             </div>
             <h1 class="heading">Add New Subject Admin</h1>
+            
+
+
+
+
+            
+
 
             <p>Subject <span>*</span></p>
             <select name="subject" class="box" required>
                 <option value="" selected disabled>-- select subject</option>
-                <option value="physics">Physics</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="combined_maths">Combined Maths</option>
+                <?php foreach ($data['subjects'] as $subject) : ?>
+                <option value="<?php echo $subject->subject_name ?>">
+                    <?php echo ucfirst($subject->subject_name) ?>
+                </option>
+                <?php endforeach; ?>
+                
             </select>
             <p>Firstname <span>*</span></p>
             <input type="text" name="fname" maxlength="100" required placeholder="Enter first name" class="box">

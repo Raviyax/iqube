@@ -37,6 +37,27 @@ class Model extends Database
         return false;
     }
 
+    public function update($data, $table, $where, $allowedColumns)
+    {
+        if (!empty($allowedColumns)) {
+            foreach ($data as $key => $value) {
+                if (!in_array($key, $allowedColumns)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        $keys = array_keys($data);
+        $query = "UPDATE " . $table . " SET ";
+        $conditions = [];
+        foreach ($keys as $key) {
+            $conditions[] = $key . "=:" . $key;
+        }
+        $query .= implode(',', $conditions) . " WHERE " . $where;
+
+        $this->query($query, $data);
+    }
+
     
     
 }

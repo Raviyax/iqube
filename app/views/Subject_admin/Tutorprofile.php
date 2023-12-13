@@ -12,9 +12,10 @@
     
         
         
-         <img src=<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?> alt="profile" >
+         <img src=<?php echo "data:image/jpg;base64,".$data['profilepic'];?> alt="profile" >
+         <?php $tutor = $data['tutor'];?>   
 
-         <h3><?php echo ucwords($_SESSION['USER_DATA']['fname']." ".$_SESSION['USER_DATA']['lname']);?></h3>
+         <h3><?php echo $tutor->fname." ".$tutor->lname;?></h3>
          
             
             <span></span>
@@ -25,23 +26,23 @@
       <div class="flex">
             <div class="box">
                 <span>Username</span>
-                <p><?php echo  $_SESSION['USER_DATA']['username'];?></p>
+                <p><?php echo $tutor->username;?></p>
 
             </div>
 
             <div class="box">
                 <span>Firstname</span>
-                <p><?php echo  $_SESSION['USER_DATA']['fname'];?></p>
+                <p><?php echo  $tutor->fname;?></p>
 
             </div>
             <div class="box">
                 <span>Lastname</span>
-                <p><?php echo  $_SESSION['USER_DATA']['lname'];?></p>
+                <p><?php echo  $tutor->lname;?></p>
             </div>
 
             <div class="box">
                 <span>Joined At</span>
-                <p><?php echo  $_SESSION['USER_DATA']['created_at'];?></p>
+                <p>date eka danna oni</p>
             </div>
 
 
@@ -50,17 +51,17 @@
 
          <div class="box">
             <span>Email</span>
-            <p><?php echo  $_SESSION['USER_DATA']['email'];?></p>
+            <p><?php echo  $tutor->email;?></p>
             
          </div>
          <div class="box">
             <span>Subject</span>
-            <p><?php echo  ucfirst($_SESSION['USER_DATA']['subject']);?></p>
+            <p><?php echo  ucfirst($tutor->subject);?></p>
           
          </div>
          <div class="box">
             <span>Contact Number</span>
-            <p><?php echo  $_SESSION['USER_DATA']['cno'];?></p>
+            <p><?php echo  $tutor->cno;?></p>
       
          </div>
       
@@ -83,7 +84,7 @@
 
             <div class="profile">
 
-<img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
+<img src="<?php echo "data:image/jpg;base64,".$profilepic;?>" alt="">
 
 
 

@@ -40,12 +40,11 @@ class Database
     return $b64image;
   }
 
-  public function update_image($image= [], $targetDir, $table, $condition)
+  public function update_image($image= [], $targetDir, $query,$uniqueFilename)
   {
       try {
-          if (!empty($image)) {
-              $fileType = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
-              $uniqueFilename = uniqid('', true) . '.' . $fileType;
+          
+              $fileType = strtolower(pathinfo($uniqueFilename, PATHINFO_EXTENSION));  
               $targetFilePath = $targetDir . $uniqueFilename;
   
               $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
@@ -53,17 +52,15 @@ class Database
               if (in_array($fileType, $allowTypes)) {
                   if (move_uploaded_file($image['tmp_name'], $targetFilePath)) {
                       // Update the database with the unique filename
-                      $this->query("UPDATE $table SET image = '{$uniqueFilename}' WHERE user_id = '{$condition}'");
-                      return $uniqueFilename;
+                      $this->query($query);
+                      
                   } else {
                       throw new Exception('File upload failed.');
                   }
               } else {
                   throw new Exception('Invalid file type.');
               }
-          } else {
-              throw new Exception('No image uploaded.');
-          }
+        
       } catch (Exception $e) {
           echo 'Error: ' . $e->getMessage();
       }

@@ -23,13 +23,11 @@ class Subjectadmin extends Controller
     public function profile()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
-            $profilepic = Database::get_image($_SESSION['USER_DATA']['image'],"/uploads/userimages/");
 
             $data = [
                 'title' => 'Subject Admin',
                 'view' => 'My Profile',
-                'profilepic' => $profilepic
-
+                
 
                 
             ];
@@ -42,8 +40,12 @@ class Subjectadmin extends Controller
             if (isset($_POST["submit"])) {
 
                
-               $image = $this->me->update_image($_FILES["image"],APPROOT."/uploads/userimages/",'subject_admins',$_SESSION['USER_DATA']['user_id']);
-               $_SESSION['USER_DATA']['image'] = $image;
+               $uniqueFilename = generate_unique_filename($_FILES["image"]);
+        
+               $this->me->update_image($_FILES["image"],APPROOT."/uploads/userimages/","UPDATE subject_admins SET image = '{$uniqueFilename}' WHERE user_id = '{$_SESSION['USER_DATA']['user_id']}'");
+
+               $_SESSION['USER_DATA']['image'] = Database::get_image( $uniqueFilename, "/uploads/userimages/");
+              
               
                
 
@@ -95,6 +97,25 @@ class Subjectadmin extends Controller
             $this->view('Subject_admin/Tutors', $data);
 
 
+        } else {
+            redirect('/Login');
+        }
+    }
+
+    public function Tutorprofile($id){
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $data = [
+                'title' => 'Subject Admin',
+                'view' => 'Tutor Profile',
+                
+            ];
+            
+            $this->tutor = $this->model('Tutors');
+            $data['tutor'] = $this->tutor->first([
+                'tutor_id' => $id
+            ], 'tutors', 'tutor_id');
+            $data['profilepic'] = $this->tutor->get_image($data['tutor']->image, "/uploads/userimages/");
+            $this->view('Subject_admin/Tutorprofile', $data);
         } else {
             redirect('/Login');
         }

@@ -73,7 +73,7 @@
     <section class="video-form">
 
 
-        <form action="<?php echo URLROOT?>/subjectadmin/profile" method="post" enctype="multipart/form-data">
+        <form action="<?php echo URLROOT?>/tutor/profile" method="post" enctype="multipart/form-data">
             <div class="flex-btn" style="justify-content: flex-end;">
 
 
