@@ -13,6 +13,6 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
 // app root - use something in app root
 define('APPROOT',dirname(dirname(__FILE__)));
 // URL root - use something in public root
-define('URLROOT','http://localhost/iqube');
+define('URLROOT','https://ravishan.duckdns.org/');
 // Site name
 define('SITENAME','IQube');
