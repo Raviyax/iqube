@@ -1,4 +1,4 @@
-<?php $this->view('inc/header') ?>
+<?php $this->view('inc/header',$data) ?>
 <section class="dashboard" id="users">
     <h1 class="heading">Manage Users <a href="#" class="btn" style="width: fit-content;">View All Users</a></h1>
     <div class="flex-btn">
@@ -33,7 +33,7 @@
         <div class="box">
             <h3><?php echo ucfirst($subject->subject_name) ?></h3>
             <p> <?php $count=0; $i = 0; while($i < sizeof($data['subjectadmins'])) {if($data['subjectadmins'][$i]->subject == $subject->subject_name){$count++;} $i++;}echo $count;?> Subject Admins</p>
-            <a href="#" class="btn">View</a>
+            <a href="<?php echo URLROOT;?>/Admin/all_subject_admins/<?php echo $subject->subject_name;?>" class="btn">View</a>
         </div>
         <?php endforeach; ?>
       

@@ -4,6 +4,7 @@ class Admin extends Controller
 
     public $Subjectadmin;
     public $user;
+    public $subject;
 
     public function index()
     {
@@ -29,6 +30,7 @@ class Admin extends Controller
 
             $data['errors'] = [];
             $data['title'] = 'Users';
+            $data['view'] = 'Manage Users';
             $this->user = $this->model('user');
            
             $data['subjectadmins'] = $this->user->query("SELECT * FROM subject_admins");
@@ -70,7 +72,7 @@ class Admin extends Controller
 
     
     
-    public function profile($id = null)
+    public function profile()
     {
         if (Auth::is_logged_in() && Auth::is_admin()) {
           
@@ -85,12 +87,14 @@ class Admin extends Controller
         }
     }
 
-    public function all_subject_admins()
+    public function all_subject_admins($subject=null)
     {
         if (Auth::is_logged_in() && Auth::is_admin()) {
             $this->Subjectadmin = $this->model('Subjectadmin');
-           
-            $data['subjectadmins'] = $this->Subjectadmin->query("SELECT * FROM subject_admins");
+            $data['subject'] = [];
+           if($subject!=null){ $data['subjectadmins'] = $this->Subjectadmin->query("SELECT * FROM subject_admins WHERE subject='$subject'"); $data['subject']=$subject;}else{
+            $data['subjectadmins'] = $this->Subjectadmin->query("SELECT * FROM subject_admins");}
+
             $data['subjects'] = $this->Subjectadmin->query("SELECT * FROM subjects");
         $data['title'] = 'All Subject Admins';
         $data['view'] = 'All Subject Admins';

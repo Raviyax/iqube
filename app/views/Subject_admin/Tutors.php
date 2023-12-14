@@ -14,7 +14,7 @@
             <button type="submit" class="fas fa-search" name="search_btn" ></button>
         </form>
 
-        <a href="#" class="btn" onclick="addnewsubjectadmin()" style="width: fit-content;"><i class="fa-solid fa-user-plus"></i> Add New Tutor</a>
+        <a href="#" class="btn" onclick="addnewsubjectadmin()" style="width: fit-content;"><i class="fa-solid fa-user-plus"></i> Add New <?php echo ucwords($_SESSION['USER_DATA']['subject']);?> Tutor</a>
         
         
 
@@ -35,7 +35,7 @@
     
 
   </tr>
-    <?php foreach($data['tutors'] as $tutor): ?>
+    <?php if($data['tutors']) foreach($data['tutors'] as $tutor): ?>
   <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutorprofile/<?php echo $tutor->tutor_id; ?>'">
     <td>
         <?php echo $tutor->tutor_id; ?>
@@ -66,7 +66,7 @@
 
                 <button class="option-btn" onclick="closeadd()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <h1 class="heading">Add New Subject Admin</h1>
+            <h1 class="heading">Add New <?php echo ucwords($_SESSION['USER_DATA']['subject']);?> Tutor</h1>
 
             <p>Subject <span>*</span></p>
             <select name="subject" class="box" required>

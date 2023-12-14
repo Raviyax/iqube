@@ -19,7 +19,7 @@
             
             <span></span>
             
-         <a class="inline-btn" onclick="openedit()"><i class="fa-solid fa-user-pen" ></i> Edit Profile</a>
+         <a class="inline-btn" onclick="openedit()"><i class="fa-solid fa-user-pen" ></i> Edit My Profile</a>
          <a href="" class="inline-btn"><i class="fa-solid fa-lock"></i> Change Password</a>
       </div>
       <div class="flex">
@@ -77,7 +77,7 @@
             <div class="flex-btn" style="justify-content: flex-end;">
 
 
-                <button class="option-btn" onclick="closeedit()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></button>
+                <a class="option-btn" onclick="closeedit()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></a>
             </div>
             <h1 class="heading">Edit My Profile</h1>
 
@@ -88,7 +88,8 @@
 
 
  <p style="text-align: center;">Change Profile Picture</p>
-      <input type="file" name="image" accept="image/*" required class="box">
+      <input type="file" name="image" accept="image/*"  class="box"> 
+      
       
 
 

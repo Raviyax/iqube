@@ -88,7 +88,7 @@
 
 
  <p style="text-align: center;">Change Profile Picture</p>
-      <input type="file" name="image" accept="image/*" required class="box">
+      <input type="file" name="image" accept="image/*"  class="box">
       
 
 

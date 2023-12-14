@@ -56,6 +56,29 @@
               
                 ];
             }
+
+            if($row->role == 'student'){
+                $_SESSION['USER_DATA'] = [
+                    'user_id' => $row->user_id,
+                    'username' => $row->username,
+                    'email' => $row->email,
+                    'role' => $row->role,
+                    'created_at' => $row->created_at,
+                    'updated_at' => $row->updated_at,
+                    'fname' => $studentdata->fname,
+                    'lname' => $studentdata->lname,
+                    'cno' => $studentdata->cno,
+                    'username' => $studentdata->username,
+                    'subject' => $studentdata->subject,
+                    'student_id' => $studentdata->student_id,
+                    'image' => $studentdata->image,  
+                    'premium' => $studentdata->premium,
+                    
+                    
+
+              
+                ];
+            }
             if(!empty($_SESSION['USER_DATA']['image'])){$_SESSION['USER_DATA']['image'] = Database::get_image($_SESSION['USER_DATA']['image'],"/uploads/userimages/");} 
    
          
@@ -104,6 +127,13 @@
 
     public static function is_subject_admin(){
         if($_SESSION['USER_DATA']['role'] == 'subject_admin'){
+            return true;
+        }
+        return false;
+    }
+
+    public static function is_premium(){
+        if($_SESSION['USER_DATA']['premium'] == '1'){
             return true;
         }
         return false;

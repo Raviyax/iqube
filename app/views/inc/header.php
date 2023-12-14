@@ -103,7 +103,7 @@
 
     <nav class="navbar">
         <a href="<?php echo URLROOT;?>/subjectadmin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-        <a href="<?php echo URLROOT;?>/Subjectadmin/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
+        <a href="<?php echo URLROOT;?>/Subjectadmin/tutors"><i class="fa-solid fa-person-chalkboard"></i><span><?php echo ucfirst($_SESSION['USER_DATA']['subject']);?> Tutors</span></a>
         <a href="<?php echo URLROOT;?>/Subjectadmin/students"><i class="fa-solid fa-user-pen"></i><span>Students</span></a>
 
         <a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a>
@@ -151,7 +151,7 @@
             <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
             <h3><?php echo ucfirst($_SESSION['USER_DATA']['username']);?></h3>
             <span><?php echo ucfirst($_SESSION['USER_DATA']['email']);?></span>
-            <a href="profile.php" class="btn">View Profile</a>
+            <a href="<?php echo URLROOT ?>/Admin/profile" class="btn">View Profile</a>
             
             <a href="<?php echo URLROOT;?>/Logout" class="delete-btn">logout</a>
 
@@ -339,7 +339,7 @@
     <div class="profile">
 
         <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
-        <?php echo $_SESSION['USER_DATA']['image'];?>
+        
         <h3></h3>
         <span></span>
         <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname'])." ".ucfirst($_SESSION['USER_DATA']['lname']);?></a>
@@ -359,4 +359,107 @@
 
 </div>
 <?php } ?>
+
+
+<!-- free student header  -->
+
+<?php if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium()){?>
+<header class="header" style="z-index: 1500;">
+
+    <section class="flex">
+        <div class="icons">
+    
+            <div id="menu-btn" class="fas fa-bars"></div>
+            
+            
+
+            
+            
+        </div>
+        
+
+
+
+        <form action="search_page.php" method="post" class="search-form">
+            <input type="text" name="search" placeholder="search here..." required maxlength="100">
+            <button type="submit" class="fas fa-search" name="search_btn"></button>
+            
+        </form>
+        
+
+        <div class="icons">
+        <div id="cart" class="fa-solid fa-cart-shopping" style="opacity: 0.3;"></div>
+        <div id="fav" class="fa-regular fa-heart" style="opacity: 0.3;"></div>
+
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+           
+            
+         
+            <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        </div>
+
+        <div class="profile">
+
+            <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
+            <h3><?php echo  $_SESSION['USER_DATA']['email'];?></h3>
+            
+            <a href="<?php echo URLROOT?>/Student/profile" class="btn">View Profile</a>
+            <a href="<?php echo URLROOT?>/Student/profile" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
+          
+            <a href="<?php echo URLROOT;?>/Logout" class="delete-btn">logout</a>
+
+
+
+
+
+
+        </div>
+
+    </section>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- side bar section starts  -->
+
+<div class="side-bar">
+
+    <div class="close-side-bar">
+        <i class="fas fa-times"></i>
+    </div>
+
+    <div class="profile">
+
+        <img src="<?php echo URLROOT?>/assets/img/Landing/iqube.png" alt="">
+        
+        <!-- <h3></h3>
+        <span></span> -->
+        <a href="#" class="btn">About Us</a>
+
+
+
+    </div>
+
+    <nav class="navbar">
+        <a href="<?php echo URLROOT;?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
+        <a href="<?php echo URLROOT;?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
+        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
+        <a href="<?php echo URLROOT;?>/Tutor/contents"style="opacity: 0.5;"><i class="fa-solid fa-bars-progress" ></i><span>My Progress<sup> (Pro)</sup></span></a>
+        <a href="<?php echo URLROOT;?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a>
+
+
+
+        
+        <a href="<?php echo URLROOT;?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+    </nav>
+    <a href="<?php echo URLROOT?>/Student/profile" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
+
+
+</div>
+<?php } ?>
+
+
 

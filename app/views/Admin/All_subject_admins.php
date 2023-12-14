@@ -1,7 +1,7 @@
-<?php $this->view('inc/header') ?>
+<?php $this->view('inc/header',$data) ?>
 <section class="dashboard" id="section">
 
-    <h1 class="heading">All Subject Admins</h1>
+    <h1 class="heading"><?php echo ($data['subject']) ? $data['subject'] : "All"; ?> Subject Admins</h1>
     <header class="header">
 
     <section class="flex">
@@ -31,11 +31,12 @@
     <th>Subject Admin ID</th>
     <th>Name</th>
     <th>Email</th>
+    <th>Subject</th>
     
     
 
   </tr>
-    <?php foreach($data['subjectadmins'] as $subjectadmin): ?>
+    <?php if($data['subjectadmins']) foreach($data['subjectadmins'] as $subjectadmin): ?>
   <tr onclick="window.location='<?php echo URLROOT?>/Admin/Subject_admin_profile/<?php echo $subjectadmin->subject_admin_id; ?>'">
     <td>
         <?php echo $subjectadmin->subject_admin_id; ?>
@@ -45,6 +46,9 @@
     </td>
     <td>
         <?php echo $subjectadmin->email; ?>
+    </td>
+    <td>
+        <?php echo $subjectadmin->subject; ?>
     </td>
     
   </tr>

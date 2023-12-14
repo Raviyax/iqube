@@ -21,7 +21,7 @@ class Subjectadmin extends Controller
     }
 
     public function profile()
-    {
+    {   
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
 
             $data = [
@@ -35,17 +35,45 @@ class Subjectadmin extends Controller
           
             $this->view('Subject_admin/Profile', $data);
             $this->me = $this->model('User');
+            
+            
+
 
 
             if (isset($_POST["submit"])) {
+                if ($_FILES["image"]['size'] > 0) {
+                    $uniqueFilename = generate_unique_filename($_FILES["image"]);
+        
+                    $this->me->update_image($_FILES["image"],APPROOT."/uploads/userimages/","UPDATE subject_admins SET image = '{$uniqueFilename}' WHERE user_id = '{$_SESSION['USER_DATA']['user_id']}'", $uniqueFilename);
+        
+                    $_SESSION['USER_DATA']['image'] = Database::get_image( $uniqueFilename, "/uploads/userimages/");
+             
+                   
+                   
+        
+                 }
 
                
-               $uniqueFilename = generate_unique_filename($_FILES["image"]);
-        
-               $this->me->update_image($_FILES["image"],APPROOT."/uploads/userimages/","UPDATE subject_admins SET image = '{$uniqueFilename}' WHERE user_id = '{$_SESSION['USER_DATA']['user_id']}'");
+                $this->me->query("UPDATE users SET username=? WHERE email=?", [
+                  
+                    $_POST['username'],
+                    $_SESSION['USER_DATA']['email']
+                ]);
+                $this->me->query("UPDATE subject_admins SET username=?, fname=?, lname=?, cno=? WHERE user_id=?", [
+                    
+                    $_POST['username'],
+                    $_POST['fname'],
+                    $_POST['lname'],
+                    $_POST['cno'],
+                    $_SESSION['USER_DATA']['user_id']
+                ]);
 
-               $_SESSION['USER_DATA']['image'] = Database::get_image( $uniqueFilename, "/uploads/userimages/");
-              
+                $_SESSION['USER_DATA']['username'] = $_POST['username'];
+                $_SESSION['USER_DATA']['fname'] = $_POST['fname'];
+                $_SESSION['USER_DATA']['lname'] = $_POST['lname'];
+                $_SESSION['USER_DATA']['cno'] = $_POST['cno'];
+                
+
               
                
 
@@ -116,6 +144,27 @@ class Subjectadmin extends Controller
             ], 'tutors', 'tutor_id');
             $data['profilepic'] = $this->tutor->get_image($data['tutor']->image, "/uploads/userimages/");
             $this->view('Subject_admin/Tutorprofile', $data);
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+              
+              
+                        $this->tutor->query("UPDATE users SET username=? WHERE email=?", [
+                          
+                            $_POST['username'],
+                            $data['tutor']->email
+                        ]);
+                        $this->tutor->query("UPDATE tutors SET username=?, fname=?, lname=?, cno=? WHERE tutor_id=?", [
+                            
+                            $_POST['username'],
+                            $_POST['fname'],
+                            $_POST['lname'],
+                            $_POST['cno'],
+                            $data['tutor']->tutor_id
+                        ]);
+                    
+          
+            }
+
         } else {
             redirect('/Login');
         }
