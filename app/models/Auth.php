@@ -1,7 +1,7 @@
 <?php
  class Auth {
     public $user;
-    public static function authenticate($row, $subjectadmindata, $studentdata, $tutordata){
+    public static function authenticate($row, $subjectadmindata, $studentdata, $tutordata, $premiumdata){
         
 
         if(is_object($row )){
@@ -65,20 +65,48 @@
                     'role' => $row->role,
                     'created_at' => $row->created_at,
                     'updated_at' => $row->updated_at,
-                    'fname' => $studentdata->fname,
-                    'lname' => $studentdata->lname,
-                    'cno' => $studentdata->cno,
-                    'username' => $studentdata->username,
-                    'subject' => $studentdata->subject,
-                    'student_id' => $studentdata->student_id,
+                
                     'image' => $studentdata->image,  
                     'premium' => $studentdata->premium,
+                    'paid' => $studentdata->paid,
+                    'student_id' => $studentdata->student_id,
+                    'fname' => $premiumdata->fname,
+                    'lname' => $premiumdata->lname,
+                    'cno' => $premiumdata->cno,
+
+
                     
                     
 
               
                 ];
             }
+
+            if(($row->role == 'student') && ($studentdata->premium == 1)){
+                $_SESSION['USER_DATA'] = [
+                    'user_id' => $row->user_id,
+                    'username' => $row->username,
+                    'email' => $row->email,
+                    'role' => $row->role,
+                    'created_at' => $row->created_at,
+                    'updated_at' => $row->updated_at,
+                    'fname' => $premiumdata->fname,
+                    'lname' => $premiumdata->lname,
+                    'cno' => $premiumdata->cno,
+                    
+                    
+                    'student_id' => $studentdata->student_id,
+                    'image' => $studentdata->image,  
+                    'premium' => $studentdata->premium,
+                    'paid' => $studentdata->paid,
+                    
+                    
+
+              
+                ];
+            }
+
+
             if(!empty($_SESSION['USER_DATA']['image'])){$_SESSION['USER_DATA']['image'] = Database::get_image($_SESSION['USER_DATA']['image'],"/uploads/userimages/");} 
    
          
@@ -138,6 +166,14 @@
         }
         return false;
     }
+
+    public static function is_paid(){
+        if($_SESSION['USER_DATA']['paid'] == '1'){
+            return true;
+        }
+        return false;
+    }
+
 
 
 
