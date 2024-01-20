@@ -99,12 +99,51 @@
         </button>
 
         
-
+<?php if(!Auth::is_logged_in()){?>
         <a href="<?php echo URLROOT?>/Login" class="btn has-before">
           <span class="span">Try for free</span>
 
           <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
         </a>
+        <?php }?>
+
+        <?php if(Auth::is_logged_in()){?>
+         <?php if(Auth::is_student()){?>
+        <a href="<?php echo URLROOT?>/student" class="btn has-before">
+          <span class="span">Back to Dashboard</span>
+
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+        </a>
+        <?php }?>
+
+        <?php if(Auth::is_tutor()){?>
+        <a href="<?php echo URLROOT?>/tutor" class="btn has-before">
+          <span class="span">Back to Dashboard</span>
+
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+        </a>
+        <?php }?>
+
+        <?php if(Auth::is_admin()){?>
+        <a href="<?php echo URLROOT?>/admin" class="btn has-before">
+          <span class="span">Back to Dashboard</span>
+
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+        </a>
+        <?php }?>
+
+        <?php if(Auth::is_subject_admin()){?>
+        <a href="<?php echo URLROOT?>/subjectadmin" class="btn has-before">
+          <span class="span">Back to Dashboard</span>
+
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+        </a>
+        <?php }?>
+        <?php }?>
+
+
+
+
 
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
           <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>

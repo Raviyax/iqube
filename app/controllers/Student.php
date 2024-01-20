@@ -1,6 +1,8 @@
 <?php
 class Student extends Controller {
 
+    private $imagepath;
+
     public $user;
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
@@ -76,5 +78,30 @@ class Student extends Controller {
         }
     }
 
-    
+    public function userimage($image) {
+       
+        if(Auth::is_logged_in() && Auth::is_student()){
+            $imagePath = APPROOT. "/uploads/userimages/" . $image;
+        readfile($imagePath);
+        }
+        else{
+            redirect('/Login');
+        }
+    }
+
+
+    public function study_materials(){
+        if(Auth::is_logged_in() && Auth::is_student()){
+            $data = [
+                'title' => 'Student',
+                'view' => 'Study Materials'
+            ];
+            $this->view('Student/study_materials', $data);
+        }
+        else{
+            redirect('/Login');
+        }
+    }
+
 }
+    

@@ -14,7 +14,7 @@
     
         
         
-         <img src=<?php echo "data:image/jpg;base64,".$data['profilepic'];?> alt="profile" >
+         <img src=<?php echo URLROOT."/Admin/userimage/". $data['subjectadmin']->image?> alt="profile" >
          
 
          <h3><?php echo $subjectadmin->fname." ".$subjectadmin->lname;?></h3>

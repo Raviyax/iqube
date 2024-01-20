@@ -8,9 +8,7 @@
     <div class="box-container">
 
         <div class="box">
-            <h3>test</h3>
-            <p>test</p>
-            
+           <img src="http://localhost/iqube/student/image" alt="">
         </div>
 
 

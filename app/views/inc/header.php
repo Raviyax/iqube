@@ -446,7 +446,7 @@
     <nav class="navbar">
         <a href="<?php echo URLROOT;?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
         <a href="<?php echo URLROOT;?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
+        <a href="<?php echo URLROOT;?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
         <a href="<?php echo URLROOT;?>/Tutor/contents"style="opacity: 0.5;"><i class="fa-solid fa-bars-progress" ></i><span>My Progress<sup> (Pro)</sup></span></a>
         <a href="<?php echo URLROOT;?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a>
 

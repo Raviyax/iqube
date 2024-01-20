@@ -141,7 +141,6 @@ class Admin extends Controller
             $data['subjectadmin'] = $this->Subjectadmin->first([
                 'subject_admin_id' => $id
             ], 'subject_admins', 'subject_admin_id');
-            $data['profilepic'] = $this->Subjectadmin->get_image($data['subjectadmin']->image, "/uploads/userimages/");
             $this->view('Admin/Subject_admin_profile', $data);
         
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -187,6 +186,18 @@ class Admin extends Controller
         }
         
     }
+
+    public function userimage($image) {
+       
+        if(Auth::is_logged_in() && Auth::is_admin()){
+            $imagePath = APPROOT. "/uploads/userimages/" . $image;
+        readfile($imagePath);
+        }
+        else{
+            redirect('/Login');
+        }
+    }
+
 }
 
 
