@@ -1,0 +1,159 @@
+/*
+* Defining
+* Elements 
+ */
+
+
+/* *
+* General
+* Styles
+ */
+
+.grid{
+    display: grid;
+    grid-template-rows: 10em 30vh auto 10em;
+    grid-template-columns:  5fr 2fr ;
+
+    /* grid-template-areas: "header header header header"
+        ". main sub ."
+        "footer footer footer footer"
+    ; */
+}
+
+
+/* 
+* * specific Styles
+ */
+.section-title{
+    font-size: 3rem;
+}
+/* Progress Summary Section */
+.progress-summary,
+.course-completion,
+.performance-metrics {
+    flex: 1;
+    min-width: 280px; /* Adjust min-width for responsiveness */
+}
+
+.progress-bar,
+.subject-progress-bar {
+    margin-bottom: 15px;
+}
+
+.progress-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.progress-track,
+.progress-fill {
+    border-radius: 15px; /* Slight border change */
+}
+
+.progress-fill {
+    color: #fff;
+    text-align: center;
+    padding: 5px 0; /* Padding for text inside the progress bar */
+}
+
+.subject-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.course-cards {
+    display: grid;
+    gap: 10px;
+}
+
+.course-card {
+    padding: 20px;
+    background-color: #f5f5f5; /* Unified color scheme */
+    border-radius: 10px; /* Slightly rounded edges */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+}
+
+.course-card h3 {
+    font-size: 20px; /* Larger heading */
+    margin-bottom: 15px;
+}
+
+.course-progress {
+    font-size: 16px;
+}
+
+/* Performance Metrics Section */
+.metric-charts {
+    display: grid;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Additional Styling for Charts (Chart.js) */
+canvas {
+    max-width: 100%; /* Ensure responsiveness */
+    border-radius: 10px; /* Slight border change */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+}
+
+/* Styles for Achievements section */
+.achievements-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* Adjusted height for responsiveness */
+}
+
+.card {
+    background-color: #f9f9f9; /* Lighter color scheme */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adjusted shadow */
+    padding: 30px;
+    width: 100%; /* Adjusted width for responsiveness */
+    text-align: center;
+}
+
+.card-header {
+    margin-top: 0;
+    font-size: 28px; /* Larger header font size */
+    color: #333;
+}
+
+.btn {
+    display: inline-block; /* Inline block for button */
+    margin: 10px 0;
+    padding: 10px 20px; /* Adjusted padding */
+    border-radius: 5px;
+    background-color: #2e86de;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.btn:hover {
+    background-color: #1e3799;
+}
+
+/* List styles */
+.achievements-list {
+    padding: 0;
+}
+
+.achievements-list li {
+    margin-bottom: 10px;
+}
+
+.achievement-title {
+    font-weight: bold;
+    font-size: 20px; /* Larger font size */
+    color: #333;
+    display: block;
+}
+
+.achievement-description {
+    font-size: 16px; /* Adjusted font size */
+    color: #666;
+}
+

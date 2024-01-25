@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/Login.css">
+</head>
 <body>
     <div class="box-form" id="login">
         <form class="login_menu" action="<?php echo URLROOT;?>/Login" method = "post">

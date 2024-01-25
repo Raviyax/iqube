@@ -9,6 +9,7 @@
    --light-color: #545454;
    --light-bg: #ebeef2;
    --border: 1px solid #e5e9f2;
+   
 }
 
 * {
@@ -66,7 +67,7 @@ body.active {
 
 section {
    padding: 2rem;
-   max-width: 1200px;
+   /* max-width: 1200px; */
    margin: 0 auto;
 }
 
@@ -316,6 +317,7 @@ section {
    background-color: var(--white);
    border-right: var(--border);
    z-index: 1200;
+   transition: width 0.5s;
 }
 
 .side-bar .close-side-bar {
@@ -395,6 +397,7 @@ section {
 
 .side-bar.active {
    left: -31rem;
+   /* transition: width 0.5s ease-in; */
 }
 
 .form-container {
@@ -1286,12 +1289,28 @@ section {
 
 .homebg{
    background-image: url("../img/Landing/students_09.jpg");
-width: 100vw;
-height: 100%;
+   width: 100vw;
+   height: 100%;
    
    background-repeat: space;
    position: fixed;
    z-index: -1;
    background-size: cover;
    
+}
+
+
+/* purchase premium */
+label {
+   display: block;
+   margin-top: 10px;
+   font-weight: bold;
+}
+
+input {
+   width: 100%;
+   padding: 8px;
+   margin-top: 5px;
+   margin-bottom: 10px;
+   box-sizing: border-box;
 }

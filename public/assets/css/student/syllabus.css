@@ -1,0 +1,237 @@
+/* :root {
+    --main-color: #559bfb;
+    --color2: #816bff;
+    --color3: #2c3782;
+    --white: #fff;
+    --color4: #000000;
+    --light-color: #545454;
+    --light-bg: #ebeef2;
+    --border: 1px solid #e5e9f2;
+}  */
+
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: var(--main-color);
+    font-size: 2.8rem;
+}
+
+h2{
+    color: var(--color4);
+}
+
+p{
+    color: var(--color4);
+}
+
+.subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.subject {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 200px;
+    height: 100px;
+    font-size: 2.8rem;
+    background-color: var(--white);
+    color: var(--color4);
+    border: var(--border);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.subject:hover {
+    background-color: var(--subject-color);
+    color: var(--white);
+}
+
+
+/* Main Header Styles */
+.MainHeader_mainHeader__flHoY {
+    background-color: var(--white);
+    color: var(--white);
+    border-radius: 5px;
+    margin-bottom:10px;
+    padding:20px 50px 50px;
+    position:relative;
+    z-index:1;
+}
+
+.MainHeader_mainHeader__flHoY .MainHeader_mainHeaderTitle__14sVT {
+    font-family: Source Sans Pro;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 45px;
+    text-align: left;
+    }
+
+.MainHeader_mainHeader__flHoY .MainHeader_mainHeaderContents__L4xJO .MainHeader_messagePanel__SA2Q3 {
+    display: flex;
+    flex-direction: column;
+    font-family: Source Sans Pro;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0;
+    line-height: 27px;
+    text-align: left;
+    width: 50%;
+    }
+
+
+.MainHeader_mainHeader__flHoY .MainHeader_mainHeaderContents__L4xJO .MainHeader_messagePanel__SA2Q3 .MainHeader_buttonGroup__xl9CD {
+    display: flex;
+    padding-top: 20px;
+    }
+
+.MainHeader_mainHeaderContents__L4xJO{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15rem;
+}
+
+.MainHeader_text_align_left__RayQX {
+    text-align: left;
+}
+
+.MainHeader_buttonGroup__xl9CD {
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 10px 15px;
+    margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-dark {
+    background-color: var(--color4);
+    color: var(--white);
+}
+
+.btn-light {
+    background-color: var(--white);
+    color: var(--color4);
+}
+
+.MainHeader_scoreCardPanel__4G25U {
+    width: 35%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.MainHeader_scoreCard__vCqYM {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.scoreCard_scoreCard__kCXP\+ {
+    background-color: var(--white);
+    border: 1px solid #dee2e6;
+    border-radius: 16px;
+    box-shadow: 10px 10px 25px var(--border);
+    box-sizing: border-box;
+    color: var(--subject-color);
+    cursor: default;
+    filter: drop-shadow(10px 10px 25px transparent);
+    font-family: Source Sans Pro,sans-serif;
+    max-width: 340px;
+    position: relative;
+    width: 340px;
+    }
+
+.scoreCard_header__8lJbn {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color3); /* Use color3 for the header */
+}
+
+.scoreCard_yourScore__-n-iY {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: var(--color4);
+}
+
+.scoreCard_arc__-AVUj {
+    margin-top: 20px;
+}
+
+/* Additional Styles for the GaugeChart */
+#scoreCardMLW3S {
+    position: relative;
+}
+
+.scoreCard_number__49hUB {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--color4);
+}
+
+.scoreCard_text__Qua6F {
+    font-size: 14px;
+    color: var(--light-color);
+}
+
+.scoreCard_scoreFactorHeading__TS12C {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color4);
+    margin-top: 15px;
+}
+
+.scoreCard_factors__oLCHD {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.scoreCard_card__s2uNN {
+    text-align: center;
+}
+
+/* Needle in the GaugeChart */
+.scoreCard_needle__3RP5L {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 2;
+    width: 15px;
+    height: 200px;
+    background-color: var(--light-color);
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+
+.scoreCard_needle__3RP5L::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color2); /* Use color2 for the needle */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+span{
+    color: var(--color4);
+}

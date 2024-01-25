@@ -364,6 +364,17 @@
 <!-- free student header  -->
 
 <?php if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium()){?>
+
+    <?php
+    // Get the view file name from the URL
+    $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $viewFileName = pathinfo($urlPath, PATHINFO_FILENAME);
+
+    // Generate the CSS file link
+    $cssFileName = strtolower($viewFileName) . '.css';
+    echo "<link rel='stylesheet' type='text/css' href='".URLROOT."/assets/css/student/$cssFileName'>";
+    // echo "css loaded ".$cssFileName;
+    ?>
 <header class="header" style="z-index: 1500;">
 
     <section class="flex">
@@ -437,18 +448,21 @@
         
         <!-- <h3></h3>
         <span></span> -->
-        <a href="#" class="btn">About Us</a>
+        <a href="<?=URLROOT;?>/Landing" class="btn">About Us</a>
 
 
 
     </div>
 
     <nav class="navbar">
-        <a href="<?php echo URLROOT;?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents"style="opacity: 0.5;"><i class="fa-solid fa-bars-progress" ></i><span>My Progress<sup> (Pro)</sup></span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a>
+        <a href="<?php echo URLROOT;?>/Student/dasboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
+        <a href="<?php echo URLROOT;?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
+        <a href="<?php echo URLROOT;?>/Student/syllabus"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
+        <a href="<?php echo URLROOT;?>/Student/progre"style="opacity: 0.5;"><i class="fa-solid fa-bars-progress" ></i><span>My Progress<sup> (Pro)</sup></span></a>
+        <a href="<?php echo URLROOT;?>/Student/studypl" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a>
+        <a href="<?php echo URLROOT;?>/Student/notes" style="opacity: 0.5;"><i class="fa-regular fa-clipboard"></i><span>My Notes<sup> (Pro)</sup></span></a>
+        <a href="<?php echo URLROOT;?>/Student/threads"><i class="fa-brands fa-threads"></i><span>Threads</span></a>
+
 
 
 
@@ -464,6 +478,17 @@
 <!-- premium student header  -->
 
 <?php if(Auth::is_logged_in() && Auth::is_student() && Auth::is_premium()){?>
+
+    <?php
+    // Get the view file name from the URL
+    $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $viewFileName = pathinfo($urlPath, PATHINFO_FILENAME);
+
+    // Generate the CSS file link
+    $cssFileName = strtolower($viewFileName) . '.css';
+    echo "<link rel='stylesheet' type='text/css' href='".URLROOT."/assets/css/student/$cssFileName'>";
+    // echo "css loaded ".$cssFileName;
+    ?>
 <header class="header" style="z-index: 1500;">
 
     <section class="flex">
@@ -538,12 +563,12 @@
     </div>
 
     <nav class="navbar">
-        <a href="<?php echo URLROOT;?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-bars-progress" ></i><span>My Progress</span></a>
-        <a href="<?php echo URLROOT;?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a>
-
+        <a href="<?php echo URLROOT;?>/Student/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
+        <a href="<?php echo URLROOT;?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
+        <a href="<?php echo URLROOT;?>/Student/syllabus"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
+        <a href="<?php echo URLROOT;?>/Student/tutors"><i class="fa-solid fa-bars-progress" ></i><span>My Progress</span></a>
+        <a href="<?php echo URLROOT;?>/Student/tutors"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a>
+        <a href="<?php echo URLROOT;?>/Student/notes"><i class="fa-regular fa-clipboard"></i><span>My Notes</span></a>
 
 
         
