@@ -49,6 +49,8 @@ html {
 body {
    background-color: var(--light-bg);
    padding-left: 30rem;
+
+   transition: 0.3s ease-out;
    
    /* padding-bottom: 7rem; */
 }
@@ -63,6 +65,7 @@ body.dark {
 
 body.active {
    padding-left: 0;
+   transition: 0.3s ease-in;
 }
 
 section {
@@ -317,7 +320,7 @@ section {
    background-color: var(--white);
    border-right: var(--border);
    z-index: 1200;
-   transition: width 0.5s;
+   transition: 0.3s ease-out;
 }
 
 .side-bar .close-side-bar {
@@ -397,7 +400,7 @@ section {
 
 .side-bar.active {
    left: -31rem;
-   /* transition: width 0.5s ease-in; */
+   transition: 0.3s ease-in; 
 }
 
 .form-container {

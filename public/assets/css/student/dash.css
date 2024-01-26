@@ -2,9 +2,12 @@
 * Defining
 * Elements 
  */
+body.dark{
+    color: #f5f5f5; 
+    /* unless explicitly defined the color of the text is white when in dark mode */
+}
 
-
-/* *
+/* 
 * General
 * Styles
  */
@@ -14,10 +17,26 @@
     grid-template-rows: 10em 30vh auto 10em;
     grid-template-columns:  5fr 2fr ;
 
-    /* grid-template-areas: "header header header header"
-        ". main sub ."
-        "footer footer footer footer"
-    ; */
+    grid-template-areas: "header header"
+        "main sub"
+        "footer footer"
+    ;
+}
+
+.mylearning{
+    grid-area: header;
+}
+
+.main{
+    grid-area: main;
+}
+
+.cal{
+    grid-area: sub;
+}
+
+.mylearning-foot{
+    grid-area: footer;
 }
 
 

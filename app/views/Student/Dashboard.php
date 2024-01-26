@@ -1,6 +1,7 @@
 <?php $this->view('inc/header',$data) ?>
 
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/dash.css">
+<link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/syllabus.css">
 
 <section class="dashboard">
 
@@ -18,7 +19,8 @@
     </div> -->
 
     <div class="box-container">
-        <div class="course-overview">
+        <div>
+            <div class="course-overview">
                 <h2 class="section-title">Subject Overview</h2>
                 <div class="courses" id="coursesContainer">
                     <!-- Courses will be dynamically added here using js -->
@@ -39,14 +41,15 @@
                     <!-- More course cards -->
                 </div>
             </div>
+        </div>
 
-            <div class="performance-metrics">
-                <h2>Performance Metrics</h2>
-                <div class="metric-charts">
-                    <canvas id="grades-chart" width="400" height="200"></canvas>
-                    <canvas id="time-spent-chart" width="400" height="200"></canvas>
-                    <!-- Add more canvas elements for additional charts -->
-                </div>
+        <div class="performance-metrics">
+            <h2>Performance Metrics</h2>
+            <div class="metric-charts">
+                <canvas id="grades-chart" width="400" height="200"></canvas>
+                <canvas id="time-spent-chart" width="400" height="200"></canvas>
+                <!-- Add more canvas elements for additional charts -->
+            </div>
         </div>
 
         <div class="achievements-section">
@@ -77,6 +80,28 @@
 </section>
 
 
+
+<script>
+        var currentIndex = 0;
+
+        function showSlide(index) {
+            var carousel = document.querySelector('.carousel');
+            var cardWidth = document.querySelector('.card').offsetWidth;
+            var newPosition = -index * cardWidth;
+            carousel.style.transform = 'translateX(' + newPosition + 'px)';
+            currentIndex = index;
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + 3) % 3;
+            showSlide(currentIndex);
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % 3;
+            showSlide(currentIndex);
+        }
+    </script>
 <script>
                 // Simulated data - Replace with actual data retrieval logic
         const syllabusProgress = 70; // Example syllabus completion percentage
