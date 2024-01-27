@@ -73,6 +73,10 @@
                     'fname' => $premiumdata->fname,
                     'lname' => $premiumdata->lname,
                     'cno' => $premiumdata->cno,
+                    'completed' => $studentdata->completed,
+
+
+
 
 
                     
@@ -101,18 +105,35 @@
                     'paid' => $studentdata->paid,
                     
                     
-
+                    
               
                 ];
             }
 
 
-            if(!empty($_SESSION['USER_DATA']['image'])){$_SESSION['USER_DATA']['image'] = Database::get_image($_SESSION['USER_DATA']['image'],"/uploads/userimages/");} 
    
          
        
         }
 
+        
+    }
+
+    public static function authenticate_admin($row){
+        if($row[0]!=null){
+            $_SESSION['USER_DATA'] = [
+                
+                'username' => $row[0]->username,
+                'email' => $row[0]->email,
+                'role' => 'admin',
+                
+                
+          
+            ];
+
+        
+            
+        }
         
     }
 
@@ -169,6 +190,13 @@
 
     public static function is_paid(){
         if($_SESSION['USER_DATA']['paid'] == '1'){
+            return true;
+        }
+        return false;
+    }
+
+    public static function is_completed(){
+        if($_SESSION['USER_DATA']['completed'] == '1'){
             return true;
         }
         return false;

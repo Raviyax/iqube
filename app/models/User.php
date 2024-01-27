@@ -3,6 +3,8 @@ class User extends Model
 {
     
     public $errors = [];
+    public $login_errors = [];
+    
     
 
     public function validate($data)
@@ -52,6 +54,45 @@ class User extends Model
         }
         return false;
     }
+
+    public function validate_admin_login($data)
+    {
+        $this->login_errors = [];
+
+        $query = "SELECT * FROM admins WHERE email = :email";
+
+        if (empty($data['email'])) {
+            $this->login_errors['email_err'] = 'Please enter email*';
+        } elseif (!$this->query($query, ['email' => $data['email']])) {
+            $this->login_errors['mismatch_err'] = '*Wrong user credentials';
+        }
+
+        if (empty($data['password'])) {
+            $this->login_errors['password_err'] = 'Please enter password*';
+        }
+
+        if(!empty($data['email']) && !empty($data['password'])){
+            $row = $this->query($query, ['email' => $data['email']]);
+           
+            if(!empty($row) && !password_verify($data['password'], $row[0]->password)){
+                $this->login_errors['mismatch_err'] = 'Wrong user credentials*';
+            }
+        }
+
+        if (empty($this->login_errors)) {
+            return $row;
+        }
+        
+        return false;
+    }
+
+    public function load_user_data($email)
+    {
+        $query = "SELECT * FROM users WHERE email = :email";
+        $row = $this->query($query, ['email' => $email]);
+        return $row;
+    }   
+
 
    
 }

@@ -23,5 +23,41 @@ class Controller {
             die('View does not exist');
         }
     }
+ 
+    public function retrive_media($media,$path){
+      $mediapath = APPROOT.$path.$media;
+        if(file_exists($mediapath)){
+            readfile($mediapath);
+    }
     
+}
+public function upload_media($file, $path)
+{
+    $uniqueFilename = generate_unique_filename($file);
+    $target_file = $path . $uniqueFilename;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+    if (file_exists($target_file)) {
+        $uploadOk = 0;
+    }
+
+    if ($file["size"] > 500000) {
+        $uploadOk = 0;
+    }
+
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+        $uploadOk = 0;
+    }
+
+    if ($uploadOk == 0) {
+        return false;
+    } else {
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $uniqueFilename;
+        } else {
+            return false;
+        }
+    }
+}
 }

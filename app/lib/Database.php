@@ -33,37 +33,8 @@ class Database
     }
   }
 
-  public static function get_image($image = [], $path)
-  {
-    $file = APPROOT . $path . $image;
-    $b64image = base64_encode(file_get_contents($file));
-    return $b64image;
-  }
 
-  public function update_image($image= [], $targetDir, $query,$uniqueFilename)
-  {
-      try {
-          
-              $fileType = strtolower(pathinfo($uniqueFilename, PATHINFO_EXTENSION));  
-              $targetFilePath = $targetDir . $uniqueFilename;
-  
-              $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
-              
-              if (in_array($fileType, $allowTypes)) {
-                  if (move_uploaded_file($image['tmp_name'], $targetFilePath)) {
-                      // Update the database with the unique filename
-                      $this->query($query);
-                      
-                  } else {
-                      throw new Exception('File upload failed.');
-                  }
-              } else {
-                  throw new Exception('Invalid file type.');
-              }
-        
-      } catch (Exception $e) {
-          echo 'Error: ' . $e->getMessage();
-      }
-  }
+
+
   
 }

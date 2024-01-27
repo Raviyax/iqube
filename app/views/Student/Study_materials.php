@@ -1,36 +1,40 @@
 <?php $this->view('inc/header',$data) ?>
 
 
-<?php include 'components/user_header.php'; ?>
 
-<!-- courses section starts  -->
 
-<section class="courses">
 
-   <h1 class="heading">all courses</h1>
+
+
+   
+<section class="contents">
+
+   <h1 class="heading">your contents</h1>
 
    <div class="box-container">
 
+   
+
 
       <div class="box">
-         <div class="tutor">
-            <img src="uploaded_files/" alt="">
-            <div>
-               <h3>test</h3>
-               <span>test</span>
-            </div>
+         <div class="flex">
+            <div><i class="fas fa-dot-circle" style="color:limegreen"></i><span style="color:red">Active</span></div>
+            <div><i class="fas fa-calendar"></i><span>2002-05-10</span></div>
          </div>
-         <img src="uploaded_files/" class="thumb" alt="">
-         <h3 class="title">test</h3>
-         <a href="playlist.php?get_id" class="inline-btn">view playlist</a>
+         <img src="<?php echo URLROOT;?>/assets/img/iqube.png" class="thumb" alt="">
+         <h3 class="title">Test title</h3>
+         <form action="" method="post" class="flex-btn">
+            <input type="hidden" name="video_id" value="1">
+            <input type="submit" value="delete" class="delete-btn" onclick="return confirm('delete this video?');" name="delete_video">
+         </form>
+         <a href="view_content.php?get_id=<?= $video_id; ?>" class="btn">view content</a>
       </div>
- 
+
 
    </div>
 
 </section>
 
-<!-- courses section ends -->
 
 
 
@@ -43,11 +47,8 @@
 
 
 
-<!-- custom js file link  -->
-<script src="js/script.js"></script>
-   
 
-</html>
+
 
 
 

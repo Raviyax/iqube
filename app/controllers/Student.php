@@ -4,6 +4,7 @@ class Student extends Controller {
     private $imagepath;
 
     public $user;
+    public $student;
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
             $data = [
@@ -22,7 +23,7 @@ class Student extends Controller {
     }
 
     public function purchase_premium(){
-        if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium()){
+        if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
             $data = [
                 'title' => 'Student',
                 'view' => 'Purchase Premium'
@@ -32,13 +33,9 @@ class Student extends Controller {
             //temporarily
 
             if(isset($_POST['pay'])){
-                $student_id = $_SESSION['USER_DATA']['student_id'];
-                $this->user = $this->model('user');
-                $this->user->query("UPDATE students SET paid = 1 WHERE student_id = $student_id");
-                $_SESSION['USER_DATA']['paid'] = 1;
-
-
-                
+            
+                $this->student = $this->model('student');
+                $this->student->pay();
                 
             }
 
@@ -50,23 +47,19 @@ class Student extends Controller {
     }
 
     public function signup_premium(){
-        if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium()){
+        if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
             if(Auth::is_paid()){
                 $data = [
                     'title' => 'Student',
                     'view' => 'Signup Premium'
                 ];
                 $this->view('Student/Signup_premium', $data);
-                $this->user = $this->model('user');
-                if(isset($_POST['submit'])){
-                    $student_id = $_SESSION['USER_DATA']['student_id'];
-                    $email = $_SESSION['USER_DATA']['email'];
-                    $this->user->query("INSERT INTO premium_students (email, student_id, fname, lname, cno) VALUES ('$email', '$student_id', '$_POST[fname]', '$_POST[lname]', '$_POST[cno]')");
-                    $this->user->query("UPDATE students SET premium = 1 WHERE student_id = $student_id");
-                    
-
-                   
+           
+                if(isset($_POST['signup'])){
+                    $this->student = $this->model('student');
+                    $this->student->signup_premium();
                 }
+                
             }else{
                echo "<script>alert('Please pay first')</script>";
             }
@@ -81,22 +74,47 @@ class Student extends Controller {
     public function userimage($image) {
        
         if(Auth::is_logged_in() && Auth::is_student()){
-            $imagePath = APPROOT. "/uploads/userimages/" . $image;
-        readfile($imagePath);
+            $this->media($image,'/uploads/userimages/');
+        }
+       
+        else{
+            redirect('/Login');
+        }
+    }
+
+    public function study_materials(){
+        if(!Auth::is_completed())
+        if(Auth::is_logged_in() && Auth::is_student() && Auth::is_completed()){
+            $data = [
+                'title' => 'Student',
+                'view' => 'Study Materials'
+            ];
+            $this->view('Student/study_materials', $data);
         }
         else{
             redirect('/Login');
         }
     }
 
-
-    public function study_materials(){
+    public function more_details(){
         if(Auth::is_logged_in() && Auth::is_student()){
-            $data = [
-                'title' => 'Student',
-                'view' => 'Study Materials'
-            ];
-            $this->view('Student/study_materials', $data);
+            if(!Auth::is_completed()){
+                $data = [
+                    'title' => 'Student',
+                    'view' => 'More Details',
+                    'subjects' => $this->model('user')->query("SELECT * FROM subjects"),
+                ];
+                $this->view('Student/more_details', $data);
+                if(isset($_POST['proceed'])){
+                    $this->student = $this->model('student');
+                    $this->student->complete_profile();
+                    
+                }
+            }
+            else{
+                redirect('/Student');
+            }
+      
         }
         else{
             redirect('/Login');

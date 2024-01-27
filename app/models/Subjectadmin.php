@@ -61,4 +61,109 @@ class Subjectadmin extends Model
     }
 
    
+    public function get_subject_admins($subject=null)
+    {
+        if($subject!=null){
+            return $this->query("SELECT * FROM subject_admins WHERE subject='$subject'");
+        }else{
+            return $this->query("SELECT * FROM subject_admins");
+        }
+    }
+
+    public function add_new_subject_admin($data)
+    {
+        if ($this->validate($data)) {
+            $this->query("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)", [
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+                'role' => 'subject_admin'
+            ]);
+            $row = $this->first([
+                'email' => $data['email']
+            ], 'users', 'user_id');
+            $this->query("INSERT INTO subject_admins (user_id,subject,fname,lname,username,email,cno) VALUES (:user_id,:subject,:fname,:lname,:username,:email,:cno)", [
+                'user_id' => $row->user_id,
+                'subject' => $data['subject'],
+                'fname' => $data['fname'],
+                'lname' => $data['lname'],
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'cno' => $data['cno']
+            ]);
+            return true;
+        }
+        
 }
+
+public function get_subject_admin($id)
+{
+    return $this->first([
+        'subject_admin_id' => $id
+    ], 'subject_admins', 'subject_admin_id');
+
+}
+
+public function update_subject_admin($data, $id)
+{
+    
+   
+        $this->query("UPDATE users SET email=?, username=? WHERE email=?", [
+            $data['email'],
+            $data['username'],
+            $data['email']
+        ]);
+        $this->query("UPDATE subject_admins SET email=?, username=?, fname=?, lname=?, cno=? WHERE subject_admin_id=?", [
+            $data['email'],
+            $data['username'],
+            $data['fname'],
+            $data['lname'],
+            $data['cno'],
+            $id
+        ]);
+        return true;
+   
+}
+public function update_profile($data, $id)
+{
+    
+   
+    $this->query("UPDATE users SET email=?, username=? WHERE email=?", [
+        $data['email'],
+        $data['username'],
+        $data['email']
+    ]);
+    $this->query("UPDATE subject_admins SET email=?, username=?, fname=?, lname=?, cno=? WHERE subject_admin_id=?", [
+        $data['email'],
+        $data['username'],
+        $data['fname'],
+        $data['lname'],
+        $data['cno'],
+        $id
+    ]);
+
+    $_SESSION['USER_DATA']['username'] = $data['username'];
+    $_SESSION['USER_DATA']['fname'] = $data['fname'];
+    $_SESSION['USER_DATA']['lname'] = $data['lname'];
+    $_SESSION['USER_DATA']['cno'] = $data['cno'];
+
+    
+    return true;
+
+}
+
+public function view_tutors($subject)
+{
+    return $this->query("SELECT * FROM tutors WHERE subject='$subject'");
+}
+
+public function save_image_data($imagename,$id)
+{
+    $this->query("UPDATE subject_admins SET image=? WHERE subject_admin_id=?", [
+        $imagename,
+        $id
+    ]);
+    return true;
+}
+}
+
