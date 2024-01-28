@@ -91,8 +91,44 @@ class User extends Model
         $query = "SELECT * FROM users WHERE email = :email";
         $row = $this->query($query, ['email' => $email]);
         return $row;
-    }   
+    } 
+    
+    public function load_tutor_data($email)
+    {
+        $query = "SELECT * FROM tutors WHERE email = :email";
+        $row = $this->query($query, ['email' => $email]);
+        return $row;
+    }
 
+    public function validate_tutor_login($data)
+    {
+        $this->login_errors = [];
 
+        $query = "SELECT * FROM users WHERE email = :email";
+
+        if (empty($data['email'])) {
+            $this->login_errors['email_err'] = 'Please enter email*';
+        } elseif (!$this->query($query, ['email' => $data['email']])) {
+            $this->login_errors['mismatch_err'] = '*Wrong user credentials';
+        }
+
+        if (empty($data['password'])) {
+            $this->login_errors['password_err'] = 'Please enter password*';
+        }
+
+        if(!empty($data['email']) && !empty($data['password'])){
+            $row = $this->query($query, ['email' => $data['email']]);
+           
+            if(!empty($row) && !password_verify($data['password'], $row[0]->password)){
+                $this->login_errors['mismatch_err'] = 'Wrong user credentials*';
+            }
+        }
+
+        if (empty($this->login_errors)) {
+            return $row;
+        }
+        
+        return false;
+    }
    
 }

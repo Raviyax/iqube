@@ -137,6 +137,31 @@
         
     }
 
+    public static function authenticate_tutor($row, $tutordata){
+        if($row[0]!=null){
+            $_SESSION['USER_DATA'] = [
+                
+                'username' => $row[0]->username,
+                'email' => $row[0]->email,
+                'role' => 'tutor',
+                'fname' => $tutordata->fname,
+                'lname' => $tutordata->lname,
+                'cno' => $tutordata->cno,
+                'username' => $tutordata->username,
+                'subject' => $tutordata->subject,
+                'tutor_id' => $tutordata->tutor_id,
+                'image' => $tutordata->image,   
+                
+                
+          
+            ];
+
+        
+            
+        }
+        
+    }
+
     public static function is_logged_in(){
         if(!empty($_SESSION['USER_DATA'])){
             

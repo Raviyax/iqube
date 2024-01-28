@@ -82,6 +82,10 @@
             <a href="#courses" class="navbar-link" data-nav-link>Study Materials</a>
           </li>
 
+          <li class="navbar-item">
+            <a href="<?php echo URLROOT;?>/Landing/be_an_IQube_tutor" class="navbar-link" data-nav-link>IQube Tutor</a>
+          </li>
+
           
 
           <li class="navbar-item">
@@ -124,13 +128,7 @@
         </a>
         <?php }?>
 
-        <?php if(Auth::is_admin()){?>
-        <a href="<?php echo URLROOT?>/admin" class="btn has-before">
-          <span class="span">Back to Dashboard</span>
-
-          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-        </a>
-        <?php }?>
+       
 
         <?php if(Auth::is_subject_admin()){?>
         <a href="<?php echo URLROOT?>/subjectadmin" class="btn has-before">
