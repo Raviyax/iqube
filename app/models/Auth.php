@@ -1,61 +1,12 @@
 <?php
  class Auth {
     public $user;
-    public static function authenticate($row, $subjectadmindata, $studentdata, $tutordata, $premiumdata){
+    public static function authenticate($row, $studentdata, $premiumdata){
         
 
         if(is_object($row )){
 
-            if($row->role == 'subject_admin'){
-                $_SESSION['USER_DATA'] = [
-                    'user_id' => $row->user_id,
-                    'username' => $row->username,
-                    'email' => $row->email,
-                    'role' => $row->role,
-                    'created_at' => $row->created_at,
-                    'updated_at' => $row->updated_at,
-                    'fname' => $subjectadmindata->fname,
-                    'lname' => $subjectadmindata->lname,
-                    'cno' => $subjectadmindata->cno,
-                    'username' => $subjectadmindata->username,
-                    'subject' => $subjectadmindata->subject,
-                    'subject_admin_id' => $subjectadmindata->subject_admin_id,
-                    'image' => $subjectadmindata->image,
-              
-                ];
-            }
-            if($row->role == 'admin'){
-                $_SESSION['USER_DATA'] = [
-                    'user_id' => $row->user_id,
-                    'username' => $row->username,
-                    'email' => $row->email,
-                    'role' => $row->role,
-                    'created_at' => $row->created_at,
-                    'updated_at' => $row->updated_at,
-                    
-              
-                ];
-            }
-
-            if($row->role == 'tutor'){
-                $_SESSION['USER_DATA'] = [
-                    'user_id' => $row->user_id,
-                    'username' => $row->username,
-                    'email' => $row->email,
-                    'role' => $row->role,
-                    'created_at' => $row->created_at,
-                    'updated_at' => $row->updated_at,
-                    'fname' => $tutordata->fname,
-                    'lname' => $tutordata->lname,
-                    'cno' => $tutordata->cno,
-                    'username' => $tutordata->username,
-                    'subject' => $tutordata->subject,
-                    'tutor_id' => $tutordata->tutor_id,
-                    'image' => $tutordata->image,   
-
-              
-                ];
-            }
+        
 
             if($row->role == 'student'){
                 $_SESSION['USER_DATA'] = [
@@ -144,13 +95,38 @@
                 'username' => $row[0]->username,
                 'email' => $row[0]->email,
                 'role' => 'tutor',
-                'fname' => $tutordata->fname,
-                'lname' => $tutordata->lname,
-                'cno' => $tutordata->cno,
-                'username' => $tutordata->username,
-                'subject' => $tutordata->subject,
-                'tutor_id' => $tutordata->tutor_id,
-                'image' => $tutordata->image,   
+                'fname' => $tutordata[0]->fname,
+                'lname' => $tutordata[0]->lname,
+                'cno' => $tutordata[0]->cno,
+                'username' => $tutordata[0]->username,
+                'subject' => $tutordata[0]->subject,
+                'tutor_id' => $tutordata[0]->tutor_id,
+                'image' => $tutordata[0]->image,   
+                
+                
+          
+            ];
+
+        
+            
+        }
+        
+    }
+
+    public static function authenticate_subject_admin($row, $subjectadmindata){
+        if($row[0]!=null){
+            $_SESSION['USER_DATA'] = [
+                
+                'username' => $row[0]->username,
+                'email' => $row[0]->email,
+                'role' => 'subject_admin',
+                'fname' => $subjectadmindata[0]->fname,
+                'lname' => $subjectadmindata[0]->lname,
+                'cno' => $subjectadmindata[0]->cno,
+                'username' => $subjectadmindata[0]->username,
+                'subject' => $subjectadmindata[0]->subject,
+                'subject_admin_id' => $subjectadmindata[0]->subject_admin_id,
+                'image' => $subjectadmindata[0]->image,
                 
                 
           

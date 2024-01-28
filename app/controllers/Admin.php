@@ -13,32 +13,7 @@ class Admin extends Controller
         $this->subject = $this->model('Subjects');
     }
 
-    public function login()
-    {
-        if (Auth::is_logged_in() && Auth::is_admin()) {
-            redirect('/Admin');
-        } else {
-            $data = [
-                'title' => 'Login',
-                'view' => 'Login'
-            ];
-           
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                
-          if($this->user->validate_admin_login($_POST)){
-                Auth::authenticate_admin($this->user->validate_admin_login($_POST));
-                redirect('/Admin');
-
-
-            }
-            else{
-                $data['errors'] = $this->user->login_errors;
-                $this->view('Admin/login', $data);
-            }
-        }
-         $this->view('Admin/login', $data);
-    }
-}
+  
 
 
 

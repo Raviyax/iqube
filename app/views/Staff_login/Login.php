@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-    <title>IQube Admin Login</title>
+    <title>IQube Staff Login</title>
     
 
     <!-- font awesome cdn link  -->
@@ -30,8 +30,8 @@
 
 <section class="form-container">
 
-   <form action="<?php echo URLROOT;?>/admin/login" method="post" enctype="multipart/form-data" class="login">
-      <h3>Welcome Back IQube Admin!</h3>
+   <form action="<?php echo URLROOT;?>/Staff/login" method="post" enctype="multipart/form-data" class="login">
+      <h3>IQube Staff Login</h3>
       <p>Email<span>*</span></p>
       <?php if(isset($data['errors']['email_err'])){echo '<p style="color: red;">'.$data['errors']['email_err'].'</p>';}?>
       <p style="color: red;"><?php ?></p>

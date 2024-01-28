@@ -24,18 +24,20 @@
             
            
             <div class="inputs">
-            <input type="email" name="email" placeholder = "" >
+            <input type="email" name="email" placeholder = "Enter tutor email" >
+            <?php if(isset($data['errors']['email_err'])){echo '<p style="color: red;">'.$data['errors']['email_err'].'</p>';}?>
                 <br>
-                <input type="password"  name="password" placeholder = "Password">
+                <input type="password"  name="password" placeholder = "Enter password">
+                <?php if(isset($data['errors']['password_err'])){echo '<p style="color: red;">'.$data['errors']['password_err'].'</p>';}?>
             </div>
                 
                 <br><br>
-                
+                <?php if(isset($data['errors']['mismatch_err'])){echo '<p class="link"><a style="color: red;">'.$data['errors']['mismatch_err'].'</a></p>';}?>
             <div class="remember-me--forget-password">
                     <!-- Angular -->
         <label>
             <span class="text-checkbox">Remember me</span>
-            <input type="checkbox" name="item" checked/>
+            <input type="checkbox" name="item" checked>
             
         </label>
                 <p>forget password?</p>

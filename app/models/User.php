@@ -6,6 +6,7 @@ class User extends Model
     public $login_errors = [];
     
     
+    
 
     public function validate($data)
     {
@@ -104,7 +105,7 @@ class User extends Model
     {
         $this->login_errors = [];
 
-        $query = "SELECT * FROM users WHERE email = :email";
+        $query = "SELECT * FROM users WHERE email = :email AND role = 'tutor'";
 
         if (empty($data['email'])) {
             $this->login_errors['email_err'] = 'Please enter email*';
@@ -129,6 +130,44 @@ class User extends Model
         }
         
         return false;
+    }
+
+    public function validate_subject_admin_login($data)
+    {
+        $this->login_errors = [];
+
+        $query = "SELECT * FROM users WHERE email = :email AND role = 'subject_admin'";
+
+        if (empty($data['email'])) {
+            $this->login_errors['email_err'] = 'Please enter email*';
+        } elseif (!$this->query($query, ['email' => $data['email']])) {
+            $this->login_errors['mismatch_err'] = '*Wrong user credentials';
+        }
+
+        if (empty($data['password'])) {
+            $this->login_errors['password_err'] = 'Please enter password*';
+        }
+
+        if(!empty($data['email']) && !empty($data['password'])){
+            $row = $this->query($query, ['email' => $data['email']]);
+           
+            if(!empty($row) && !password_verify($data['password'], $row[0]->password)){
+                $this->login_errors['mismatch_err'] = 'Wrong user credentials*';
+            }
+        }
+
+        if (empty($this->login_errors)) {
+            return $row;
+        }
+        
+        return false;
+    }
+
+    public function load_subject_admin_data($email)
+    {
+        $query = "SELECT * FROM subject_admins WHERE email = :email";
+        $row = $this->query($query, ['email' => $email]);
+        return $row;
     }
    
 }
