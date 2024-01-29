@@ -1,21 +1,7 @@
 <?php $this->view('inc/header',$data) ?>
-
-
-
-
-
-
-
-   
 <section class="contents">
-
    <h1 class="heading">your contents</h1>
-
    <div class="box-container">
-
-   
-
-
       <div class="box">
          <div class="flex">
             <div><i class="fas fa-dot-circle" style="color:limegreen"></i><span style="color:red">Active</span></div>
@@ -29,33 +15,8 @@
          </form>
          <a href="view_content.php?get_id=<?= $video_id; ?>" class="btn">view content</a>
       </div>
-
-
    </div>
-
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php $this->view('inc/footer') ?>
-
-
-
 </body>
-
 </html>

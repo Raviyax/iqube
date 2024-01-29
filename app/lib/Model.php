@@ -1,8 +1,6 @@
 <?php
 class Model extends Database
 {
-
-
     public function insert($data , $table , $allowedColumns)
     {
         if (!empty($allowedColumns)) {
@@ -12,12 +10,9 @@ class Model extends Database
                 }
             }
         }
-
         $query = "INSERT INTO " . $table . " (" . implode(',', array_keys($data)) . ") VALUES (:" . implode(',:', array_keys($data)) . ")";
-
         $this->query($query, $data);
     }
-   
     public function first($data,$table,$orderby)
     {
         $keys = array_keys($data);
@@ -27,16 +22,12 @@ class Model extends Database
             $conditions[] = $key . "=:" . $key;
         }
         $query .= implode(' AND ', $conditions) . ' ORDER BY '.$orderby.' DESC LIMIT 1';
-    
         $res = $this->query($query, $data);
-    
         if (is_array($res) && !empty($res)) {
             return $res[0];
         }
-    
         return false;
     }
-
     public function update($data, $table, $where, $allowedColumns)
     {
         if (!empty($allowedColumns)) {
@@ -46,7 +37,6 @@ class Model extends Database
                 }
             }
         }
-
         $keys = array_keys($data);
         $query = "UPDATE " . $table . " SET ";
         $conditions = [];
@@ -54,12 +44,6 @@ class Model extends Database
             $conditions[] = $key . "=:" . $key;
         }
         $query .= implode(',', $conditions) . " WHERE " . $where;
-
         $this->query($query, $data);
     }
-
-    
-
-    
-    
 }

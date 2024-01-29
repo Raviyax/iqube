@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/header', $data) ?>
 <section class="dashboard" id="users">
     <h1 class="heading">Manage Users <a href="#" class="btn" style="width: fit-content;">View All Users</a></h1>
     <div class="flex-btn">
@@ -7,36 +7,98 @@
         <a class="option-btn" onclick="displaystudents()">Students</a>
     </div>
     <div class="box-container" id="view" style=" display:flex">
-        <a href="<?php echo URLROOT?>/admin/All_subject_admins" class="btn" style="width: fit-content;display:none;" id="viewallsubjectadminsbtn">View All Subject Admins</a>
-        <a href="<?php echo URLROOT?>/admin/tutors" class="btn" style="width: fit-content;" id="viewalltutorsbtn">View All Tutors</a>
-        <a href="<?php echo URLROOT?>/admin/students" class="btn" style="width: fit-content;display:none;" id="viewallstudentsbtn">View All Students</a>
+        <a href="<?php echo URLROOT ?>/admin/students" class="btn" style="width: fit-content;display:none;" id="viewallstudentsbtn">View All Students</a>
     </div>
-    <div class="box-container" id="tutorlist">
-        <div class="box">
-            <h3>Physics</h3>
-            <p>524 Tutors</p>
-            <a href="#" class="btn">View</a>
+    <div class="box-container" id="tutorlist" style="display: block;">
+        <div class="box-container" id="view" style=" display:flex">
+            <a href="<?php echo URLROOT ?>/admin/all_tutors" class="btn" style="width: fit-content;" id="viewalltutorsbtn">View All Tutors</a>
         </div>
-        <div class="box">
-            <h3>Chemistry</h3>
-            <p>659 Tutors</p>
-            <a href="#" class="btn">View</a>
+        <header class="header">
+            <section class="flex">
+                <form class="search-form">
+                    <button type="submit" class="fas fa-search" name="search_btn"></button>
+                    <input type="text" name="searchbar" placeholder="Search by subject..." id="tutorsearchbar" onkeyup="search('tutorlist','tutorsearchbar')" maxlength="100">
+                </form>
+            </section>
+        </header>
+        <div class="box-container" style="padding: 10px;">
+            <table id="table" style="padding-top: 20px;">
+                <tr>
+                    <th>Subject</th>
+                    <th>Count</th>
+                </tr>
+                <?php if ($data['subjects']) : ?>
+    <?php foreach ($data['subjects'] as $subject) : ?>
+        <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_tutors/<?php echo $subject->subject_name; ?>'">
+            <td>
+                <?php echo ucfirst($subject->subject_name) ?>
+            </td>
+            <td>
+                <?php
+                $subjectFound = false;
+                foreach ($data['tutorcount'] as $tutorCount) {
+                    if ($tutorCount->subject == $subject->subject_name) {
+                        echo $tutorCount->count;
+                        $subjectFound = true;
+                        break;
+                    }
+                }
+                if (!$subjectFound) {
+                    echo '0';
+                }
+                ?> Tutors
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php endif; ?>
+            </table>
         </div>
     </div>
-    <div class="box-container" id="subjectadminlist" style=" display:none;">
-   
-        <div class="box">
-            <button class="btn" onclick="addnewsubjectadmin()"><i class="fa-solid fa-square-plus"></i> Add New Subject Admin</button>
+    <div id="subjectadminlist" style=" display:none;">
+        <div class="box-container" id="view" style=" display:flex; padding: 10px">
+            <button class="btn" style="width: fit-content; " onclick="addnewsubjectadmin()"><i class="fa-solid fa-square-plus"></i> Add New Subject Admin</button>
+            <a href="<?php echo URLROOT ?>/admin/All_subject_admins" class="btn" style="width: fit-content;" id="viewallsubjectadminsbtn">View All Subject Admins</a>
         </div>
-    
-        <?php foreach ($data['subjects'] as $subject) : ?>
-        <div class="box">
-            <h3><?php echo ucfirst($subject->subject_name) ?></h3>
-            <p> <?php $count=0; $i = 0; while($i < sizeof($data['subjectadmins'])) {if($data['subjectadmins'][$i]->subject == $subject->subject_name){$count++;} $i++;}echo $count;?> Subject Admins</p>
-            <a href="<?php echo URLROOT;?>/Admin/all_subject_admins/<?php echo $subject->subject_name;?>" class="btn">View</a>
+            <header class="header">
+            <section class="flex">
+                <form class="search-form">
+                    <button type="submit" class="fas fa-search" name="search_btn"></button>
+                    <input type="text" name="searchbar" placeholder="Search by subject.." id="subjectadminsearchbar" onkeyup="search('subjectadminlist', 'subjectadminsearchbar')" maxlength="100">
+                </form>
+            </section>
+        </header>
+        <div class="box-container" style="padding: 10px;">
+            <table id="table" style="padding-top: 20px;">
+                <tr>
+                    <th>Subject</th>
+                    <th>Count</th>
+                </tr>
+                <?php if ($data['subjects']) : ?>
+    <?php foreach ($data['subjects'] as $subject) : ?>
+        <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_subject_admins/<?php echo $subject->subject_name; ?>'">
+            <td>
+                <?php echo ucfirst($subject->subject_name) ?>
+            </td>
+            <td>
+                <?php
+                $subjectFound = false;
+                foreach ($data['subjectadmincount'] as $subjectAdminCount) {
+                    if ($subjectAdminCount->subject == $subject->subject_name) {
+                        echo $subjectAdminCount->count;
+                        $subjectFound = true;
+                        break;
+                    }
+                }
+                if (!$subjectFound) {
+                    echo '0';
+                }
+                ?> Subject Admins
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php endif; ?>
+            </table>
         </div>
-        <?php endforeach; ?>
-      
     </div>
     <div class="box-container" id="studentlist" style=" display:none;">
         <div class="box">
@@ -52,35 +114,21 @@
     </div>
     </div>
 </section>
-
 <div id="addnewsubjectadmin" class="overlay">
     <section class="video-form">
-
-
-        <form action="<?php echo URLROOT?>/admin/users" method="post" enctype="multipart/form-data">
+        <form action="<?php echo URLROOT ?>/admin/users" method="post" enctype="multipart/form-data">
             <div class="flex-btn" style="justify-content: flex-end;">
-
-
                 <button class="option-btn" onclick="closeadd()" style="width: fit-content;" background-color:rgba(0, 0, 0, 0);><i class="fa-solid fa-xmark"></i></button>
             </div>
             <h1 class="heading">Add New Subject Admin</h1>
-            
-
-
-
-
-            
-
-
             <p>Subject <span>*</span></p>
             <select name="subject" class="box" required>
                 <option value="" selected disabled>-- select subject</option>
                 <?php foreach ($data['subjects'] as $subject) : ?>
-                <option value="<?php echo $subject->subject_name ?>">
-                    <?php echo ucfirst($subject->subject_name) ?>
-                </option>
+                    <option value="<?php echo $subject->subject_name ?>">
+                        <?php echo ucfirst($subject->subject_name) ?>
+                    </option>
                 <?php endforeach; ?>
-                
             </select>
             <p>Firstname <span>*</span></p>
             <input type="text" name="fname" maxlength="100" required placeholder="Enter first name" class="box">
@@ -88,62 +136,39 @@
             <input type="text" name="lname" maxlength="100" required placeholder="Enter Last Name" class="box">
             <p>Contact Number <span>*</span></p>
             <input type="text" name="cno" maxlength="100" required placeholder="Enter Contact Number" class="box">
-
             <p>Username <span>*</span></p>
             <input type="text" name="username" maxlength="100" required placeholder="Enter username" class="box">
             <p>Email <span>*</span></p>
             <input type="email" name="email" maxlength="100" required placeholder="Enter email" class="box">
-
             <p>Password <span>*</span></p>
             <input type="password" name="password" maxlength="100" required placeholder="Enter Password" class="box">
-
             <p>Confirm Password <span>*</span></p>
             <input type="password" name="confirm_password" maxlength="100" required placeholder="Enter Password" class="box">
-
-
             <input type="submit" value="add_subject_admin" name="submit" class="btn">
         </form>
     </section>
 </div>
-
 <script>
     function displaystudents() {
         document.getElementById("tutorlist").style.display = "none";
         document.getElementById("subjectadminlist").style.display = "none";
-        document.getElementById("studentlist").style.display = "grid";
-        document.getElementById("viewallsubjectadminsbtn").style.display = "none";
-        document.getElementById("viewalltutorsbtn").style.display = "none";
-        document.getElementById("viewallstudentsbtn").style.display = "block";
+        document.getElementById("studentlist").style.display = "block";
     }
-
     function displaytutors() {
-        document.getElementById("tutorlist").style.display = "grid";
+        document.getElementById("tutorlist").style.display = "block";
         document.getElementById("subjectadminlist").style.display = "none";
         document.getElementById("studentlist").style.display = "none";
-        document.getElementById("viewallsubjectadminsbtn").style.display = "none";
-        document.getElementById("viewalltutorsbtn").style.display = "block";
-        document.getElementById("viewallstudentsbtn").style.display = "none";
     }
-
     function displaysubjectadmins() {
         document.getElementById("tutorlist").style.display = "none";
-        document.getElementById("subjectadminlist").style.display = "grid";
+        document.getElementById("subjectadminlist").style.display = "block";
         document.getElementById("studentlist").style.display = "none";
-        document.getElementById("viewallsubjectadminsbtn").style.display = "block";
-        document.getElementById("viewalltutorsbtn").style.display = "none";
-        document.getElementById("viewallstudentsbtn").style.display = "none";
     }
-
     function addnewsubjectadmin() {
-        
         document.getElementById("addnewsubjectadmin").style.display = "block";
-
     }
-
     function closeadd() {
-        
         document.getElementById("addnewsubjectadmin").style.display = "none";
-
     }
     var dashboard = document.getElementById("users");
     var btns = dashboard.getElementsByClassName("option-btn");
@@ -154,8 +179,26 @@
             this.className += " option-btn-active";
         });
     }
+    function search(sectionID, searchbarId) {
+    var input, filter, table, tr, td, i, txtValue, section;
+    input = document.getElementById(searchbarId);
+    filter = input.value.toUpperCase();
+    section = document.getElementById(sectionID);
+    table = section.querySelector("table"); // Corrected this line
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0]; // Assuming you want to search in the first column
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
 </script>
 <?php $this->view('inc/footer') ?>
 </body>
-
 </html>

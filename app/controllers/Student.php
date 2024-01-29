@@ -1,8 +1,6 @@
 <?php
 class Student extends Controller {
-
     private $imagepath;
-
     public $user;
     public $student;
     public function index(){
@@ -16,12 +14,7 @@ class Student extends Controller {
         else{
             redirect('/Login');
         }
-        
-
-
-
     }
-
     public function purchase_premium(){
         if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
             $data = [
@@ -29,23 +22,16 @@ class Student extends Controller {
                 'view' => 'Purchase Premium'
             ];
             $this->view('Student/purchase_premium', $data);
-
             //temporarily
-
             if(isset($_POST['pay'])){
-            
                 $this->student = $this->model('student');
                 $this->student->pay();
-                
             }
-
-            
         }
         else{
             redirect('/Login');
         }
     }
-
     public function signup_premium(){
         if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
             if(Auth::is_paid()){
@@ -54,34 +40,26 @@ class Student extends Controller {
                     'view' => 'Signup Premium'
                 ];
                 $this->view('Student/Signup_premium', $data);
-           
                 if(isset($_POST['signup'])){
                     $this->student = $this->model('student');
                     $this->student->signup_premium();
                 }
-                
             }else{
                echo "<script>alert('Please pay first')</script>";
             }
-            
-           
         }
         else{
             redirect('/Login');
         }
     }
-
     public function userimage($image) {
-       
         if(Auth::is_logged_in() && Auth::is_student()){
             $this->media($image,'/uploads/userimages/');
         }
-       
         else{
             redirect('/Login');
         }
     }
-
     public function study_materials(){
         if(!Auth::is_completed())
         if(Auth::is_logged_in() && Auth::is_student() && Auth::is_completed()){
@@ -95,7 +73,6 @@ class Student extends Controller {
             redirect('/Login');
         }
     }
-
     public function more_details(){
         if(Auth::is_logged_in() && Auth::is_student()){
             if(!Auth::is_completed()){
@@ -108,18 +85,14 @@ class Student extends Controller {
                 if(isset($_POST['proceed'])){
                     $this->student = $this->model('student');
                     $this->student->complete_profile();
-                    
                 }
             }
             else{
                 redirect('/Student');
             }
-      
         }
         else{
             redirect('/Login');
         }
     }
-
 }
-    

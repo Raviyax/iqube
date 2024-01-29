@@ -1,6 +1,5 @@
 <?php
 class Database
-
 {
   private function connect()
   {
@@ -12,10 +11,6 @@ class Database
   {
     $conn = $this->connect();
     $stm = $conn->prepare($query);
-
-
-
-
     if ($stm) {
       $check = $stm->execute($data);
       if ($check) {
@@ -32,9 +27,4 @@ class Database
       }
     }
   }
-
-
-
-
-  
 }

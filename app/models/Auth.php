@@ -2,12 +2,7 @@
  class Auth {
     public $user;
     public static function authenticate($row, $studentdata, $premiumdata){
-        
-
         if(is_object($row )){
-
-        
-
             if($row->role == 'student'){
                 $_SESSION['USER_DATA'] = [
                     'user_id' => $row->user_id,
@@ -16,8 +11,7 @@
                     'role' => $row->role,
                     'created_at' => $row->created_at,
                     'updated_at' => $row->updated_at,
-                
-                    'image' => $studentdata->image,  
+                    'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
                     'paid' => $studentdata->paid,
                     'student_id' => $studentdata->student_id,
@@ -25,18 +19,8 @@
                     'lname' => $premiumdata->lname,
                     'cno' => $premiumdata->cno,
                     'completed' => $studentdata->completed,
-
-
-
-
-
-                    
-                    
-
-              
                 ];
             }
-
             if(($row->role == 'student') && ($studentdata->premium == 1)){
                 $_SESSION['USER_DATA'] = [
                     'user_id' => $row->user_id,
@@ -48,50 +32,26 @@
                     'fname' => $premiumdata->fname,
                     'lname' => $premiumdata->lname,
                     'cno' => $premiumdata->cno,
-                    
-                    
                     'student_id' => $studentdata->student_id,
-                    'image' => $studentdata->image,  
+                    'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
                     'paid' => $studentdata->paid,
-                    
-                    
-                    
-              
                 ];
             }
-
-
-   
-         
-       
         }
-
-        
     }
-
     public static function authenticate_admin($row){
         if($row[0]!=null){
             $_SESSION['USER_DATA'] = [
-                
                 'username' => $row[0]->username,
                 'email' => $row[0]->email,
                 'role' => 'admin',
-                
-                
-          
             ];
-
-        
-            
         }
-        
     }
-
     public static function authenticate_tutor($row, $tutordata){
         if($row[0]!=null){
             $_SESSION['USER_DATA'] = [
-                
                 'username' => $row[0]->username,
                 'email' => $row[0]->email,
                 'role' => 'tutor',
@@ -101,22 +61,13 @@
                 'username' => $tutordata[0]->username,
                 'subject' => $tutordata[0]->subject,
                 'tutor_id' => $tutordata[0]->tutor_id,
-                'image' => $tutordata[0]->image,   
-                
-                
-          
+                'image' => $tutordata[0]->image,
             ];
-
-        
-            
         }
-        
     }
-
     public static function authenticate_subject_admin($row, $subjectadmindata){
         if($row[0]!=null){
             $_SESSION['USER_DATA'] = [
-                
                 'username' => $row[0]->username,
                 'email' => $row[0]->email,
                 'role' => 'subject_admin',
@@ -127,25 +78,15 @@
                 'subject' => $subjectadmindata[0]->subject,
                 'subject_admin_id' => $subjectadmindata[0]->subject_admin_id,
                 'image' => $subjectadmindata[0]->image,
-                
-                
-          
             ];
-
-        
-            
         }
-        
     }
-
     public static function is_logged_in(){
         if(!empty($_SESSION['USER_DATA'])){
-            
             return true;
         }
         return false;
     }
-
     public static function logout(){
        if(!empty($_SESSION['USER_DATA'])){
            unset($_SESSION['USER_DATA']);
@@ -153,57 +94,46 @@
            session_regenerate_id();
        }
     }
-
     public static function is_admin(){
         if($_SESSION['USER_DATA']['role'] == 'admin'){
             return true;
         }
         return false;
     }
-
     public static function is_tutor(){
         if($_SESSION['USER_DATA']['role'] == 'tutor'){
             return true;
         }
         return false;
     }
-
     public static function is_student(){
         if($_SESSION['USER_DATA']['role'] == 'student'){
             return true;
         }
         return false;
     }
-
     public static function is_subject_admin(){
         if($_SESSION['USER_DATA']['role'] == 'subject_admin'){
             return true;
         }
         return false;
     }
-
     public static function is_premium(){
         if($_SESSION['USER_DATA']['premium'] == '1'){
             return true;
         }
         return false;
     }
-
     public static function is_paid(){
         if($_SESSION['USER_DATA']['paid'] == '1'){
             return true;
         }
         return false;
     }
-
     public static function is_completed(){
         if($_SESSION['USER_DATA']['completed'] == '1'){
             return true;
         }
         return false;
     }
-
-
-
-
  }

@@ -5,12 +5,10 @@ function set_value($key){
     }
     return '';
 }
-
 function redirect($path){
     header("Location: " . URLROOT . $path);
     exit();
 }
-
 function generate_unique_filename($file){
   try {
      if (!empty($file)) {
@@ -19,12 +17,8 @@ function generate_unique_filename($file){
          return $uniqueFilename;
      } else {
          throw new Exception('File upload failed.');
-     }  
-
+     }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
-
-
 }
 }
-
