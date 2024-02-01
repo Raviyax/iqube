@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/Login.css">
+</head>
 <body>
     <div class="box-form" id="login">
         <form class="login_menu" action="<?php echo URLROOT;?>/Login" method = "post">
@@ -22,9 +23,9 @@
             <h5>Login</h5>
             <p>New to IQube? <br><a href="<?php echo URLROOT;?>/Signup">Create Your Account</a> </p>
             <div class="inputs">
-            <input type="email" name="email" placeholder = "<?php echo (!empty($data['email_err']))?$data['email_err']:'Email';?>" value="<?php echo $data['email'];?>" >
+            <input type="email" name="email" placeholder = "<?php print (empty($data['errors']['email_err']))?"Email":$data['errors']['email_err'];?>" >
                 <br>
-                <input type="password"  name="password" placeholder = "<?php echo (!empty($data['password_err']))?$data['password_err']:'Password';?>" value="<?php echo $data['password'];?>">
+                <input type="password"  name="password" placeholder = "Password">
             </div>
                 
                 <br><br>
@@ -39,7 +40,7 @@
             </div>
                 
                 <br>
-                <button>Login</button>
+                <button >Login</button>
         
         </form>
 

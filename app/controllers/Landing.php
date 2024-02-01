@@ -2,8 +2,8 @@
 class Landing extends Controller {
 
     public function index(){
-        
-        $this->view('Landing');
+       $data['view'] = 'Home';
+        $this->view('Landing',$data);
        
 
 

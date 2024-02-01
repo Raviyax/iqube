@@ -1,107 +1,59 @@
 <?php
 class Login extends Controller
-{       private $userModel;
-    public function __construct()
-    {   
-        $this->userModel = $this->model('User');
-    }
-    
+{       
+   
+
     public function index(){
+
+        if(!Auth::is_logged_in()){
+           
+        
+        $row = [];
+        $studentdata = [];
+        $tutordata = [];
+        $subjectadmindata = [];
+        $premiumdata = [];
+
+        $data['title'] = 'Login';
+        $data['errors'] = [];
+        $user = $this->model('User');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            $data = [
-                'title' => 'Signup',
+            $row = $user->first([
+                   'email' => $_POST['email']],'users','user_id');
+            $subjectadmindata = $user->first([
+                    'email' => $_POST['email']],'subject_admins','subject_admin_id');
+                    $studentdata = $user->first([
+                        'email' => $_POST['email']],'students','student_id');
+                        $tutordata = $user->first([
+                            'email' => $_POST['email']],'tutors','tutor_id');
+                            $premiumdata = $user->first([
+                                'email' => $_POST['email']],'premium_students','pro_id');
                
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
+            if($row){
                 
-               
-                'email_err' => '',
-                'password_err' => '',
-               
-            ];
-
-          
-
-            //validte email
-            if(empty($data['email'])){
-                $data['email_err'] = 'Please enter email';
-            }
-           // validate password
-              if(empty($data['password'])){
-                $data['password_err'] = 'Please enter password';
+                if(password_verify($_POST['password'], $row->password)){
+                    Auth::authenticate($row, $subjectadmindata, $studentdata, $tutordata, $premiumdata);
+                  if( Auth::is_tutor()){ header('location:'.URLROOT.'/tutor');}
+                    if( Auth::is_admin()){ header('location:'.URLROOT.'/admin');}
+                    if( Auth::is_student()){ header('location:'.URLROOT.'/student');}
+                    if( Auth::is_subject_admin()){ header('location:'.URLROOT.'/subjectadmin');}
+                  
+                   
+                   
                 }
 
-            // check for user/email
-            if($this->userModel->findUserByEmail($data['email'])){
-                //user found
-            }else{  
-                //user not found
-                $data['email_err'] = 'No user found';
+                $data['errors']['email_err'] = '*Wrong Email or Password';
 
             }
-    
-               
-    
-                //make sure errors are empty
-                if(empty($data['email_err']) && empty($data['password_err'])){
-                
-                    //validated
-                    //check and set logged in user
-                    $loggedInUser = $this->userModel->login($data['email'], $data['password']);
-                    if($loggedInUser){
-                        //create session
-                        $this->createUserSession($loggedInUser);
-                        
-                       
-                    }else{
-                        $data['password_err'] = 'Password incorrect';
-                        $this->view('Login', $data);
-                    }
-                 }
-                    else{
-                        //load view with errors
-                        $this->view('Login', $data);
-                    }
-                 
         }
-        else{
-            $data = [
-                'title' => 'Lognup',
-               
-                'email' => '',
-                'password' => '',
-            
-               
-                'email_err' => '',
-                'password_err' => '',
-                
-            ];
-            $this->view('Login', $data);
-        }
-
-      
-    }
-    public function createUserSession($user){
-        $_SESSION['user_id'] = $user->id;
-        $_SESSION['user_email'] = $user->email;
-        $_SESSION['user_name'] = $user->name;
-        $_SESSION['user_role'] = $user->role;
-
+        $this->view('login', $data);
         
-
         
-        header('location: ' . URLROOT . '/Dashboard/'.$_SESSION['user_role']);
-    }
-
-    public function logout(){
-        unset($_SESSION['user_id']);
-        unset($_SESSION['user_email']);
-        unset($_SESSION['user_name']);
-        unset($_SESSION['user_role']);
-        session_destroy();
-        header('location: ' . URLROOT . '/Login');
-    }
 }
-
+    
+    else{
+        header('location:'.URLROOT.'/Landing');
+    }
+    
+}
+}

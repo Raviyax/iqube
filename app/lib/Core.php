@@ -8,6 +8,7 @@ class core {
     protected $currentController = '_404';
     protected $currentMethod = 'index';
     protected $params = [];
+  
 
    public function __construct()
    {
@@ -26,6 +27,7 @@ class core {
 }
     // Require the controller
     require_once '../app/controllers/' . $this->currentController . '.php';
+ 
     // Instantiate controller class
     $this->currentController = new $this->currentController;
   
@@ -53,7 +55,9 @@ class core {
            
             $url = filter_var($url,FILTER_SANITIZE_URL);
             $url = explode('/',$url);
+           
             return $url;
+
        
          
     }

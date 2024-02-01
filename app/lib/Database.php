@@ -1,87 +1,69 @@
 <?php
-/*
-* Database class
-* Connect to database
-* Create prepared statements
-* Bind values
-* Return rows and results
-*/
 class Database
+
 {
-  private $host = DB_HOST;
-  private $user = DB_USER;
-  private $pass = DB_PASS;
-  private $dbname = DB_NAME;
-  private $dbh;
-  private $stmt;
-  private $error;
-
-  public function __construct()
+  private function connect()
   {
-    // Set DSN
-    $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
-    $options = array(
-      PDO::ATTR_PERSISTENT => true,
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    );
-    // Create PDO instance
-    try {
-      $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
-    } catch (PDOException $e) {
-      $this->error = $e->getMessage();
-      echo $this->error;
-    }
+    $str = DBDRIVER . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
+    $conn = new PDO($str, DB_USER, DB_PASS);
+    return $conn;
   }
+  public function query($query, $data = [], $type = 'object')
+  {
+    $conn = $this->connect();
+    $stm = $conn->prepare($query);
 
-  // Prepare statement with query
-  public function query($sql)
-  {
-    $this->stmt = $this->dbh->prepare($sql);
-  }
-  // Bind values
-  public function bind($param, $value, $type = null)
-  {
-    if (is_null($type)) {
-      switch (true) {
-        case is_int($value):
-          $type = PDO::PARAM_INT;
-          break;
-        case is_bool($value):
-          $type = PDO::PARAM_BOOL;
-          break;
-        case is_null($value):
-          $type = PDO::PARAM_NULL;
-          break;
-        default:
-          $type = PDO::PARAM_STR;
+
+
+
+    if ($stm) {
+      $check = $stm->execute($data);
+      if ($check) {
+        if ($type == 'object') {
+          $result = $stm->fetchAll(PDO::FETCH_OBJ);
+        } else {
+          $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+        }
+        if (is_array($result) && count($result) > 0) {
+          return $result;
+        } else {
+          return false;
+        }
       }
     }
-    $this->stmt->bindValue($param, $value, $type);
-  }
-  // Execute the prepared statement
-  public function execute()
-  {
-    return $this->stmt->execute();
-  }
-  // Get result set as array of objects
-  public function resultSet()
-  {
-    $this->execute();
-    return $this->stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
-  // Get single record as object
-  public function single()
+  public static function get_image($image = [], $path)
   {
-    $this->execute();
-    return $this->stmt->fetch(PDO::FETCH_OBJ);
+    $file = APPROOT . $path . $image;
+    $b64image = base64_encode(file_get_contents($file));
+    return $b64image;
   }
 
-  // Get row count
-  public function rowCount()
+  public function update_image($image= [], $targetDir, $query,$uniqueFilename)
   {
-    return $this->stmt->rowCount();
+      try {
+          
+              $fileType = strtolower(pathinfo($uniqueFilename, PATHINFO_EXTENSION));  
+              $targetFilePath = $targetDir . $uniqueFilename;
+  
+              $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+              
+              if (in_array($fileType, $allowTypes)) {
+                  if (move_uploaded_file($image['tmp_name'], $targetFilePath)) {
+                      // Update the database with the unique filename
+                      $this->query($query);
+                      
+                  } else {
+                      throw new Exception('File upload failed.');
+                  }
+              } else {
+                  throw new Exception('Invalid file type.');
+              }
+        
+      } catch (Exception $e) {
+          echo 'Error: ' . $e->getMessage();
+      }
   }
-
   
 }
