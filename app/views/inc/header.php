@@ -461,7 +461,7 @@
         <a href="<?php echo URLROOT;?>/Student/progre"style="opacity: 0.5;"><i class="fa-solid fa-bars-progress" ></i><span>My Progress<sup> (Pro)</sup></span></a>
         <a href="<?php echo URLROOT;?>/Student/studypl" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a>
         <a href="<?php echo URLROOT;?>/Student/notes" style="opacity: 0.5;"><i class="fa-regular fa-clipboard"></i><span>My Notes<sup> (Pro)</sup></span></a>
-        <a href="<?php echo URLROOT;?>/Student/threads"><i class="fa-brands fa-threads"></i><span>Threads</span></a>
+        <a href="<?php echo URLROOT;?>/Student/threads"><i class="fa-regular fa-comments"></i><span>Threads</span></a>
 
 
 

@@ -27,7 +27,7 @@
 <?php $this->view('inc/footer') ?>
 
 
-
+<script src="https://kit.fontawesome.com/3f6144a6ea.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

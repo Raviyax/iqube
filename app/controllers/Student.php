@@ -2,6 +2,8 @@
 class Student extends Controller {
 
     public $user;
+
+    public $tutor;
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
             $data = [
@@ -14,7 +16,7 @@ class Student extends Controller {
             redirect('/Login');
         }
         
-
+        
 
 
     }
@@ -112,6 +114,15 @@ class Student extends Controller {
                 'title' => 'Student',
                 'view' => 'tutors'
             ];
+
+            $this->tutor = $this->model('Tutors');
+            $data['tutors'] = $this->tutor->query("SELECT * FROM tutors");
+            
+            $data['tutor'] = $this->tutor->first([
+                'tutor_id' => $id
+            ], 'tutors', 'tutor_id');
+            $data['profilepic'] = $this->tutor->get_image($data['tutor']->image, "/uploads/userimages/");
+
             $this->view('Student/tutors', $data);
         }
         else{
@@ -130,6 +141,40 @@ class Student extends Controller {
                 'view' => 'threads'
             ];
             $this->view('Student/threads', $data);
+        }
+        else{
+            redirect('/Login');
+        }
+        
+
+
+
+    }
+
+    public function achievements(){
+        if(Auth::is_logged_in() && Auth::is_student()){
+            $data = [
+                'title' => 'Student',
+                'view' => 'achievements'
+            ];
+            $this->view('Student/achievements', $data);
+        }
+        else{
+            redirect('/Login');
+        }
+        
+
+
+
+    }
+
+    public function profile(){
+        if(Auth::is_logged_in() && Auth::is_student()){
+            $data = [
+                'title' => 'Student',
+                'view' => 'profile'
+            ];
+            $this->view('Student/profile', $data);
         }
         else{
             redirect('/Login');
