@@ -34,4 +34,10 @@ class Landing extends Controller {
         $this->view('Landing/tutor_login',$data);
     }
 }
+
+public function make_a_tutor_request(){
+
+    $data['view'] = 'Make a tutor request';
+    $this->view('Landing/Tutor_request',$data);
+}
 }

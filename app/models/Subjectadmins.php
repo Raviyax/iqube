@@ -1,5 +1,5 @@
 <?php
-class Subjectadmin extends Model
+class Subjectadmins extends Model
 {
     public $errors = [];
     public function validate($data)
@@ -98,13 +98,13 @@ public function update_subject_admin($data, $id)
 }
 public function update_profile($data, $id)
 {
-    $this->query("UPDATE users SET email=?, username=? WHERE email=?", [
-        $data['email'],
+    $this->query("UPDATE users SET  username=? WHERE user_id=?", [
+
         $data['username'],
-        $data['email']
+        $id
     ]);
-    $this->query("UPDATE subject_admins SET email=?, username=?, fname=?, lname=?, cno=? WHERE subject_admin_id=?", [
-        $data['email'],
+    $this->query("UPDATE subject_admins SET username=?, fname=?, lname=?, cno=? WHERE user_id=?", [
+
         $data['username'],
         $data['fname'],
         $data['lname'],
@@ -115,18 +115,24 @@ public function update_profile($data, $id)
     $_SESSION['USER_DATA']['fname'] = $data['fname'];
     $_SESSION['USER_DATA']['lname'] = $data['lname'];
     $_SESSION['USER_DATA']['cno'] = $data['cno'];
+    $_SESSION['USER_DATA']['email'] = $data['email'];
+
     return true;
 }
+
+
 public function view_tutors($subject)
 {
-    return $this->query("SELECT * FROM tutors WHERE subject='$subject'");
+    return $this->query("SELECT tutor_id, fname, lname, email FROM tutors WHERE subject='$subject'");
 }
+
 public function save_image_data($imagename,$id)
 {
     $this->query("UPDATE subject_admins SET image=? WHERE subject_admin_id=?", [
         $imagename,
         $id
     ]);
+    $_SESSION['USER_DATA']['image'] = $imagename;
     return true;
 }
 public function get_subject_admin_count_subject_vise(){

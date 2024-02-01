@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME. " ".$data['title']; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src=
+        "https://www.google.com/recaptcha/api.js" async defer>
+    </script>
 <link rel="stylesheet" href="<?php echo URLROOT;?>/assets/css/Login.css">
 <body>
     <div class="box-form" id="login">
@@ -30,6 +33,9 @@
             <span class="text-checkbox">Remember me</span>
         </label>
                 <p>forget password?</p>
+            </div>
+            <div class="g-recaptcha"
+                data-sitekey="6Lf_GGMpAAAAAEcRQIh1J6Yc8KkjyCNCrDbruOcd">
             </div>
                 <br>
                 <button >Login</button>

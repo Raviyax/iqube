@@ -78,6 +78,9 @@
                 'subject' => $subjectadmindata[0]->subject,
                 'subject_admin_id' => $subjectadmindata[0]->subject_admin_id,
                 'image' => $subjectadmindata[0]->image,
+                'created_at' => $row[0]->created_at,
+                'user_id' => $row[0]->user_id,
+                'password' => $row[0]->password,
             ];
         }
     }

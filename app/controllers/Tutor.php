@@ -50,4 +50,13 @@ class Tutor extends Controller
             redirect('/Login');
         }
     }
+
+    public function userimage($image)
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $this->retrive_media($image, '/uploads/userimages/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
 }

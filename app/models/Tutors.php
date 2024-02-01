@@ -2,6 +2,7 @@
 class Tutors extends Model
 {
     public $errors = [];
+    public $emailerrors;
     public function validate($data)
     {
         $this->errors = [];
@@ -61,4 +62,88 @@ public function get_tutor($id)
         'tutor_id' => $id
     ], 'tutors', 'tutor_id');
 }
+
+public function add_new_tutor($data)
+{
+    if ($this->validate($data)) {
+        $this->query("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)", [
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
+            'role' => 'tutor'
+        ]);
+        $row = $this->first([
+            'email' => $data['email']
+        ], 'users', 'user_id');
+        $this->query("INSERT INTO tutors (user_id, subject, fname, lname, username, email, cno) VALUES (:user_id, :subject, :fname, :lname, :username, :email, :cno)", [
+            'user_id' => $row->user_id,
+            'subject' => $_SESSION['USER_DATA']['subject'],
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'cno' => $data['cno']
+        ]);
+        return true;
+    }
+    return false;
+
+
+}
+
+public function validate_email_change($data)
+{
+    $this->emailerrors = [];
+
+    $query = "SELECT * FROM users WHERE email = :email";
+    $data['email'];
+
+
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        $this->emailerrors['email_err'] = '*Invalid Email';
+    }
+    elseif ($result = $this->query($query, ['email' => $data['email']])) {
+        if (!empty($result)) {
+            $this->emailerrors['email_err'] = '*Email already taken';
+        }
+    }
+
+    if (empty($data['confirmemail'])) {
+        $this->emailerrors['confirm_email_err'] = '*Please confirm email';
+    } else {
+        if ($data['email'] != $data['confirmemail']) {
+            $this->emailerrors['confirm_email_err'] = '*Emails do not match';
+        }
+    }
+    if (empty($data['subjectadminpassword'])) {
+        $this->emailerrors['password_err'] = '*Please enter password';
+    } elseif (!password_verify($data['subjectadminpassword'], $_SESSION['USER_DATA']['password'])) {
+        $this->emailerrors['password_err'] = '*Wrong Password';
+    }
+    if (empty($this->emailerrors)) {
+        return true;
+    }
+    print_r($this->emailerrors);
+    return false;
+
+
+}
+
+public function update_tutor_email($data, $id)
+{
+    if ($this->validate_email_change($data)) {
+        $this->query("UPDATE users SET email = :email WHERE user_id = :user_id", [
+            'email' => $data,
+            'user_id' => $id
+        ]);
+        $this->query("UPDATE tutors SET email = :email WHERE user_id = :user_id", [
+            'email' => $data,
+            'user_id' => $id
+        ]);
+        return true;
+    }
+    return false;
+
+}
+
 }

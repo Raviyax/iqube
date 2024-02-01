@@ -10,6 +10,11 @@ class Login extends Controller
         $data['errors'] = [];
         $user = $this->model('User');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            if($user->google_recaptcha($_POST['g-recaptcha-response']) == false){
+                $data['errors']['captcha_err'] = '*Please check the captcha';
+                $this->view('login', $data);
+            }
+
             $row = $user->first([
                    'email' => $_POST['email']],'users','user_id');
                     $studentdata = $user->first([

@@ -3,6 +3,11 @@ class Subjectadmin extends Controller
 {
     public $tutor;
     public $Subjectadmin;
+    public function __construct()
+    {
+        $this->Subjectadmin = $this->model('Subjectadmins');
+        $this->tutor = $this->model('Tutors');
+    }
     public function index()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
@@ -22,39 +27,42 @@ class Subjectadmin extends Controller
                 'title' => 'Subject Admin',
                 'view' => 'My Profile',
             ];
-            $this->view('Subject_admin/Profile', $data);
-            $this->Subjectadmin = $this->model('Subjectadmin');
+
+
+
+
             if (isset($_POST["submit"])) {
                 if ($_FILES["image"]['size'] > 0) {
                     $image = $this->upload_media($_FILES["image"], "/uploads/userimages/");
-                    $this->Subjectadmin->save_image_data($image, $_SESSION['USER_DATA']['user_id']);
+                    $this->Subjectadmin->save_image_data($image, $_SESSION['USER_DATA']['subject_admin_id']);
+                    redirect('/Subjectadmin/profile');
+
+
+
              }
                 $this->Subjectadmin->update_profile($_POST, $_SESSION['USER_DATA']['user_id']);
+                redirect('/Subjectadmin/profile');
             }
+            $this->view('Subject_admin/Profile', $data);
         } else {
             redirect('/Login');
         }
     }
+
     public function Tutors()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
             $data['errors'] = [];
             $data['title'] = 'Tutors';
             $data['view'] = 'Tutors';
-            $this->tutor = $this->model('Tutors');
-            $this->Subjectadmin = $this->model('Subjectadmin');
+
+
             $data['tutors'] = $this->Subjectadmin->view_tutors($_SESSION['USER_DATA']['subject']);
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($this->tutor->validate($_POST)) {
-                    $_POST['role'] = 'tutor';
-                    $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                    $this->tutor->insert($_POST, 'users', ['username', 'email', 'password', 'role']);
-                    $row = $this->tutor->first([
-                        'email' => $_POST['email']
-                    ], 'users', 'user_id');
-                    $_POST['user_id'] = $row->user_id;
-                    $this->tutor->insert($_POST, 'tutors', ['user_id','subject','fname','lname', 'username', 'email','cno']);
-                } else {
+                    $this->tutor->add_new_tutor($_POST);
+                    redirect('/Subjectadmin/Tutors');
+          } else {
                     $data['errors'] = $this->tutor->errors;
                     $data['title'] = 'tutors';
                     $this->view('Subject_admin/Tutors', $data);
@@ -65,42 +73,46 @@ class Subjectadmin extends Controller
             redirect('/Login');
         }
     }
-    public function Tutorprofile($id){
+    public function tutor_profile($id)
+    {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
             $data = [
-                'title' => 'Subject Admin',
+                'title' => 'Tutor',
                 'view' => 'Tutor Profile',
             ];
-            $this->tutor = $this->model('Tutors');
-            $data['tutor'] = $this->tutor->first([
-                'tutor_id' => $id
-            ], 'tutors', 'tutor_id');
-            $data['profilepic'] = $this->tutor->get_image($data['tutor']->image, "/uploads/userimages/");
-            $this->view('Subject_admin/Tutorprofile', $data);
+            $data['tutor'] = $this->tutor->get_tutor($id);
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $this->tutor->query("UPDATE users SET username=? WHERE email=?", [
-                            $_POST['username'],
-                            $data['tutor']->email
-                        ]);
-                        $this->tutor->query("UPDATE tutors SET username=?, fname=?, lname=?, cno=? WHERE tutor_id=?", [
-                            $_POST['username'],
-                            $_POST['fname'],
-                            $_POST['lname'],
-                            $_POST['cno'],
-                            $data['tutor']->tutor_id
-                        ]);
+                if(isset($_POST['changeemail'])){
+                    if ($this->tutor->validate_email_change($_POST)) {
+
+                        
+
+                        $this->tutor->update_tutor_email($_POST['email'],$data['tutor']->user_id);
+                        // redirect('/Subjectadmin/tutor_profile/' . $id);
+                    } else {
+                        $data['errors'] = $this->tutor->errors;
+                        $data['title'] = 'Tutor';
+                        $this->view('Subject_admin/Tutorprofile', $data);
+                    }
+
+
+                }
+
+
             }
+            $this->view('Subject_admin/Tutorprofile', $data);
+
         } else {
-            redirect('/Login');
+            $this->view('Noaccess');
         }
     }
-    public function userimage($image) {
-        if(Auth::is_logged_in() && Auth::is_subject_admin()){
-            $imagePath = APPROOT. "/uploads/userimages/" . $image;
-        readfile($imagePath);
-        }
-        else{
-            redirect('/Login');
+
+    public function userimage($image)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $this->retrive_media($image, '/uploads/userimages/');
+        } else {
+            $this->view('Noaccess');
         }
     }
 }

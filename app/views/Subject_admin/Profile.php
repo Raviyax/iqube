@@ -1,9 +1,9 @@
 <?php $this->view('inc/header',$data) ?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
-   <h1 class="heading">My Profile</h1>
+   <h1 class="heading">My Personal Profile</h1>
    <div class="details">
       <div class="tutor">
-         <img src=<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?> alt="profile" >
+         <img src="<?php echo URLROOT."/Subjectadmin/userimage/". $_SESSION['USER_DATA']['image'];?>" alt="profile" >
          <h3><?php echo ucwords($_SESSION['USER_DATA']['fname']." ".$_SESSION['USER_DATA']['lname']);?></h3>
             <span></span>
          <a class="inline-btn" onclick="openedit()"><i class="fa-solid fa-user-pen" ></i> Edit My Profile</a>
@@ -49,7 +49,7 @@
             </div>
             <h1 class="heading">Edit My Profile</h1>
             <div class="profile">
-<img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
+<img src="<?php echo URLROOT."/Subjectadmin/userimage/". $_SESSION['USER_DATA']['image'];?>" alt="">
  <p style="text-align: center;">Change Profile Picture</p>
       <input type="file" name="image" accept="image/*"  class="box">
 </div>

@@ -1,4 +1,4 @@
-<?php $this->view('inc/header') ?>
+<?php $this->view('inc/header',$data) ?>
 <section class="dashboard" id="section">
     <h1 class="heading"><?php echo $_SESSION['USER_DATA']['subject'];?> Tutors</h1>
     <header class="header">
@@ -17,7 +17,7 @@
     <th>Email</th>
   </tr>
     <?php if($data['tutors']) foreach($data['tutors'] as $tutor): ?>
-  <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutorprofile/<?php echo $tutor->tutor_id; ?>'">
+  <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutor_profile/<?php echo $tutor->tutor_id; ?>'">
     <td>
         <?php echo $tutor->tutor_id; ?>
     </td>

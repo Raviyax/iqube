@@ -8,7 +8,7 @@ class Admin extends Controller
     public function __construct()
     {
         $this->user = $this->model('User');
-        $this->Subjectadmin = $this->model('Subjectadmin');
+        $this->Subjectadmin = $this->model('Subjectadmins');
         $this->subject = $this->model('Subjects');
         $this->tutor = $this->model('Tutors');
     }
