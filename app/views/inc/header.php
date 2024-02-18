@@ -48,12 +48,70 @@
                     <div id="tutor-request-btn" class="fa-solid fa-user-plus"></div>
                     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
                 </div>
-                <div class="profile">
+                <div class="profile" id="profile">
                     <img src="<?php echo URLROOT . "/Subjectadmin/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                     <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
                     <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']); ?></span>
                     <a href="<?php echo URLROOT ?>/subjectadmin/profile" class="btn">View Profile</a>
                     <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
+                </div>
+
+                <div class="profile" id="notifications" style="overflow-y: scroll;">
+
+                    <?php
+                    if ($data['notifications']) {
+                        $notifications = $data['notifications'];
+                        
+
+                        if ($notifications['last_tutor_requests']) {
+                            echo '<div id="tutorrequests" style="margin-bottom: 10px;">';
+                        echo '<h3 class="heading">Tutor Requests</h3>';
+                            foreach ($notifications['last_tutor_requests'] as $last_tutor_request) {
+                                echo "<div class='notification'>";
+                                echo "<h3>" . $last_tutor_request['fname'] . " " . $last_tutor_request['lname'] . "</h3>";
+                                echo "<span>" . $last_tutor_request['requested_days_passed'] . " days ago</span>";
+                                echo "<div class='flex-btn'>";
+                                echo "<a href='' class='option-btn'>Dismiss</a>";
+                                echo "<a href='' class='option-btn'>View</a>";
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                            echo '<a href="' . URLROOT . '/Subjectadmin/tutor_requests" class="option-btn">View All</a>';
+                            echo '</div>';
+                        }
+                    }
+
+
+                    ?>
+
+
+
+
+
+
+
+
+                    <div id="complains">
+                        <h3 class="heading">complains</h3>
+                        <div class="notification">
+                            <h3>Kasun Chamara</h3>
+                            <span>5 days ago</span>
+                            <div class="flex-btn">
+                                <a href="login.php" class="option-btn">login</a>
+                                <a href="register.php" class="option-btn">register</a>
+                            </div>
+
+                        </div>
+
+                        <div class="notification">
+                            <h3>Kasun Chamara</h3>
+                            <span>5 days ago</span>
+                            <div class="flex-btn">
+                                <a href="login.php" class="option-btn">login</a>
+                                <a href="register.php" class="option-btn">register</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </header>
@@ -70,20 +128,24 @@
                 <a href="<?php echo URLROOT ?>/subjectadmin/profile" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
             </div>
             <nav class="navbar">
-                <a href="<?php echo URLROOT; ?>/subjectadmin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-                <a href="<?php echo URLROOT; ?>/Subjectadmin/tutors"><i class="fa-solid fa-person-chalkboard"></i><span><?php echo ucfirst($_SESSION['USER_DATA']['subject']); ?> Tutors</span>
-
-                    <div class="dropdown-content">
-                        <p>
-                            <i class="fa-solid fa-user-plus"></i>Tutor Requests
-                        </p>
-
-                    </div>
-                </a>
-                <a href="<?php echo URLROOT; ?>/Subjectadmin/students"><i class="fa-solid fa-user-pen"></i><span>Students</span></a>
-                <a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a>
-                <a href="comments.php"><i class="fa-solid fa-person-circle-question"></i><span>Complaints</span></a>
-                <a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+                <ul>
+                    <li><a href="<?php echo URLROOT; ?>/subjectadmin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Subjectadmin/tutors"><i class="fa-solid fa-person-chalkboard"></i><span><?php echo ucfirst($_SESSION['USER_DATA']['subject']); ?> Tutors</a></span>
+                        <div class="dropdown-content">
+                            <ul>
+                                <li><a href="<?php echo URLROOT; ?>/Subjectadmin/tutors"><i class="fa-solid fa-person-chalkboard"></i>View Tutors</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/Subjectadmin/tutor_requests"><i class="fa-solid fa-user-plus"></i>Tutor Requests</a></li>
+                            </ul>
+                            <!-- <p>
+                                <i class="fa-solid fa-user-plus"></i>Tutor Requests
+                            </p> -->
+                        </div>
+                    </li>
+                    <li><a href="<?php echo URLROOT; ?>/Subjectadmin/students"><i class="fa-solid fa-user-pen"></i><span>Students</span></a></li>
+                    <li><a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a></li>
+                    <li><a href="comments.php"><i class="fa-solid fa-person-circle-question"></i><span>Complaints</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                </ul>
             </nav>
         </div>
     <?php } ?>
@@ -128,11 +190,13 @@
                 <a href="profile.php" class="btn"><?php echo  $_SESSION['USER_DATA']['username']; ?></a>
             </div>
             <nav class="navbar">
-                <a href="<?php echo URLROOT; ?>/admin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-                <a href="<?php echo URLROOT; ?>/admin/users"><i class="fa-solid fa-users"></i><span>Users</span></a>
-                <a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a>
-                <a href="comments.php"><i class="fa-solid fa-gear"></i><span>Site Settings</span></a>
-                <a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+                <ul>
+                    <li href="<?php echo URLROOT; ?>/admin/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></li>
+                    <li href="<?php echo URLROOT; ?>/admin/users"><i class="fa-solid fa-users"></i><span>Users</span></li>
+                    <li href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></li>
+                    <li href="comments.php"><i class="fa-solid fa-gear"></i><span>Site Settings</span></li>
+                    <li href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></li>
+                </ul>
             </nav>
         </div><?php } ?>
     <!-- landing header  -->
@@ -193,7 +257,7 @@
                     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
                 </div>
                 <div class="profile">
-                    <img src="<?php echo URLROOT . "/tutor/userimage/". $_SESSION['USER_DATA']['image'];?>" alt="">
+                    <img src="<?php echo URLROOT . "/tutor/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                     <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
                     <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']); ?> Tutor</span>
                     <a href="<?php echo URLROOT ?>/Tutor/profile" class="btn">View Profile</a>
@@ -208,16 +272,18 @@
                 <i class="fas fa-times"></i>
             </div>
             <div class="profile">
-                <img src="<?php echo URLROOT . "/tutor/userimage/". $_SESSION['USER_DATA']['image'];?>" alt="">
+                <img src="<?php echo URLROOT . "/tutor/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                 <h3></h3>
                 <span></span>
                 <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
             </div>
             <nav class="navbar">
-                <a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-user-pen"></i><span>My Students</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book"></i><span>My Contents</span></a>
-                <a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+                <ul>
+                    <li href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-user-pen"></i><span>My Students</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book"></i><span>My Contents</span></li>
+                    <li href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></li>
+                </ul>
             </nav>
         </div>
     <?php } ?>
@@ -262,12 +328,14 @@
                 <a href="#" class="btn">About Us</a>
             </div>
             <nav class="navbar">
-                <a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
-                <a href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a>
-                <a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+                <ul>
+                    <li href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></li>
+                    <li href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></li>
+                    <li href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></li>
+                </ul>
             </nav>
             <a href="<?php echo URLROOT ?>/Student/purchase_premium" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
         </div>
@@ -313,12 +381,14 @@
                 <a href="profile.php" class="btn"><i class="fa-solid fa-crown"></i> <?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
             </div>
             <nav class="navbar">
-                <a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></a>
-                <a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a>
-                <a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+                <ul>
+                    <li href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></li>
+                    <li href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></li>
+                    <li href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></li>
+                </ul>
             </nav>
         </div>
     <?php } ?>

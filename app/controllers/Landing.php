@@ -1,8 +1,12 @@
 <?php
 class Landing extends Controller {
     public $user;
+    public $subjects;
+    public $tutors;
     public function __construct(){
         $this->user = $this->model('User');
+        $this->subjects = $this->model('Subjects');
+        $this->tutors = $this->model('Tutors');
     }
     public function index(){
        $data['view'] = 'Home';
@@ -34,10 +38,41 @@ class Landing extends Controller {
         $this->view('Landing/tutor_login',$data);
     }
 }
-
 public function make_a_tutor_request(){
+    $data['subjects'] = $this->subjects->get_subjects();
 
     $data['view'] = 'Make a tutor request';
-    $this->view('Landing/Tutor_request',$data);
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+
+        if($this->tutors->validate_tutor_requests($_POST,$_FILES['fileToUpload'])){
+            $cv=  $this->upload_media($_FILES['fileToUpload'],'/uploads/cv/');
+            $this->tutors->make_a_tutor_request($_POST,$cv);
+            redirect('/Landing');
+
+        }
+        else{
+            $data['errors'] = $this->tutors->request_errors;
+            $data['fname'] = $_POST['fname'];
+            $data['lname'] = $_POST['lname'];
+            $data['cno'] = $_POST['cno'];
+            $data['username'] = $_POST['username'];
+            $data['email'] = $_POST['email'];
+            $this->view('Landing/Tutor_request',$data);
+
+
+
+
+
+
+            $this->view('Landing/Tutor_request',$data);
+
+
+    }
+
+
+}
+$this->view('Landing/Tutor_request',$data);
 }
 }

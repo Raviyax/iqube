@@ -3,7 +3,6 @@
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     grid-template-rows: 3fr 2fr;
 }
-
 .flex{
     display: flex;
     align-items: center;
@@ -11,20 +10,16 @@
     position: relative;
     padding-top: 1rem;
 }
-
 .flex .circular-progress:hover{
     transform: scale(1.03);
 }
-
 .flex .circular-progress{
     transition: transform 0.3s linear;
 }
-
 /* ----------- *\
     *circular
     *progress
 \* ----------- */
-
 .circular-progress {
     --size: 250px;
     --half-size: calc(var(--size) / 2);
@@ -36,7 +31,6 @@
     position: absolute;
     z-index: 1;
   }
-
   .circular-progress circle {
     cx: var(--half-size);
     cy: var(--half-size);
@@ -45,11 +39,9 @@
     fill: none;
     stroke-linecap: round;
   }
-
   .circular-progress circle.bg {
     stroke: #ddd;
   }
-
   .circular-progress circle.fg {
     transform: rotate(-90deg);
     transform-origin: var(--half-size) var(--half-size);
@@ -57,13 +49,11 @@
     transition: stroke-dasharray 0.3s linear 0s;
     stroke: #5394fd;
   }
-
   @property --progress {
     syntax: "<number>";
     inherits: false;
     initial-value: 0;
   }
-
   @keyframes progress-animation {
     from {
       --progress: 0;
@@ -72,22 +62,18 @@
       --progress: 100;
     }
   }
-
 .flex img{
     border-radius: 50%;
     aspect-ratio: 1;
     width: calc(250px- var(--stroke-width));
     z-index: 0;
 }
-
 .flex .circular-progress:hover img{
     opacity: 0.5;
     background-image: url(http://localhost/iqube/6325975.png);
     object-fit: cover;
 }
-
 #profile-pic{
     display: none;
     position: fixed;
-
 }

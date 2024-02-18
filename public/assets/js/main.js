@@ -1,9 +1,21 @@
 let body = document.body;
-let profile = document.querySelector('.header .flex .profile');
-document.querySelector('#user-btn').onclick = () =>{
-   profile.classList.toggle('active');
-   searchForm.classList.remove('active');
+
+
+document.querySelector('#user-btn').onclick = () => {
+   let profile = document.getElementById('profile');
+   if (profile) {
+      profile.classList.toggle('active'); // You can replace 'active' with the class you want to use for visibility
+   }
 }
+document.querySelector('#notification-btn').onclick = () => {
+   let notifications = document.getElementById('notifications');
+   if (notifications) {
+       notifications.classList.toggle('active'); 
+       searchForm.classList.remove('active');// You can replace 'active' with the class you want to use for visibility
+   }
+}
+
+
 let searchForm = document.querySelector('.header .flex .search-form');
 document.querySelector('#search-btn').onclick = () =>{
    searchForm.classList.toggle('active');

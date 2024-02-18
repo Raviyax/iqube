@@ -3,6 +3,7 @@ class Tutors extends Model
 {
     public $errors = [];
     public $emailerrors;
+    public $request_errors = [];
     public function validate($data)
     {
         $this->errors = [];
@@ -62,7 +63,6 @@ public function get_tutor($id)
         'tutor_id' => $id
     ], 'tutors', 'tutor_id');
 }
-
 public function add_new_tutor($data)
 {
     if ($this->validate($data)) {
@@ -87,18 +87,12 @@ public function add_new_tutor($data)
         return true;
     }
     return false;
-
-
 }
-
 public function validate_email_change($data)
 {
     $this->emailerrors = [];
-
     $query = "SELECT * FROM users WHERE email = :email";
     $data['email'];
-
-
     if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
         $this->emailerrors['email_err'] = '*Invalid Email';
     }
@@ -107,7 +101,6 @@ public function validate_email_change($data)
             $this->emailerrors['email_err'] = '*Email already taken';
         }
     }
-
     if (empty($data['confirmemail'])) {
         $this->emailerrors['confirm_email_err'] = '*Please confirm email';
     } else {
@@ -125,10 +118,7 @@ public function validate_email_change($data)
     }
     print_r($this->emailerrors);
     return false;
-
-
 }
-
 public function update_tutor_email($data, $id)
 {
     if ($this->validate_email_change($data)) {
@@ -143,6 +133,77 @@ public function update_tutor_email($data, $id)
         return true;
     }
     return false;
+}
+public function validate_tutor_requests($data,$cvdata)
+{
+
+    $this->request_errors = [];
+        $query = "SELECT * FROM users WHERE username = :username";
+        if (empty($data['fname'])) {
+            $this->request_errors['fname_err'] = '*Enter First name';
+        }
+        if (empty($data['lname'])) {
+            $this->request_errors['lname_err'] = '*Enter Last name';
+        }
+        if (empty($data['username'])) {
+            $this->request_errors['uname_err'] = '*Enter name';
+        }
+        elseif ($this->query($query, ['username' => $data['username']])) {
+            $this->request_errors['uname_err'] = '*Username already taken';
+        }
+        $query = "SELECT * FROM users WHERE email = :email";
+        if(empty($data['email'])){
+            $this->request_errors['email_err'] = '*Enter email';
+        }
+        elseif (!filter_var($data['email'],FILTER_VALIDATE_EMAIL)) {
+            $this->request_errors['email_err'] = '*Invalid Email';
+        } elseif ($this->query($query, ['email' => $data['email']])) {
+            $this->request_errors['email_err'] = '*Email already taken';
+        }
+    if(empty($data['cno'])){
+        $this->request_errors['cno_err'] = '*Enter contact number';
+    }
+    if(empty($data['subject'])){
+        $this->request_errors['subject_err'] = '*Please choose a subject';
+    }
+    if(empty($data['qualification'])){
+        $this->request_errors['qualification_err'] = '*Please choose a qualification';
+    }
+    if(empty($cvdata)){
+        $this->request_errors['file_err'] = '*Please upload your CV';
+    }elseif($cvdata['size'] > 1000000){
+        $this->request_errors['file_err'] = '*File size too large';
+    }
+
+        if (empty($data['terms'])) {
+            $this->request_errors['terms_err'] = '*Please accept terms and conditions';
+        }
+        if (empty($this->request_errors)) {
+            return true;
+        }
+        return false;
+}
+
+public function make_a_tutor_request($data,$cv)
+{
+
+        $this->query("INSERT INTO tutor_requests (subject, fname, lname, username, email, cno, qualification, cv,message) VALUES (:subject, :fname, :lname, :username, :email, :cno, :qualification, :cv, :message)", [
+
+            'subject' => $data['subject'],
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'cno' => $data['cno'],
+            'qualification' => $data['qualification'],
+            'cv' => $cv,
+            'message' => $data['message']
+            
+
+        ]);
+        return true;
+
+
 
 }
 

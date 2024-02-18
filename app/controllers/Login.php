@@ -14,7 +14,6 @@ class Login extends Controller
                 $data['errors']['captcha_err'] = '*Please check the captcha';
                 $this->view('login', $data);
             }
-
             $row = $user->first([
                    'email' => $_POST['email']],'users','user_id');
                     $studentdata = $user->first([

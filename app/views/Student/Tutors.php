@@ -1,11 +1,7 @@
 <?php $this->view('inc/header',$data) ?>
-
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/tutors.css">
-
 <section class="container">
-
     <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1>
-
     <h1 class="spacing">Instructors <span style="font-size:1.5rem">(241)</span></h1>
     <br>
     <div class="filters">
@@ -41,18 +37,14 @@
             </select>
         </div> -->
     </div>
-
     <div class="grid">
         <?php
             $tutorsPerPage = 12;
             $tutorChunks = array_chunk($data['tutors'], $tutorsPerPage);
-
             // Get the current page number from the URL parameter
             $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
             // Display tutors for the current page
             $currentTutors = isset($tutorChunks[$currentPage - 1]) ? $tutorChunks[$currentPage - 1] : [];
-
             foreach ($currentTutors as $tutor):
         ?>
         <div class="tutor">
@@ -69,38 +61,21 @@
         </div>
         <?php endforeach; ?>
     </div>
-
     <div class="paginator">
         <ul>
             <?php if ($currentPage > 1): ?>
                 <li><a href="?page=<?php echo $currentPage - 1; ?>" class="prev">&lt; Prev</a></li>
             <?php endif; ?>
-
             <?php for ($i = 1; $i <= count($tutorChunks); $i++): ?>
                 <li><a href="?page=<?php echo $i; ?>" <?php echo ($i == $currentPage) ? 'class="active"' : ''; ?>><?php echo $i; ?></a></li>
             <?php endfor; ?>
-
             <?php if ($currentPage < count($tutorChunks)): ?>
                 <li><a href="?page=<?php echo $currentPage + 1; ?>" class="next">Next &gt;</a></li>
             <?php endif; ?>
         </ul>
     </div>
-
-
-
-
 </section>
-
-
-
-
-
 <script src="<?=URLROOT?>/assets/js/student/tutors.js"></script>
-
 <?php $this->view('inc/footer') ?>
-
-
-
 </body>
-
 </html>

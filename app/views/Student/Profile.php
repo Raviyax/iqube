@@ -1,7 +1,5 @@
 <?php $this->view('inc/header',$data) ?>
-
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/profile.css">
-
 <section class="dashboard">
     <div class="grid">
         <div class="flex">
@@ -16,10 +14,7 @@
         <input type="file" name="profile-pic" accept="image/*" class="box">
     </div>
 </section>
-
 <?php $this->view('inc/footer') ?>
-
-
 <script>
     function changeDP(){
         document.getElementById("profile-pic").style.display = "flex";
@@ -29,5 +24,4 @@
     }
 </script>
 </body>
-
 </html>

@@ -50,7 +50,6 @@
             </div>
             <h1 class="heading">Change <?php echo  ucfirst($tutor->fname);?>'s Email</h1>
             <div class="profile">
-
 </div>
             <p>New Email</p>
             <input type="email" maxlength="100" required placeholder="New Email" class="box" name = "email">
@@ -58,8 +57,6 @@
             <input type="email" maxlength="100" required placeholder="Confirm Email" name="confirmemail" class="box">
             <p>Your Password</p>
             <input type="password" maxlength="100" required placeholder="Password" name="subjectadminpassword" class="box">
-
-
          <input type="submit" value="Change Email" name="changeemail" class="btn">
         </form>
     </section>

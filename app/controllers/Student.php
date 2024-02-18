@@ -95,7 +95,6 @@ class Student extends Controller {
             redirect('/Login');
         }
     }
-
 public function profile(){
     if(Auth::is_logged_in() && Auth::is_student()){
         $data = [
@@ -112,7 +111,6 @@ public function profile(){
         redirect('/Login');
     }
 }
-
 public function syllabus(){
     if(Auth::is_logged_in() && Auth::is_student()){
         $data = [
@@ -124,9 +122,7 @@ public function syllabus(){
     else{
         redirect('/Login');
     }
-
 }
-
 public function threads(){
     if(Auth::is_logged_in() && Auth::is_student()){
         $data = [
@@ -139,13 +135,11 @@ public function threads(){
         redirect('/Login');
     }
 }
-
 public function tutors(){
     if(Auth::is_logged_in() && Auth::is_student()){
         $data = [
             'title' => 'Student',
             'view' => 'Tutors',
-
             'tutors' => $this->model('user')->query("SELECT * FROM tutors"),
         ];
         $this->view('Student/Tutors', $data);

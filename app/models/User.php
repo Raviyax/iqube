@@ -126,38 +126,28 @@ class User extends Model
         $row = $this->query($query, ['email' => $email]);
         return $row;
     }
-
     public function google_recaptcha($google_captcha) {
         // Your Google reCAPTCHA secret key
         $secretKey = "6Lf_GGMpAAAAADDck4EoTxHqZMkgdvsuMPm_ZDHg";
-
         // Google reCAPTCHA verification endpoint
         $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secretKey . '&response=' . $google_captcha;
-
         // Use cURL for making the HTTP request
         $ch = curl_init($url);
-
         // Set cURL options
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
         // Execute the cURL request
         $response = curl_exec($ch);
-
         // Check for cURL errors
         if (curl_errno($ch)) {
             // Handle cURL error (e.g., log, return an error response, etc.)
             curl_close($ch);
             return false;
         }
-
         // Close cURL session
         curl_close($ch);
-
         // Decode the JSON response
         $responseKeys = json_decode($response, true);
-
         // Check if the verification was successful
         return isset($responseKeys["success"]) && $responseKeys["success"];
     }
-
 }

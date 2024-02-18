@@ -34,9 +34,9 @@
         </label>
                 <p>forget password?</p>
             </div>
-            <div class="g-recaptcha"
+            <!-- <div class="g-recaptcha"
                 data-sitekey="6Lf_GGMpAAAAAEcRQIh1J6Yc8KkjyCNCrDbruOcd">
-            </div>
+            </div> -->
                 <br>
                 <button >Login</button>
         </form>

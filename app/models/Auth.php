@@ -62,6 +62,10 @@
                 'subject' => $tutordata[0]->subject,
                 'tutor_id' => $tutordata[0]->tutor_id,
                 'image' => $tutordata[0]->image,
+               'approved_date' => $tutordata[0]->approved_date,
+               'active' => $tutordata[0]->active,
+                
+                
             ];
         }
     }
@@ -104,7 +108,7 @@
         return false;
     }
     public static function is_tutor(){
-        if($_SESSION['USER_DATA']['role'] == 'tutor'){
+        if($_SESSION['USER_DATA']['role'] == 'tutor' && $_SESSION['USER_DATA']['active'] == 1){
             return true;
         }
         return false;
