@@ -1,7 +1,15 @@
 <?php
 class Tutor extends Controller
 {
-    private $me;
+    public $me;
+    public $tutor;
+
+
+    public function __construct()
+    {
+        $this->me = $this->model('User');
+        $this->tutor = $this->model('Tutors');
+    }
     public function index()
     {
         if (Auth::is_logged_in() && Auth::is_tutor()) {
@@ -10,8 +18,7 @@ class Tutor extends Controller
                 'view' => 'Dashboard'
             ];
             $this->view('Tutor/Dashboard', $data);
-        }
-        else{
+        } else {
             redirect('/Login');
         }
     }
@@ -27,9 +34,9 @@ class Tutor extends Controller
             if (isset($_POST["submit"])) {
                 if ($_FILES["image"]['size'] > 0) {
                     $uniqueFilename = generate_unique_filename($_FILES["image"]);
-                    $this->me->update_image($_FILES["image"],APPROOT."/uploads/userimages/","UPDATE tutors SET image = '{$uniqueFilename}' WHERE user_id = '{$_SESSION['USER_DATA']['user_id']}'", $uniqueFilename);
-                    $_SESSION['USER_DATA']['image'] = Database::get_image( $uniqueFilename, "/uploads/userimages/");
-                 }
+                    $this->me->update_image($_FILES["image"], APPROOT . "/uploads/userimages/", "UPDATE tutors SET image = '{$uniqueFilename}' WHERE user_id = '{$_SESSION['USER_DATA']['user_id']}'", $uniqueFilename);
+                    // $_SESSION['USER_DATA']['image'] = Database::get_image( $uniqueFilename, "/uploads/userimages/");
+                }
                 $this->me->query("UPDATE users SET username=? WHERE email=?", [
                     $_POST['username'],
                     $_SESSION['USER_DATA']['email']
@@ -57,5 +64,41 @@ class Tutor extends Controller
         } else {
             $this->view('Noaccess');
         }
+    }
+
+    public function first_time_login()
+    {   
+        $email = isset($_GET['email']) ? $_GET['email'] : null;
+    $token = isset($_GET['token']) ? $_GET['token'] : null;
+        if (!Auth::is_logged_in() && !$this->tutor->is_activated($email) && $token != null && $email != null) {
+            if ($this->tutor->verify_token($email, $token)) {
+                $data = [
+                    'email' => $email,
+                    'token' => $token,
+                ];
+                $this->view('Tutor/createpassword', $data);
+                if (isset($_POST['create'])) {
+                    if ($this->tutor->validate_new_password($_POST)) {
+                        if ($this->tutor->create_new_password($_POST['password'], $email)) {
+                            $this->tutor->set_tutor_active($email);
+
+
+                            echo "<script>alert('Acount Activated Sucessfully')</script>";
+                            redirect('/Login');
+                        }
+                    } else {
+                        $data = [
+                            'errors' => $this->tutor->errors
+                        ];
+                        $this->view('Tutor/createpassword', $data);
+                    }
+                }
+            }
+        }else{
+            redirect('/Landing');
+           
+            
+        }
+
     }
 }

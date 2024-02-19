@@ -203,23 +203,39 @@ public function get_tutor_request($id)
 
 public function accept_tutor_request($id)
 {
-    //1st copy the entire row from tutor_requests to users
+        // Auto-generate password for tutor
+        $password = bin2hex(random_bytes(8));
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+    // 1st copy the entire row from tutor_requests to users
     $tutor_request = $this->first([
         'request_id' => $id
     ], 'tutor_requests', 'request_id');
     
-    //auto generate password for tutor
-    $password = bin2hex(random_bytes(8));
+
+    
+    // Send an email with a link to tutor
+    $mail = new Mail();
+$link = URLROOT . "/Tutor/first_time_login?email=".$tutor_request->email."&token=".$password;
+
+
+
+if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href="' . $link . '">click here</a> to log in and change your password.')) {
+    // Insert data into users table
     $this->query("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)", [
         'username' => $tutor_request->username,
         'email' => $tutor_request->email,
-        'password' => password_hash($password, PASSWORD_DEFAULT),
+        'password' => $hashedPassword,
         'role' => 'tutor'
     ]);
+
+    // Get the user_id from the inserted user record
     $row = $this->first([
         'email' => $tutor_request->email
     ], 'users', 'user_id');
-    $this->query("INSERT INTO tutors (user_id,subject,fname,lname,username,email,cno,qualification,cv) VALUES (:user_id,:subject,:fname,:lname,:username,:email,:cno,:qualification,:cv)", [
+
+    // Insert data into tutors table
+    $this->query("INSERT INTO tutors (user_id, subject, fname, lname, username, email, cno, qualification, cv) VALUES (:user_id, :subject, :fname, :lname, :username, :email, :cno, :qualification, :cv)", [
         'user_id' => $row->user_id,
         'subject' => $tutor_request->subject,
         'fname' => $tutor_request->fname,
@@ -231,10 +247,17 @@ public function accept_tutor_request($id)
         'cv' => $tutor_request->cv,
     ]);
 
-    //2nd delete the row from tutor_requests
+    // 2nd delete the row from tutor_requests
     $this->query("DELETE FROM tutor_requests WHERE request_id=?", [$id]);
-
+   
+    return true;
+} else {
+    echo "<script>alert('Error');</script>";
 }
+
+   
+}
+
 
 
 

@@ -34,7 +34,7 @@ public function upload_media($file, $path)
     // Move the uploaded file
     if (move_uploaded_file($file["tmp_name"], $target_file)) {
         // Check file size
-        if ($file["size"] > 5000000) {
+        if ($file["size"] > 50000000) {
             unlink($target_file); // Delete the uploaded file if it exceeds the size limit
             return false;
         }

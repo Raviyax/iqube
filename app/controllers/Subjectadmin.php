@@ -134,8 +134,12 @@ class Subjectadmin extends Controller
             $data['tutor'] = $this->Subjectadmin->get_tutor_request($id);
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['accept'])) {
-                    $this->Subjectadmin->accept_tutor_request($id);
-                    redirect('/Subjectadmin/tutor_requests');
+                    if($this->Subjectadmin->accept_tutor_request($id)){
+                       
+                        redirect('/Subjectadmin/tutor_requests');
+                        echo "<script>alert('Tutor request accepted successfully');</script>";
+                    }
+                    
                 } elseif (isset($_POST['reject'])) {
                     $this->Subjectadmin->reject_tutor_request($id);
                     redirect('/Subjectadmin/tutor_requests');

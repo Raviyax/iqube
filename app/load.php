@@ -8,6 +8,7 @@
     require_once "lib/Controller.php";
     require_once "lib/Core.php";
     require_once "lib/Model.php";
+    require_once "lib/Mail.php";
 // Autoload Core Libraries
         require_once "models/User.php";
 $init = new Core;

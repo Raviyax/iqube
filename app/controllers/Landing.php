@@ -38,6 +38,18 @@ class Landing extends Controller {
         $this->view('Landing/tutor_login',$data);
     }
 }
+
+public function activate_tutor_account($email,$password){
+    if($this->tutors->activate_tutor_account($email,$password)){
+        
+    }
+    else{
+        // $data['view'] = 'Invalid activation link';
+        // $this->view('Landing/invalid_activation_link',$data);
+        echo "Invalid activation link";
+    }
+}
+
 public function make_a_tutor_request(){
     $data['subjects'] = $this->subjects->get_subjects();
 
