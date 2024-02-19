@@ -64,9 +64,9 @@ class Tutor extends Controller
         }
     }
     public function first_time_login()
-    {   
+    {
         $email = isset($_GET['email']) ? $_GET['email'] : null;
-    $token = isset($_GET['token']) ? $_GET['token'] : null;
+        $token = isset($_GET['token']) ? $_GET['token'] : null;
         if (!Auth::is_logged_in() && !$this->tutor->is_activated($email) && $token != null && $email != null) {
             if ($this->tutor->verify_token($email, $token)) {
                 $data = [
@@ -89,7 +89,7 @@ class Tutor extends Controller
                     }
                 }
             }
-        }else{
+        } else {
             redirect('/Landing');
         }
     }
@@ -112,10 +112,27 @@ class Tutor extends Controller
             $data = [
                 'title' => 'Tutor',
                 'view' => 'Add New',
-               'chapters' => $this->tutor->get_chapters(),
+                'chapters' => $this->tutor->get_chapters(),
             ];
             if (isset($_POST['submit-video'])) {
-                $this->tutor->add_new_video($_POST, $_FILES);
+                if ($this->tutor->validate_insert_to_video_content($_POST, $_FILES['video'], $_FILES['thumbnail'])) {
+                    $selectedValues = $_POST['subOption'];
+                    $commaSeparatedValues = implode('][', $selectedValues);
+                    $_POST['subOption'] = $commaSeparatedValues;
+                    $video = $this->upload_media($_FILES['video'], '/uploads/video_content/videos/');
+                    $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/video_content/thumbnails/');
+                    
+                    if ( $video && $thumbnail) {
+                        $this->tutor->insert_to_video_content($_POST, $video, $thumbnail);
+                        redirect('/Tutor/myuploads');
+                    } else {
+                        $data['errors'] = "Error uploading file";
+                    }
+                }else{
+                    $data['errors'] = $this->tutor->errors;
+                    $this->view('Tutor/Add_new_video', $data);
+                }
+
             }
             $this->view('Tutor/Add_new_video', $data);
         } else {

@@ -4,7 +4,7 @@
   <section class="form-container" style="display: block;">
 
 
-    <form action="<?php echo URLROOT ?>/Tutor/add_new" method="post" enctype="multipart/form-data">
+    <form action="<?php echo URLROOT ?>/Tutor/add_new_video" method="post" enctype="multipart/form-data">
 
       <!-- section for general overview -->
 
@@ -18,7 +18,7 @@
             <textarea name="description" id="" cols="30" rows="10" class="box" placeholder="Enter the video description..." required></textarea>
             <p>Price in LKR<span>*</span></p>
             <input type="number" name="price" placeholder="Example : 2500" class="box"> 
-            <p>Upload Video<span>*</span></p>
+            <p>Upload Video (100 MB Max)<span>*</span></p>
             <input type="file" name="video" accept="video/*" required class="box">
             <p>Upload Thumbnail<span>*</span></p>
             <input type="file" name="thumbnail" accept="image/*" required class="box"> 
@@ -38,9 +38,11 @@
               echo '<li>';
               echo '<input type="checkbox" id="option"><label for="option"><b>' . $chapter->chapter_level_1 . '</b></label>';
               echo '<ul>';
+              
               foreach ($resultArray as $result) {
-                echo '<li><label><input type="checkbox" class="subOption" value="' . $result['id'] . '">' . $result['chapter_level_2'] . '</label></li>';
+                  echo '<li><label><input type="checkbox" name="subOption[]" class="subOption" value="' . $result['id'] . '">' . $result['chapter_level_2'] . '</label></li>';
               }
+            
               echo '</ul>';
               echo '</li>';
               echo '</ul>';

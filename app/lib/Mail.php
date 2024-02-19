@@ -1,13 +1,17 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 require APPROOT . '/mail/src/Exception.php';
 require APPROOT . '/mail/src/PHPMailer.php';
 require APPROOT . '/mail/src/SMTP.php';
+
 class Mail
 {
     public $mail;
+
     public function __construct()
     {
         $this->mail = new PHPMailer(true);
@@ -20,6 +24,7 @@ class Mail
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mail->Port = 465; // TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     }
+
     public function send($to, $subject, $body)
     {
         try {
