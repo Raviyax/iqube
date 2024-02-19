@@ -1,6 +1,4 @@
 let body = document.body;
-
-
 document.querySelector('#user-btn').onclick = () => {
    let profile = document.getElementById('profile');
    if (profile) {
@@ -14,8 +12,6 @@ document.querySelector('#notification-btn').onclick = () => {
        searchForm.classList.remove('active');// You can replace 'active' with the class you want to use for visibility
    }
 }
-
-
 let searchForm = document.querySelector('.header .flex .search-form');
 document.querySelector('#search-btn').onclick = () =>{
    searchForm.classList.toggle('active');

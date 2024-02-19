@@ -16,7 +16,6 @@ class Subjectadmin extends Controller
                 'title' => 'Subject Admin',
                 'view' => 'Dashboard',
                 'notifications' => $notifications,
-                
             ];
             $this->view('Subject_admin/Dashboard', $data);
         } else {
@@ -105,7 +104,6 @@ class Subjectadmin extends Controller
             $this->view('Noaccess');
         }
     }
-
     public function tutor_requests()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
@@ -129,17 +127,14 @@ class Subjectadmin extends Controller
                 'title' => 'Tutor Request',
                 'view' => 'Tutor Request',
                 'notifications' => $notifications,
-                
             ];
             $data['tutor'] = $this->Subjectadmin->get_tutor_request($id);
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['accept'])) {
                     if($this->Subjectadmin->accept_tutor_request($id)){
-                       
                         redirect('/Subjectadmin/tutor_requests');
                         echo "<script>alert('Tutor request accepted successfully');</script>";
                     }
-                    
                 } elseif (isset($_POST['reject'])) {
                     $this->Subjectadmin->reject_tutor_request($id);
                     redirect('/Subjectadmin/tutor_requests');
@@ -150,5 +145,4 @@ class Subjectadmin extends Controller
             redirect('/Login');
         }
     }
-    
 }

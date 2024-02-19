@@ -3,8 +3,6 @@ class Tutor extends Controller
 {
     public $me;
     public $tutor;
-
-
     public function __construct()
     {
         $this->me = $this->model('User');
@@ -65,7 +63,6 @@ class Tutor extends Controller
             $this->view('Noaccess');
         }
     }
-
     public function first_time_login()
     {   
         $email = isset($_GET['email']) ? $_GET['email'] : null;
@@ -81,8 +78,6 @@ class Tutor extends Controller
                     if ($this->tutor->validate_new_password($_POST)) {
                         if ($this->tutor->create_new_password($_POST['password'], $email)) {
                             $this->tutor->set_tutor_active($email);
-
-
                             echo "<script>alert('Acount Activated Sucessfully')</script>";
                             redirect('/Login');
                         }
@@ -96,9 +91,35 @@ class Tutor extends Controller
             }
         }else{
             redirect('/Landing');
-           
-            
         }
-
+    }
+    public function myuploads()
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'My Uploads',
+                // 'courses' => $this->tutor->get_courses($_SESSION['USER_DATA']['user_id'])
+            ];
+            $this->view('Tutor/Myuploads', $data);
+        } else {
+            redirect('/Login');
+        }
+    }
+    public function add_new_video()
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'Add New',
+               'chapters' => $this->tutor->get_chapters(),
+            ];
+            if (isset($_POST['submit-video'])) {
+                $this->tutor->add_new_video($_POST, $_FILES);
+            }
+            $this->view('Tutor/Add_new_video', $data);
+        } else {
+            redirect('/Login');
+        }
     }
 }

@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-
 <html>
 	<head>
 		<title>Contact - Alpha by HTML5 UP</title>
@@ -101,7 +100,6 @@ of Expert Instructors</p>
 									</select>
 								</div>
 								<div class="col-12">
-
 								<label for="terms">Upload your CV (Only pdf)</a>.</label><br>
 								<?php
 								if(isset($data['errors']['file_err'])){

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +25,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
-
 <body>
     <!-- subject admin header  -->
     <?php if (Auth::is_logged_in() && Auth::is_subject_admin()) { ?>
@@ -55,14 +53,10 @@
                     <a href="<?php echo URLROOT ?>/subjectadmin/profile" class="btn">View Profile</a>
                     <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
                 </div>
-
                 <div class="profile" id="notifications" style="overflow-y: scroll;">
-
                     <?php
                     if ($data['notifications']) {
                         $notifications = $data['notifications'];
-                        
-
                         if ($notifications['last_tutor_requests']) {
                             echo '<div id="tutorrequests" style="margin-bottom: 10px;">';
                         echo '<h3 class="heading">Tutor Requests</h3>';
@@ -80,17 +74,7 @@
                             echo '</div>';
                         }
                     }
-
-
                     ?>
-
-
-
-
-
-
-
-
                     <div id="complains">
                         <h3 class="heading">complains</h3>
                         <div class="notification">
@@ -100,9 +84,7 @@
                                 <a href="login.php" class="option-btn">login</a>
                                 <a href="register.php" class="option-btn">register</a>
                             </div>
-
                         </div>
-
                         <div class="notification">
                             <h3>Kasun Chamara</h3>
                             <span>5 days ago</span>
@@ -256,7 +238,7 @@
                     <div id="notification-btn" class="fa-regular fa-bell"></div>
                     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
                 </div>
-                <div class="profile">
+                <div class="profile" id="profile">
                     <img src="<?php echo URLROOT . "/tutor/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                     <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
                     <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']); ?> Tutor</span>
@@ -279,10 +261,18 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></li>
-                    <li href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-user-pen"></i><span>My Students</span></li>
-                    <li href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book"></i><span>My Contents</span></li>
-                    <li href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-user-pen"></i><span>My Students</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/myuploads"><i class="fa-solid fa-book"></i><span>My Contents</span></a>
+                    <div class="dropdown-content">
+                            <ul>
+                                <li><a href="<?php echo URLROOT; ?>/Tutor/myuploads"><i class="fa-solid fa-folder-open"></i>Overview</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_video"><i class="fa-brands fa-youtube"></i>Add New video</a></li>
+                                <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_model_paper"><i class="fa-regular fa-file-lines"></i>New Model Paper</a></li>
+                            </ul>
+                        </div>
+                </li>
+                    <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
         </div>

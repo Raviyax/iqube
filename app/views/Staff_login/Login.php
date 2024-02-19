@@ -16,7 +16,7 @@
 </head>
 <body style="padding-left: 0;">
 <!-- register section starts  -->
-<section class="form-container">
+<section class="form-container" style="min-height: 100vh;">
    <form action="<?php echo URLROOT;?>/Staff/login" method="post" enctype="multipart/form-data" class="login">
       <h3>IQube Staff Login</h3>
       <p>Email<span>*</span></p>

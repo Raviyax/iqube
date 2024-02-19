@@ -133,29 +133,23 @@ public function get_subject_admin_count_subject_vise(){
     $query = "SELECT subject,COUNT(*) as count FROM subject_admins GROUP BY subject";
     return $this->query($query);
 }
-
 public function get_notifications()
 {
     $subject = $_SESSION['USER_DATA']['subject'];
     $last_tutor_requests = $this->query("SELECT fname, lname, requested_date FROM tutor_requests WHERE subject = '$subject' AND declined = 0 ORDER BY request_id DESC LIMIT 3;");
-
     // Check if the query result is not null
     if ($last_tutor_requests != null) {
         foreach ($last_tutor_requests as $key => $value) {
             $requestedDate = strtotime($value->requested_date);
             $currentDate = time();
-            
             $daysPassed = floor(($currentDate - $requestedDate) / (60 * 60 * 24));
-
             // Update the object with the calculated days passed
             $last_tutor_requests[$key]->requested_days_passed = $daysPassed;
         }
-
         // Make notifications with tutor name and days passed
         $notifications = [
             'last_tutor_requests' => [], // You can add more types here
         ];
-
         foreach ($last_tutor_requests as $tutor) {
             // Use an indexed array for each tutor
             $notifications['last_tutor_requests'][] = [
@@ -164,7 +158,6 @@ public function get_notifications()
                 'requested_days_passed' => $tutor->requested_days_passed,
             ];
         }
-       
         return $notifications;
     } else {
         // Handle the case where the query result is null (e.g., log a message, return an empty array, etc.)
@@ -173,15 +166,11 @@ public function get_notifications()
         ];
     }
 }
-
-
 public function get_tutor_requests($subject)
 {
     $query = "SELECT request_id, fname, lname, email, requested_date FROM tutor_requests WHERE subject = :subject AND declined = 0";
     $params = ['subject' => $subject];
-
     $result = $this->query($query, $params);
-
     // Check if the query result is not null
     if ($result !== null) {
         return $result;
@@ -190,8 +179,6 @@ public function get_tutor_requests($subject)
         return [];
     }
 }
-
-
 public function get_tutor_request($id)
 {
     //get tutor request where approval status is 0
@@ -200,26 +187,18 @@ public function get_tutor_request($id)
         'declined' => 0
     ], 'tutor_requests', 'request_id');
 }
-
 public function accept_tutor_request($id)
 {
         // Auto-generate password for tutor
         $password = bin2hex(random_bytes(8));
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    
     // 1st copy the entire row from tutor_requests to users
     $tutor_request = $this->first([
         'request_id' => $id
     ], 'tutor_requests', 'request_id');
-    
-
-    
     // Send an email with a link to tutor
     $mail = new Mail();
 $link = URLROOT . "/Tutor/first_time_login?email=".$tutor_request->email."&token=".$password;
-
-
-
 if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href="' . $link . '">click here</a> to log in and change your password.')) {
     // Insert data into users table
     $this->query("INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)", [
@@ -228,12 +207,10 @@ if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href=
         'password' => $hashedPassword,
         'role' => 'tutor'
     ]);
-
     // Get the user_id from the inserted user record
     $row = $this->first([
         'email' => $tutor_request->email
     ], 'users', 'user_id');
-
     // Insert data into tutors table
     $this->query("INSERT INTO tutors (user_id, subject, fname, lname, username, email, cno, qualification, cv) VALUES (:user_id, :subject, :fname, :lname, :username, :email, :cno, :qualification, :cv)", [
         'user_id' => $row->user_id,
@@ -246,20 +223,11 @@ if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href=
         'qualification' => $tutor_request->qualification,
         'cv' => $tutor_request->cv,
     ]);
-
     // 2nd delete the row from tutor_requests
     $this->query("DELETE FROM tutor_requests WHERE request_id=?", [$id]);
-   
     return true;
 } else {
     echo "<script>alert('Error');</script>";
 }
-
-   
 }
-
-
-
-
-
 }

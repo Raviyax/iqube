@@ -9,7 +9,6 @@
             <span></span>
             <button  name="accept" class="inline-btn"><i class="fa-solid fa-check"></i></i> Approve</button>
             <a href="" class="inline-btn"><i class="fa-solid fa-xmark"></i></i> Reject</a>
-
         </div>
         <div class="flex">
             <div class="box">
@@ -24,11 +23,9 @@
                 <span>Lastname</span>
                 <p><?php echo  $tutor->lname; ?></p>
             </div>
-
             <div class="box">
                 <span>Email</span>
                 <p><?php echo  $tutor->email; ?></p>
-
             </div>
             <div class="box">
                 <span>Highest Qualifcation</span>
@@ -40,10 +37,8 @@
             </div>
             <div class="box">
                 <span>Resume</span>
-
                 <a class="inline-btn"><i class="fa-solid fa-download"></i> Download CV</a>
             </div>
-
             <div class="box">
                 <span>Joined At</span>
                 <p><?php echo  $tutor->requested_date; ?></p>
@@ -52,9 +47,6 @@
     </div>
 </section>
 </form>
-
-
 <?php $this->view('inc/footer') ?>
 </body>
-
 </html>

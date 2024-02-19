@@ -135,7 +135,6 @@ class Tutors extends Model
     }
     public function validate_tutor_requests($data, $cvdata)
     {
-
         $this->request_errors = [];
         $query = "SELECT * FROM users WHERE username = :username";
         if (empty($data['fname'])) {
@@ -171,7 +170,6 @@ class Tutors extends Model
         } elseif ($cvdata['size'] > 1000000) {
             $this->request_errors['file_err'] = '*File size too large';
         }
-
         if (empty($data['terms'])) {
             $this->request_errors['terms_err'] = '*Please accept terms and conditions';
         }
@@ -180,12 +178,9 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function make_a_tutor_request($data, $cv)
     {
-
         $this->query("INSERT INTO tutor_requests (subject, fname, lname, username, email, cno, qualification, cv,message) VALUES (:subject, :fname, :lname, :username, :email, :cno, :qualification, :cv, :message)", [
-
             'subject' => $data['subject'],
             'fname' => $data['fname'],
             'lname' => $data['lname'],
@@ -195,8 +190,6 @@ class Tutors extends Model
             'qualification' => $data['qualification'],
             'cv' => $cv,
             'message' => $data['message']
-
-
         ]);
         return true;
     }
@@ -207,19 +200,15 @@ class Tutors extends Model
         $result = $this->query($query, ['email' => $email]);
         if ($result) {
             if (password_verify($password, $result[0]->password)) {
-
-               
                 return true;
             }
         }
     }
-
     public function set_tutor_active($email)
     {
         $query = "UPDATE tutors SET active = 1 WHERE email = :email";
         $this->query($query, ['email' => $email]);
     }
-
     public function is_activated($email)
     {
         $query = "SELECT active FROM tutors WHERE email = :email";
@@ -229,7 +218,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function validate_new_password($data)
     {
         $this->errors = [];
@@ -250,13 +238,23 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function create_new_password($password, $email)
     {
         $query = "UPDATE users SET password = :password WHERE email = :email";
         $this->query($query, ['password' => password_hash($password, PASSWORD_DEFAULT), 'email' => $email]);
         return true;
     }
-
-    
+    public function get_chapters()
+    {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
+        $query = "SELECT
+        chapter_level_1,
+        GROUP_CONCAT(CONCAT(id, '-->>', chapter_level_2) SEPARATOR '--->>>') AS chapter_level_2_list_with_id
+    FROM
+        chapters
+    WHERE
+        subject = :subject
+    GROUP BY
+        chapter_level_1";
+        return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
+    }
 }

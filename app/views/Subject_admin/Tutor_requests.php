@@ -11,8 +11,6 @@
   </header>
   <?php if (($data['tutors'])) {
 $tutors = $data['tutors'];
-
-  
   ?>
   <table id="table">
     <tr>
@@ -21,10 +19,8 @@ $tutors = $data['tutors'];
       <th>Email</th>
       <th>Requested date</th>
     </tr>
-
     <?php foreach ($tutors as $tutor) : ?>
       <tr onclick="window.location='<?php echo URLROOT ?>/Subjectadmin/view_request/<?php echo $tutor->request_id; ?>'">
-
         <td><?php echo $tutor->request_id ?></td>
         <td><?php echo $tutor->fname . ' ' . $tutor->lname ?></td>
         <td><?php echo $tutor->email ?></td>

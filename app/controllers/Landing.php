@@ -38,10 +38,8 @@ class Landing extends Controller {
         $this->view('Landing/tutor_login',$data);
     }
 }
-
 public function activate_tutor_account($email,$password){
     if($this->tutors->activate_tutor_account($email,$password)){
-        
     }
     else{
         // $data['view'] = 'Invalid activation link';
@@ -49,20 +47,14 @@ public function activate_tutor_account($email,$password){
         echo "Invalid activation link";
     }
 }
-
 public function make_a_tutor_request(){
     $data['subjects'] = $this->subjects->get_subjects();
-
     $data['view'] = 'Make a tutor request';
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
-
         if($this->tutors->validate_tutor_requests($_POST,$_FILES['fileToUpload'])){
             $cv=  $this->upload_media($_FILES['fileToUpload'],'/uploads/cv/');
             $this->tutors->make_a_tutor_request($_POST,$cv);
             redirect('/Landing');
-
         }
         else{
             $data['errors'] = $this->tutors->request_errors;
@@ -72,18 +64,8 @@ public function make_a_tutor_request(){
             $data['username'] = $_POST['username'];
             $data['email'] = $_POST['email'];
             $this->view('Landing/Tutor_request',$data);
-
-
-
-
-
-
             $this->view('Landing/Tutor_request',$data);
-
-
     }
-
-
 }
 $this->view('Landing/Tutor_request',$data);
 }

@@ -1,22 +1,13 @@
 <?php $this->view('inc/header',$data) ?>
-
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/dash.css">
-
 <section>
-
     <!-- <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1> -->
-
-
     <!-- <div class="box-container">
-
         <div class="box">
             <h3>test</h3>
             <p>test</p>
-
         </div>
-
     </div> -->
-
     <div class="container">
         <div class="mylearning">
             <div>
@@ -46,7 +37,6 @@ We hope you will continue to learn with us.</span>
             <div class="card">Lessons Read</div>
             <div class="card">Achievements</div>
         </div>
-
         <div class="schedule">
             <div class="head">
                 <div class="title">Schedule</div>
@@ -60,7 +50,6 @@ We hope you will continue to learn with us.</span>
                 </div>
             </div>
         </div>
-
         <div class="courses">
             <h1 class="title">Courses</h1>
             <div class="list">
@@ -106,7 +95,6 @@ We hope you will continue to learn with us.</span>
             </div>
             <a href="courses" class="more">see all ></a>
         </div>
-
         <div class="tutorial">
         <h1 class="heading"><i class="fa-regular fa-lightbulb"></i> Tutorials for you</h1>
             <div class="tutorial-card">
@@ -210,7 +198,6 @@ We hope you will continue to learn with us.</span>
                 </div>
             </div>
         </div>
-
         <div class="pathfinder">
             <div class="heading">
                 <span>My Goal</span>
@@ -332,9 +319,7 @@ We hope you will continue to learn with us.</span>
                 <svg cx="50%" cy="50%" class="recharts-surface" width="312" height="312" viewBox="0 0 312 312" style="width: 100%; height: 100%;"><title></title><desc></desc><defs><clipPath id="recharts1-clip"><rect x="5" y="5" height="288" width="302"></rect></clipPath></defs><g class="recharts-polar-grid"><g class="recharts-polar-grid-angle"><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="156" y2="40.8"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="223.71286106409292" y2="62.80124224800605"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="265.5617106772017" y2="120.40124224800606"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="265.5617106772017" y2="191.59875775199396"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="223.71286106409292" y2="249.19875775199395"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="156" y2="271.2"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="88.28713893590711" y2="249.19875775199395"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="46.43828932279831" y2="191.59875775199396"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="46.4382893227983" y2="120.40124224800607"></line><line stroke="#ccc" cx="156" cy="156" x1="156" y1="156" x2="88.28713893590708" y2="62.80124224800606"></line></g><g class="recharts-polar-grid-concentric"><path stroke="#ccc" cx="156" cy="156" radius="0" fill="none" class="recharts-polar-grid-concentric-polygon" d="M 156,156L 156,156L 156,156L 156,156L 156,156L 156,156L 156,156L 156,156L 156,156L 156,156Z"></path><path stroke="#ccc" cx="156" cy="156" radius="28.8" fill="none" class="recharts-polar-grid-concentric-polygon" d="M 156,127.2L 172.92821526602322,132.7003105620015L 183.39042766930044,147.1003105620015L 183.39042766930044,164.8996894379985L 172.92821526602322,179.2996894379985L 156,184.8L 139.07178473397678,179.2996894379985L 128.60957233069956,164.8996894379985L 128.60957233069956,147.1003105620015L 139.07178473397676,132.7003105620015Z"></path><path stroke="#ccc" cx="156" cy="156" radius="57.6" fill="none" class="recharts-polar-grid-concentric-polygon" d="M 156,98.4L 189.85643053204646,109.40062112400302L 210.78085533860084,138.20062112400302L 210.78085533860084,173.79937887599698L 189.85643053204646,202.599378875997L 156,213.6L 122.14356946795355,202.599378875997L 101.21914466139916,173.79937887599698L 101.21914466139916,138.20062112400302L 122.14356946795354,109.40062112400304Z"></path><path stroke="#ccc" cx="156" cy="156" radius="86.4" fill="none" class="recharts-polar-grid-concentric-polygon" d="M 156,69.6L 206.78464579806968,86.10093168600453L 238.17128300790125,129.30093168600453L 238.17128300790125,182.69906831399547L 206.78464579806968,225.89906831399549L 156,242.4L 105.21535420193032,225.89906831399549L 73.82871699209873,182.69906831399547L 73.82871699209872,129.30093168600456L 105.21535420193031,86.10093168600454Z"></path><path stroke="#ccc" cx="156" cy="156" radius="115.2" fill="none" class="recharts-polar-grid-concentric-polygon" d="M 156,40.8L 223.71286106409292,62.80124224800605L 265.5617106772017,120.40124224800606L 265.5617106772017,191.59875775199396L 223.71286106409292,249.19875775199395L 156,271.2L 88.28713893590711,249.19875775199395L 46.43828932279831,191.59875775199396L 46.4382893227983,120.40124224800607L 88.28713893590708,62.80124224800606Z"></path></g></g><g class="recharts-layer recharts-polar-angle-axis"><path cx="156" cy="156" orientation="outer" radius="115.2" fill="none" class="recharts-polygon angleAxis" d="M156,40.8L223.71286106409292,62.80124224800605L265.5617106772017,120.40124224800606L265.5617106772017,191.59875775199396L223.71286106409292,249.19875775199395L156,271.2L88.28713893590711,249.19875775199395L46.43828932279831,191.59875775199396L46.4382893227983,120.40124224800607L88.28713893590708,62.80124224800606L156,40.8Z"></path><g class="recharts-layer recharts-polar-angle-axis-ticks"><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="156" y1="40.8" x2="156" y2="32.8"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="156" y="32.8" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="middle" fill="#808080"><tspan x="156" dy="0em">Heat</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="223.71286106409292" y1="62.80124224800605" x2="228.41514308243268" y2="56.329106293006475"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="228.41514308243268" y="56.329106293006475" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="start" fill="#808080"><tspan x="228.41514308243268" dy="0em">R</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="265.5617106772017" y1="120.40124224800606" x2="273.1701628075629" y2="117.92910629300647"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="273.1701628075629" y="117.92910629300647" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="start" fill="#808080"><tspan x="273.1701628075629" dy="0em">G-field</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="265.5617106772017" y1="191.59875775199396" x2="273.1701628075629" y2="194.07089370699353"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="273.1701628075629" y="194.07089370699353" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="start" fill="#808080"><tspan x="273.1701628075629" dy="0em">C++</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="223.71286106409292" y1="249.19875775199395" x2="228.41514308243268" y2="255.67089370699352"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="228.41514308243268" y="255.67089370699352" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="start" fill="#808080"><tspan x="228.41514308243268" dy="0em">M-field</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="156" y1="271.2" x2="156" y2="279.2"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="156" y="279.2" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="middle" fill="#808080"><tspan x="156" dy="0em">E-field</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="88.28713893590711" y1="249.19875775199395" x2="83.58485691756732" y2="255.67089370699352"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="83.58485691756732" y="255.67089370699352" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="end" fill="#808080"><tspan x="83.58485691756732" dy="0em">Algebra</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="46.43828932279831" y1="191.59875775199396" x2="38.82983719243708" y2="194.07089370699353"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="38.82983719243708" y="194.07089370699353" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="end" fill="#808080"><tspan x="38.82983719243708" dy="0em">Trigonometry</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="46.4382893227983" y1="120.40124224800607" x2="38.82983719243707" y2="117.9291062930065"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="38.82983719243707" y="117.9291062930065" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="end" fill="#808080"><tspan x="38.82983719243707" dy="0em">Chemical Bonding</tspan></text></g><g class="recharts-layer recharts-polar-angle-axis-tick"><line class="angleAxis" cx="156" cy="156" orientation="outer" radius="115.2" fill="none" x1="88.28713893590708" y1="62.80124224800606" x2="83.5848569175673" y2="56.32910629300649"></line><text cx="156" cy="156" orientation="outer" radius="115.2" stroke="none" font-size="10px" x="83.5848569175673" y="56.32910629300649" class="recharts-text recharts-polar-angle-axis-tick-value" text-anchor="end" fill="#808080"><tspan x="83.5848569175673" dy="0em">Mechanics</tspan></text></g></g></g><g class="recharts-layer recharts-polar-radius-axis"><line class="radiusAxis" opacity="0" orientation="right" stroke="#ccc" radius="115.2" fill="none" x1="156" y1="156" x2="255.76612651596736" y2="98.4"></line><g class="recharts-layer recharts-polar-radius-axis-ticks"><g class="recharts-layer recharts-polar-radius-axis-tick"><text transform="rotate(60, 156, 156)" opacity="0" cx="156" cy="156" orientation="right" radius="115.2" stroke="none" x="156" y="156" class="recharts-text recharts-polar-radius-axis-tick-value" text-anchor="start" fill="#ccc"><tspan x="156" dy="0em">0</tspan></text></g><g class="recharts-layer recharts-polar-radius-axis-tick"><text transform="rotate(60, 180.94153162899184, 141.6)" opacity="0" cx="156" cy="156" orientation="right" radius="115.2" stroke="none" x="180.94153162899184" y="141.6" class="recharts-text recharts-polar-radius-axis-tick-value" text-anchor="start" fill="#ccc"><tspan x="180.94153162899184" dy="0em">25</tspan></text></g><g class="recharts-layer recharts-polar-radius-axis-tick"><text transform="rotate(60, 205.88306325798368, 127.2)" opacity="0" cx="156" cy="156" orientation="right" radius="115.2" stroke="none" x="205.88306325798368" y="127.2" class="recharts-text recharts-polar-radius-axis-tick-value" text-anchor="start" fill="#ccc"><tspan x="205.88306325798368" dy="0em">50</tspan></text></g><g class="recharts-layer recharts-polar-radius-axis-tick"><text transform="rotate(60, 230.8245948869755, 112.80000000000001)" opacity="0" cx="156" cy="156" orientation="right" radius="115.2" stroke="none" x="230.8245948869755" y="112.80000000000001" class="recharts-text recharts-polar-radius-axis-tick-value" text-anchor="start" fill="#ccc"><tspan x="230.8245948869755" dy="0em">75</tspan></text></g><g class="recharts-layer recharts-polar-radius-axis-tick"><text transform="rotate(60, 255.76612651596736, 98.4)" opacity="0" cx="156" cy="156" orientation="right" radius="115.2" stroke="none" x="255.76612651596736" y="98.4" class="recharts-text recharts-polar-radius-axis-tick-value" text-anchor="start" fill="#ccc"><tspan x="255.76612651596736" dy="0em">100</tspan></text></g></g></g><g class="recharts-layer recharts-radar"><g class="recharts-layer recharts-radar-polygon"><path name="My Goals" stroke="#E19500" fill="#E19500" fill-opacity="0.2" class="recharts-polygon" d="M156,98.4L189.85643053204646,109.40062112400302L210.78085533860084,138.20062112400302L210.78085533860084,173.79937887599698L189.85643053204646,202.599378875997L156,213.6L122.14356946795355,202.599378875997L101.21914466139916,173.79937887599698L101.21914466139916,138.20062112400302L122.14356946795354,109.40062112400304L156,98.4Z"></path></g></g><g class="recharts-layer recharts-radar"><g class="recharts-layer recharts-radar-polygon"><path name="My Skills" stroke="#04AA6D" fill="#04AA6D" fill-opacity="0.8" class="recharts-polygon" d="M156,156L156,156L156,156L156,156L166.83405777025487,170.91180124031902L156,157.152L156,156L154.904382893228,156.35598757751993L156,156L156,156L156,156Z"></path></g></g></svg>
             </div>
         </div>
-
     </div>
-
     <!-- <div class="flexbox">
         <svg width="250" height="250" viewBox="0 0 250 250" class="circular-progress">
             <circle class="bg"></circle>
@@ -342,16 +327,10 @@ We hope you will continue to learn with us.</span>
         </svg>
         <img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
     </div> -->
-
-
-
 </section>
-
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
         var currentIndex = 0;
-
         function showSlide(index) {
             var carousel = document.querySelector('.carousel');
             var cardWidth = document.querySelector('.card').offsetWidth;
@@ -359,12 +338,10 @@ We hope you will continue to learn with us.</span>
             carousel.style.transform = 'translateX(' + newPosition + 'px)';
             currentIndex = index;
         }
-
         function prevSlide() {
             currentIndex = (currentIndex - 1 + 3) % 3;
             showSlide(currentIndex);
         }
-
         function nextSlide() {
             currentIndex = (currentIndex + 1) % 3;
             showSlide(currentIndex);
@@ -374,11 +351,9 @@ We hope you will continue to learn with us.</span>
                 // Simulated data - Replace with actual data retrieval logic
         const syllabusProgress = 70; // Example syllabus completion percentage
         const subjectsProgress = [50, 80, 60]; // Example progress for subjects
-
         // Update overall syllabus progress bar
         const progressElement = document.querySelector('.progress-bar');
         progressElement.style.width = syllabusProgress + '%';
-
         // Create subject progress bars
         const subjectProgress = document.querySelector('.subject-progress');
         subjectsProgress.forEach(progress => {
@@ -387,14 +362,12 @@ We hope you will continue to learn with us.</span>
             subjectBar.style.width = progress + '%';
             subjectProgress.appendChild(subjectBar);
         });
-
         // Simulated course data
         const courses = [
             { name: 'Course 1', completion: 80 },
             { name: 'Course 2', completion: 60 },
             // Add more course data
         ];
-
         // Display course cards
         const courseCards = document.querySelector('.course-cards');
         courses.forEach(course => {
@@ -403,9 +376,7 @@ We hope you will continue to learn with us.</span>
             card.textContent = `${course.name} - ${course.completion}% completed`;
             courseCards.appendChild(card);
         });
-
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
                 // Wait for the DOM content to load
@@ -413,7 +384,6 @@ We hope you will continue to learn with us.</span>
             // Chart.js initialization
             var gradesCtx = document.getElementById("grades-chart").getContext("2d");
             var timeSpentCtx = document.getElementById("time-spent-chart").getContext("2d");
-
             // Dummy data for the charts
             var gradesData = {
                 labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
@@ -425,7 +395,6 @@ We hope you will continue to learn with us.</span>
                     borderWidth: 1
                 }]
             };
-
             var timeSpentData = {
                 labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
                 datasets: [{
@@ -436,7 +405,6 @@ We hope you will continue to learn with us.</span>
                     borderWidth: 1
                 }]
             };
-
             // Create dummy line charts
             var gradesChart = new Chart(gradesCtx, {
                 type: "line",
@@ -449,7 +417,6 @@ We hope you will continue to learn with us.</span>
                     }
                 }
             });
-
             var timeSpentChart = new Chart(timeSpentCtx, {
                 type: "line",
                 data: timeSpentData,
@@ -462,17 +429,8 @@ We hope you will continue to learn with us.</span>
                 }
             });
         });
-
     </script>
-
-
-
 <script src="<?=URLROOT?>/assets/js/student/dash.js"></script>
-
 <?php $this->view('inc/footer') ?>
-
-
-
 </body>
-
 </html>

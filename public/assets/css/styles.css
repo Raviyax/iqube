@@ -293,7 +293,6 @@ section {
 #notifications {
    display: none;
 }
-
 #notifications.active {
    display: flex;
    flex-direction: column;
@@ -358,7 +357,6 @@ section {
    display: flex;
    align-items: center;
    justify-content: center;
-   min-height: 100vh;
 }
 .form-container form {
    background-color: var(--white);
@@ -1092,15 +1090,119 @@ height: 100%;
 }
 .dropdown-content {
    display: none;
-   
    background-color: #f9f9f9;
    min-width:auto;
    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-   
    z-index: 1;
    color: var(--light-color);
    cursor: pointer;
  }
  .side-bar .navbar li:hover .dropdown-content {
    display: block;
+ }
+ .courses .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, 35rem);
+   gap: 1.5rem;
+   align-items: flex-start;
+   justify-content: center;
+}
+.courses .box-container .box{
+   border-radius: .5rem;
+   background-color: var(--white);
+   padding: 2rem;
+}
+.courses .box-container .box .tutor{
+   margin-bottom: 2rem;
+   display: flex;
+   align-items: center;
+   gap: 2rem;
+}
+.courses .box-container .box .tutor img{
+   width: 5rem;
+   height: 5rem;
+   border-radius: 50%;
+   object-fit: cover;
+   margin-bottom: .5rem;
+}
+.courses .box-container .box .tutor h3{
+   font-size: 2rem;
+   color: var(--black);
+   margin-bottom: .2rem;
+}
+.courses .box-container .box .tutor span{
+   font-size: 1.5rem;
+   color: var(--light-color);
+}
+.courses .box-container .box .thumb{
+   width: 100%;
+   border-radius: .5rem;
+   height: 20rem;
+   object-fit: cover;
+   margin-bottom: .3rem;
+}
+.courses .box-container .box .title{
+   font-size: 2rem;
+   color: var(--black);
+   margin-top: .5rem;
+   padding: .5rem 0;
+}
+.courses .more-btn{
+   margin-top: 2rem;
+   text-align: center;
+}
+/* for tutors chapter selection */
+.chaptercontainer {
+   margin: 20px;
+  font-size: 1.6rem;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   padding: 10px;
+ }
+ .chaptercontainer ul {
+   list-style-type: none;
+   padding: 0;
+ }
+ .chaptercontainer li {
+   margin-bottom: 10px;
+ }
+ .chaptercontainer input[type="checkbox"].subOption {
+   margin-right: 5px;
+ }
+ .chaptercontainer label {
+   cursor: pointer;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+ }
+ .chaptercontainer label:hover {
+   text-decoration: underline;
+ }
+ /* Style for hierarchy lines */
+ .chaptercontainer li:before {
+   content: "";
+   display: block;
+   width: 0;
+   height: 100%;
+   border-left: 2px solid #3498db; /* Adjust the color as needed */
+   position: absolute;
+   top: 0;
+   left: -10px; /* Adjust the distance from the left */
+ }
+ /* Style for top-level checkboxes */
+ .chaptercontainer input[type="checkbox"].top-level {
+   margin-right: 10px;
+ }
+ /* Style for nested checkboxes */
+ .chaptercontainer input[type="checkbox"].subOption {
+   margin-left: 20px;
+ }
+ /* Style for indeterminate state */
+ .chaptercontainer input[type="checkbox"]:indeterminate {
+   background-color: #3498db; /* Adjust the color as needed */
+ }
+ /* Style for labels of indeterminate checkboxes */
+ .chaptercontainer input[type="checkbox"]:indeterminate + label {
+   font-weight: bold;
+   color: #3498db; /* Adjust the color as needed */
  }
