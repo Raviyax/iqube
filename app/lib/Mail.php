@@ -20,7 +20,7 @@ class Mail
         $this->mail->Host = 'smtp.gmail.com'; // Set the SMTP server to send through
         $this->mail->SMTPAuth = true;
         $this->mail->Username = 'activate.iqube@gmail.com'; // SMTP username
-        $this->mail->Password = ''; // SMTP password
+        $this->mail->Password = 'uyfyjj'; // SMTP password
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $this->mail->Port = 465; // TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     }
