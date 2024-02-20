@@ -15,15 +15,15 @@
   <div class="flex" >
     <div class="col">
       <p>Question<span>*</span></p>
-      <input type="text" name="1question" placeholder="Enter the question..." maxlength="50" required class="box">
+      <input type="text" name="1question" placeholder="Enter the question..." maxlength="400" required class="box">
       <p>Option 1<span>*</span></p>
-      <input type="text" name="1option1" placeholder="Enter the first option..." maxlength="50" required class="box">
+      <input type="text" name="1option1" placeholder="Enter the first option..." maxlength="400" required class="box">
       <p>Option 2<span>*</span></p>
-      <input type="text" name="1option2" placeholder="Enter the second option..." maxlength="50" required class="box">
+      <input type="text" name="1option2" placeholder="Enter the second option..." maxlength="400" required class="box">
       <p>Option 3<span>*</span></p>
-      <input type="text" name="1option3" placeholder="Enter the third option..." maxlength="50" required class="box">
+      <input type="text" name="1option3" placeholder="Enter the third option..." maxlength="400" required class="box">
       <p>Option 4<span>*</span></p>
-      <input type="text" name="1option4" placeholder="Enter the fourth option..." maxlength="50" required class="box">
+      <input type="text" name="1option4" placeholder="Enter the fourth option..." maxlength="400" required class="box">
       <p>Correct Answer<span>*</span></p>
       <select name="1correct" class="box" required>
         <option value="" disabled selected>-- Select the correct answer</option>

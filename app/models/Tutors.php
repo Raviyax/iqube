@@ -382,4 +382,21 @@ class Tutors extends Model
         return true;
     }
 
+    public function get_my_uploads()
+    {
+        $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
+        
+        $result_video_content=$this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
+        //obtain date correseponding to video_content_id from mcq_for_video
+        $i=0;
+        foreach($result_video_content as $video_content)
+        {
+            $query = "SELECT date FROM mcq_for_video WHERE video_content_id = :video_content_id";
+            $result_date=$this->query($query, ['video_content_id' => $video_content->video_content_id]);
+            $result_video_content[$i]->date=$result_date[0]->date;
+            $i++;
+        }
+        return $result_video_content;
+    }
 }
+

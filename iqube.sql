@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2024 at 10:04 AM
+-- Generation Time: Feb 20, 2024 at 03:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,19 +112,22 @@ CREATE TABLE `mcq_for_video` (
   `option3` varchar(500) NOT NULL,
   `option4` varchar(500) NOT NULL,
   `option5` varchar(500) DEFAULT NULL,
-  `correct` enum('option1','option2','option3','option4','option5') NOT NULL
+  `correct` enum('option1','option2','option3','option4','option5') NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `mcq_for_video`
 --
 
-INSERT INTO `mcq_for_video` (`mcq_id`, `video_content_id`, `tutor_id`, `question`, `option1`, `option2`, `option3`, `option4`, `option5`, `correct`) VALUES
-(1, '382b3cf673e679e5', '', 'gas ballage nama mokkda', 'ravishan', 'balla', 'madasha', 'dew', NULL, 'option3'),
-(2, '382b3cf673e679e5', '', '5+5?', '24', '10', 'efwf', 'ijkk', NULL, 'option2'),
-(3, '7c86dbe61a7e7344', '23', 'legs for dog', 'ekai', 'dekai', 'thunai', 'hatharai', NULL, 'option4'),
-(4, '7c86dbe61a7e7344', '23', 'rathnawaliya koheda', 'gampaha', 'kaluthara', 'refgwe', 'wgf', NULL, 'option1'),
-(5, '7c86dbe61a7e7344', '23', '2*2 keeyada', '56', 'scdf', '4', '99999', NULL, 'option3');
+INSERT INTO `mcq_for_video` (`mcq_id`, `video_content_id`, `tutor_id`, `question`, `option1`, `option2`, `option3`, `option4`, `option5`, `correct`, `date`) VALUES
+(1, '382b3cf673e679e5', '', 'gas ballage nama mokkda', 'ravishan', 'balla', 'madasha', 'dew', NULL, 'option3', '2024-02-20'),
+(2, '382b3cf673e679e5', '', '5+5?', '24', '10', 'efwf', 'ijkk', NULL, 'option2', '2024-02-20'),
+(3, '7c86dbe61a7e7344', '23', 'legs for dog', 'ekai', 'dekai', 'thunai', 'hatharai', NULL, 'option4', '2024-02-20'),
+(4, '7c86dbe61a7e7344', '23', 'rathnawaliya koheda', 'gampaha', 'kaluthara', 'refgwe', 'wgf', NULL, 'option1', '2024-02-20'),
+(5, '7c86dbe61a7e7344', '23', '2*2 keeyada', '56', 'scdf', '4', '99999', NULL, 'option3', '2024-02-20'),
+(6, 'a9285fbfd481c07d', '23', 'What Is the sammalest measurement from this', 'least count', 'actual reading', 'main scale division', 'vernier scale division', NULL, 'option1', '2024-02-20'),
+(7, 'a9285fbfd481c07d', '23', 'lc for standard vernier caliper', '0.2mm', '0.1mm', '0.02mm', '0.002mm', NULL, 'option3', '2024-02-20');
 
 -- --------------------------------------------------------
 
@@ -360,7 +363,8 @@ INSERT INTO `video_content` (`video_content_id`, `tutor_id`, `name`, `descriptio
 ('4', '23', 'à¶´à·’à·ƒà·’à¶šà·Šà·ƒà·Š à·ƒà¶»à¶½à·€', 'halooooo', '65d4390de368e9.04892944.mp4', '65d4390de3bad3.05946732.png', 600, '5][12][13][19][20][21][22][23][24][25][26][27][28][29][30][31', 0),
 ('5', '23', 'physics saralawa', 'testing description', '65d439a49d74a5.00023724.mp4', '65d439a49db2f1.73768024.png', 600, '3][6][19][20][21][22][23][24][25][26][27][28][29][30][31][33', 0),
 ('6', '23', 'physics saralawa', 'testing description', '65d43a245a0c79.94424214.mp4', '65d43a245a74d3.57664847.png', 600, '3][6][19][20][21][22][23][24][25][26][27][28][29][30][31][33', 0),
-('7c86dbe61a7e7344', '23', 'hashing methods', 'here we explain hashing methods', '65d466fc1918f6.08001978.mp4', '65d466fc194ea8.43404859.png', 600, '5][21][26][32', 1);
+('7c86dbe61a7e7344', '23', 'hashing methods', 'here we explain hashing methods', '65d466fc1918f6.08001978.mp4', '65d466fc194ea8.43404859.png', 600, '5][21][26][32', 1),
+('a9285fbfd481c07d', '23', 'lets learn about vernier caliper', 'What Is Vernier Calliper? A vernier calliper is defined as a measuring device that is used for the measurement of linear dimensions. It is also used for the measurement of diameters of round objects with the help of the measuring jaws', '65d4b29169c816.00948529.mp4', '65d4b2916c0cb8.60634087.png', 3100, '3][6', 1);
 
 --
 -- Indexes for dumped tables
@@ -457,7 +461,7 @@ ALTER TABLE `chapters`
 -- AUTO_INCREMENT for table `mcq_for_video`
 --
 ALTER TABLE `mcq_for_video`
-  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `premium_students`

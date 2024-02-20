@@ -99,7 +99,7 @@ class Tutor extends Controller
             $data = [
                 'title' => 'Tutor',
                 'view' => 'My Uploads',
-                // 'courses' => $this->tutor->get_courses($_SESSION['USER_DATA']['user_id'])
+                'courses' => $this->tutor->get_my_uploads()
             ];
             $this->view('Tutor/Myuploads', $data);
         } else {
@@ -170,6 +170,15 @@ class Tutor extends Controller
         }
         else {
             redirect('/Login');
+        }
+    }
+
+    public function thumbnail($thumbnail)
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $this->retrive_media($thumbnail, '/uploads/video_content/thumbnails/');
+        } else {
+            $this->view('Noaccess');
         }
     }
 }
