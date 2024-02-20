@@ -121,21 +121,54 @@ class Tutor extends Controller
                     $_POST['subOption'] = $commaSeparatedValues;
                     $video = $this->upload_media($_FILES['video'], '/uploads/video_content/videos/');
                     $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/video_content/thumbnails/');
-                    
-                    if ( $video && $thumbnail) {
-                        $this->tutor->insert_to_video_content($_POST, $video, $thumbnail);
-                        redirect('/Tutor/myuploads');
+
+                    if ($video && $thumbnail) {
+                        // if ($this->tutor->insert_to_video_content($_POST, $video, $thumbnail)) {
+                        //     $this->view('Tutor/Add_mcq_for_video', $data);
+                        //     return;
+                        // }
+
+                        $video_content_id = $this->tutor->insert_to_video_content($_POST, $video, $thumbnail);
+                        if ($video_content_id) {
+                            $data['video_content_id'] = $video_content_id;
+                            $this->view('Tutor/Add_mcq_for_video', $data);
+                            return;
+                        }
                     } else {
                         $data['errors'] = "Error uploading file";
                     }
-                }else{
+                } else {
                     $data['errors'] = $this->tutor->errors;
                     $this->view('Tutor/Add_new_video', $data);
                 }
-
             }
+            $video_content_id = isset($_GET['video_content_id']) ? $_GET['video_content_id'] : null;
+            if (isset($_POST['submit-mcq']) && $video_content_id != null) {
+                if ($this->tutor->is_video_content_id_exists_and_not_active($video_content_id)) {
+                    if ($this->tutor->validate_insert_to_mcq_for_video($_POST)) {
+                        if ($this->tutor->insert_to_mcq_for_video($_POST, $video_content_id)) {
+                            if ($this->tutor->set_video_content_active($video_content_id)) {
+                                echo "<script>alert('MCQs added successfully')</script>";
+                                redirect('/Tutor/myuploads');
+                            }
+                            
+                        }
+                    }
+                    else {
+                        $data['errors'] = $this->tutor->errors;
+                        $this->view('Tutor/Add_mcq_for_video', $data);
+                    }
+                } else {
+                    echo "<script>alert('Video Content ID does not exist or is already active')</script>";
+                }
+
+                
+
+                ;
+            } 
             $this->view('Tutor/Add_new_video', $data);
-        } else {
+        }
+        else {
             redirect('/Login');
         }
     }

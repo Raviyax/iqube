@@ -260,16 +260,25 @@ class Tutors extends Model
 
     public function insert_to_video_content($data,$video,$thumbnail)
     {
-        $this->query("INSERT INTO video_content (tutor_id, name, description, video, thumbnail, price, covering_chapters) VALUES (:tutor_id, :name, :description, :video, :thumbnail, :price, :covering_chapters)", [
+        //generate uniqe string in 16 characters for video_content_id
+        $video_content_id = bin2hex(random_bytes(8));
+
+      
+
+
+        $this->query("INSERT INTO video_content (video_content_id,tutor_id, name, description, video, thumbnail, price, covering_chapters) VALUES (:video_content_id,:tutor_id, :name, :description, :video, :thumbnail, :price, :covering_chapters)", [
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
             'name' => $data['name'],
             'description' => $data['description'],
             'video' => $video,
             'thumbnail' => $thumbnail,
             'price' => $data['price'],
-            'covering_chapters' => $data['subOption']
+            'covering_chapters' => $data['subOption'],
+            'video_content_id' => $video_content_id
+
         ]);
-        return true;
+        return $video_content_id;
+      
 
 
     } 
@@ -304,4 +313,73 @@ class Tutors extends Model
         }
         return false;
     }
+
+    public function is_video_content_id_exists_and_not_active($video_content_id)
+    {
+        $query = "SELECT * FROM video_content WHERE video_content_id = :video_content_id AND tutor_id = :tutor_id AND active = 0";
+        $result = $this->query($query, ['video_content_id' => $video_content_id, 'tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    public function validate_insert_to_mcq_for_video($data)
+    {
+        $this->errors = [];
+        $i = 1;
+        while (isset($data[$i . 'question'])) {
+            if (empty($data[$i . 'question'])) {
+                $this->errors[$i . 'question_err'] = '*Enter the question';
+            }
+            if (empty($data[$i . 'option1'])) {
+                $this->errors[$i . 'option1_err'] = '*Enter option 1';
+            }
+            if (empty($data[$i . 'option2'])) {
+                $this->errors[$i . 'option2_err'] = '*Enter option 2';
+            }
+            if (empty($data[$i . 'option3'])) {
+                $this->errors[$i . 'option3_err'] = '*Enter option 3';
+            }
+            if (empty($data[$i . 'option4'])) {
+                $this->errors[$i . 'option4_err'] = '*Enter option 4';
+            }
+            if (empty($data[$i . 'correct'])) {
+                $this->errors[$i . 'correct_err'] = '*Select the correct answer';
+            }
+            $i++;
+        }
+        if (empty($this->errors)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function insert_to_mcq_for_video($data, $video_content_id)
+    {
+        $i = 1;
+        while (isset($data[$i . 'question'])) {
+            $this->query("INSERT INTO mcq_for_video (video_content_id, tutor_id, question, option1, option2, option3, option4, correct) VALUES (:video_content_id, :tutor_id, :question, :option1, :option2, :option3, :option4, :correct)", [
+                'video_content_id' => $video_content_id,
+                'question' => $data[$i . 'question'],
+                'option1' => $data[$i . 'option1'],
+                'option2' => $data[$i . 'option2'],
+                'option3' => $data[$i . 'option3'],
+                'option4' => $data[$i . 'option4'],
+                'correct' => $data[$i . 'correct'],
+                'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
+            ]);
+            $i++;
+        }
+        return true;
+    }
+    
+    //update the videio_content active status to 1
+    public function set_video_content_active($video_content_id)
+    {
+        $query = "UPDATE video_content SET active = 1 WHERE video_content_id = :video_content_id";
+        $this->query($query, ['video_content_id' => $video_content_id]);
+        return true;
+    }
+
 }
