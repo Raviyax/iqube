@@ -123,10 +123,7 @@ class Tutor extends Controller
                     $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/video_content/thumbnails/');
 
                     if ($video && $thumbnail) {
-                        // if ($this->tutor->insert_to_video_content($_POST, $video, $thumbnail)) {
-                        //     $this->view('Tutor/Add_mcq_for_video', $data);
-                        //     return;
-                        // }
+                  
 
                         $video_content_id = $this->tutor->insert_to_video_content($_POST, $video, $thumbnail);
                         if ($video_content_id) {
@@ -179,6 +176,77 @@ class Tutor extends Controller
             $this->retrive_media($thumbnail, '/uploads/video_content/thumbnails/');
         } else {
             $this->view('Noaccess');
+        }
+    }
+
+    public function add_new_model_paper()
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'Add New Model Paper',
+                'chapters' => $this->tutor->get_chapters(),
+            ];
+            if (isset($_POST['submit-about-paper'])) {
+                if ($this->tutor->validate_insert_to_model_paper_content($_POST, $_FILES['thumbnail'])) {
+                   
+                    $selectedValues = $_POST['subOption'];
+                    $commaSeparatedValues = implode('][', $selectedValues);
+                    $_POST['subOption'] = $commaSeparatedValues;
+                    $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/model_papers/thumbnails/');
+                    if ($thumbnail) {
+
+                        $model_paper_content_id = $this->tutor->insert_to_model_paper_content($_POST, $thumbnail);
+                        if ($model_paper_content_id) {
+                            $data['model_paper_content_id'] = $model_paper_content_id;
+                            $this->view('Tutor/Add_questions_to_model_paper', $data);
+                            return;
+                        }
+                        // echo"thumbnail uploaded";
+                        // if ($this->tutor->insert_to_model_paper_content($_POST, $thumbnail)) {
+                        //     echo "<script>alert('Model Paper added successfully')</script>";
+                        //     redirect('/Tutor/myuploads');
+                        // }
+                    } else {
+                        $data['errors'] = "Error uploading file";
+                    }
+                } else {
+                    $data['errors'] = $this->tutor->errors;
+                    $this->view('Tutor/Add_new_model_paper', $data);
+                   
+                }
+            }
+
+            //should continue from here. nothin implemented
+            $model_paper_content_id = isset($_GET['model_paper_content_id']) ? $_GET['model_paper_content_id'] : null;
+            if (isset($_POST['submit-questions']) && $model_paper_content_id != null) {
+                if ($this->tutor->is_model_paper_content_id_exists_and_not_active($model_paper_content_id)) {
+                    if ($this->tutor->validate_insert_to_questions_for_model_paper($_POST, $_FILES['essay_questions'])) {
+                        $essay_questions = $this->upload_media($_FILES['essay_questions'], '/uploads/model_papers/essay_questions/');
+                        if ($essay_questions) {
+                            if ($this->tutor->insert_to_questions_for_model_paper($_POST, $essay_questions, $model_paper_content_id)) {
+                                if ($this->tutor->set_model_paper_content_active($model_paper_content_id)) {
+                                    echo "<script>alert('Questions added successfully')</script>";
+                                    redirect('/Tutor/myuploads');
+                                }
+                            }
+                        } else {
+                            $data['errors'] = "Error uploading file";
+                        }
+                    } else {
+                        $data['errors'] = $this->tutor->errors;
+                        $this->view('Tutor/Add_questions_to_model_paper', $data);
+                    }
+                } else {
+                    echo "<script>alert('Model Paper Content ID does not exist or is already active')</script>";
+                }
+            }
+
+
+
+            $this->view('Tutor/Add_new_model_paper', $data);
+        } else {
+            redirect('/Login');
         }
     }
 }

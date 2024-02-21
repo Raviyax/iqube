@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2024 at 03:16 PM
+-- Generation Time: Feb 21, 2024 at 07:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -99,6 +99,39 @@ INSERT INTO `chapters` (`id`, `subject`, `chapter_level_1`, `chapter_level_2`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `essays_for_model_paper`
+--
+
+CREATE TABLE `essays_for_model_paper` (
+  `essay_id` int(11) NOT NULL,
+  `model_paper_content_id` varchar(100) NOT NULL,
+  `tutor_id` varchar(10) NOT NULL,
+  `document` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mcqs_for_model_paper`
+--
+
+CREATE TABLE `mcqs_for_model_paper` (
+  `mcq_id` int(100) NOT NULL,
+  `model_paper_content_id` varchar(100) NOT NULL,
+  `tutor_id` varchar(10) NOT NULL,
+  `question` varchar(500) NOT NULL,
+  `option1` varchar(500) NOT NULL,
+  `option2` varchar(500) NOT NULL,
+  `option3` varchar(500) NOT NULL,
+  `option4` varchar(500) NOT NULL,
+  `option5` varchar(500) NOT NULL,
+  `correct` enum('option1','option2','option3','option4','option5') NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `mcq_for_video`
 --
 
@@ -128,6 +161,31 @@ INSERT INTO `mcq_for_video` (`mcq_id`, `video_content_id`, `tutor_id`, `question
 (5, '7c86dbe61a7e7344', '23', '2*2 keeyada', '56', 'scdf', '4', '99999', NULL, 'option3', '2024-02-20'),
 (6, 'a9285fbfd481c07d', '23', 'What Is the sammalest measurement from this', 'least count', 'actual reading', 'main scale division', 'vernier scale division', NULL, 'option1', '2024-02-20'),
 (7, 'a9285fbfd481c07d', '23', 'lc for standard vernier caliper', '0.2mm', '0.1mm', '0.02mm', '0.002mm', NULL, 'option3', '2024-02-20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_paper_content`
+--
+
+CREATE TABLE `model_paper_content` (
+  `model_paper_content_id` varchar(100) NOT NULL,
+  `tutor_id` varchar(50) NOT NULL,
+  `thumbnail` varchar(100) NOT NULL,
+  `price` int(10) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `covering_chapters` varchar(500) NOT NULL,
+  `time_duration` timestamp(5) NOT NULL DEFAULT current_timestamp(5) ON UPDATE current_timestamp(5),
+  `active` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `model_paper_content`
+--
+
+INSERT INTO `model_paper_content` (`model_paper_content_id`, `tutor_id`, `thumbnail`, `price`, `name`, `description`, `covering_chapters`, `time_duration`, `active`) VALUES
+('92bad9cbbc1a8be1', '23', '65d589be86d6c3.23088497.png', 300, 'physics saralawa', 'fkl;k\'s', '8][9][32][33', '0000-00-00 00:00:00.00000', 0);
 
 -- --------------------------------------------------------
 
@@ -384,10 +442,28 @@ ALTER TABLE `chapters`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `essays_for_model_paper`
+--
+ALTER TABLE `essays_for_model_paper`
+  ADD PRIMARY KEY (`essay_id`);
+
+--
+-- Indexes for table `mcqs_for_model_paper`
+--
+ALTER TABLE `mcqs_for_model_paper`
+  ADD PRIMARY KEY (`mcq_id`);
+
+--
 -- Indexes for table `mcq_for_video`
 --
 ALTER TABLE `mcq_for_video`
   ADD PRIMARY KEY (`mcq_id`);
+
+--
+-- Indexes for table `model_paper_content`
+--
+ALTER TABLE `model_paper_content`
+  ADD PRIMARY KEY (`model_paper_content_id`);
 
 --
 -- Indexes for table `premium_students`
@@ -456,6 +532,18 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `chapters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `essays_for_model_paper`
+--
+ALTER TABLE `essays_for_model_paper`
+  MODIFY `essay_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `mcqs_for_model_paper`
+--
+ALTER TABLE `mcqs_for_model_paper`
+  MODIFY `mcq_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `mcq_for_video`

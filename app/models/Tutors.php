@@ -398,5 +398,50 @@ class Tutors extends Model
         }
         return $result_video_content;
     }
+
+    public function validate_insert_to_model_paper_content($data, $thumbnail)
+    {
+        $this->errors = [];
+        if (empty($data['name'])) {
+            $this->errors['name_err'] = '*Enter name';
+        }
+        if (empty($data['description'])) {
+            $this->errors['description_err'] = '*Enter description';
+        }
+        if (empty($data['price'])) {
+            $this->errors['price_err'] = '*Enter price';
+        }
+        if (empty($thumbnail)) {
+            $this->errors['thumbnail_err'] = '*Please upload a thumbnail';
+        } elseif ($thumbnail['size'] > 1000000) {
+            $this->errors['thumbnail_err'] = '*File size too large';
+        }
+        if (empty($data['time_duration'])) {
+            $this->errors['time_duration_err'] = '*Enter time duration';
+        }
+        if (empty($data['subOption'])) {
+            $this->errors['subOption_err'] = '*Please select at least 1 chapter';
+        }
+        if (empty($this->errors)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function insert_to_model_paper_content($data, $thumbnail)
+    {
+       $model_paper_content_id = bin2hex(random_bytes(8));
+        $this->query("INSERT INTO model_paper_content (model_paper_content_id, tutor_id, name, description, thumbnail, price, covering_chapters, time_duration) VALUES (:model_paper_content_id, :tutor_id, :name, :description, :thumbnail, :price, :covering_chapters, :time_duration)", [
+            'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'thumbnail' => $thumbnail,
+            'price' => $data['price'],
+            'covering_chapters' => $data['subOption'],
+            'time_duration' => $data['time_duration'],
+            'model_paper_content_id' => $model_paper_content_id
+        ]);
+        return $model_paper_content_id;
+    }
 }
 
