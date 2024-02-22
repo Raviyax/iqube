@@ -209,22 +209,27 @@ class Tutor extends Controller
                         // }
                     } else {
                         $data['errors'] = "Error uploading file";
+                        $this->view('Tutor/Add_new_model_paper', $data);
+                        
+                        
                     }
                 } else {
                     $data['errors'] = $this->tutor->errors;
                     $this->view('Tutor/Add_new_model_paper', $data);
+                    
                    
                 }
             }
+            
 
-            //should continue from here. nothin implemented
+            
             $model_paper_content_id = isset($_GET['model_paper_content_id']) ? $_GET['model_paper_content_id'] : null;
             if (isset($_POST['submit-questions']) && $model_paper_content_id != null) {
                 if ($this->tutor->is_model_paper_content_id_exists_and_not_active($model_paper_content_id)) {
                     if ($this->tutor->validate_insert_to_questions_for_model_paper($_POST, $_FILES['essay_questions'])) {
                         $essay_questions = $this->upload_media($_FILES['essay_questions'], '/uploads/model_papers/essay_questions/');
                         if ($essay_questions) {
-                            if ($this->tutor->insert_to_questions_for_model_paper($_POST, $essay_questions, $model_paper_content_id)) {
+                            if ($this->tutor->insert_to_mcqs_for_model_paper($_POST,$model_paper_content_id) && $this->tutor->insert_to_essays_for_model_paper($essay_questions, $model_paper_content_id)) {
                                 if ($this->tutor->set_model_paper_content_active($model_paper_content_id)) {
                                     echo "<script>alert('Questions added successfully')</script>";
                                     redirect('/Tutor/myuploads');

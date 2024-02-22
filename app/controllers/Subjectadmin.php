@@ -145,4 +145,20 @@ class Subjectadmin extends Controller
             redirect('/Login');
         }
     }
+
+    public function manage_syllabus()
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $notifications = $this->Subjectadmin->get_notifications(); 
+            $data = [
+                'title' => 'Manage Syllabus',
+                'view' => 'Manage Syllabus',
+                'notifications' => $notifications,
+                // 'syllabus' => $this->Subjectadmin->get_syllabus($_SESSION['USER_DATA']['subject'])
+            ];
+            $this->view('Subject_admin/Manage_syllabus', $data);
+        } else {
+            redirect('/Login');
+        }
+    }
 }

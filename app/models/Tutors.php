@@ -443,5 +443,101 @@ class Tutors extends Model
         ]);
         return $model_paper_content_id;
     }
+
+    public function insert_to_model_paper_content_id_exists_and_not_active($model_paper_content_id)
+    {
+        $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id AND tutor_id = :tutor_id AND active = 0";
+        $result = $this->query($query, ['model_paper_content_id' => $model_paper_content_id, 'tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    public function validate_insert_to_questions_for_model_paper($data,$essay_questions)
+    {
+        $this->errors = [];
+        $i = 1;
+        while (isset($data[$i . 'question'])) {
+            if (empty($data[$i . 'question'])) {
+                $this->errors[$i . 'question_err'] = '*Enter the question';
+            }
+            if (empty($data[$i . 'option1'])) {
+                $this->errors[$i . 'option1_err'] = '*Enter option 1';
+            }
+            if (empty($data[$i . 'option2'])) {
+                $this->errors[$i . 'option2_err'] = '*Enter option 2';
+            }
+            if (empty($data[$i . 'option3'])) {
+                $this->errors[$i . 'option3_err'] = '*Enter option 3';
+            }
+            if (empty($data[$i . 'option4'])) {
+                $this->errors[$i . 'option4_err'] = '*Enter option 4';
+            }
+            if (empty($data[$i . 'option5'])) {
+                $this->errors[$i . 'option5_err'] = '*Enter option 5';
+            }
+            if (empty($data[$i . 'correct'])) {
+                $this->errors[$i . 'correct_err'] = '*Select the correct answer';
+            }
+            $i++;
+        }
+        if (empty($essay_questions)) {
+            $this->errors['essay_questions_err'] = '*Please upload a document';
+        } elseif ($essay_questions['size'] > 1000000) {
+            $this->errors['essay_questions_err'] = '*File size too large';
+        }
+        if (empty($this->errors)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function insert_to_mcqs_for_model_paper($data, $model_paper_content_id)
+    {
+        $i = 1;
+        while (isset($data[$i . 'question'])) {
+            $this->query("INSERT INTO mcqs_for_model_paper (model_paper_content_id, tutor_id, question, option1, option2, option3, option4, option5, correct) VALUES (:model_paper_content_id, :tutor_id, :question, :option1, :option2, :option3, :option4, :option5, :correct)", [
+                'model_paper_content_id' => $model_paper_content_id,
+                'question' => $data[$i . 'question'],
+                'option1' => $data[$i . 'option1'],
+                'option2' => $data[$i . 'option2'],
+                'option3' => $data[$i . 'option3'],
+                'option4' => $data[$i . 'option4'],
+                'option5' => $data[$i . 'option5'],
+                'correct' => $data[$i . 'correct'],
+                'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
+            ]);
+            $i++;
+        }
+        return true;
+    }
+
+    public function insert_to_essays_for_model_paper($essay_questions, $model_paper_content_id)
+    {
+        $this->query("INSERT INTO essays_for_model_paper (model_paper_content_id, tutor_id, essay_questions) VALUES (:model_paper_content_id, :tutor_id, :essay_questions)", [
+            'model_paper_content_id' => $model_paper_content_id,
+            'essay_questions' => $essay_questions,
+            'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
+        ]);
+        return true;
+    }
+
+    public function set_model_paper_content_active($model_paper_content_id)
+    {
+        $query = "UPDATE model_paper_content SET active = 1 WHERE model_paper_content_id = :model_paper_content_id";
+        $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+        return true;
+    }
+
+    public function is_model_paper_content_id_exists_and_not_active($model_paper_content_id)
+    {
+        $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id AND tutor_id = :tutor_id AND active = 0";
+        $result = $this->query($query, ['model_paper_content_id' => $model_paper_content_id, 'tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
 }
 
