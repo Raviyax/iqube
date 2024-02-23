@@ -64,6 +64,7 @@
                 'image' => $tutordata[0]->image,
                'approved_date' => $tutordata[0]->approved_date,
                'active' => $tutordata[0]->active,
+               
             ];
         }
     }
@@ -129,12 +130,7 @@
         }
         return false;
     }
-    public static function is_paid(){
-        if($_SESSION['USER_DATA']['paid'] == '1'){
-            return true;
-        }
-        return false;
-    }
+
     public static function is_completed(){
         if($_SESSION['USER_DATA']['completed'] == '1'){
             return true;

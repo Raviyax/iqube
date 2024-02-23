@@ -57,3 +57,4 @@ toggleBtn.onclick = (e) =>{
 if(darkMode === 'enabled'){
    enabelDarkMode();
 }
+

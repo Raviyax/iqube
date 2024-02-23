@@ -3,6 +3,12 @@ class Student extends Controller {
     private $imagepath;
     public $user;
     public $student;
+    public $payhere;
+    public function __construct(){
+        $this->user = $this->model('user');
+        $this->payhere = new Payhere;
+        $this->student = $this->model('students');
+    }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
             $data = [
@@ -19,39 +25,66 @@ class Student extends Controller {
         if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
             $data = [
                 'title' => 'Student',
-                'view' => 'Purchase Premium'
+                'view' => 'Purchase Premium',
+                
+               
             ];
+           
+            $premiumdata = $this->student->get_premium_data($_SESSION['USER_DATA']['student_id']);
+            if($premiumdata){
+                $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city);
+                $data['premiumdata'] = $premiumdata;
+                $this->view('Student/pay', $data);
+                return;
+            }
+            
+            if(isset($_POST['premium']) && !$this->student->get_premium_data($_SESSION['USER_DATA']['student_id'])){
+                
             $this->view('Student/purchase_premium', $data);
-            //temporarily
-            if(isset($_POST['pay'])){
-                $this->student = $this->model('student');
-                $this->student->pay();
+            return;
             }
-        }
-        else{
-            redirect('/Login');
-        }
-    }
-    public function signup_premium(){
-        if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
-            if(Auth::is_paid()){
-                $data = [
-                    'title' => 'Student',
-                    'view' => 'Signup Premium'
-                ];
-                $this->view('Student/Signup_premium', $data);
-                if(isset($_POST['signup'])){
-                    $this->student = $this->model('student');
-                    $this->student->signup_premium();
+
+            if(isset($_POST['next-to-confirmation'])){
+                if($this->student->validate_insert_to_premium_students($_POST)){
+                    if($this->student->insert_to_premium_students($_POST)){
+                        $premiumdata = $this->student->get_premium_data($_SESSION['USER_DATA']['student_id']);
+                        if($premiumdata){
+                            $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city);
+                            $data['premiumdata'] = $premiumdata;
+                            $this->view('Student/pay', $data);
+                            return;
+                        }
+                    }
+                    
                 }
-            }else{
-               echo "<script>alert('Please pay first')</script>";
+                else{
+                    $data['errors'] = $this->student->errors;
+                    $this->view('Student/purchase_premium', $data);
+            
+                    return;
+                }
+
+                
             }
+           
+            if(isset($_POST['payment_id'])){
+                if($this->payhere->verify_payment($_POST)){
+                    if($this->student->upgrade_to_premium()){
+                        redirect('/Student');
+                        return;
+                    }
+
+                }
+             }
+
+
+            $this->view('Student/premium', $data);
         }
         else{
             redirect('/Login');
         }
     }
+
     public function userimage($image)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -83,7 +116,7 @@ class Student extends Controller {
                 ];
                 $this->view('Student/more_details', $data);
                 if(isset($_POST['proceed'])){
-                    $this->student = $this->model('student');
+               
                     $this->student->complete_profile();
                 }
             }
@@ -103,7 +136,7 @@ public function profile(){
         ];
         $this->view('Student/profile', $data);
         if(isset($_POST['submit'])){
-            $this->student = $this->model('student');
+         
             $this->student->update_profile();
         }
     }
@@ -148,4 +181,6 @@ public function tutors(){
         redirect('/Login');
     }
 }
+
+
 }

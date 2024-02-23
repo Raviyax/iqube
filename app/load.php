@@ -9,6 +9,7 @@
     require_once "lib/Core.php";
     require_once "lib/Model.php";
     require_once "lib/Mail.php";
+    require_once "lib/Payhere.php";
 // Autoload Core Libraries
         require_once "models/User.php";
 $init = new Core;

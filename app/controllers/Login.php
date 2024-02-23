@@ -10,16 +10,16 @@ class Login extends Controller
         $data['errors'] = [];
         $user = $this->model('User');
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            if($user->google_recaptcha($_POST['g-recaptcha-response']) == false){
-                $data['errors']['captcha_err'] = '*Please check the captcha';
-                $this->view('login', $data);
-            }
+            // if($user->google_recaptcha($_POST['g-recaptcha-response']) == false){
+            //     $data['errors']['captcha_err'] = '*Please check the captcha';
+            //     $this->view('login', $data);
+            // }
             $row = $user->first([
                    'email' => $_POST['email']],'users','user_id');
                     $studentdata = $user->first([
                         'email' => $_POST['email']],'students','student_id');
                             $premiumdata = $user->first([
-                                'email' => $_POST['email']],'premium_students','pro_id');
+                                'student_id' => $studentdata->student_id],'premium_students','pro_id');
             if($row){
                 if(password_verify($_POST['password'], $row->password)){
                     Auth::authenticate($row, $studentdata,$premiumdata);
