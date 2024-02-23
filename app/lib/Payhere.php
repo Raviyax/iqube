@@ -2,16 +2,16 @@
 class Payhere
 {
     // Payment to purchase premium for a student
-    public function premium( $cno, $address, $city)
+    public function premium( $cno, $address, $city, $fname, $lname)
     {
         $amount = 1000;
         $merchant_id = '1226057'; // Replace your Merchant ID
-        $merchant_secret = '';
+        $merchant_secret = 'MjI0ODQ4MjI1MTY5NjI4Njg2MDI1MzkyOTcxMDcyMDA5MzcyNjI4';
         $return_url = URLROOT.'/student'; // Replace with your Return URL
         $cancel_url = 'https://'.URLROOT.'/cancel'; // Replace with your Cancel URL
         $notify_url = URLROOT.'/student/purchase_premium'; // Replace with your Notify URL
-        $first_name = 'ravishan';
-        $last_name = 'jayathilaka';
+        $first_name = $fname;
+        $last_name = $lname;
         $email = $_SESSION['USER_DATA']['email'];
         $phone = $cno;
         $address = $address;
@@ -67,7 +67,7 @@ class Payhere
             $data['payhere_amount'] .
             $data['payhere_currency'] .
             $data['status_code'] .
-            strtoupper(md5(''))
+            strtoupper(md5('MjI0ODQ4MjI1MTY5NjI4Njg2MDI1MzkyOTcxMDcyMDA5MzcyNjI4'))
         ));
 
         if ($local_md5sig == $md5sig) {

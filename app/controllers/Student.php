@@ -32,7 +32,7 @@ class Student extends Controller {
            
             $premiumdata = $this->student->get_premium_data($_SESSION['USER_DATA']['student_id']);
             if($premiumdata){
-                $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city);
+                $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname);
                 $data['premiumdata'] = $premiumdata;
                 $this->view('Student/pay', $data);
                 return;
@@ -49,7 +49,7 @@ class Student extends Controller {
                     if($this->student->insert_to_premium_students($_POST)){
                         $premiumdata = $this->student->get_premium_data($_SESSION['USER_DATA']['student_id']);
                         if($premiumdata){
-                            $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city);
+                            $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname);
                             $data['premiumdata'] = $premiumdata;
                             $this->view('Student/pay', $data);
                             return;
