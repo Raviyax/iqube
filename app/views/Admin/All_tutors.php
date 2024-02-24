@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data) ?>
+<?php $this->view('inc/Header', $data) ?>
 <section class="dashboard" id="section">
   <h1 class="heading"><?php echo ($data['subject']) ? $data['subject'] : "All"; ?> Tutors</h1>
   <header class="header">

@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data) ?>
+<?php $this->view('inc/Header', $data) ?>
 <?php $tutor = $data['tutor']; ?>
 <form action="<?php echo URLROOT ?>/Subjectadmin/view_request/<?php echo $tutor->request_id; ?>" method="post" enctype="multipart/form-data">
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">

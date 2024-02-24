@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data) ?>
+<?php $this->view('inc/Header', $data) ?>
 <section class="dashboard" id="users">
     <h1 class="heading">Manage Users <a href="#" class="btn" style="width: fit-content;">View All Users</a></h1>
     <div class="flex-btn">

@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data); ?>
+<?php $this->view('inc/Header', $data); ?>
 
 <section class="courses">
   <h1 class="heading">Upgarade to premium student</h1>
@@ -106,6 +106,6 @@
 
 
 </script>
-<?php $this->view('inc/footer'); ?>
+<?php $this->view('inc/Footer'); ?>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data) ?>
+<?php $this->view('inc/Header', $data) ?>
 <section class="courses">
   <h1 class="heading">My contents / Add new video / Add MCQs from video</h1>
   <section class="form-container" style="display: block;">

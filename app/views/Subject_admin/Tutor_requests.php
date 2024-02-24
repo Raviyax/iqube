@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data) ?>
+<?php $this->view('inc/Header', $data) ?>
 <section class="dashboard" id="section">
   <h1 class="heading">Tutor requests for <?php echo $_SESSION['USER_DATA']['subject'] ?></h1>
   <header class="header">

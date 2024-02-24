@@ -1,4 +1,4 @@
-<?php $this->view('inc/header') ?>
+<?php $this->view('inc/Header') ?>
 <section class="dashboard" id="section">
     <h1 class="heading">All Students</h1>
     <header class="header">
