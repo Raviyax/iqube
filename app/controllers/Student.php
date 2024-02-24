@@ -5,9 +5,9 @@ class Student extends Controller {
     public $student;
     public $payhere;
     public function __construct(){
-        $this->user = $this->model('user');
+        $this->user = $this->model('User');
         $this->payhere = new Payhere;
-        $this->student = $this->model('students');
+        $this->student = $this->model('Students');
     }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
@@ -114,7 +114,7 @@ class Student extends Controller {
                 $data = [
                     'title' => 'Student',
                     'view' => 'More Details',
-                    'subjects' => $this->model('user')->query("SELECT * FROM subjects"),
+                    'subjects' => $this->user->query("SELECT * FROM subjects"),
                 ];
                 $this->view('Student/More_details', $data);
                 if(isset($_POST['proceed'])){
@@ -175,7 +175,7 @@ public function tutors(){
         $data = [
             'title' => 'Student',
             'view' => 'Tutors',
-            'tutors' => $this->model('user')->query("SELECT * FROM tutors"),
+            'tutors' => $this->user->query("SELECT * FROM tutors"),
         ];
         $this->view('Student/Tutors', $data);
     }

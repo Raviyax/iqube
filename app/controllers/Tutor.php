@@ -28,7 +28,7 @@ class Tutor extends Controller
                 'view' => 'My Profile',
             ];
             $this->view('Tutor/Profile', $data);
-            $this->me = $this->model('User');
+
             if (isset($_POST["submit"])) {
                 if ($_FILES["image"]['size'] > 0) {
                     $uniqueFilename = generate_unique_filename($_FILES["image"]);
