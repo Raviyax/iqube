@@ -22,6 +22,8 @@ class Student extends Controller {
         }
     }
     public function purchase_premium(){
+
+
         if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
             $data = [
                 'title' => 'Student',
