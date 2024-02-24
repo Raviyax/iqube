@@ -23,7 +23,9 @@ class Login extends Controller
             if($row){
                 if(password_verify($_POST['password'], $row->password)){
                     Auth::authenticate($row, $studentdata,$premiumdata);
-                    if( Auth::is_student()){ header('location:'.URLROOT.'/student');}
+                    if( Auth::is_student()){ header('location:'.URLROOT.'/student');
+                        return;
+                    }
                 }
                 $data['errors']['email_err'] = '*Wrong Email or Password';
             }

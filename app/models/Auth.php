@@ -13,7 +13,6 @@
                     'updated_at' => $row->updated_at,
                     'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
-                    'paid' => $studentdata->paid,
                     'student_id' => $studentdata->student_id,
                     'fname' => $premiumdata->fname,
                     'lname' => $premiumdata->lname,
