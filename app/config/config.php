@@ -8,13 +8,13 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DBDRIVER','mysql');
     define('URLROOT','http://localhost/iqube');
 }
-if($_SERVER['SERVER_NAME'] == 'https://ravishan.duckdns.org/'){
+if($_SERVER['SERVER_NAME'] == 'https://groupproject.duckdns.org'){
     define('DB_HOST','localhost');
     define('DB_USER','root');
     define('DB_PASS','Priuscaa4025');
     define('DB_NAME','iqube');
     define('DBDRIVER','mysql');
-    define('URLROOT','https://ravishan.duckdns.org/');
+    define('URLROOT','https://groupproject.duckdns.org');
 }
 // app root - use something in app root
 define('APPROOT',dirname(dirname(__FILE__)));
