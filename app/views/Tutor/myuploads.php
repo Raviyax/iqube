@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <section class="courses">
    <h1 class="heading">My Uploads</h1>
    <header class="header">
@@ -48,6 +48,6 @@
 
    </div>
 </section>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

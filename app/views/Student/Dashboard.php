@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/dash.css">
 <section>
     <!-- <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1> -->
@@ -431,6 +431,6 @@ We hope you will continue to learn with us.</span>
         });
     </script>
 <script src="<?=URLROOT?>/assets/js/student/dash.js"></script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

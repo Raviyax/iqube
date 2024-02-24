@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <section class="courses">
   <h1 class="heading">My contents / Add new model paper </h1>
   <section class="form-container" style="display: block;">
@@ -92,6 +92,6 @@
   });
 
 </script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

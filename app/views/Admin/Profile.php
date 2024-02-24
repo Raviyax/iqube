@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
    <h1 class="heading">IQube Admin Profile</h1>
    <div class="details">
@@ -37,6 +37,6 @@
         document.getElementById("editprofile").style.display = "none";
     }
 </script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

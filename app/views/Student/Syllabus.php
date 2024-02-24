@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/syllabus.css">
 <section>
     <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1>
@@ -77,6 +77,6 @@
             </div>
         </div>
     </section>
-    <?php $this->view('inc/footer') ?>
+    <?php $this->view('inc/Footer') ?>
 </body>
 </html>

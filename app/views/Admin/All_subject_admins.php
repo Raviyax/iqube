@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <section class="dashboard" id="section">
     <h1 class="heading"><?php echo ($data['subject']) ? $data['subject'] : "All"; ?> Subject Admins</h1>
     <header class="header">
@@ -93,6 +93,6 @@ function addnewsubjectadmin() {
         document.getElementById("addnewsubjectadmin").style.display = "none";
     }
 </script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

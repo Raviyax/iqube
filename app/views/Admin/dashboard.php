@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <section class="dashboard">
     <h1 class="heading">dashboard</h1>
     <div class="box-container">
@@ -10,6 +10,6 @@
     </div>
     </div>
 </section>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

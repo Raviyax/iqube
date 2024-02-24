@@ -54,6 +54,6 @@
     }
   }
 </script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

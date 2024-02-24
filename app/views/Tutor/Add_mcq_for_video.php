@@ -121,7 +121,7 @@ function addNewQuestion() {
     document.getElementById("content").style.display = "none";
   }
 </script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 
 </html>

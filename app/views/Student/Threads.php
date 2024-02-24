@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/threads.css">
 <section class="dashboard">
     <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1>
@@ -12,7 +12,7 @@
     </div>
 </section>
 <script src="<?=URLROOT?>/assets/js/student/threads.js"></script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 <script src="https://kit.fontawesome.com/3f6144a6ea.js" crossorigin="anonymous"></script>
 </body>
 </html>

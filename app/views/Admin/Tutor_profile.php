@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <?php $tutor = $data['tutor'];?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
    <h1 class="heading"><?php echo $tutor->fname." ".$tutor->lname;?>'s Personal Profile</h1>
@@ -41,6 +41,6 @@
       </div>
    </div>
 </section>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>

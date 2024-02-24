@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/profile.css">
 <section class="dashboard">
     <div class="grid">
@@ -14,7 +14,7 @@
         <input type="file" name="profile-pic" accept="image/*" class="box">
     </div>
 </section>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 <script>
     function changeDP(){
         document.getElementById("profile-pic").style.display = "flex";

@@ -1,4 +1,4 @@
-<?php $this->view('inc/header',$data) ?>
+<?php $this->view('inc/Header',$data) ?>
 <?php $tutor = $data['tutor'];?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
    <h1 class="heading"><?php echo $_SESSION['USER_DATA']['subject'];?> Tutors > <?php echo $tutor->fname." ".$tutor->lname;?>'s Profile</h1>
@@ -69,6 +69,6 @@
         document.getElementById("editprofile").style.display = "none";
     }
 </script>
-<?php $this->view('inc/footer') ?>
+<?php $this->view('inc/Footer') ?>
 </body>
 </html>
