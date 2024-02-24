@@ -15,7 +15,7 @@ class Student extends Controller {
                 'title' => 'Student',
                 'view' => 'Dashboard'
             ];
-            $this->view('Student/dashboard', $data);
+            $this->view('Student/Dashboard', $data);
         }
         else{
             redirect('/Login');
@@ -36,13 +36,13 @@ class Student extends Controller {
             if($premiumdata){
                 $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname);
                 $data['premiumdata'] = $premiumdata;
-                $this->view('Student/pay', $data);
+                $this->view('Student/Pay', $data);
                 return;
             }
             
             if(isset($_POST['premium']) && !$this->student->get_premium_data($_SESSION['USER_DATA']['student_id'])){
                 
-            $this->view('Student/purchase_premium', $data);
+            $this->view('Student/Purchase_premium', $data);
             return;
             }
 
@@ -53,7 +53,7 @@ class Student extends Controller {
                         if($premiumdata){
                             $data['payment'] = $this->payhere->premium($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname);
                             $data['premiumdata'] = $premiumdata;
-                            $this->view('Student/pay', $data);
+                            $this->view('Student/Pay', $data);
                             return;
                         }
                     }
@@ -61,7 +61,7 @@ class Student extends Controller {
                 }
                 else{
                     $data['errors'] = $this->student->errors;
-                    $this->view('Student/purchase_premium', $data);
+                    $this->view('Student/Purchase_premium', $data);
             
                     return;
                 }
@@ -80,7 +80,7 @@ class Student extends Controller {
              }
 
 
-            $this->view('Student/premium', $data);
+            $this->view('Student/Premium', $data);
         }
         else{
             redirect('/Login');
@@ -102,7 +102,7 @@ class Student extends Controller {
                 'title' => 'Student',
                 'view' => 'Study Materials'
             ];
-            $this->view('Student/study_materials', $data);
+            $this->view('Student/Study_materials', $data);
         }
         else{
             redirect('/Login');
@@ -116,7 +116,7 @@ class Student extends Controller {
                     'view' => 'More Details',
                     'subjects' => $this->model('user')->query("SELECT * FROM subjects"),
                 ];
-                $this->view('Student/more_details', $data);
+                $this->view('Student/More_details', $data);
                 if(isset($_POST['proceed'])){
                
                     $this->student->complete_profile();
@@ -136,7 +136,7 @@ public function profile(){
             'title' => 'Student',
             'view' => 'Profile',
         ];
-        $this->view('Student/profile', $data);
+        $this->view('Student/Profile', $data);
         if(isset($_POST['submit'])){
          
             $this->student->update_profile();

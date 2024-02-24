@@ -73,7 +73,7 @@ class Tutor extends Controller
                     'email' => $email,
                     'token' => $token,
                 ];
-                $this->view('Tutor/createpassword', $data);
+                $this->view('Tutor/Createpassword', $data);
                 if (isset($_POST['create'])) {
                     if ($this->tutor->validate_new_password($_POST)) {
                         if ($this->tutor->create_new_password($_POST['password'], $email)) {
@@ -85,7 +85,7 @@ class Tutor extends Controller
                         $data = [
                             'errors' => $this->tutor->errors
                         ];
-                        $this->view('Tutor/createpassword', $data);
+                        $this->view('Tutor/Createpassword', $data);
                     }
                 }
             }

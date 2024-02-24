@@ -19,7 +19,7 @@ class Admin extends Controller
                 'title' => 'Admin',
                 'view' => 'Dashboard'
             ];
-            $this->view('Admin/dashboard', $data);
+            $this->view('Admin/Dashboard', $data);
         } else {
             $this->view('Noaccess');
         }
@@ -80,7 +80,7 @@ class Admin extends Controller
             $this->view('Noaccess');
         }
     }
-    public function Subject_admin_profile($id)
+    public function subject_admin_profile($id)
     {
         if (Auth::is_logged_in() && Auth::is_admin()) {
             $data = [

@@ -26,10 +26,10 @@ class Staff extends Controller{
             }
             else{
                 $data['errors'] = $this->user->login_errors;
-                $this->view('Staff_login/login', $data);
+                $this->view('Staff_login/Login', $data);
             }
         }
-         $this->view('Staff_login/login', $data);
+         $this->view('Staff_login/Login', $data);
     }
     }
 }

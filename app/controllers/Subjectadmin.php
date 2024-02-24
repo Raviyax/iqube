@@ -45,7 +45,7 @@ class Subjectadmin extends Controller
             redirect('/Login');
         }
     }
-    public function Tutors()
+    public function tutors()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
             $notifications = $this->Subjectadmin->get_notifications(); 
@@ -140,7 +140,7 @@ class Subjectadmin extends Controller
                     redirect('/Subjectadmin/tutor_requests');
                 }
             }
-            $this->view('Subject_admin/view_request', $data);
+            $this->view('Subject_admin/View_request', $data);
         } else {
             redirect('/Login');
         }

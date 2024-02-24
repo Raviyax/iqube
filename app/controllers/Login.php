@@ -28,7 +28,7 @@ class Login extends Controller
                 $data['errors']['email_err'] = '*Wrong Email or Password';
             }
         }
-        $this->view('login', $data);
+        $this->view('Login', $data);
 }
     else{
         header('location:'.URLROOT.'/Landing');
