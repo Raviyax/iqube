@@ -14,7 +14,7 @@
     define('DB_PASS','Priuscaa4025');
     define('DB_NAME','iqube');
     define('DBDRIVER','mysql');
-    define('URLROOT','https://groupproject.duckdns.org');
+    define('URLROOT','https://iqube.me');
 
 // app root - use something in app root
 define('APPROOT',dirname(dirname(__FILE__)));
