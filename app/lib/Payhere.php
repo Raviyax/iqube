@@ -6,7 +6,7 @@ class Payhere
     {
         $amount = 1000;
         $merchant_id = '1226057'; // Replace your Merchant ID
-        $merchant_secret = 'MjI0ODQ4MjI1MTY5NjI4Njg2MDI1MzkyOTcxMDcyMDA5MzcyNjI4';
+        $merchant_secret = 'NDgyNjY3NzExMjgxODQyMDAyNTIxMDQ5Nzg3MzY3MDE5NDEyNQ==';
         $return_url = URLROOT.'/student/profile'; // Replace with your Return URL
         $cancel_url = URLROOT.'/cancel'; // Replace with your Cancel URL
         $notify_url = URLROOT.'/student/purchase_premium'; // Replace with your Notify URL
