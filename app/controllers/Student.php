@@ -31,6 +31,7 @@ class Student extends Controller {
                 }
 
             }
+            redirect('/Landing');
          }
 
 
