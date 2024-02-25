@@ -22,6 +22,16 @@ class Student extends Controller {
         }
     }
     public function purchase_premium(){
+        
+        if(isset($_POST['payment_id'])){
+            if($this->payhere->verify_payment($_POST)){
+                if($this->student->upgrade_to_premium()){
+                    redirect('/Student');
+                    return;
+                }
+
+            }
+         }
 
 
         if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
@@ -69,15 +79,7 @@ class Student extends Controller {
                 
             }
            
-            if(isset($_POST['payment_id'])){
-                if($this->payhere->verify_payment($_POST)){
-                    if($this->student->upgrade_to_premium()){
-                        redirect('/Student');
-                        return;
-                    }
-
-                }
-             }
+        
 
 
             $this->view('Student/Premium', $data);
