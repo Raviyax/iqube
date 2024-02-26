@@ -11,6 +11,10 @@ class Student extends Controller {
     }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
+            if(!Auth::is_completed()){
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Dashboard'
@@ -23,16 +27,25 @@ class Student extends Controller {
     }
     public function purchase_premium(){
         
-        if(isset($_POST['payment_id'])){
-            if($this->payhere->verify_payment($_POST)){
+        //wrong implementation due to error in payhere end
+        if (isset($_POST['status'])) {
+            if ($_POST['status'] == 'ok') {
+
                 if($this->student->upgrade_to_premium()){
-                    redirect('/Student');
-                    return;
+        
+                // Send a JSON response
+                header('Content-Type: application/json');
+                echo json_encode(['message' => 'ok']);
                 }
 
+                return;
             }
-            redirect('/Landing');
-         }
+        }
+        
+
+        
+
+
 
 
         if(Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()){
@@ -127,6 +140,7 @@ class Student extends Controller {
             }
             else{
                 redirect('/Student');
+            
             }
         }
         else{
@@ -185,6 +199,27 @@ public function tutors(){
     else{
         redirect('/Login');
     }
+}
+
+public function verify_email(){
+ 
+    
+     $token = isset($_GET['token']) ? $_GET['token'] : '';
+        $email = isset($_GET['email']) ? $_GET['email'] : '';
+        if($this->student->verify_email($token, $email)){
+            $data = [
+                'title' => 'Student',
+                'view' => 'Email Verified',
+            ];
+            $this->view('Student/Email_verified', $data);
+            //after 5 seconds redirect to login page
+            header("refresh:3;url=".URLROOT."/Login");
+        }
+        else{
+           echo "Invalid verification link";
+        }
+
+
 }
 
 

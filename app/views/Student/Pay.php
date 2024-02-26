@@ -74,26 +74,49 @@
 </section>
 
 
+  
 
 
-
+<!-- 
+Not the correct method to verify payment. Notify url is not working in payhere
+        Therefore payment verification is done in js as follow 
+    call the purchase_premium method in student controller  -->
 <script>
    
 
-    payhere.onCompleted = function onCompleted() {
-        console.log("Payment completed. OrderID:");
-        // Note: validate the payment and show success or failure page to the customer
+   payhere.onCompleted = function onCompleted() {
+        // Create a FormData object and append the data you want to send
+        var formData = new FormData();
+        formData.append('status', 'ok');
+
+        // Make a POST request using the fetch API
+        fetch('<?= URLROOT ?>/student/purchase_premium', {
+            method: 'POST',
+            body: formData,
+            // Add any headers if needed (e.g., content-type)
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if(data.message == 'ok'){
+                window.location.href = "<?= URLROOT ?>/student";
+            }
+        })
+        
+
+       
     };
 
-    // Payment window closed
+
+    
     payhere.onDismissed = function onDismissed() {
-        // Note: Prompt user to pay again or show an error page
+      
         console.log("Payment dismissed");
     };
 
-    // Error occurred
+   
     payhere.onError = function onError(error) {
-        // Note: show an error page
+        
         console.log("Error:"  + error);
     };
     var payment = <?php echo  $data['payment']; ?>;

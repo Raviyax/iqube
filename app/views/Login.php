@@ -25,7 +25,25 @@
                 <br>
                 <input type="password"  name="password" placeholder = "Password">
             </div>
+            
+            <?php if(isset($data['notification'])):?>
                 <br><br>
+            <div style="background-color:aqua; width:100%;">
+                <p style="color: black;">
+                    <?php echo $data['notification'];?>
+                </p>
+            </div>
+            <?php endif;?>
+
+            <?php if(isset($data['errors']['verification_err'])):?>
+            <div style="background-color: #ff6666; width:100%;">
+                <p style="color: black;">
+                    <?php echo $data['errors']['verification_err'];?>
+                </p>
+            </div>
+            <?php endif;?>
+
+                <br>
             <div class="remember-me--forget-password">
                     <!-- Angular -->
         <label>

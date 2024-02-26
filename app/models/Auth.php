@@ -2,6 +2,7 @@
  class Auth {
     public $user;
     public static function authenticate($row, $studentdata, $premiumdata){
+ 
         if(is_object($row )){
             if($row->role == 'student'){
                 $_SESSION['USER_DATA'] = [
@@ -18,6 +19,7 @@
                     'lname' => $premiumdata->lname,
                     'cno' => $premiumdata->cno,
                     'completed' => $studentdata->completed,
+                    'verify' => $studentdata->verify
                 ];
             }
             if(($row->role == 'student') && ($studentdata->premium == 1)){
@@ -34,7 +36,7 @@
                     'student_id' => $studentdata->student_id,
                     'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
-                    'paid' => $studentdata->paid,
+                    
                 ];
             }
         }
@@ -112,7 +114,7 @@
         return false;
     }
     public static function is_student(){
-        if($_SESSION['USER_DATA']['role'] == 'student'){
+        if($_SESSION['USER_DATA']['role'] == 'student' && $_SESSION['USER_DATA']['verify'] == 1){
             return true;
         }
         return false;
