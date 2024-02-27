@@ -328,7 +328,11 @@
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
+         
+            <div class="profile">
             <a href="<?php echo URLROOT ?>/Student/purchase_premium" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
+
+            </div>
         </div>
     <?php } ?>
     <!-- premium student header  -->

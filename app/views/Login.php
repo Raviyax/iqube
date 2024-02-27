@@ -28,18 +28,18 @@
             
             <?php if(isset($data['notification'])):?>
                 <br><br>
-            <div style="background-color:aqua; width:100%;">
+            <div style="background-color:#816bff; width:100%; padding:10px; border-radius:5px;">
                 <p style="color: black;">
-                    <?php echo $data['notification'];?>
+                <b><?php echo $data['notification'];?></b>
                 </p>
             </div>
             <?php endif;?>
 
             <?php if(isset($data['errors']['verification_err'])):?>
                 <br><br>
-            <div style="background-color: #ff6666; width:100%;">
-                <p style="color: black;">
-                    <?php echo $data['errors']['verification_err'];?>
+            <div style="background-color: red; width:100%; padding:10px; border-radius:5px;">
+                <p style="color: black; ">
+                    <b><?php echo $data['errors']['verification_err'];?></b>
                 </p>
             </div>
             <?php endif;?>

@@ -5,7 +5,7 @@ class Login extends Controller
     public function index()
     {
         if (Auth::is_logged_in()) {
-            redirect('/Landing');
+            redirect('/Student');
             return;
         }
 
@@ -23,12 +23,12 @@ class Login extends Controller
             //     $data['errors']['captcha_err'] = '*Please check the captcha';
             //     $this->view('login', $data);
             // }
-
-            $row = $user->first(['email' => $email], 'users', 'user_id');
             $studentdata = $user->first(['email' => $email], 'students', 'student_id');
+            $row = $user->first(['email' => $email], 'users', 'user_id');
+            
     
 
-            if ($row && password_verify($password, $row->password)) {
+            if ($studentdata && password_verify($password, $row->password)) {
                 if ($studentdata && $studentdata->verify == 1) {
                     $premiumdata = $user->first(['student_id' => $studentdata->student_id], 'premium_students', 'student_id');
 
@@ -49,9 +49,8 @@ class Login extends Controller
                         }
                     }
                 } else {
-                    $data['errors']['verification_err'] = 'Please Verify your email first. Check your email for the verification link.';
-                    echo 'Please Verify your email first. Check your email for the verification link.';
-                    return;
+                    $data['errors']['verification_err'] = 'Please Verify your email first. Check your email for the verification link!';
+                  
                     
                 }
             } else {
