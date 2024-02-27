@@ -11,10 +11,6 @@ class Student extends Controller {
     }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
-            if(!Auth::is_completed()){
-                redirect('/Student/more_details');
-                return;
-            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Dashboard'
@@ -124,29 +120,35 @@ class Student extends Controller {
             redirect('/Login');
         }
     }
-    public function more_details(){
-        if(Auth::is_logged_in() && Auth::is_student()){
-            if(!Auth::is_completed()){
+    public function more_details()
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
                 $data = [
                     'title' => 'Student',
                     'view' => 'More Details',
                     'subjects' => $this->user->query("SELECT * FROM subjects"),
                 ];
-                $this->view('Student/More_details', $data);
-                if(isset($_POST['proceed'])){
-               
-                    $this->student->complete_profile();
+    
+                if (isset($_POST['proceed'])) {
+                    // Sanitize and validate input if necessary
+    
+                    // Move the logic to the Student model
+                    if ($this->student->complete_profile()) {
+                        redirect('/Student');
+                        return;
+                    }
                 }
-            }
-            else{
+    
+                $this->view('Student/More_details', $data);
+            } else {
                 redirect('/Student');
-            
             }
-        }
-        else{
+        } else {
             redirect('/Login');
         }
     }
+    
 public function profile(){
     if(Auth::is_logged_in() && Auth::is_student()){
         $data = [

@@ -320,12 +320,12 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></li>
-                    <li href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></li>
-                    <li href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></li>
-                    <li href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></li>
-                    <li href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></li>
-                    <li href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
             <a href="<?php echo URLROOT ?>/Student/purchase_premium" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>

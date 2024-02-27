@@ -15,9 +15,6 @@
                     'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
                     'student_id' => $studentdata->student_id,
-                    'fname' => $premiumdata->fname,
-                    'lname' => $premiumdata->lname,
-                    'cno' => $premiumdata->cno,
                     'completed' => $studentdata->completed,
                     'verify' => $studentdata->verify
                 ];
@@ -39,7 +36,10 @@
                     
                 ];
             }
+
+            return true;
         }
+        return false;
     }
     public static function authenticate_admin($row){
         if($row[0]!=null){

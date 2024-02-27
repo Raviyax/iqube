@@ -36,6 +36,7 @@
             <?php endif;?>
 
             <?php if(isset($data['errors']['verification_err'])):?>
+                <br><br>
             <div style="background-color: #ff6666; width:100%;">
                 <p style="color: black;">
                     <?php echo $data['errors']['verification_err'];?>
