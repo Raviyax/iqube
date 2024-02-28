@@ -53,8 +53,15 @@ public function make_a_tutor_request(){
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($this->tutors->validate_tutor_requests($_POST,$_FILES['fileToUpload'])){
             $cv=  $this->upload_media($_FILES['fileToUpload'],'/uploads/cv/');
-            $this->tutors->make_a_tutor_request($_POST,$cv);
-            redirect('/Landing');
+            // $this->tutors->make_a_tutor_request($_POST,$cv);
+            // redirect('/Landing');
+            if($this->tutors->make_a_tutor_request($_POST,$cv)){
+                $data['view'] = 'Confirm request';
+                $this->view('Landing/Confirm_request',$data);
+                //wait for 3 seconds and redirect to home
+                header("refresh:3;url=".URLROOT."/Landing");
+            }
+    
         }
         else{
             $data['errors'] = $this->tutors->request_errors;

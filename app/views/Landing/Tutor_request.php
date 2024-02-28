@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Contact - Alpha by HTML5 UP</title>
+		<title>IQube - Join as a Tutor</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="<?php echo URLROOT?>/assets/css/Landing.css">

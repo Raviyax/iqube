@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2024 at 07:13 AM
+-- Generation Time: Feb 28, 2024 at 07:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -106,7 +106,7 @@ CREATE TABLE `essays_for_model_paper` (
   `essay_id` int(11) NOT NULL,
   `model_paper_content_id` varchar(100) NOT NULL,
   `tutor_id` varchar(10) NOT NULL,
-  `document` varchar(100) NOT NULL
+  `essay_questions` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -116,7 +116,7 @@ CREATE TABLE `essays_for_model_paper` (
 --
 
 CREATE TABLE `mcqs_for_model_paper` (
-  `mcq_id` int(100) NOT NULL,
+  `mcq_id` int(11) NOT NULL,
   `model_paper_content_id` varchar(100) NOT NULL,
   `tutor_id` varchar(10) NOT NULL,
   `question` varchar(500) NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE `mcqs_for_model_paper` (
   `option4` varchar(500) NOT NULL,
   `option5` varchar(500) NOT NULL,
   `correct` enum('option1','option2','option3','option4','option5') NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -146,21 +146,8 @@ CREATE TABLE `mcq_for_video` (
   `option4` varchar(500) NOT NULL,
   `option5` varchar(500) DEFAULT NULL,
   `correct` enum('option1','option2','option3','option4','option5') NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `mcq_for_video`
---
-
-INSERT INTO `mcq_for_video` (`mcq_id`, `video_content_id`, `tutor_id`, `question`, `option1`, `option2`, `option3`, `option4`, `option5`, `correct`, `date`) VALUES
-(1, '382b3cf673e679e5', '', 'gas ballage nama mokkda', 'ravishan', 'balla', 'madasha', 'dew', NULL, 'option3', '2024-02-20'),
-(2, '382b3cf673e679e5', '', '5+5?', '24', '10', 'efwf', 'ijkk', NULL, 'option2', '2024-02-20'),
-(3, '7c86dbe61a7e7344', '23', 'legs for dog', 'ekai', 'dekai', 'thunai', 'hatharai', NULL, 'option4', '2024-02-20'),
-(4, '7c86dbe61a7e7344', '23', 'rathnawaliya koheda', 'gampaha', 'kaluthara', 'refgwe', 'wgf', NULL, 'option1', '2024-02-20'),
-(5, '7c86dbe61a7e7344', '23', '2*2 keeyada', '56', 'scdf', '4', '99999', NULL, 'option3', '2024-02-20'),
-(6, 'a9285fbfd481c07d', '23', 'What Is the sammalest measurement from this', 'least count', 'actual reading', 'main scale division', 'vernier scale division', NULL, 'option1', '2024-02-20'),
-(7, 'a9285fbfd481c07d', '23', 'lc for standard vernier caliper', '0.2mm', '0.1mm', '0.02mm', '0.002mm', NULL, 'option3', '2024-02-20');
 
 -- --------------------------------------------------------
 
@@ -172,20 +159,13 @@ CREATE TABLE `model_paper_content` (
   `model_paper_content_id` varchar(100) NOT NULL,
   `tutor_id` varchar(50) NOT NULL,
   `thumbnail` varchar(100) NOT NULL,
-  `price` int(10) NOT NULL,
+  `price` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
   `covering_chapters` varchar(500) NOT NULL,
   `time_duration` timestamp(5) NOT NULL DEFAULT current_timestamp(5) ON UPDATE current_timestamp(5),
-  `active` int(1) NOT NULL
+  `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `model_paper_content`
---
-
-INSERT INTO `model_paper_content` (`model_paper_content_id`, `tutor_id`, `thumbnail`, `price`, `name`, `description`, `covering_chapters`, `time_duration`, `active`) VALUES
-('92bad9cbbc1a8be1', '23', '65d589be86d6c3.23088497.png', 300, 'physics saralawa', 'fkl;k\'s', '8][9][32][33', '0000-00-00 00:00:00.00000', 0);
 
 -- --------------------------------------------------------
 
@@ -194,22 +174,22 @@ INSERT INTO `model_paper_content` (`model_paper_content_id`, `tutor_id`, `thumbn
 --
 
 CREATE TABLE `premium_students` (
-  `pro_id` int(50) NOT NULL,
-  `student_id` int(50) NOT NULL,
+  `pro_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
   `fname` varchar(100) NOT NULL,
   `lname` varchar(100) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `city` varchar(50) NOT NULL,
   `cno` varchar(10) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `payment_id` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `premium_students`
 --
 
-INSERT INTO `premium_students` (`pro_id`, `student_id`, `fname`, `lname`, `cno`, `email`) VALUES
-(2, 7, 'nisal', 'wishwajith', '0770410810', 'nisal@gmail.com'),
-(3, 8, 'sarala', 'janson', '1234567890', 'sarala@gmail.com'),
-(4, 10, 'madasha', 'liyabage', '0123456789', 'dewmini@gmail.com');
+INSERT INTO `premium_students` (`pro_id`, `student_id`, `fname`, `lname`, `address`, `city`, `cno`, `payment_id`) VALUES
+(1, 1, 'Madasha', 'Liyanage', '302/8, Gamini Mawatha, Batuwatta', 'Ragama', '0711426031', NULL);
 
 -- --------------------------------------------------------
 
@@ -223,22 +203,19 @@ CREATE TABLE `students` (
   `username` text DEFAULT NULL,
   `email` varchar(100) NOT NULL,
   `premium` tinyint(1) NOT NULL DEFAULT 0,
-  `paid` tinyint(1) NOT NULL DEFAULT 0,
   `image` varchar(500) NOT NULL DEFAULT 'user.jpg',
   `completed` tinyint(1) NOT NULL DEFAULT 0,
-  `subjects` varchar(255) DEFAULT NULL
+  `subjects` varchar(255) DEFAULT NULL,
+  `verify` tinyint(1) NOT NULL DEFAULT 0,
+  `token` varchar(100) NOT NULL DEFAULT 'no token'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`student_id`, `user_id`, `username`, `email`, `premium`, `paid`, `image`, `completed`, `subjects`) VALUES
-(7, 33, 'the nisal', 'nisal@gmail.com', 1, 1, 'user.jpg', 0, NULL),
-(8, 34, 'sarala', 'sarala@gmail.com', 1, 1, 'user.jpg', 0, NULL),
-(9, 35, 'gagan', 'gagan@gmail.com', 0, 0, 'user.jpg', 1, 'chemistry'),
-(10, 36, 'dewmini', 'dewmini@gmail.com', 1, 1, 'user.jpg', 0, NULL),
-(11, 37, 'wasfan', 'wasfan@gmail.com', 0, 0, 'user.jpg', 1, 'biology');
+INSERT INTO `students` (`student_id`, `user_id`, `username`, `email`, `premium`, `image`, `completed`, `subjects`, `verify`, `token`) VALUES
+(1, 1, 'madasha', 'dewliyanage123@gmail.com', 1, 'user.jpg', 1, 'chemistry', 1, 'no token');
 
 -- --------------------------------------------------------
 
@@ -247,7 +224,7 @@ INSERT INTO `students` (`student_id`, `user_id`, `username`, `email`, `premium`,
 --
 
 CREATE TABLE `subjects` (
-  `subject_id` int(50) NOT NULL,
+  `subject_id` int(11) NOT NULL,
   `subject_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -285,13 +262,7 @@ CREATE TABLE `subject_admins` (
 --
 
 INSERT INTO `subject_admins` (`subject_admin_id`, `user_id`, `email`, `subject`, `fname`, `lname`, `username`, `cno`, `image`) VALUES
-(8, 24, 'rishmi@gmail.com', 'physics', 'Rishmi', 'Dissanayake', 'rishu', '+94703855683', 'user.jpg'),
-(9, 25, 'kasun@gmail.com', 'physics', 'Kasun', 'Gunawardhana', 'kasun', '1234567890', '6579bb4224afe0.55526855.jpg'),
-(10, 26, 'chand@gmail.com', 'physics', 'chandana', 'hettiarachchi', 'chanx', '1234567890', 'user.jpg'),
-(11, 27, 'rasuka@gmail.com', 'financial-accounting', 'Rasika', 'rajapakse', 'rasiya', '0775764268', 'user.jpg'),
-(12, 28, 'janathissa@gmail.com', 'biology', 'thissat', 'jananayake', 'thissajt', '0774797993', 'user.jpg'),
-(13, 38, 'thanuja@gmail.com', 'chemistry', 'Thanuja', 'Senanayake', 'thanuja', '074797993', 'user.jpg'),
-(14, 39, 'dewliyanage@gmail.com', 'physics', 'මදාෂා', 'ලියනගේ', 'දෙව්', '0711426031', '65b793f0b593d8.45992789.jpeg');
+(1, 2, 'danuj@gmail.com', 'physics', 'Danujaya', 'Liyanage', 'danuj', '0712345678', 'user.jpg');
 
 -- --------------------------------------------------------
 
@@ -311,7 +282,7 @@ CREATE TABLE `tutors` (
   `image` varchar(500) NOT NULL DEFAULT 'user.jpg',
   `cv` varchar(100) NOT NULL,
   `qualification` varchar(50) DEFAULT NULL,
-  `approved_date` date NOT NULL DEFAULT current_timestamp(),
+  `approved_date` datetime NOT NULL DEFAULT current_timestamp(),
   `active` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -320,15 +291,7 @@ CREATE TABLE `tutors` (
 --
 
 INSERT INTO `tutors` (`tutor_id`, `user_id`, `email`, `subject`, `fname`, `lname`, `username`, `cno`, `image`, `cv`, `qualification`, `approved_date`, `active`) VALUES
-(4, 29, 'shantha@gmail.com', 'physics', 'Shantha', 'Walpolage', 'shantha', '0785339652', 'user.jpg', '', NULL, '2024-02-11', 0),
-(6, 31, 'dalpe@gmail.com', 'financial-accounting', 'Ravien', 'Dalpataduuu', 'dunusinghe', '0711426031', '6579bc464bf556.47641869.png', '', NULL, '2024-02-11', 0),
-(7, 40, 'lalanthajayathilake@gmail.com', 'physics', 'lalantha', 'jayathilake', 'lalantha', '0775764168', 'user.jpg', '', NULL, '2024-02-11', 0),
-(9, NULL, 'gfgyi@gmail.com', 'combined-mathematics', 'test', 'test', 'fgzxfx', '23456', 'user.jpg', '65bc9ff75e1ba7.42585181.pdf', 'degree', '2024-02-11', 0),
-(10, NULL, 'salinda@gmail.com', 'chemistry', 'Adilu', 'Salinda', 'adzero', '123456789', 'user.jpg', '65c625258ff9e8.48359726.pdf', 'diploma', '2024-02-11', 0),
-(11, NULL, 'gagan2@gmail.com', 'physics', 'Gagan', 'Saswika', 'gaga', '1234567890', 'user.jpg', '65c7cac2f1fd35.96774503.pdf', 'highschool', '2024-02-11', 0),
-(12, 44, 'charitha@gmail.com', 'physics', 'charitha', 'dissanayake', 'cgis', '0771234567', 'user.jpg', '65', 'degree', '2024-02-18', 0),
-(13, 45, 'ishan@gmail.com', 'physics', 'Ishan', 'Anurudda', 'ishan', '0774797993', 'user.jpg', '65', 'degree', '2024-02-18', 0),
-(23, 55, 'freshhackrip@gmail.com', 'physics', 'Ashen', 'Chamuditha', 'alaya', '0774797993', 'user.jpg', '65d2341f2e7dc1.86804252.pdf', 'diploma', '2024-02-18', 1);
+(1, 3, '2021is043@stu.ucsc.cmb.ac.lk', 'physics', 'Ravishan', 'Jayathilake', 'ravishan', '0711234567', 'user.jpg', '65deb6300adc62.99592811.pdf', 'degree', '2024-02-28 11:02:30', 0);
 
 -- --------------------------------------------------------
 
@@ -348,8 +311,15 @@ CREATE TABLE `tutor_requests` (
   `cv` varchar(100) NOT NULL,
   `qualification` varchar(100) NOT NULL,
   `message` varchar(512) DEFAULT NULL,
-  `requested_date` date NOT NULL DEFAULT current_timestamp()
+  `requested_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tutor_requests`
+--
+
+INSERT INTO `tutor_requests` (`request_id`, `email`, `subject`, `fname`, `lname`, `username`, `cno`, `declined`, `cv`, `qualification`, `message`, `requested_date`) VALUES
+(15, '2021is055@stu.ucsc.cmb.ac.lk', 'combined-mathematics', 'Thilanga', 'Wishwajith', 'thilanga', '0112400888', 0, '65dec173bfc020.88345070.pdf', 'masters', 'this is a test message', '2024-02-28 10:45:31');
 
 -- --------------------------------------------------------
 
@@ -372,25 +342,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
-(24, 'rishu', '$2y$10$xHKMvSWsCeD.PWpnoOkIbOMISVMMSGF.SVEfGv9F6BoB3pce3x00O', 'rishmi@gmail.com', 'subject_admin', '2023-12-12 16:43:27', '2023-12-12 16:43:27'),
-(25, 'kasun', '$2y$10$demZYRKDuQv5GlGdOC/iv.JYu6u577XyVs7ysGYbMGBZMYt8GYpcy', 'kasun@gmail.com', 'subject_admin', '2023-12-12 16:58:03', '2023-12-12 16:58:03'),
-(26, 'chanx', '$2y$10$n5I9JCzw.86wW9.QDKAcBel5/QG9fHKcQQF4uiXK.U4Eu72CYxTNu', 'chandana@gmail.com', 'subject_admin', '2023-12-12 17:19:32', '2023-12-12 17:19:32'),
-(27, 'rasiya', '$2y$10$qoGF2VUruJib.JGZSO9B3OQAKfcP1Xw.oeazCm7JZjwUIZO.pOA5y', 'rasuka@gmail.com', 'subject_admin', '2023-12-12 17:22:16', '2023-12-12 17:22:16'),
-(28, 'thissaj', '$2y$10$LQvgXANrV/t5la7MQ6BjE./wYoVSlgDpKhdKmi6xU3ku8DQ52wcS.', 'janathissa@gmail.com', 'subject_admin', '2023-12-13 02:58:13', '2023-12-13 02:58:13'),
-(29, 'shantha', '$2y$10$XmPRyxzyws.RJEZtVj2MBO1GtTyksdrEte/3YvS/lljuoHdyx.MOu', 'shantha@gmail.com', 'tutor', '2023-12-13 09:42:12', '2023-12-13 09:42:12'),
-(30, 'shika', '$2y$10$4a3v/UzuBskaU70C0/hw2.e5TMtwKdbrHSWTqftzgbuEO0hOki0qS', '', 'tutor', '2023-12-13 12:40:46', '2023-12-13 13:23:00'),
-(31, 'dunusinghe', '$2y$10$HOllJ0ZMfACjjM/4OaGsL.rBstbYFjnj8VwKXZB80IIhIct2x27s.', 'dalpe@gmail.com', 'tutor', '2023-12-13 13:25:39', '2023-12-13 14:14:48'),
-(33, 'the nisal', '$2y$10$WscAGI58JopJrcJf1DTfD.QLD43wK9mmlBVhxc51IpZ.2YiiFDnL.', 'nisal@gmail.com', 'student', '2023-12-13 14:55:19', '2023-12-13 14:55:19'),
-(34, 'sarala', '$2y$10$lFYXhnPT7t.W9BKklAEObemx6BCOUlnzaFWX7x9mag7ry1wJQHI5K', 'sarala@gmail.com', 'student', '2023-12-15 04:45:53', '2023-12-15 04:45:53'),
-(35, 'gagan', '$2y$10$9436X7Ae2y66Dta.Y.EheeruIfZ7UyIXHox9WBvz6V6POR8quI8nu', 'gagan@gmail.com', 'student', '2023-12-15 05:58:05', '2023-12-15 05:58:05'),
-(36, 'dewmini', '$2y$10$JW7xupYqzt3I1A49w7KGoOwvRGWNKL.8wDP8MXWSoZoCSQ1knPAiy', 'dewmini@gmail.com', 'student', '2024-01-08 05:08:11', '2024-01-08 05:08:11'),
-(37, 'wasfan', '$2y$10$Y/rX0K61jPFFjO1D0sdHm.4VTclllKDuuQZWRCdFMUdpT/ov19Fei', 'wasfan@gmail.com', 'student', '2024-01-20 10:41:16', '2024-01-20 10:41:16'),
-(38, 'thanuja', '$2y$10$lpwXMA2wDqGpyZp6/nxRP.qfx8l5V9JKBsH6XSZ.kXD6cZMXI86Km', 'thanuja@gmail.com', 'subject_admin', '2024-01-26 14:25:46', '2024-01-26 14:25:46'),
-(39, 'දෙව්', '$2y$10$2c714DZJtr/OYS12oVD0MO.aGf8TDVFAsrQ8Mik9C87x0HjD0/sZi', 'dewliyanage@gmail.com', 'subject_admin', '2024-01-29 08:40:25', '2024-01-29 12:09:27'),
-(40, 'lalantha', '$2y$10$O.cDiiZaaFIzJjzvnb2iAumi0AY58WXRgUKqDFE5czIeGdC0Psgai', 'lalanthajayathilake@gmail.com', 'tutor', '2024-01-29 13:44:08', '2024-01-29 13:44:08'),
-(44, 'cgis', '$2y$10$/DOI4nG4zfWZ9EKemO5ge.uI3YzeF20UQ5xMpJIxJENrpZ4PebaIq', 'charitha@gmail.com', 'tutor', '2024-02-18 04:50:41', '2024-02-18 04:50:41'),
-(45, 'ishan', '$2y$10$0BsF/eJ9nUlb9WZ5Ycu9X.TWodsIIScoQOLwFaZifuUirvU00DLze', 'ishan@gmail.com', 'tutor', '2024-02-18 05:37:40', '2024-02-18 05:37:40'),
-(55, 'alaya', '$2y$10$JnChhyUNnfGBpJJfhlXXbOMhL4tnzM27RbTbzfwFgHUoiCanGCeEm', 'freshhackrip@gmail.com', 'tutor', '2024-02-18 16:48:42', '2024-02-18 17:03:38');
+(1, 'madasha', '$2y$10$M4dX1DvAbOlpeDti6iOq4eQ1hHnNirg2GJycyjkgSjEwXrifDX0QO', 'dewliyanage123@gmail.com', 'student', '2024-02-27 16:44:54', '2024-02-27 16:44:54'),
+(2, 'danuj', '$2y$10$wLiLmDOavyXPZ21mVAPEQ.0xNfhOsiYaDOsQ.98huq4/lzWiwLoZC', 'danuj@gmail.com', 'subject_admin', '2024-02-28 04:23:43', '2024-02-28 04:23:43'),
+(3, 'ravishan', '$2y$10$XhsVpM0h1pA.7TeC1ITxJ.z77.x9CqTE5.CjycZXIZiA3tpR0NHxe', '2021is043@stu.ucsc.cmb.ac.lk', 'tutor', '2024-02-28 05:32:30', '2024-02-28 05:32:30');
 
 -- --------------------------------------------------------
 
@@ -405,24 +359,10 @@ CREATE TABLE `video_content` (
   `description` varchar(512) NOT NULL,
   `video` varchar(100) NOT NULL,
   `thumbnail` varchar(100) NOT NULL,
-  `price` int(5) NOT NULL,
+  `price` int(11) NOT NULL,
   `covering_chapters` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `video_content`
---
-
-INSERT INTO `video_content` (`video_content_id`, `tutor_id`, `name`, `description`, `video`, `thumbnail`, `price`, `covering_chapters`, `active`) VALUES
-('2', '23', 'test', 'testingggggg', 'video', 'thumbnail', 500, '3,5,16,19,32', 0),
-('3', '23', 'test', 'testingggggg', '65d376e4080fe7.00155510.mp4', '65d376e4087a33.06927107.png', 500, '3,5,16,19,32', 0),
-('382b3cf673e679e5', '23', 'me babage video eka', 'helloooooo', '65d46511c579b0.52190459.mp4', '65d46511c5aed0.87023724.png', 5000, '5][13][32][33', 1),
-('4', '23', 'à¶´à·’à·ƒà·’à¶šà·Šà·ƒà·Š à·ƒà¶»à¶½à·€', 'halooooo', '65d4390de368e9.04892944.mp4', '65d4390de3bad3.05946732.png', 600, '5][12][13][19][20][21][22][23][24][25][26][27][28][29][30][31', 0),
-('5', '23', 'physics saralawa', 'testing description', '65d439a49d74a5.00023724.mp4', '65d439a49db2f1.73768024.png', 600, '3][6][19][20][21][22][23][24][25][26][27][28][29][30][31][33', 0),
-('6', '23', 'physics saralawa', 'testing description', '65d43a245a0c79.94424214.mp4', '65d43a245a74d3.57664847.png', 600, '3][6][19][20][21][22][23][24][25][26][27][28][29][30][31][33', 0),
-('7c86dbe61a7e7344', '23', 'hashing methods', 'here we explain hashing methods', '65d466fc1918f6.08001978.mp4', '65d466fc194ea8.43404859.png', 600, '5][21][26][32', 1),
-('a9285fbfd481c07d', '23', 'lets learn about vernier caliper', 'What Is Vernier Calliper? A vernier calliper is defined as a measuring device that is used for the measurement of linear dimensions. It is also used for the measurement of diameters of round objects with the help of the measuring jaws', '65d4b29169c816.00948529.mp4', '65d4b2916c0cb8.60634087.png', 3100, '3][6', 1);
 
 --
 -- Indexes for dumped tables
@@ -543,55 +483,55 @@ ALTER TABLE `essays_for_model_paper`
 -- AUTO_INCREMENT for table `mcqs_for_model_paper`
 --
 ALTER TABLE `mcqs_for_model_paper`
-  MODIFY `mcq_id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `mcq_for_video`
 --
 ALTER TABLE `mcq_for_video`
-  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `premium_students`
 --
 ALTER TABLE `premium_students`
-  MODIFY `pro_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `subject_admins`
 --
 ALTER TABLE `subject_admins`
-  MODIFY `subject_admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `subject_admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tutor_requests`
 --
 ALTER TABLE `tutor_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

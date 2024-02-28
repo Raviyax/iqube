@@ -27,7 +27,7 @@
                     <th>Subject</th>
                     <th>Count</th>
                 </tr>
-                <?php if ($data['subjects']) : ?>
+                <?php if ($data['subjects'] && $data['tutorcount']) : ?>
     <?php foreach ($data['subjects'] as $subject) : ?>
         <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_tutors/<?php echo $subject->subject_name; ?>'">
             <td>
@@ -73,7 +73,7 @@
                     <th>Subject</th>
                     <th>Count</th>
                 </tr>
-                <?php if ($data['subjects']) : ?>
+                <?php if ($data['subjects'] && $data['subjectadmincount']) : ?>
     <?php foreach ($data['subjects'] as $subject) : ?>
         <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_subject_admins/<?php echo $subject->subject_name; ?>'">
             <td>

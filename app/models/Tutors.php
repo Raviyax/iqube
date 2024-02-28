@@ -202,7 +202,9 @@ class Tutors extends Model
             if (password_verify($password, $result[0]->password)) {
                 return true;
             }
+            echo 'Password incorrect';
         }
+        echo 'Email incorrect';
     }
     public function set_tutor_active($email)
     {
