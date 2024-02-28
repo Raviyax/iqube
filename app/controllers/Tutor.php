@@ -73,15 +73,16 @@ class Tutor extends Controller
                     'email' => $email,
                     'token' => $token,
                 ];
-                $this->view('Tutor/Createpassword', $data);
-                return;
-            }
+                
+             
+            
                  if (isset($_POST['create'])) {
-                    if ($this->tutor->validate_new_password($_POST)) {
+                    if ($this->tutor->validate_new_password($_POST)) { 
                         if ($this->tutor->create_new_password($_POST['password'], $email)) {
                             $this->tutor->set_tutor_active($email);
-                            echo "<script>alert('Acount Activated Sucessfully')</script>";
-                            redirect('/Login');
+                           
+                            redirect('/Landing/Login_as_a_tutor');
+                            return;
                         }
                     } else {
                         $data = [
@@ -90,6 +91,8 @@ class Tutor extends Controller
                         $this->view('Tutor/Createpassword', $data);
                     }
                 }
+                $this->view('Tutor/Createpassword', $data);
+            }
         } else {
             redirect('/Landing');
         }

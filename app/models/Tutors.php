@@ -386,20 +386,31 @@ class Tutors extends Model
 
     public function get_my_uploads()
     {
+        // Assuming you have a database connection available
+    
+        // Fetch video uploads
         $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
+        $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
         
-        $result_video_content=$this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
-        //obtain date correseponding to video_content_id from mcq_for_video
-        $i=0;
-        foreach($result_video_content as $video_content)
-        {
-            $query = "SELECT date FROM mcq_for_video WHERE video_content_id = :video_content_id";
-            $result_date=$this->query($query, ['video_content_id' => $video_content->video_content_id]);
-            $result_video_content[$i]->date=$result_date[0]->date;
-            $i++;
+       if (empty($result_video_content)) {
+            return [];
         }
+        foreach ($result_video_content as &$video_content) {
+            $query = "SELECT date FROM mcq_for_video WHERE video_content_id = :video_content_id";
+            $result_date = $this->query($query, ['video_content_id' => $video_content->video_content_id]);
+            
+            // Check if $result_date is an array before accessing it
+            if (is_array($result_date) && !empty($result_date)) {
+                $video_content->date = $result_date[0]->date;
+            } else {
+                $video_content->date = null; // Set to null or any default value if no date found
+            }
+        }
+    
         return $result_video_content;
     }
+    
+    
 
     public function validate_insert_to_model_paper_content($data, $thumbnail)
     {

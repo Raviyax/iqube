@@ -29,6 +29,8 @@ class Login extends Controller
     
 
             if ($studentdata && password_verify($password, $row->password)) {
+                
+                
                 if ($studentdata && $studentdata->verify == 1) {
                     $premiumdata = $user->first(['student_id' => $studentdata->student_id], 'premium_students', 'student_id');
 
@@ -43,10 +45,7 @@ class Login extends Controller
                                 redirect('/Student');
                                 return;
                             }
-                        } else {
-                            redirect('/Logout');
-                            return;
-                        }
+                        } 
                     }
                 } else {
                     $data['errors']['verification_err'] = 'Please Verify your email first. Check your email for the verification link!';

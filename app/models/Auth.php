@@ -33,6 +33,9 @@
                     'student_id' => $studentdata->student_id,
                     'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
+                    'completed' => $studentdata->completed,
+                    'verify' => $studentdata->verify
+                    
                     
                 ];
             }
