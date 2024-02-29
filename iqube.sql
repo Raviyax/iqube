@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2024 at 07:12 AM
+-- Generation Time: Feb 29, 2024 at 06:06 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -149,6 +149,14 @@ CREATE TABLE `mcq_for_video` (
   `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `mcq_for_video`
+--
+
+INSERT INTO `mcq_for_video` (`mcq_id`, `video_content_id`, `tutor_id`, `question`, `option1`, `option2`, `option3`, `option4`, `option5`, `correct`, `date`) VALUES
+(1, 'c112e3359ece1921', '2', 'what is the lc of vernier calliper', '1mm', '5mm', '3mm', '6mm', NULL, 'option3', '2024-02-28 21:22:17'),
+(2, 'c112e3359ece1921', '2', 'this is a test question', 'ans a', 'ans b', 'ans c', 'ans d', NULL, 'option3', '2024-02-28 21:22:17');
+
 -- --------------------------------------------------------
 
 --
@@ -189,7 +197,8 @@ CREATE TABLE `premium_students` (
 --
 
 INSERT INTO `premium_students` (`pro_id`, `student_id`, `fname`, `lname`, `address`, `city`, `cno`, `payment_id`) VALUES
-(1, 1, 'Madasha', 'Liyanage', '302/8, Gamini Mawatha, Batuwatta', 'Ragama', '0711426031', NULL);
+(1, 1, 'Madasha', 'Liyanage', '302/8, Gamini Mawatha, Batuwatta', 'Ragama', '0711426031', NULL),
+(2, 3, 'Saman', 'Perera', '305/2', 'colombo', '1234567890', NULL);
 
 -- --------------------------------------------------------
 
@@ -215,7 +224,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`student_id`, `user_id`, `username`, `email`, `premium`, `image`, `completed`, `subjects`, `verify`, `token`) VALUES
-(1, 1, 'madasha', 'dewliyanage123@gmail.com', 1, 'user.jpg', 1, 'chemistry', 1, 'no token');
+(1, 1, 'madasha', 'dewliyanage123@gmail.com', 1, 'user.jpg', 1, 'chemistry', 1, 'no token'),
+(2, 4, 'Attendance jaye', 'jayathilakeravishan@gmail.com', 0, 'user.jpg', 0, NULL, 1, 'no token'),
+(3, 6, 'saman', 'freshhackrip@gmail.com', 1, 'user.jpg', 1, 'physics', 1, 'no token');
 
 -- --------------------------------------------------------
 
@@ -291,7 +302,7 @@ CREATE TABLE `tutors` (
 --
 
 INSERT INTO `tutors` (`tutor_id`, `user_id`, `email`, `subject`, `fname`, `lname`, `username`, `cno`, `image`, `cv`, `qualification`, `approved_date`, `active`) VALUES
-(1, 3, '2021is043@stu.ucsc.cmb.ac.lk', 'physics', 'Ravishan', 'Jayathilake', 'ravishan', '0711234567', 'user.jpg', '65deb6300adc62.99592811.pdf', 'degree', '2024-02-28 11:02:30', 0);
+(2, 5, '2021is043@stu.ucsc.cmb.ac.lk', 'physics', 'Ravishan', 'Jayathilake', '2021is043@stu.ucsc.cmb.ac.lk', '+94769286535', 'user.jpg', '65df4d4ade8cd8.22373139.pdf', 'masters', '2024-02-28 20:43:29', 1);
 
 -- --------------------------------------------------------
 
@@ -313,13 +324,6 @@ CREATE TABLE `tutor_requests` (
   `message` varchar(512) DEFAULT NULL,
   `requested_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tutor_requests`
---
-
-INSERT INTO `tutor_requests` (`request_id`, `email`, `subject`, `fname`, `lname`, `username`, `cno`, `declined`, `cv`, `qualification`, `message`, `requested_date`) VALUES
-(15, '2021is055@stu.ucsc.cmb.ac.lk', 'combined-mathematics', 'Thilanga', 'Wishwajith', 'thilanga', '0112400888', 0, '65dec173bfc020.88345070.pdf', 'masters', 'this is a test message', '2024-02-28 10:45:31');
 
 -- --------------------------------------------------------
 
@@ -344,7 +348,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
 (1, 'madasha', '$2y$10$M4dX1DvAbOlpeDti6iOq4eQ1hHnNirg2GJycyjkgSjEwXrifDX0QO', 'dewliyanage123@gmail.com', 'student', '2024-02-27 16:44:54', '2024-02-27 16:44:54'),
 (2, 'danuj', '$2y$10$wLiLmDOavyXPZ21mVAPEQ.0xNfhOsiYaDOsQ.98huq4/lzWiwLoZC', 'danuj@gmail.com', 'subject_admin', '2024-02-28 04:23:43', '2024-02-28 04:23:43'),
-(3, 'ravishan', '$2y$10$XhsVpM0h1pA.7TeC1ITxJ.z77.x9CqTE5.CjycZXIZiA3tpR0NHxe', '2021is043@stu.ucsc.cmb.ac.lk', 'tutor', '2024-02-28 05:32:30', '2024-02-28 05:32:30');
+(4, 'Attendance jaye', '$2y$10$AwIe5id0tSnix2xEzWX42uYHyve2UcOdR81U87TEeCqfZ5d9H1AFW', 'jayathilakeravishan@gmail.com', 'student', '2024-02-28 06:23:02', '2024-02-28 06:23:02'),
+(5, '2021is043@stu.ucsc.cmb.ac.lk', '$2y$10$z4d1.jcq3DrUbUEf6qT5zeoJ1rBLF6dK1sjOROQE6GAcfldC2fk.6', '2021is043@stu.ucsc.cmb.ac.lk', 'tutor', '2024-02-28 15:13:29', '2024-02-28 15:33:31'),
+(6, 'saman', '$2y$10$H2SAUaM5qyDm65c12a1Uaexz9R/bctmr28rI2rmDZMkYp4xODeazq', 'freshhackrip@gmail.com', 'student', '2024-02-28 16:10:18', '2024-02-28 16:10:18');
 
 -- --------------------------------------------------------
 
@@ -363,6 +369,13 @@ CREATE TABLE `video_content` (
   `covering_chapters` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `video_content`
+--
+
+INSERT INTO `video_content` (`video_content_id`, `tutor_id`, `name`, `description`, `video`, `thumbnail`, `price`, `covering_chapters`, `active`) VALUES
+('c112e3359ece1921', '2', 'Vernier Caliper', 'This video contains about vernier caliper', '65df5665ade289.33283203.mp4', '65df5665ae3ed3.04446191.png', 2500, '5][6', 1);
 
 --
 -- Indexes for dumped tables
@@ -489,19 +502,19 @@ ALTER TABLE `mcqs_for_model_paper`
 -- AUTO_INCREMENT for table `mcq_for_video`
 --
 ALTER TABLE `mcq_for_video`
-  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mcq_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `premium_students`
 --
 ALTER TABLE `premium_students`
-  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -519,19 +532,19 @@ ALTER TABLE `subject_admins`
 -- AUTO_INCREMENT for table `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `tutor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tutor_requests`
 --
 ALTER TABLE `tutor_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
