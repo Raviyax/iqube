@@ -145,7 +145,6 @@ class Subjectadmin extends Controller
             redirect('/Login');
         }
     }
-
     public function manage_syllabus()
     {
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {

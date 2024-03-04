@@ -26,7 +26,6 @@
                         <p>You will be informed within 3 working days. Please check your email regulary</p>
 						<p>You will be redirected to the home shortly</p>
 					</header>
-				
 				</section>
 			<!-- Footer -->
 				<footer id="footer">

@@ -33,13 +33,11 @@ public function upload_media($file, $path)
     $target_file = APPROOT . $path . $uniqueFilename;
     // Move the uploaded file
     if (move_uploaded_file($file["tmp_name"], $target_file)) {
-      
        //allow only 100 mega bytes
         if ($file["size"] > 100000000) {
             unlink($target_file); // Delete the uploaded file if it exceeds the file size limit
             return false;
         }
-
         // Check file type
         $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         if (!in_array($FileType, ["jpg", "jpeg", "png", "pdf", "mp4", "mov", "avi", "mkv"])) {

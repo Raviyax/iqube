@@ -2,7 +2,6 @@
  class Auth {
     public $user;
     public static function authenticate($row, $studentdata, $premiumdata){
- 
         if(is_object($row )){
             if($row->role == 'student'){
                 $_SESSION['USER_DATA'] = [
@@ -35,11 +34,8 @@
                     'premium' => $studentdata->premium,
                     'completed' => $studentdata->completed,
                     'verify' => $studentdata->verify
-                    
-                    
                 ];
             }
-
             return true;
         }
         return false;
@@ -68,7 +64,6 @@
                 'image' => $tutordata[0]->image,
                'approved_date' => $tutordata[0]->approved_date,
                'active' => $tutordata[0]->active,
-               
             ];
         }
     }
@@ -134,7 +129,6 @@
         }
         return false;
     }
-
     public static function is_completed(){
         if($_SESSION['USER_DATA']['completed'] == '1'){
             return true;

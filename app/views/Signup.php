@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,6 @@
     <title><?php echo SITENAME . " " . $data['title']; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/assets/css/Signup.css">
-
 <body>
     <div class="box-form" id="login">
         <form class="login_menu" action="<?php echo URLROOT; ?>/Signup" method="post">

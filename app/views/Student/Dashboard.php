@@ -8,8 +8,6 @@
         </div>
     </div>
 </section>
-   
-
 <?php $this->view('inc/Footer') ?>
 </body>
 </html>

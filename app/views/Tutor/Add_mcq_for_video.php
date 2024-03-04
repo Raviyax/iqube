@@ -2,14 +2,8 @@
 <section class="courses">
   <h1 class="heading">My contents / Add new video / Add MCQs from video</h1>
   <section class="form-container" style="display: block;">
-
-
     <form action="<?php echo URLROOT ?>/Tutor/add_new_video?video_content_id=<?php echo $data['video_content_id'] ?>" method="post" enctype="multipart/form-data">
-
-    
-
       <!-- section for mcqs from the video -->
-
       <section id="question1" style="display: block;">
   <h3>Question 1</h3>
   <div class="flex" >
@@ -34,50 +28,31 @@
       </select>
     </div>
   </div>
-
 </section>
 <div style="display: flex;">
 <button onclick="addNewQuestion()" class="btn" style="width: fit-content;" >Add New Question <i class="fa-solid fa-circle-plus"></i></button>
-
   </div>
   <div style="display: flex; flex-direction:row-reverse">
   <button type="submit" name="submit-mcq" class="btn" style ="width: fit-content;">Submit <i class="fa-solid fa-file-arrow-up"></i></button>
-
   </div>
-
-
-
-
-
-
-
-
     </form>
-
-
   </section>
 </section>
 <!-- registe section ends -->
 </body>
-
 </html>
 <script>
-
 function addNewQuestion() {
     // Get the reference to the last existing section
     var existingSections = document.querySelectorAll('[id^=question]');
-    
     // Check if the number of existing sections is less than 50 before duplicating
     if (existingSections.length >= 50) {
         alert("You have reached the maximum limit of 50 questions.");
         return;
     }
-
     var lastExistingSection = existingSections[existingSections.length - 1];
-
     // Clone the last existing section
     var newSection = lastExistingSection.cloneNode(true);
-
     // Clear the values of input fields in the new section
     var newInputs = newSection.querySelectorAll('input, select');
     newInputs.forEach(function(input) {
@@ -85,16 +60,13 @@ function addNewQuestion() {
             input.value = '';
         }
     });
-
     // Increment the ID of the new section
     var currentId = parseInt(newSection.id.replace('question', ''));
     var newId = currentId + 1;
     newSection.id = 'question' + newId;
-
     // Increment the question number
     var question = newSection.querySelector('h3');
     question.textContent = 'Question ' + newId;
-
     // Increment the names of inputs in the new section
     var inputs = newSection.querySelectorAll('input, select');
     inputs.forEach(function(input) {
@@ -102,20 +74,13 @@ function addNewQuestion() {
             input.name = input.name.replace(/\d+/, newId);
         }
     });
-
     // Insert the new section after the last existing one
     lastExistingSection.parentNode.insertBefore(newSection, lastExistingSection.nextSibling);
 }
-
-
-
-
-
   function displaycontent() {
     document.getElementById("general").style.display = "none";
     document.getElementById("content").style.display = "block";
   }
-
   function displaygeneral() {
     document.getElementById("general").style.display = "block";
     document.getElementById("content").style.display = "none";
@@ -123,5 +88,4 @@ function addNewQuestion() {
 </script>
 <?php $this->view('inc/Footer') ?>
 </body>
-
 </html>

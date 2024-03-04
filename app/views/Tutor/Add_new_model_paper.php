@@ -2,14 +2,9 @@
 <section class="courses">
   <h1 class="heading">My contents / Add new model paper </h1>
   <section class="form-container" style="display: block;">
-
-
     <form action="<?php echo URLROOT ?>/Tutor/add_new_model_paper" method="post" enctype="multipart/form-data">
-
       <!-- section for general overview -->
-
       <section id="general" style="display: block;">
-        
         <div class="flex">
           <div class="col">
           <p>Name for the paper<span>*</span></p>
@@ -23,7 +18,6 @@
             <!-- time duration -->
             <p>Time duration<span>*</span></p>
             <input type="number" name="time_duration" placeholder="Enter the time duration in minutes..." class="box">
-
             <p>Covering Chapters<span>*</span></p>
             <?php
             $chapters = $data['chapters'];
@@ -39,11 +33,9 @@
               echo '<li>';
               echo '<input type="checkbox" id="option"><label for="option"><b>' . $chapter->chapter_level_1 . '</b></label>';
               echo '<ul>';
-              
               foreach ($resultArray as $result) {
                   echo '<li><label><input type="checkbox" name="subOption[]" class="subOption" value="' . $result['id'] . '">' . $result['chapter_level_2'] . '</label></li>';
               }
-            
               echo '</ul>';
               echo '</li>';
               echo '</ul>';
@@ -55,23 +47,11 @@
         <div style="display: flex; flex-direction:row-reverse">
           <button type="submit" class="btn" style="width: fit-content;" name="submit-about-paper">Next <i class="fa-solid fa-arrow-right"></i></button>
         </div>
-        
       </section>
-
       <!-- section for content -->
-      
-
-     
-
-
-
-
     </form>
-
-
   </section>
 </section>
-
 <script>
   var containers = document.querySelectorAll('.chaptercontainer');
   containers.forEach(function(container) {
@@ -90,7 +70,6 @@
       }
     }
   });
-
 </script>
 <?php $this->view('inc/Footer') ?>
 </body>

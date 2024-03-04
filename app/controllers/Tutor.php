@@ -28,7 +28,6 @@ class Tutor extends Controller
                 'view' => 'My Profile',
             ];
             $this->view('Tutor/Profile', $data);
-
             if (isset($_POST["submit"])) {
                 if ($_FILES["image"]['size'] > 0) {
                     $uniqueFilename = generate_unique_filename($_FILES["image"]);
@@ -73,14 +72,10 @@ class Tutor extends Controller
                     'email' => $email,
                     'token' => $token,
                 ];
-                
-             
-            
                  if (isset($_POST['create'])) {
                     if ($this->tutor->validate_new_password($_POST)) { 
                         if ($this->tutor->create_new_password($_POST['password'], $email)) {
                             $this->tutor->set_tutor_active($email);
-                           
                             redirect('/Landing/Login_as_a_tutor');
                             return;
                         }
@@ -125,10 +120,7 @@ class Tutor extends Controller
                     $_POST['subOption'] = $commaSeparatedValues;
                     $video = $this->upload_media($_FILES['video'], '/uploads/video_content/videos/');
                     $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/video_content/thumbnails/');
-
                     if ($video && $thumbnail) {
-                  
-
                         $video_content_id = $this->tutor->insert_to_video_content($_POST, $video, $thumbnail);
                         if ($video_content_id) {
                             $data['video_content_id'] = $video_content_id;
@@ -152,7 +144,6 @@ class Tutor extends Controller
                                 echo "<script>alert('MCQs added successfully')</script>";
                                 redirect('/Tutor/myuploads');
                             }
-                            
                         }
                     }
                     else {
@@ -162,9 +153,6 @@ class Tutor extends Controller
                 } else {
                     echo "<script>alert('Video Content ID does not exist or is already active')</script>";
                 }
-
-                
-
                 ;
             } 
             $this->view('Tutor/Add_new_video', $data);
@@ -173,8 +161,7 @@ class Tutor extends Controller
             redirect('/Login');
         }
     }
-
-    public function thumbnail($thumbnail)
+    public function video_thumbnail($thumbnail)
     {
         if (Auth::is_logged_in() && Auth::is_tutor()) {
             $this->retrive_media($thumbnail, '/uploads/video_content/thumbnails/');
@@ -182,7 +169,14 @@ class Tutor extends Controller
             $this->view('Noaccess');
         }
     }
-
+    public function model_paper_thumbnail($thumbnail)
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $this->retrive_media($thumbnail, '/uploads/model_papers/thumbnails/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
     public function add_new_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_tutor()) {
@@ -193,13 +187,11 @@ class Tutor extends Controller
             ];
             if (isset($_POST['submit-about-paper'])) {
                 if ($this->tutor->validate_insert_to_model_paper_content($_POST, $_FILES['thumbnail'])) {
-                   
                     $selectedValues = $_POST['subOption'];
                     $commaSeparatedValues = implode('][', $selectedValues);
                     $_POST['subOption'] = $commaSeparatedValues;
                     $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/model_papers/thumbnails/');
                     if ($thumbnail) {
-
                         $model_paper_content_id = $this->tutor->insert_to_model_paper_content($_POST, $thumbnail);
                         if ($model_paper_content_id) {
                             $data['model_paper_content_id'] = $model_paper_content_id;
@@ -214,19 +206,12 @@ class Tutor extends Controller
                     } else {
                         $data['errors'] = "Error uploading file";
                         $this->view('Tutor/Add_new_model_paper', $data);
-                        
-                        
                     }
                 } else {
                     $data['errors'] = $this->tutor->errors;
                     $this->view('Tutor/Add_new_model_paper', $data);
-                    
-                   
                 }
             }
-            
-
-            
             $model_paper_content_id = isset($_GET['model_paper_content_id']) ? $_GET['model_paper_content_id'] : null;
             if (isset($_POST['submit-questions']) && $model_paper_content_id != null) {
                 if ($this->tutor->is_model_paper_content_id_exists_and_not_active($model_paper_content_id)) {
@@ -250,9 +235,6 @@ class Tutor extends Controller
                     echo "<script>alert('Model Paper Content ID does not exist or is already active')</script>";
                 }
             }
-
-
-
             $this->view('Tutor/Add_new_model_paper', $data);
         } else {
             redirect('/Login');

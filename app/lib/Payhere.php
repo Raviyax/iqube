@@ -6,8 +6,8 @@ class Payhere
     {
         $amount = 1000;
         $merchant_id = '1226057'; // Replace your Merchant ID
-        $merchant_secret = 'NDgyNjY3NzExMjgxODQyMDAyNTIxMDQ5Nzg3MzY3MDE5NDEyNQ=='; 
-        // $merchant_secret = 'NDAxNDY2NzkyMDIwMjk5NTg3MDQxMjc1NjI3OTQwMjA5ODU4MDQyOQ=='; localhost
+        // $merchant_secret = 'NDgyNjY3NzExMjgxODQyMDAyNTIxMDQ5Nzg3MzY3MDE5NDEyNQ=='; iqube.me
+        $merchant_secret = 'NDAxNDY2NzkyMDIwMjk5NTg3MDQxMjc1NjI3OTQwMjA5ODU4MDQyOQ=='; 
         $return_url = URLROOT.'/student/profile'; // Replace with your Return URL
         $cancel_url = URLROOT.'/cancel'; // Replace with your Cancel URL
         $notify_url = URLROOT.'/student/purchase_premium'; // Replace with your Notify URL
@@ -20,10 +20,8 @@ class Payhere
         $country = 'Sri Lanka';
         $order_id = $_SESSION['USER_DATA']['student_id'];
         $items = 'IQube Premium for a student';
-       
         $currency = 'LKR';
         $mode = 'sandbox'; // sandbox or live
-
         $hash = strtoupper(
             md5(
                 $merchant_id . 
@@ -33,7 +31,6 @@ class Payhere
                 strtoupper(md5($merchant_secret)) 
             ) 
         );
-      
         $payhere_args = array(
             'merchant_id' => $merchant_id,
             'return_url' => $return_url,
@@ -53,14 +50,10 @@ class Payhere
             'hash' => $hash,
             'mode' => $mode
         );
-
         return json_encode($payhere_args);
-    
     }
-
     public function verify_payment($data){
         $md5sig = $data['md5sig'];
-
         //locally generated hash
         $local_md5sig = strtoupper(md5(
             $data['merchant_id'] .
@@ -70,15 +63,12 @@ class Payhere
             $data['status_code'] .
             strtoupper(md5('MjI0ODQ4MjI1MTY5NjI4Njg2MDI1MzkyOTcxMDcyMDA5MzcyNjI4'))
         ));
-
         if ($local_md5sig == $md5sig) {
-           
             return $data['status_code'];
         }
         else{
             return false;
         }
-        
     }
 }
 ?>

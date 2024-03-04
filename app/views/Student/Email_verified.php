@@ -11,7 +11,6 @@
             text-align: center;
             padding: 50px;
         }
-
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -20,22 +19,18 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
             color: #4CAF50;
         }
-
         p {
             color: #333;
             font-size: 18px;
         }
-
         a {
             text-decoration: none;
             color: #007BFF;
             font-weight: bold;
         }
-
         .loader {
             border: 8px solid #f3f3f3;
             border-top: 8px solid #3498db;
@@ -45,7 +40,6 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -60,5 +54,4 @@
         <p>If you are not redirected, click <a href="YOUR_LOGIN_PAGE_URL">here</a> to go to the login page.</p>
     </div>
 </body>
-
 </html>

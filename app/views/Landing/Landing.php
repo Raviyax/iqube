@@ -1,13 +1,11 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
 	<title>IQube</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="<?php echo URLROOT ?>/assets/css/Landing.css">
 </head>
-
 <body class="landing is-preload">
 	<div id="page-wrapper">
 		<!-- Header -->
@@ -39,8 +37,6 @@
 			</div>
 		</section>
 		<!-- Main -->
-
-
 		<section id="main" class="container">
 			<!-- <section class="box special">
 						<header class="major">
@@ -53,13 +49,8 @@
 						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
 					</section> -->
 			<section class="box special features">
-
 				<!-- iqube logo -->
 				<img src="<?php echo URLROOT ?>/assets/img/iqube.png" alt="iqube logo">
-
-
-
-
 			</section>
 			<div class="row">
 				<div class="col-6 col-12-narrower">
@@ -117,5 +108,4 @@
 	</div>
 	<!-- Scripts -->
 </body>
-
 </html>

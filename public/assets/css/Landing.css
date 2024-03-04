@@ -2495,7 +2495,6 @@
 	#banner {
 		background-attachment: scroll,							fixed;
 		background-color: #000000;
-		
 		background-image: url("../img/Landing/student09.jpg"), url("../img/Landing/banner.jpg");
 		background-position: top left,						center center;
 		background-repeat: repeat,							no-repeat;

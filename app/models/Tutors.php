@@ -259,15 +259,10 @@ class Tutors extends Model
         chapter_level_1";
         return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
-
     public function insert_to_video_content($data,$video,$thumbnail)
     {
         //generate uniqe string in 16 characters for video_content_id
         $video_content_id = bin2hex(random_bytes(8));
-
-      
-
-
         $this->query("INSERT INTO video_content (video_content_id,tutor_id, name, description, video, thumbnail, price, covering_chapters) VALUES (:video_content_id,:tutor_id, :name, :description, :video, :thumbnail, :price, :covering_chapters)", [
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
             'name' => $data['name'],
@@ -277,14 +272,9 @@ class Tutors extends Model
             'price' => $data['price'],
             'covering_chapters' => $data['subOption'],
             'video_content_id' => $video_content_id
-
         ]);
         return $video_content_id;
-      
-
-
     } 
-
     public function validate_insert_to_video_content($data,$video,$thumbnail)
     {
         $this->errors = [];
@@ -315,7 +305,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function is_video_content_id_exists_and_not_active($video_content_id)
     {
         $query = "SELECT * FROM video_content WHERE video_content_id = :video_content_id AND tutor_id = :tutor_id AND active = 0";
@@ -325,7 +314,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function validate_insert_to_mcq_for_video($data)
     {
         $this->errors = [];
@@ -356,7 +344,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function insert_to_mcq_for_video($data, $video_content_id)
     {
         $i = 1;
@@ -375,7 +362,6 @@ class Tutors extends Model
         }
         return true;
     }
-    
     //update the videio_content active status to 1
     public function set_video_content_active($video_content_id)
     {
@@ -383,35 +369,55 @@ class Tutors extends Model
         $this->query($query, ['video_content_id' => $video_content_id]);
         return true;
     }
-
-    public function get_my_uploads()
+    public function get_my_videos()
     {
         // Assuming you have a database connection available
-    
         // Fetch video uploads
         $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
         $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
-        
        if (empty($result_video_content)) {
             return [];
         }
         foreach ($result_video_content as &$video_content) {
             $query = "SELECT date FROM mcq_for_video WHERE video_content_id = :video_content_id";
             $result_date = $this->query($query, ['video_content_id' => $video_content->video_content_id]);
-            
             // Check if $result_date is an array before accessing it
             if (is_array($result_date) && !empty($result_date)) {
                 $video_content->date = $result_date[0]->date;
+                $video_content->type = 'video';
             } else {
                 $video_content->date = null; // Set to null or any default value if no date found
             }
         }
-    
         return $result_video_content;
     }
-    
-    
-
+    public function get_my_model_papers(){
+        $query = "SELECT model_paper_content_id, name, thumbnail, price FROM model_paper_content WHERE tutor_id = :tutor_id AND active = 1";
+        $result_model_paper_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
+        if (empty($result_model_paper_content)) {
+            return [];
+        }
+        foreach ($result_model_paper_content as &$model_paper_content) {
+            $query = "SELECT date FROM mcqs_for_model_paper WHERE model_paper_content_id = :model_paper_content_id";
+            $result_date = $this->query($query, ['model_paper_content_id' => $model_paper_content->model_paper_content_id]);
+            if (is_array($result_date) && !empty($result_date)) {
+                $model_paper_content->date = $result_date[0]->date;
+                $model_paper_content->type = 'Model Paper';
+            } else {
+                $model_paper_content->date = null; // Set to null or any default value if no date found
+            }
+        }
+        return $result_model_paper_content;
+    }
+    //function to randomly concatinate model paper and video results
+    public function get_my_uploads()
+    {
+        $video_content = $this->get_my_videos();
+        $model_paper_content = $this->get_my_model_papers();
+        $result = array_merge($video_content, $model_paper_content);
+        shuffle($result);
+        return $result;
+    }
     public function validate_insert_to_model_paper_content($data, $thumbnail)
     {
         $this->errors = [];
@@ -440,7 +446,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function insert_to_model_paper_content($data, $thumbnail)
     {
        $model_paper_content_id = bin2hex(random_bytes(8));
@@ -456,7 +461,6 @@ class Tutors extends Model
         ]);
         return $model_paper_content_id;
     }
-
     public function insert_to_model_paper_content_id_exists_and_not_active($model_paper_content_id)
     {
         $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id AND tutor_id = :tutor_id AND active = 0";
@@ -466,7 +470,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function validate_insert_to_questions_for_model_paper($data,$essay_questions)
     {
         $this->errors = [];
@@ -505,7 +508,6 @@ class Tutors extends Model
         }
         return false;
     }
-
     public function insert_to_mcqs_for_model_paper($data, $model_paper_content_id)
     {
         $i = 1;
@@ -525,7 +527,6 @@ class Tutors extends Model
         }
         return true;
     }
-
     public function insert_to_essays_for_model_paper($essay_questions, $model_paper_content_id)
     {
         $this->query("INSERT INTO essays_for_model_paper (model_paper_content_id, tutor_id, essay_questions) VALUES (:model_paper_content_id, :tutor_id, :essay_questions)", [
@@ -535,14 +536,12 @@ class Tutors extends Model
         ]);
         return true;
     }
-
     public function set_model_paper_content_active($model_paper_content_id)
     {
         $query = "UPDATE model_paper_content SET active = 1 WHERE model_paper_content_id = :model_paper_content_id";
         $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
         return true;
     }
-
     public function is_model_paper_content_id_exists_and_not_active($model_paper_content_id)
     {
         $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id AND tutor_id = :tutor_id AND active = 0";
@@ -553,4 +552,3 @@ class Tutors extends Model
         return false;
     }
 }
-

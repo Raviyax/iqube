@@ -61,7 +61,6 @@ public function make_a_tutor_request(){
                 //wait for 3 seconds and redirect to home
                 header("refresh:3;url=".URLROOT."/Landing");
             }
-    
         }
         else{
             $data['errors'] = $this->tutors->request_errors;

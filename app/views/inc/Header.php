@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <meta charset="UTF-8">
@@ -27,7 +26,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
-
 <body>
     <!-- subject admin header  -->
     <?php if (Auth::is_logged_in() && Auth::is_subject_admin()) { ?>
@@ -184,7 +182,6 @@
                 </ul>
             </nav>
         </div><?php } ?>
-
     <!-- tutor header  -->
     <?php if (Auth::is_logged_in() && Auth::is_tutor()) { ?>
         <header class="header" style="z-index: 1500;">
@@ -291,12 +288,13 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+                   
+
+
                 </ul>
             </nav>
-
             <div class="profile">
                 <a href="<?php echo URLROOT ?>/Student/purchase_premium" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
-
             </div>
         </div>
     <?php } ?>
@@ -347,6 +345,9 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a></li>
+                     <!-- iqube support chat -->
+                    <li><a href="<?php echo URLROOT; ?>/Student/iqube_support"><i class="fa-solid fa-headset"></i><span>Support Chat</span></a></li>
+
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
