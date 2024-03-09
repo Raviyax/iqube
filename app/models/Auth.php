@@ -52,6 +52,7 @@
     public static function authenticate_tutor($row, $tutordata){
         if($row[0]!=null){
             $_SESSION['USER_DATA'] = [
+                'user_id' => $row[0]->user_id,
                 'username' => $row[0]->username,
                 'email' => $row[0]->email,
                 'role' => 'tutor',
@@ -70,6 +71,7 @@
     public static function authenticate_subject_admin($row, $subjectadmindata){
         if($row[0]!=null){
             $_SESSION['USER_DATA'] = [
+                'user_id' => $row[0]->user_id,
                 'username' => $row[0]->username,
                 'email' => $row[0]->email,
                 'role' => 'subject_admin',

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -289,8 +290,6 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                    
-
-
                 </ul>
             </nav>
             <div class="profile">
@@ -346,10 +345,16 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a></li>
                      <!-- iqube support chat -->
-                    <li><a href="<?php echo URLROOT; ?>/Student/iqube_support"><i class="fa-solid fa-headset"></i><span>Support Chat</span></a></li>
-
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
         </div>
-    <?php } ?>
+        <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
+<div class="chat-popup" id="chat"></div>
+
+<?php } ?>
+    
+
+<script src="<?php echo URLROOT; ?>/assets/js/chat.js"></script>
+
+ 

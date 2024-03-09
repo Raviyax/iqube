@@ -1205,3 +1205,23 @@ height: 100%;
    font-weight: bold;
    color: #3498db; /* Adjust the color as needed */
  }
+ .open-chat {
+   background-color: var(--main-color);
+   color: white;
+   padding: 8px 10px;
+   border-radius: 5px;
+   cursor: pointer;
+   opacity: 0.8;
+   position: fixed;
+   bottom: 23px;
+   right: 28px;
+   width: 180px;
+ }
+ .chat-popup {
+   display: none;
+   position: fixed;
+   right: 15px;
+  height: calc(100% - 50px);
+   z-index: 9;
+   overflow-y: scroll;
+ }

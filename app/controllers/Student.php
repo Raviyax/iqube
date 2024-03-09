@@ -4,10 +4,12 @@ class Student extends Controller {
     public $user;
     public $student;
     public $payhere;
+    public $complain;
     public function __construct(){
         $this->user = $this->model('User');
         $this->payhere = new Payhere;
         $this->student = $this->model('Students');
+        $this->complain = $this->model('Complain');
     }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
@@ -186,5 +188,23 @@ public function verify_email(){
         else{
            echo "Invalid verification link";
         }
+}
+public function iqube_support(){
+    if(Auth::is_logged_in() && Auth::is_student()){
+        if(isset($_POST['about_complain'])){
+            $complain_id = $this->complain->start_complain($_POST['about_complain'], 'IQube Support');
+            if($complain_id){
+              
+                $this->view('Student/Complain');
+            }
+           
+        } 
+     
+      $this->view('Student/Start_complain');
+  
+           
+    }
+  
+  
 }
 }
