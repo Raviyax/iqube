@@ -3,6 +3,10 @@
     public $user;
     public static function authenticate($row, $studentdata, $premiumdata){
         if(is_object($row )){
+            if($studentdata->subjects != null){
+                $subjects = explode(',', $studentdata->subjects);
+                $_SESSION['USER_DATA']['subjects'] = $subjects;
+            }
             if($row->role == 'student'){
                 $_SESSION['USER_DATA'] = [
                     'user_id' => $row->user_id,

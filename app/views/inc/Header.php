@@ -355,6 +355,6 @@
 <?php } ?>
     
 
-<script src="<?php echo URLROOT; ?>/assets/js/chat.js"></script>
+
 
  

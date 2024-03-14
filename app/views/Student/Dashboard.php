@@ -4,6 +4,7 @@
     <div class="box-container">
         <div class="box">
             <h3>test</h3>
+            <?php print_r($_SESSION['USER_DATA']) ?>
             <p>test</p>
         </div>
     </div>

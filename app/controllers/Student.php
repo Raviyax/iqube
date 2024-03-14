@@ -4,12 +4,12 @@ class Student extends Controller {
     public $user;
     public $student;
     public $payhere;
-    public $complain;
+
     public function __construct(){
         $this->user = $this->model('User');
         $this->payhere = new Payhere;
         $this->student = $this->model('Students');
-        $this->complain = $this->model('Complain');
+    
     }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
@@ -106,11 +106,16 @@ class Student extends Controller {
                     'subjects' => $this->user->query("SELECT * FROM subjects"),
                 ];
                 if (isset($_POST['proceed'])) {
-                    // Sanitize and validate input if necessary
-                    // Move the logic to the Student model
-                    if ($this->student->complete_profile()) {
-                        redirect('/Student');
-                        return;
+                    
+                   
+                    if($this->student->validate_complete_profile($_POST)){
+                        if($this->student->complete_profile($_POST)){
+                            redirect('/Student');
+                            return;
+                        }
+                    }
+                    else{
+                        $data['errors'] = $this->student->errors;
                     }
                 }
                 $this->view('Student/More_details', $data);
@@ -189,18 +194,16 @@ public function verify_email(){
            echo "Invalid verification link";
         }
 }
-public function iqube_support(){
+public function chat(){
     if(Auth::is_logged_in() && Auth::is_student()){
-        if(isset($_POST['about_complain'])){
-            $complain_id = $this->complain->start_complain($_POST['about_complain'], 'IQube Support');
-            if($complain_id){
-              
-                $this->view('Student/Complain');
-            }
-           
-        } 
-     
-      $this->view('Student/Start_complain');
+
+  
+    $this->view('Student/Chat');
+    }
+    else{
+        redirect('/Login');
+        
+   
   
            
     }

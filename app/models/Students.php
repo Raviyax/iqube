@@ -1,10 +1,18 @@
 <?php
 class Students extends Model {
     public $errors;
-    public function complete_profile(){
+public function complete_profile($data){
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        $this->query("UPDATE students SET subjects = '$_POST[subjects]', completed = 1 WHERE student_id = $student_id");
-        $_SESSION['USER_DATA']['completed'] = 1;
+        //separate the subjects with a comma
+        $subjects = implode(',', $data['subject']);
+        if($this->query("UPDATE students SET subjects = :subjects WHERE student_id = $student_id", ['subjects' => $subjects])){
+            //update completed to 1
+            $this->query("UPDATE students SET completed = 1 WHERE student_id = $student_id");
+            $_SESSION['USER_DATA']['completed'] = 1;
+        }
+        $_SESSION['USER_DATA']['subjects'] = $data['subject'];
+
+        return true;
     }
     public function insert_to_premium_students($data){
         $this->query("INSERT INTO premium_students (student_id, fname, lname, cno, address, city) VALUES (:student_id, :fname, :lname, :cno, :address, :city)" , [
@@ -96,4 +104,53 @@ class Students extends Model {
             return false;
         }
     }
+
+    public function validate_complete_profile($data){
+        if(empty($data['subject'])){
+            $this->errors['subjects'] = 'Please select at least one subject';
+        }else if(count($data['subject']) > 3){
+            $this->errors['subjects'] = 'You can select up to 3 subjects';
+        }else{
+            //check whether the entered subject_id s tally with the subjects in the database
+            $subjects = $this->query("SELECT subject_id FROM subjects");
+            $subject_ids = [];
+            foreach($subjects as $subject){
+                $subject_ids[] = $subject->subject_id;
+            }
+            foreach($data['subject'] as $subject){
+                if(!in_array($subject, $subject_ids)){
+                    $this->errors['subjects'] = 'Invalid subject';
+                    break;
+                }
+            }
+
+   }
+        if(empty($this->errors)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function get_my_subject_names($student_id){
+        $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
+        if($subjects){
+            $subject_ids = explode(',', $subjects[0]->subjects);
+            $subject_names = [];
+            foreach($subject_ids as $subject_id){
+                $subject = $this->query("SELECT subject_name FROM subjects WHERE subject_id = :subject_id", ['subject_id' => $subject_id]);
+                if($subject){
+                    $subject_names[] = $subject[0]->subject_name;
+                }
+            }
+            return $subject_names;
+        }
+        else{
+            return false;
+        }
+      
+      
+    }
+
 }
