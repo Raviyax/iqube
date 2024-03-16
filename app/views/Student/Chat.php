@@ -1,4 +1,4 @@
-<?php $this->view('inc/Header', $data) ?>
+<?php $this->view('inc/Header') ?>
 <section class="courses">
 	<h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username']; ?>!</h1>
 	<!DOCTYPE html>
@@ -40,7 +40,7 @@
 									include(APPROOT . "/Chat/Chat.php");
 									$chat = new Chat();
 									$loggedUser = $chat->getUserDetails($_SESSION['USER_DATA']['user_id']);
-                                    $chat->getUserChat($_SESSION['USER_DATA']['user_id'], $_POST['to_user_id']);
+                                  
 									$chat->updateUserOnline($_SESSION['USER_DATA']['user_id'], 1);
 
 									echo '<div class="wrap">';

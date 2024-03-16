@@ -153,4 +153,31 @@ public function complete_profile($data){
       
     }
 
+   public function get_all_tutors_for_my_subjects($student_id){
+       $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
+       if($subjects){
+           $subject_ids = explode(',', $subjects[0]->subjects);
+          // get subject_name for relavant subject_id
+            $subject_names = [];
+            foreach($subject_ids as $subject_id){
+                $subject = $this->query("SELECT subject_name FROM subjects WHERE subject_id = :subject_id", ['subject_id' => $subject_id]);
+                if($subject){
+                    $subject_names[] = $subject[0]->subject_name;
+                }
+            }
+            //get tutors for each subject
+            $tutors = [];
+            foreach($subject_names as $subject_name){
+                $tutor = $this->query("SELECT fname ,lname ,tutor_id ,subject ,approved_date ,image FROM tutors WHERE subject LIKE :subject_name", ['subject_name' => "%$subject_name%"]);
+                if($tutor){
+                    $tutors[] = $tutor;
+                }
+            }
+           return $tutors;
+       }
+       else{
+           return false;
+       }
+   }
+
 }

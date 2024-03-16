@@ -170,8 +170,10 @@ public function tutors(){
         $data = [
             'title' => 'Student',
             'view' => 'Tutors',
-            'tutors' => $this->user->query("SELECT * FROM tutors"),
+            'tutors' => $this->student->get_all_tutors_for_my_subjects($_SESSION['USER_DATA']['student_id']),
+            'subjects' => $this->student->get_my_subject_names($_SESSION['USER_DATA']['student_id']),
         ];
+  
         $this->view('Student/Tutors', $data);
     }
     else{

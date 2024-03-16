@@ -1,81 +1,107 @@
-<?php $this->view('inc/Header',$data) ?>
-<link rel="stylesheet" href="<?=URLROOT?>/assets/css/student/tutors.css">
-<section class="container">
-    <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1>
-    <h1 class="spacing">Instructors <span style="font-size:1.5rem">(241)</span></h1>
-    <br>
-    <div class="filters">
-        <div class="search">
-            <span>Search</span>
-            <form action="search_page.php" method="post" class="search-form">
-                <input type="text" name="search" placeholder="search here..." required maxlength="100">
-                <button type="submit" class="fas fa-search" name="search_btn"></button>
+<?php $this->view('inc/Header', $data); ?>
+<section class="courses">
+<?php $subjects = $data['subjects'];?>
+<!-- omplode the subjects in the array with , -->
+<?php $printsubjects = implode(', ', $subjects); ?>
+<!-- print the subjects -->
+
+    <h1 class="heading">Tutors for <?php echo $printsubjects; ?></h1>
+    <header class="header">
+        <section style="border-radius: 10px; ">
+            <form class="search-form">
+                <input type="text" name="searchbar" placeholder="Search by subject..." id="tutorsearchbar" onkeyup="search('tutorlist', 'tutorsearchbar')" maxlength="100">
+                <select name="sort" id="sort" onchange="sortBoxes()" >
+    <option value="none" selected disabled>Sort by</option>
+    <option value="date">Rating</option>
+    <option value="price">Purchases</option>
+</select>
+
+                <select name="content_type" id="content_type" onchange="filterContainer()">
+                    <option value="all" selected>All subjects</option>
+                   
+                    <?php foreach ($subjects as $subject) : ?>
+                        <option value="<?php echo $subject; ?>"><?php echo $subject; ?></option>
+                    <?php endforeach; ?>
+                   
+                 
+                </select>
             </form>
-        </div>
-        <div class="subjects">
-            <span>Subjects</span>
-            <select name="subjects" id="subjects" >
-                <option value="Physics">Physics</option>
-                <option value="Biology">Biology</option>
-                <option value="Com. Maths">Com. Maths</option>
-                <option value="Chemistry">Chemistry</option>
-                <option value="Commerce">Commerce</option>
-                <option value="Geography">Geography</option>
-                <option value="Accounting">Accounting</option>
-                <option value="Economics">Economics</option>
-                <option value="English">English</option>
-                <option value="E. Tech.">E. Tech.</option>
-                <option value="B. Tech.">B. Tech.</option>
-            </select>
-        </div>
-        <!-- <div class="courses">
-            <select name="courses" id="courses">
-                <option value="Theory">Theory</option>
-                <option value="Theory">Model Paper</option>
-                <option value="Theory">Crash Course</option>
-                <option value="Theory">Theory</option>
-            </select>
-        </div> -->
-    </div>
-    <div class="grid">
-        <?php
-            $tutorsPerPage = 12;
-            $tutorChunks = array_chunk($data['tutors'], $tutorsPerPage);
-            // Get the current page number from the URL parameter
-            $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-            // Display tutors for the current page
-            $currentTutors = isset($tutorChunks[$currentPage - 1]) ? $tutorChunks[$currentPage - 1] : [];
-            foreach ($currentTutors as $tutor):
-        ?>
-        <div class="tutor">
-            <img src="<?php echo "data:image/jpg;base64,".$data['profilepic'];?>" alt="">
-            <div class="tutor-detail">
-                <div class="tutor-name"><?php echo $tutor->fname." ".$tutor->lname; ?></div>
-                <div class="tutor-subject"><?php echo $tutor->subject; ?></div>
-            </div>
-            <div class="tutor-cred">
-                <div id="rating"><i class="fa-regular fa-star"></i></div>
-                <div id="std-count">236</div>
-            </div>
-            <button class="btn">Send Message</button>
-        </div>
-        <?php endforeach; ?>
-    </div>
-    <div class="paginator">
-        <ul>
-            <?php if ($currentPage > 1): ?>
-                <li><a href="?page=<?php echo $currentPage - 1; ?>" class="prev">&lt; Prev</a></li>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= count($tutorChunks); $i++): ?>
-                <li><a href="?page=<?php echo $i; ?>" <?php echo ($i == $currentPage) ? 'class="active"' : ''; ?>><?php echo $i; ?></a></li>
-            <?php endfor; ?>
-            <?php if ($currentPage < count($tutorChunks)): ?>
-                <li><a href="?page=<?php echo $currentPage + 1; ?>" class="next">Next &gt;</a></li>
-            <?php endif; ?>
-        </ul>
+        </section>
+    </header>
+    <div class="box-container" style="margin-top: 10px;">
+    
+        <?php $tutors = $data['tutors'];
+        if (empty($tutors)) {
+            echo "<h3 class='title'>No Tutors Found</h3>";
+        } else {
+            foreach ($tutors as $subjectTutors) {
+                foreach ($subjectTutors as $tutor) {
+                    // Access each tutor's specific relevant data
+                    $tutor_id = $tutor->tutor_id;
+                    $subject = ucfirst($tutor->subject);
+                    $fname = ucfirst($tutor->fname);
+                    $lname = ucfirst($tutor->lname);
+                    $image = $tutor->image;
+                    $approved_date = $tutor->approved_date;
+
+                    echo '  <div class="box" id="tutor">
+                    <img src="'.URLROOT.'/Student/userimage/'.$image.'" class="thumb" alt="">
+                    <h3 class="title">'.$fname.' '.$lname.'</h3>
+                    <h2 class="type">'.$subject.'</h2>
+                    <div>
+                        <span>'.$approved_date.'</span>
+                        <p>4.2 Rate</p>
+                    </div>
+                    <a href="<?php echo URLROOT; ?>/playlist.php?get_id=" class="inline-btn">view Tutor</a>
+                </div>';
+                }
+
+                // Display each tutor's data in a box
+             
+            }
+        } ?>
+      
+      
     </div>
 </section>
-<script src="<?=URLROOT?>/assets/js/student/tutors.js"></script>
-<?php $this->view('inc/Footer') ?>
+<script>
+    // JavaScript function to filter and show/hide the entire box-container based on the selected content type 
+    function filterContainer() {
+        var selectedType = document.getElementById("content_type").value;
+        var boxes = document.getElementsByClassName("box");
+        for (var i = 0; i < boxes.length; i++) {
+            var box = boxes[i];
+            var boxType = box.getAttribute("data-type");
+            if (selectedType === "all" || boxType === selectedType) {
+                box.style.display = "block";
+            } else {
+                box.style.display = "none";
+            }
+        }
+    }
+    function sortBoxes() {
+        var sortOption = document.getElementById("sort").value;
+        var container = document.querySelector('.box-container');
+        var boxes = Array.from(container.getElementsByClassName('box'));
+        boxes.sort(function (a, b) {
+            var aValue, bValue;
+            if (sortOption === "date") {
+                aValue = new Date(a.dataset.date);
+                bValue = new Date(b.dataset.date);
+            } else if (sortOption === "price") {
+                aValue = parseFloat(a.dataset.price);
+                bValue = parseFloat(b.dataset.price);
+            }
+            return aValue - bValue;
+        });
+        // Clear the container
+        container.innerHTML = "";
+        // Append sorted boxes back to the container
+        boxes.forEach(function (box) {
+            container.appendChild(box);
+        });
+    }
+</script>
+<?php $this->view('inc/Footer'); ?>
 </body>
 </html>
