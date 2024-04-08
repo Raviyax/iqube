@@ -4,11 +4,13 @@ class Student extends Controller {
     public $user;
     public $student;
     public $payhere;
+    public $tutor;
 
     public function __construct(){
         $this->user = $this->model('User');
         $this->payhere = new Payhere;
         $this->student = $this->model('Students');
+        $this->tutor = $this->model('Tutors');
     
     }
     public function index(){
@@ -211,5 +213,22 @@ public function chat(){
     }
   
   
+}
+
+public function tutor_profile($id)
+{
+    if (Auth::is_logged_in() && Auth::is_student()) {
+       
+        $data = [
+            'title' => 'Tutor',
+            'view' => 'Tutor Profile',
+           
+        ];
+        $data['tutor'] = $this->tutor->get_tutor($id);
+ 
+        $this->view('Student/Tutorprofile', $data);
+    } else {
+        $this->view('Noaccess');
+    }
 }
 }

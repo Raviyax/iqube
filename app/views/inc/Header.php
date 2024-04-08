@@ -283,7 +283,7 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Student/dashboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a></li>
@@ -339,7 +339,7 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Student/dashboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></a></li>

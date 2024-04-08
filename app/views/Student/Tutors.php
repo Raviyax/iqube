@@ -52,7 +52,7 @@
                         <span>'.$approved_date.'</span>
                         <p>4.2 Rate</p>
                     </div>
-                    <a href="<?php echo URLROOT; ?>/playlist.php?get_id=" class="inline-btn">view Tutor</a>
+                    <a href="'. URLROOT.'/Student/tutor_profile/'.$tutor_id.'" class="inline-btn">view Tutor</a>
                 </div>';
                 }
 
