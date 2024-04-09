@@ -234,14 +234,37 @@ if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href=
 public function get_chapters()
 {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
     $query = "SELECT
+    id,
     chapter_level_1,
-    GROUP_CONCAT(CONCAT(id, '-->>', chapter_level_2) SEPARATOR '--->>>') AS chapter_level_2_list_with_id
+    chapter_level_2,
+    weight
 FROM
     chapters
 WHERE
     subject = :subject
-GROUP BY
-    chapter_level_1";
+ORDER BY
+    chapter_level_1,
+    weight";
+;
+
     return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
+}
+
+public function update_syllabus($id, $subunit, $weight)
+{
+    $this->query("UPDATE chapters SET chapter_level_2=?, weight=? WHERE id=?", [
+        $subunit,
+        $weight,
+        $id
+    ]);
+    return true;
+
+}
+
+public function delete_syllabus($id)
+{
+    $this->query("DELETE FROM chapters WHERE id=?", [$id]);
+    return true;
+
 }
 }
