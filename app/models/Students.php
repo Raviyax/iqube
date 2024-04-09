@@ -180,4 +180,31 @@ public function complete_profile($data){
        }
    }
 
+   public function get_chapters_for_subject($subject)
+   {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
+       $query = "SELECT
+       chapter_level_1,
+       GROUP_CONCAT(CONCAT(id, '-->>', chapter_level_2) SEPARATOR '--->>>') AS chapter_level_2_list_with_id
+   FROM
+       chapters
+   WHERE
+       subject = :subject
+   GROUP BY
+       chapter_level_1";
+       return $this->query($query, ['subject' => $subject]);
+   }
+
+   public function get_chapters_for_my_subjects(){
+    
+    $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+    //get chapters for each subject
+    $chapters = [];
+    foreach($my_subjects as $subject){
+        $chapters[$subject] = $this->get_chapters_for_subject($subject);
+    }
+    return $chapters;
+
+   }
+   
+
 }

@@ -230,4 +230,18 @@ if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href=
     echo "<script>alert('Error');</script>";
 }
 }
+
+public function get_chapters()
+{  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
+    $query = "SELECT
+    chapter_level_1,
+    GROUP_CONCAT(CONCAT(id, '-->>', chapter_level_2) SEPARATOR '--->>>') AS chapter_level_2_list_with_id
+FROM
+    chapters
+WHERE
+    subject = :subject
+GROUP BY
+    chapter_level_1";
+    return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
+}
 }

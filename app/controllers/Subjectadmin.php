@@ -153,7 +153,7 @@ class Subjectadmin extends Controller
                 'title' => 'Manage Syllabus',
                 'view' => 'Manage Syllabus',
                 'notifications' => $notifications,
-                // 'syllabus' => $this->Subjectadmin->get_syllabus($_SESSION['USER_DATA']['subject'])
+                'syllabus' => $this->Subjectadmin->get_chapters($_SESSION['USER_DATA']['subject'])
             ];
             $this->view('Subject_admin/Manage_syllabus', $data);
         } else {

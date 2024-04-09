@@ -15,6 +15,15 @@ class Student extends Controller {
     }
     public function index(){
         if(Auth::is_logged_in() && Auth::is_student()){
+            if(Auth::is_premium()){
+                $data = [
+                    'title' => 'Student',
+                    'view' => 'Dashboard',
+                 'chapters' => $this->student->get_chapters_for_my_subjects(),
+                ];
+                $this->view('Student/Premium_dashboard', $data);
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Dashboard'

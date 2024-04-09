@@ -1226,85 +1226,66 @@ height: 100%;
    overflow-y: scroll;
  }
 
- 
-.ongoing
-{
-  background:#fff;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  flex-direction:column;
-  box-shadow:0 30px 60px rgba(0,0,0,.4);
-  transition: transform .2s;
+.ongoing {
+   margin-bottom: 35px;
+   position: relative;
+    overflow-x:hidden;
+    
 }
-/* .box:hover
-{
- transform:scale(1.2);
-} */
-.ongoing .percent
-{
-  width:150px;
-  height:150px;
-  position:relative;
+.ongoing > p {
+   font-size: 18px;
+   font-weight: 700;
+   color: #1a1716;
+   margin: 0;
 }
-.ongoing .percent svg
-{
-  width:150px;
-  height:150px;
-  position:relative;
+.ongoing:before{
+   width: 100%;
+   height: 5px;
+   content: "";
+   display: block;
+   position: absolute;
+   background: #959595;
+   bottom: 0;
 }
-.ongoing .percent svg circle
-{
-  width:150px;
-  height:150px;
-  fill:none;
-  stroke-width:10;
-  stroke:#000;
-  transform:translate(5px,5px);
-  stroke-dasharray:440;
-  stroke-dashoffset:440;
-  stroke-linecap:round;
-}
-.ongoing .percent svg circle:nth-child(1)
-{
-  stroke-dashoffset:0;
-  stroke:#f3f3f3;
+.ongoing-bar {
+   width: 100%;
+   height: 5px;
+   background:var(--main-color);
+   display: block;
+   position: relative;
 }
 
-.ongoing .percent .num
-{
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:absolute;
-  color:#111;
+
+.ongoing1{
+   width: 95%;
+    
 }
-.ongoing .percent .num h2
-{
-  font-size:48px;
+.ongoing-bar span{
+   position: absolute;
+
+   top: -30px;
+   padding: 0;
+   font-size: 18px;
+   padding: 3px 0;
+   font-weight: 500;
 }
-.ongoing .percent .num h2 span
-{
-  font-size:24px;
-}
-.ongoing .text
-{
-  padding: 10px 0 0;
-  color:#999;
-  font-weight:700;
-  letter-spacing:1px;
+.ongoing-bar {
+   position: relative;
+    
 }
 
-.ongoing_img {
-   border: 1px solid #ddd;
-   border-radius: 4px;
-   padding: 5px;
-   width: 150px;
+.ongoing1 .ongoing-count {
+   right: 0;
+}
+
+.white_box {
+   background-color: var(--white);
+   border-bottom: var(--border);
+   margin-bottom: 5px;
   
- }
+   left: 0;
+   right: 0;
+ 
+   box-shadow: 0 1px 3px 0 rgba(54,74,99,.05);
+}
