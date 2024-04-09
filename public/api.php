@@ -20,3 +20,12 @@ if($_POST['action'] == 'delete_syllabus') {
     $subjectadmins->delete_syllabus($id);
     echo 'success';
 }
+
+//insert_subunit
+if($_POST['action'] == 'insert_subunit') {
+    $chapter_level_1 = $_POST['chapter_level_1'];
+    $subunit = $_POST['subunit'];
+    $weight = $_POST['weight'];
+    $subjectadmins->insert_subunit($chapter_level_1, $subunit, $weight);
+    echo 'success';
+}

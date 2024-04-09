@@ -14,6 +14,8 @@
             // If it's a new chapter, close the previous section if exists
             if ($currentChapter !== null) {
                 echo '</table>';
+                echo '<button class="btn addnewsubunit"  name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>';
+
                 echo '</section>'; // Closing the section for previous chapter_level_1
             }
 
@@ -61,6 +63,23 @@
 
 </section>
 <script>
+  //add a new empty row for the current table when addnewsubunit button is clicked
+  document.querySelectorAll('button.addnewsubunit').forEach(button => {
+    button.addEventListener('click', () => {
+      const table = button.parentElement.querySelector('table');
+      const newRow = table.insertRow(-1);
+      newRow.innerHTML = `
+        <td>-</td>
+        <td contenteditable></td>
+        <td contenteditable></td>
+        <td style="display:flex; flex-direction:row;">
+          <button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red;" id="savenew"><i class="fa-solid fa-floppy-disk"></i></button>
+          <button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="removenew"><i class="fa-solid fa-xmark"></i></button>
+        </td>
+      `;
+    });
+  });
+
   //if any edit for the subunit or weight, show the save button
   document.querySelectorAll('td[contenteditable]').forEach(td => {
     td.addEventListener('input', () => {
@@ -73,30 +92,40 @@
   $(document).ready(function() {
     // Save the edited subunit and weight
     $('button#save').click(function() {
-      const id = $(this).closest('tr').find('td').eq(0).text();
-      const subunit = $(this).closest('tr').find('td').eq(1).text();
-      const weight = $(this).closest('tr').find('td').eq(2).text();
+    // Get the chapter_level_1 from the closest section's h1
+    const chapter_level_1 = $(this).closest('section').find('h1').text();
 
-      $.ajax({
-        url: api_root,
-        type: 'POST',
-        data: {
-          action: 'update_syllabus',
-          id: id,
-          subunit: subunit,
-          weight: weight
-        },
-        success: function(response) {
-          console.log(response);
-          if (response === 'success') {
-            alert('Syllabus updated successfully');
-            location.reload();
-          } else {
-            alert('Failed to update syllabus');
-          }
-        }
-      });
-    });
+    // Get the id, subunit, and weight from the table row
+    const id = $(this).closest('tr').find('td').eq(0).text();
+    const subunit = $(this).closest('tr').find('td').eq(1).text();
+    const weight = $(this).closest('tr').find('td').eq(2).text();
+
+        $.ajax({
+            url: api_root,
+            type: 'POST',
+            data: {
+                action: 'update_syllabus',
+                id: id,
+                subunit: subunit,
+                weight: weight
+            },
+            success: function(response) {
+                console.log(response);
+                if (response === 'success') {
+                    alert('Syllabus updated successfully');
+                    location.reload();
+                } else {
+                    alert('Failed to update syllabus');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                alert('An error occurred while processing your request');
+            }
+        });
+    
+});
+
 
 //delete sub unit with id
     $('button#delete').click(function() {
@@ -118,6 +147,46 @@
           }
         }
       });
+    });
+
+    // Save the new subunit and weight
+    $('button#savenew').click(function() {
+      // Get the chapter_level_1 from the closest section's h1
+      const chapter_level_1 = $(this).closest('section').find('h1').text();
+
+      // Get the subunit and weight from the table row
+      const subunit = $(this).closest('tr').find('td').eq(1).text();
+      const weight = $(this).closest('tr').find('td').eq(2).text();
+
+      $.ajax({
+        url: api_root,
+        type: 'POST',
+        data: {
+          action: 'insert_subunit',
+          chapter_level_1: chapter_level_1,
+          chapter_level_2: subunit,
+          weight: weight
+        },
+        success: function(response) {
+          console.log(response);
+          if (response === 'success') {
+            alert('Subunit added successfully');
+            location.reload();
+          } else {
+            alert('Failed to add subunit');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+          alert('An error occurred while processing your request');
+        }
+        
+      });
+    });
+
+    // Remove the new subunit and weight
+    $('button#removenew').click(function() {
+      $(this).closest('tr').remove();
     });
   });
   

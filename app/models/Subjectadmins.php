@@ -267,4 +267,15 @@ public function delete_syllabus($id)
     return true;
 
 }
+
+public function insert_subunit($chapter_level_1, $subunit, $weight)
+{
+    $this->query("INSERT INTO chapters (subject, chapter_level_1, chapter_level_2, weight) VALUES (:subject, :chapter_level_1, :chapter_level_2, :weight)", [
+        'subject' => $_SESSION['USER_DATA']['subject'],
+        'chapter_level_1' => $chapter_level_1,
+        'chapter_level_2' => $subunit,
+        'weight' => $weight
+    ]);
+    return true;
+}
 }
