@@ -1,4 +1,4 @@
-<?php $this->view('inc/header', $data) ?>
+<?php $this->view('inc/Header', $data) ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <section>
     <h1 class="heading">Manage <?php echo $_SESSION['USER_DATA']['subject']; ?> Syllabus</h1>
