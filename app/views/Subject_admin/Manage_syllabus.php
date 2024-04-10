@@ -57,28 +57,27 @@
     // Close the last section
     if ($currentChapter !== null) {
         echo '</table>';
-        echo '</section>'; // Closing the section for last chapter_level_1
+        echo '<button class="btn addnewsubunit"  name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>';
+
+        echo '</section>'; 
+        // Closing the section for last chapter_level_1
+        echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
     }
     ?>
 
 </section>
 <script>
   //add a new empty row for the current table when addnewsubunit button is clicked
-  document.querySelectorAll('button.addnewsubunit').forEach(button => {
-    button.addEventListener('click', () => {
-      const table = button.parentElement.querySelector('table');
-      const newRow = table.insertRow(-1);
-      newRow.innerHTML = `
-        <td>-</td>
-        <td contenteditable></td>
-        <td contenteditable></td>
-        <td style="display:flex; flex-direction:row;">
-          <button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red;" id="savenew"><i class="fa-solid fa-floppy-disk"></i></button>
-          <button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="removenew"><i class="fa-solid fa-xmark"></i></button>
-        </td>
-      `;
-    });
-  });
+  $(document).on('click', 'button.addnewsubunit', function() {
+  const table = $(this).parent().find('table');
+  const newRow = $('<tr><td>-</td><td contenteditable></td><td contenteditable></td><td style="display:flex; flex-direction:row;"><button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red;" id="savenew"><i class="fa-solid fa-floppy-disk"></i></button><button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="removenew"><i class="fa-solid fa-xmark"></i></button></td></tr>');
+  table.append(newRow);
+});
+
+
+
+
+
 
   //if any edit for the subunit or weight, show the save button
   document.querySelectorAll('td[contenteditable]').forEach(td => {
@@ -150,11 +149,11 @@
     });
 
     // Save the new subunit and weight
-    $('button#savenew').click(function() {
+    $(document).on('click', 'button#savenew', function() {
       // Get the chapter_level_1 from the closest section's h1
       const chapter_level_1 = $(this).closest('section').find('h1').text();
 
-      // Get the subunit and weight from the table row
+      // Get the subunit and weight from the new row
       const subunit = $(this).closest('tr').find('td').eq(1).text();
       const weight = $(this).closest('tr').find('td').eq(2).text();
 
@@ -164,7 +163,7 @@
         data: {
           action: 'insert_subunit',
           chapter_level_1: chapter_level_1,
-          chapter_level_2: subunit,
+          subunit: subunit,
           weight: weight
         },
         success: function(response) {
@@ -175,20 +174,40 @@
           } else {
             alert('Failed to add subunit');
           }
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-          alert('An error occurred while processing your request');
         }
-        
       });
     });
 
     // Remove the new subunit and weight
-    $('button#removenew').click(function() {
+    $(document).on('click', 'button#removenew', function() {
       $(this).closest('tr').remove();
     });
+
+    //add a new complete section with empty row when addnewunit button is clicked
+    $('button#addnewunit').click(function() {
+      //ask name of the unit by a alert
+      const chapter_level_1 = prompt('Enter the name of the new unit');
+      if (chapter_level_1) {
+        const section = document.createElement('section');
+        section.className = 'unit-container';
+        section.innerHTML = `
+          <h1 class="heading" style="border:none;">${chapter_level_1}</h1>
+          <table id="table">
+            <tr style="cursor:default;">
+              <th>ID</th>
+              <th>Sub unit</th>
+              <th>Weight</th>
+              <th>Action</th>
+            </tr>
+          </table>
+          <button class="btn addnewsubunit" name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>
+        `;
+        //insert the new section before the addnewunit button
+        document.querySelector('button#addnewunit').before(section);
+      }
+
   });
+});
   
 
 </script>

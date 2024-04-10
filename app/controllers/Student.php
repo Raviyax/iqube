@@ -95,7 +95,7 @@ class Student extends Controller {
         }
     }
     public function study_materials(){
-        if(!Auth::is_completed())
+   
         if(Auth::is_logged_in() && Auth::is_student() && Auth::is_completed()){
             $data = [
                 'title' => 'Student',
@@ -240,4 +240,5 @@ public function tutor_profile($id)
         $this->view('Noaccess');
     }
 }
+
 }

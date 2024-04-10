@@ -263,9 +263,10 @@ class Tutors extends Model
     {
         //generate uniqe string in 16 characters for video_content_id
         $video_content_id = bin2hex(random_bytes(8));
-        $this->query("INSERT INTO video_content (video_content_id,tutor_id, name, description, video, thumbnail, price, covering_chapters) VALUES (:video_content_id,:tutor_id, :name, :description, :video, :thumbnail, :price, :covering_chapters)", [
+        $this->query("INSERT INTO video_content (video_content_id,tutor_id, name, subject, description, video, thumbnail, price, covering_chapters) VALUES (:video_content_id,:tutor_id, :name, :subject, :description, :video, :thumbnail, :price, :covering_chapters)", [
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
             'name' => $data['name'],
+            'subject' => $_SESSION['USER_DATA']['subject'],
             'description' => $data['description'],
             'video' => $video,
             'thumbnail' => $thumbnail,
@@ -371,7 +372,7 @@ class Tutors extends Model
     }
     public function get_my_videos()
     {
-        // Assuming you have a database connection available
+
         // Fetch video uploads
         $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
         $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
@@ -449,9 +450,10 @@ class Tutors extends Model
     public function insert_to_model_paper_content($data, $thumbnail)
     {
        $model_paper_content_id = bin2hex(random_bytes(8));
-        $this->query("INSERT INTO model_paper_content (model_paper_content_id, tutor_id, name, description, thumbnail, price, covering_chapters, time_duration) VALUES (:model_paper_content_id, :tutor_id, :name, :description, :thumbnail, :price, :covering_chapters, :time_duration)", [
+        $this->query("INSERT INTO model_paper_content (model_paper_content_id, tutor_id, name, subject, description, thumbnail, price, covering_chapters, time_duration) VALUES (:model_paper_content_id, :tutor_id, :name, :subject, :description, :thumbnail, :price, :covering_chapters, :time_duration)", [
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
             'name' => $data['name'],
+            'subject' => $_SESSION['USER_DATA']['subject'],
             'description' => $data['description'],
             'thumbnail' => $thumbnail,
             'price' => $data['price'],

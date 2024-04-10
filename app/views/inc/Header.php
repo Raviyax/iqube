@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,6 +28,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
+
 <body>
     <!-- subject admin header  -->
     <?php if (Auth::is_logged_in() && Auth::is_subject_admin()) { ?>
@@ -127,6 +129,7 @@
                     </li>
                     <li><a href="<?php echo URLROOT; ?>/Subjectadmin/students"><i class="fa-solid fa-user-pen"></i><span>Students</span></a></li>
                     <li><a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Subjectadmin/manage_syllabus"><i class="fa-solid fa-book"></i><span><?php echo ucfirst($_SESSION['USER_DATA']['subject']); ?> Syllabus</span></a></li>
                     <li><a href="comments.php"><i class="fa-solid fa-person-circle-question"></i><span>Complaints</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
@@ -161,7 +164,7 @@
                 </div>
             </section>
         </header>
-        <!-- header section ends -->    
+        <!-- header section ends -->
         <!-- side bar section starts  -->
         <div class="side-bar">
             <div class="close-side-bar">
@@ -289,7 +292,7 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
-                   
+
                 </ul>
             </nav>
             <div class="profile">
@@ -317,7 +320,7 @@
                     <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
                 </div>
                 <div class="profile" id="profile">
-                    <img src="<?php echo URLROOT . "/student/userimage/".$_SESSION['USER_DATA']['image']; ?>" alt="">
+                    <img src="<?php echo URLROOT . "/student/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                     <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
                     <span>Premium Student</span>
                     <a href="<?php echo URLROOT ?>/Tutor/profile" class="btn">View Profile</a>
@@ -332,7 +335,7 @@
                 <i class="fas fa-times"></i>
             </div>
             <div class="profile">
-                <img src="<?php echo URLROOT . "/student/userimage/".$_SESSION['USER_DATA']['image']; ?>" alt="">
+                <img src="<?php echo URLROOT . "/student/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                 <h3></h3>
                 <span></span>
                 <a href="profile.php" class="btn"><i class="fa-solid fa-crown"></i> <?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
@@ -341,20 +344,15 @@
                 <ul>
                     <li><a href="<?php echo URLROOT; ?>/Student/dashboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a></li>
-                     <!-- iqube support chat -->
+                    <!-- iqube support chat -->
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
         </div>
         <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
-<div class="chat-popup" id="chat"></div>
+        <div class="chat-popup" id="chat"></div>
 
-<?php } ?>
-    
-
-
-
- 
+    <?php } ?>

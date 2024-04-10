@@ -180,18 +180,23 @@ public function complete_profile($data){
        }
    }
 
-   public function get_chapters_for_subject($subject)
+   public function get_chapters_for_subject()
    {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
        $query = "SELECT
+       id,
        chapter_level_1,
-       GROUP_CONCAT(CONCAT(id, '-->>', chapter_level_2) SEPARATOR '--->>>') AS chapter_level_2_list_with_id
+       chapter_level_2,
+       weight
    FROM
        chapters
    WHERE
        subject = :subject
-   GROUP BY
-       chapter_level_1";
-       return $this->query($query, ['subject' => $subject]);
+   ORDER BY
+       chapter_level_1,
+       weight";
+   ;
+   
+       return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
    }
 
    public function get_chapters_for_my_subjects(){
@@ -200,10 +205,34 @@ public function complete_profile($data){
     //get chapters for each subject
     $chapters = [];
     foreach($my_subjects as $subject){
-        $chapters[$subject] = $this->get_chapters_for_subject($subject);
+        $chapter = $this->query("SELECT * FROM chapters WHERE subject = :subject", ['subject' => $subject]);
+        if($chapter){
+            $chapters[] = $chapter;
+        }
     }
     return $chapters;
 
+   }
+
+   public function get_videos(){
+    // Fetch video uploads
+    $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
+    $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
+   if (empty($result_video_content)) {
+        return [];
+    }
+    foreach ($result_video_content as &$video_content) {
+        $query = "SELECT date FROM mcq_for_video WHERE video_content_id = :video_content_id";
+        $result_date = $this->query($query, ['video_content_id' => $video_content->video_content_id]);
+        // Check if $result_date is an array before accessing it
+        if (is_array($result_date) && !empty($result_date)) {
+            $video_content->date = $result_date[0]->date;
+            $video_content->type = 'video';
+        } else {
+            $video_content->date = null; // Set to null or any default value if no date found
+        }
+    }
+    return $result_video_content;
    }
    
 
