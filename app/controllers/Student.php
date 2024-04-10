@@ -99,7 +99,8 @@ class Student extends Controller {
         if(Auth::is_logged_in() && Auth::is_student() && Auth::is_completed()){
             $data = [
                 'title' => 'Student',
-                'view' => 'Study Materials'
+                'view' => 'Study Materials',
+                'study_materials' => $this->student->get_study_materials(),
             ];
             $this->view('Student/Study_materials', $data);
         }
@@ -241,4 +242,50 @@ public function tutor_profile($id)
     }
 }
 
+public function video_thumbnail($thumbnail)
+{
+    if (Auth::is_logged_in() && Auth::is_student()) {
+        $this->retrive_media($thumbnail, '/uploads/video_content/thumbnails/');
+    } else {
+        $this->view('Noaccess');
+    }
+}
+public function model_paper_thumbnail($thumbnail)
+{
+    if (Auth::is_logged_in() && Auth::is_student()) {
+        $this->retrive_media($thumbnail, '/uploads/model_papers/thumbnails/');
+    } else {
+        $this->view('Noaccess');
+    }
+}
+
+public function video_overview($id)
+{
+    if (Auth::is_logged_in() && Auth::is_student()) {
+        $data = [
+            'title' => 'Student',
+            'view' => 'Video Overview',
+            'video' => $this->student->get_video_overview($id),
+        ];
+        $this->view('Student/Video_overview', $data);
+    } else {
+        $this->view('Noaccess');
+    }
+
+}
+
+public function model_paper_overview($id)
+{
+    if (Auth::is_logged_in() && Auth::is_student()) {
+        $data = [
+            'title' => 'Student',
+            'view' => 'Model Paper Overview',
+            'model_paper' => $this->student->get_model_paper_overview($id),
+        ];
+        $this->view('Student/Model_paper_overview', $data);
+    } else {
+        $this->view('Noaccess');
+    }
+
+}
 }

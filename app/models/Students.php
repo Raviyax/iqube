@@ -215,25 +215,122 @@ public function complete_profile($data){
    }
 
    public function get_videos(){
-    // Fetch video uploads
-    $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
-    $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
-   if (empty($result_video_content)) {
-        return [];
-    }
-    foreach ($result_video_content as &$video_content) {
-        $query = "SELECT date FROM mcq_for_video WHERE video_content_id = :video_content_id";
-        $result_date = $this->query($query, ['video_content_id' => $video_content->video_content_id]);
-        // Check if $result_date is an array before accessing it
-        if (is_array($result_date) && !empty($result_date)) {
-            $video_content->date = $result_date[0]->date;
-            $video_content->type = 'video';
-        } else {
-            $video_content->date = null; // Set to null or any default value if no date found
+    // Fetch video uploads where subject = my subjects and active
+    $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+    $videos = [];
+    foreach($my_subjects as $subject){
+        $video = $this->query("SELECT video_content_id, tutor_id, date, name, subject, thumbnail, price, covering_chapters
+         FROM video_content WHERE subject = :subject AND active = 1", ['subject' => $subject]);
+        if($video){
+            //add type to the video array
+            foreach($video as $v){
+                $v->type = 'video';
+                //get tutors name for the video
+                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $v->tutor_id]);  
+                if($tutor){
+                    $v->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                }
+            }
+            $videos[] = $video;
+            
         }
     }
-    return $result_video_content;
-   }
-   
+    return $videos;
+}
+
+public function get_model_papers(){
+    // Fetch model papers where subject = my subjects and active
+    $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+    $model_papers = [];
+    foreach($my_subjects as $subject){
+        $model_paper = $this->query("SELECT model_paper_content_id, tutor_id, date, name, subject, price, thumbnail, covering_chapters FROM model_paper_content WHERE subject = :subject AND active = 1", ['subject' => $subject]);
+        if($model_paper){
+            //add type to the model paper array
+            foreach($model_paper as $m){
+                $m->type = 'model_paper';
+                //get tutors name for the model paper
+                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $m->tutor_id]);
+                if($tutor){
+                    $m->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                }
+            }
+            $model_papers[] = $model_paper;
+        }
+    }
+    return $model_papers;
+}
+
+public function get_study_materials(){
+    $model_papers = $this->get_model_papers();
+    $videos = $this->get_videos();
+    //shuffle them
+    $study_materials = array_merge($model_papers, $videos);
+    shuffle($study_materials);
+    return $study_materials;
+}
+
+public function get_model_paper_overview($model_paper_content_id){
+    $model_paper = $this->query("SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper_content_id]);
+    if($model_paper){
+        //get tutors name for the model paper
+        $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper[0]->tutor_id]);
+        if($tutor){
+            $model_paper[0]->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+            //get tutors image
+            $tutor_image = $this->query("SELECT image FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper[0]->tutor_id]);
+            if($tutor_image){
+                $model_paper[0]->tutor_image = $tutor_image[0]->image;
+            }
+        }
+
+        //get covering chapters for the model paper
+        $chapter_ids = explode('][' , $model_paper[0]->covering_chapters);
+        $chapters = [];
+        foreach($chapter_ids as $chapter_id){
+            $chapter = $this->query("SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :chapter_id", ['chapter_id' => $chapter_id]);
+            if($chapter){
+                $chapters[] = $chapter[0];
+            }
+        }
+        $model_paper[0]->chapters = $chapters;
+        return $model_paper[0];
+    }
+    else{
+        return false;
+    }
+}
+
+public function get_video_overview($video_content_id){
+    $video = $this->query("SELECT video_content_id,tutor_id, name, subject, description, thumbnail, price, covering_chapters FROM video_content WHERE video_content_id = :video_content_id", ['video_content_id' => $video_content_id]);
+    if($video){
+        //get tutors name for the video
+        $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
+        if($tutor){
+            $video[0]->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+            //get tutors image
+            $tutor_image = $this->query("SELECT image FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
+            if($tutor_image){
+                $video[0]->tutor_image = $tutor_image[0]->image;
+            }
+        }
+
+        //get covering chapters for the video
+        $chapter_ids = explode('][' , $video[0]->covering_chapters);
+        $chapters = [];
+        foreach($chapter_ids as $chapter_id){
+            $chapter = $this->query("SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :chapter_id", ['chapter_id' => $chapter_id]);
+            if($chapter){
+                $chapters[] = $chapter[0];
+            }
+        }
+        $video[0]->chapters = $chapters;
+        return $video[0];
+    }
+    else{
+        return false;
+    }
+}
+
+
 
 }
