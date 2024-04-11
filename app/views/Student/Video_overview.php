@@ -30,41 +30,46 @@ $chapters = $video->chapters;
             <div class="details">
                 <h3><?php echo $data['video']->name; ?></h3>
                 <p><?php echo $data['video']->description; ?></p>
-                <div class="date"><?php echo $data['video']->price; ?> LKR</span></div>
+                <div class="date">added date</span></div>
                 <div class="chaptercontainer">
-                <h3>Covering Areas</h3>
-                <?php
-// Initialize an array to hold sub-chapters grouped by level 1 chapters
-$groupedChapters = [];
+                    <h3>Covering Areas</h3>
+                    <?php
+                    // Initialize an array to hold sub-chapters grouped by level 1 chapters
+                    $groupedChapters = [];
 
-// Group sub-chapters by level 1 chapters
-foreach ($chapters as $chapter) {
-    $level1 = $chapter->chapter_level_1;
-    // If the level 1 chapter doesn't exist in the grouped array, initialize it
-    if (!isset($groupedChapters[$level1])) {
-        $groupedChapters[$level1] = [];
-    }
-    // Add the current sub-chapter to its corresponding level 1 chapter
-    $groupedChapters[$level1][] = $chapter;
-}
+                    // Group sub-chapters by level 1 chapters
+                    foreach ($chapters as $chapter) {
+                        $level1 = $chapter->chapter_level_1;
+                        // If the level 1 chapter doesn't exist in the grouped array, initialize it
+                        if (!isset($groupedChapters[$level1])) {
+                            $groupedChapters[$level1] = [];
+                        }
+                        // Add the current sub-chapter to its corresponding level 1 chapter
+                        $groupedChapters[$level1][] = $chapter;
+                    }
 
-// Output the grouped chapters
-foreach ($groupedChapters as $level1 => $subChapters) {
-    echo '<div class="chaptercontainer">';
-    echo '<ul>';
-    echo '<li>';
-    echo '<p><b>' . $level1 . '</b></p>';
-    echo '<ul>';
-    foreach ($subChapters as $subChapter) {
-        echo '<li><p style="margin-left:5px;">' . $subChapter->chapter_level_2 . '</p></li>';
-    }
-    echo '</ul>';
-    echo '</li>';
-    echo '</ul>';
-    echo '</div>';
-}
-?>
+                    // Output the grouped chapters
+                    foreach ($groupedChapters as $level1 => $subChapters) {
+                        echo '<div class="chaptercontainer">';
+                        echo '<ul>';
+                        echo '<li>';
+                        echo '<p><b>' . $level1 . '</b></p>';
+                        echo '<ul>';
+                        foreach ($subChapters as $subChapter) {
+                            echo '<li><p style="margin-left:5px;"><i class="fa-solid fa-arrow-right"></i> ' . $subChapter->chapter_level_2 . '</p></li>';
+                        }
+                        echo '</ul>';
+                        echo '</li>';
+                        echo '</ul>';
+                        echo '</div>';
+                    }
+                    ?>
                 </div>
+                <form action="<?php echo URLROOT; ?>/student/purchase_video" method="post" enctype="multipart/form-data">
+
+                    <input type="hidden" name="video_id" value="<?php echo  $video->video_content_id; ?>">
+                    <button type="submit" class="btn" style="width: fit-content;"><?php echo $data['video']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
+                </form>
 
 
 
@@ -76,4 +81,5 @@ foreach ($groupedChapters as $level1 => $subChapters) {
 
 <?php $this->view('inc/Footer') ?>
 </body>
+
 </html>

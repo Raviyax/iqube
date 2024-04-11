@@ -331,6 +331,31 @@ public function get_video_overview($video_content_id){
     }
 }
 
+public function purchase_video($video_content_id){
+    $student_id = $_SESSION['USER_DATA']['student_id'];
+    //check whether the student has already purchased the video
+    $result = $this->query("SELECT purchased_video FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+    if($result){
+        $purchased_videos = explode(',', $result[0]->purchased_video);
+        if(in_array($video_content_id, $purchased_videos)){
+            return 'already_purchased';
+        }
+        else{
+            //if purchased video column is empty just insert the video_content_id. else append the video_content_id to the existing purchased videos
+            if($result[0]->purchased_video == ''){
+                $this->query("UPDATE premium_students SET purchased_video = :video_content_id WHERE student_id = :student_id", ['video_content_id' => $video_content_id, 'student_id' => $student_id]);
+            }
+            else{
+                $purchased_videos[] = $video_content_id;
+                $purchased_videos = implode(',', $purchased_videos);
+                $this->query("UPDATE premium_students SET purchased_video = :purchased_videos WHERE student_id = :student_id", ['purchased_videos' => $purchased_videos, 'student_id' => $student_id]);
+            }
+            return 'true';
+
+        }
+    }
+
+}
 
 
 }

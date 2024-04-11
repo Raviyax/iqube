@@ -4,9 +4,11 @@ include("../app/config/config.php");
 include("../app/lib/Database.php");
 include("../app/lib/Model.php");
 include ("../app/models/Subjectadmins.php");
+include ("../app/models/Students.php");
 
 
 $subjectadmins = new Subjectadmins();
+$students = new Students();
 if($_POST['action'] == 'update_syllabus') {
     $id = $_POST['id'];
     $subunit = $_POST['subunit'];
@@ -27,5 +29,12 @@ if($_POST['action'] == 'insert_subunit') {
     $subunit = $_POST['subunit'];
     $weight = $_POST['weight'];
     $subjectadmins->insert_subunit($chapter_level_1, $subunit, $weight);
+    echo 'success';
+}
+
+//purchase_video
+if($_POST['action'] == 'purchase_video') {
+    $video_content_id = $_POST['video_content_id'];
+    $students->purchase_video($video_content_id);
     echo 'success';
 }
