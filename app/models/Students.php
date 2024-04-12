@@ -1,11 +1,13 @@
 <?php
-class Students extends Model {
+class Students extends Model
+{
     public $errors;
-public function complete_profile($data){
+    public function complete_profile($data)
+    {
         $student_id = $_SESSION['USER_DATA']['student_id'];
         //separate the subjects with a comma
         $subjects = implode(',', $data['subject']);
-        if($this->query("UPDATE students SET subjects = :subjects WHERE student_id = $student_id", ['subjects' => $subjects])){
+        if ($this->query("UPDATE students SET subjects = :subjects WHERE student_id = $student_id", ['subjects' => $subjects])) {
             //update completed to 1
             $this->query("UPDATE students SET completed = 1 WHERE student_id = $student_id");
             $_SESSION['USER_DATA']['completed'] = 1;
@@ -14,8 +16,9 @@ public function complete_profile($data){
 
         return true;
     }
-    public function insert_to_premium_students($data){
-        $this->query("INSERT INTO premium_students (student_id, fname, lname, cno, address, city) VALUES (:student_id, :fname, :lname, :cno, :address, :city)" , [
+    public function insert_to_premium_students($data)
+    {
+        $this->query("INSERT INTO premium_students (student_id, fname, lname, cno, address, city) VALUES (:student_id, :fname, :lname, :cno, :address, :city)", [
             'student_id' => $_SESSION['USER_DATA']['student_id'],
             'fname' => $data['fname'],
             'lname' => $data['lname'],
@@ -25,44 +28,44 @@ public function complete_profile($data){
         ]);
         return true;
     }
-    public function validate_insert_to_premium_students($data){
-        if(empty($data['fname'])){
+    public function validate_insert_to_premium_students($data)
+    {
+        if (empty($data['fname'])) {
             $this->errors['fname'] = 'First name is required';
         }
-        if(empty($data['lname'])){
+        if (empty($data['lname'])) {
             $this->errors['lname'] = 'Last name is required';
         }
-        if(empty($data['cno'])){
+        if (empty($data['cno'])) {
             $this->errors['cno'] = 'Contact number is required';
         }
-        if(empty($data['address'])){
+        if (empty($data['address'])) {
             $this->errors['address'] = 'Address is required';
         }
-        if(empty($data['city'])){
+        if (empty($data['city'])) {
             $this->errors['city'] = 'City is required';
         }
-        if(empty($this->errors)){
+        if (empty($this->errors)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
-    public function get_premium_data($student_id){
+    public function get_premium_data($student_id)
+    {
         $result = $this->query("SELECT * FROM premium_students WHERE student_id = $student_id");
-     if($result){
-        if($result[0]->student_id == $student_id){
-            return $result[0];
-        }
-        else{
+        if ($result) {
+            if ($result[0]->student_id == $student_id) {
+                return $result[0];
+            } else {
+                return false;
+            }
+        } else {
             return false;
         }
-     }
-     else{
-         return false;
-     }
     }
-    public function upgrade_to_premium(){
+    public function upgrade_to_premium()
+    {
         $student_id = $_SESSION['USER_DATA']['student_id'];
         $this->query("UPDATE students SET premium = 1 WHERE student_id = $student_id");
         $_SESSION['USER_DATA']['premium'] = 1;
@@ -76,7 +79,8 @@ public function complete_profile($data){
         return true;
     }
     //send a verification email to the studentWGTRP
-    public function send_verification_email($email) {
+    public function send_verification_email($email)
+    {
         // Generate a random token (16 characters)
         $token = bin2hex(random_bytes(16));
         // Insert the token into the database
@@ -95,7 +99,8 @@ public function complete_profile($data){
             return false;
         }
     }
-    public function verify_email($token, $email) {
+    public function verify_email($token, $email)
+    {
         $result = $this->query("SELECT token, email FROM students WHERE token = :token AND email = :email", ['token' => $token, 'email' => $email]);
         if ($result) {
             $this->query("UPDATE students SET verify = 1, token = 'no token' WHERE email = :email", ['email' => $email]);
@@ -105,84 +110,81 @@ public function complete_profile($data){
         }
     }
 
-    public function validate_complete_profile($data){
-        if(empty($data['subject'])){
+    public function validate_complete_profile($data)
+    {
+        if (empty($data['subject'])) {
             $this->errors['subjects'] = 'Please select at least one subject';
-        }else if(count($data['subject']) > 3){
+        } else if (count($data['subject']) > 3) {
             $this->errors['subjects'] = 'You can select up to 3 subjects';
-        }else{
+        } else {
             //check whether the entered subject_id s tally with the subjects in the database
             $subjects = $this->query("SELECT subject_id FROM subjects");
             $subject_ids = [];
-            foreach($subjects as $subject){
+            foreach ($subjects as $subject) {
                 $subject_ids[] = $subject->subject_id;
             }
-            foreach($data['subject'] as $subject){
-                if(!in_array($subject, $subject_ids)){
+            foreach ($data['subject'] as $subject) {
+                if (!in_array($subject, $subject_ids)) {
                     $this->errors['subjects'] = 'Invalid subject';
                     break;
                 }
             }
-
-   }
-        if(empty($this->errors)){
-            return true;
         }
-        else{
+        if (empty($this->errors)) {
+            return true;
+        } else {
             return false;
         }
     }
 
-    public function get_my_subject_names($student_id){
+    public function get_my_subject_names($student_id)
+    {
         $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
-        if($subjects){
+        if ($subjects) {
             $subject_ids = explode(',', $subjects[0]->subjects);
             $subject_names = [];
-            foreach($subject_ids as $subject_id){
+            foreach ($subject_ids as $subject_id) {
                 $subject = $this->query("SELECT subject_name FROM subjects WHERE subject_id = :subject_id", ['subject_id' => $subject_id]);
-                if($subject){
+                if ($subject) {
                     $subject_names[] = $subject[0]->subject_name;
                 }
             }
             return $subject_names;
-        }
-        else{
+        } else {
             return false;
         }
-      
-      
     }
 
-   public function get_all_tutors_for_my_subjects($student_id){
-       $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
-       if($subjects){
-           $subject_ids = explode(',', $subjects[0]->subjects);
-          // get subject_name for relavant subject_id
+    public function get_all_tutors_for_my_subjects($student_id)
+    {
+        $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
+        if ($subjects) {
+            $subject_ids = explode(',', $subjects[0]->subjects);
+            // get subject_name for relavant subject_id
             $subject_names = [];
-            foreach($subject_ids as $subject_id){
+            foreach ($subject_ids as $subject_id) {
                 $subject = $this->query("SELECT subject_name FROM subjects WHERE subject_id = :subject_id", ['subject_id' => $subject_id]);
-                if($subject){
+                if ($subject) {
                     $subject_names[] = $subject[0]->subject_name;
                 }
             }
             //get tutors for each subject
             $tutors = [];
-            foreach($subject_names as $subject_name){
+            foreach ($subject_names as $subject_name) {
                 $tutor = $this->query("SELECT fname ,lname ,tutor_id ,subject ,approved_date ,image FROM tutors WHERE subject LIKE :subject_name", ['subject_name' => "%$subject_name%"]);
-                if($tutor){
+                if ($tutor) {
                     $tutors[] = $tutor;
                 }
             }
-           return $tutors;
-       }
-       else{
-           return false;
-       }
-   }
+            return $tutors;
+        } else {
+            return false;
+        }
+    }
 
-   public function get_chapters_for_subject()
-   {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
-       $query = "SELECT
+    public function get_chapters_for_subject()
+    {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
+        $query = "SELECT
        id,
        chapter_level_1,
        chapter_level_2,
@@ -193,169 +195,220 @@ public function complete_profile($data){
        subject = :subject
    ORDER BY
        chapter_level_1,
-       weight";
-   ;
-   
-       return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
-   }
+       weight";;
 
-   public function get_chapters_for_my_subjects(){
-    
-    $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
-    //get chapters for each subject
-    $chapters = [];
-    foreach($my_subjects as $subject){
-        $chapter = $this->query("SELECT * FROM chapters WHERE subject = :subject", ['subject' => $subject]);
-        if($chapter){
-            $chapters[] = $chapter;
-        }
+        return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
-    return $chapters;
 
-   }
+    public function get_chapters_for_my_subjects()
+    {
 
-   public function get_videos(){
-    // Fetch video uploads where subject = my subjects and active
-    $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
-    $videos = [];
-    foreach($my_subjects as $subject){
-        $video = $this->query("SELECT video_content_id, tutor_id, date, name, subject, thumbnail, price, covering_chapters
+        $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+        //get chapters for each subject
+        $chapters = [];
+        foreach ($my_subjects as $subject) {
+            $chapter = $this->query("SELECT * FROM chapters WHERE subject = :subject", ['subject' => $subject]);
+            if ($chapter) {
+                $chapters[] = $chapter;
+            }
+        }
+        return $chapters;
+    }
+
+    public function get_videos()
+    {
+        // Fetch video uploads where subject = my subjects and active
+        $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+        $videos = [];
+        foreach ($my_subjects as $subject) {
+            $video = $this->query("SELECT video_content_id, tutor_id, date, name, subject, thumbnail, price, covering_chapters
          FROM video_content WHERE subject = :subject AND active = 1", ['subject' => $subject]);
-        if($video){
-            //add type to the video array
-            foreach($video as $v){
-                $v->type = 'video';
-                //get tutors name for the video
-                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $v->tutor_id]);  
-                if($tutor){
-                    $v->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+            if ($video) {
+                //add type to the video array
+                foreach ($video as $v) {
+                    $v->type = 'video';
+                    //get tutors name for the video
+                    $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $v->tutor_id]);
+                    if ($tutor) {
+                        $v->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                    }
+                }
+                $videos[] = $video;
+            }
+        }
+        return $videos;
+    }
+
+    public function get_model_papers()
+    {
+        // Fetch model papers where subject = my subjects and active
+        $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+        $model_papers = [];
+        foreach ($my_subjects as $subject) {
+            $model_paper = $this->query("SELECT model_paper_content_id, tutor_id, date, name, subject, price, thumbnail, covering_chapters FROM model_paper_content WHERE subject = :subject AND active = 1", ['subject' => $subject]);
+            if ($model_paper) {
+                //add type to the model paper array
+                foreach ($model_paper as $m) {
+                    $m->type = 'model_paper';
+                    //get tutors name for the model paper
+                    $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $m->tutor_id]);
+                    if ($tutor) {
+                        $m->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                    }
+                }
+                $model_papers[] = $model_paper;
+            }
+        }
+        return $model_papers;
+    }
+
+    public function get_study_materials()
+    {
+        $model_papers = $this->get_model_papers();
+        $videos = $this->get_videos();
+        //shuffle them
+        $study_materials = array_merge($model_papers, $videos);
+        shuffle($study_materials);
+        return $study_materials;
+    }
+
+    public function get_model_paper_overview($model_paper_content_id)
+    {
+        $model_paper = $this->query("SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper_content_id]);
+        if ($model_paper) {
+            //get tutors name for the model paper
+            $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper[0]->tutor_id]);
+            if ($tutor) {
+                $model_paper[0]->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                //get tutors image
+                $tutor_image = $this->query("SELECT image FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper[0]->tutor_id]);
+                if ($tutor_image) {
+                    $model_paper[0]->tutor_image = $tutor_image[0]->image;
                 }
             }
-            $videos[] = $video;
-            
-        }
-    }
-    return $videos;
-}
 
-public function get_model_papers(){
-    // Fetch model papers where subject = my subjects and active
-    $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
-    $model_papers = [];
-    foreach($my_subjects as $subject){
-        $model_paper = $this->query("SELECT model_paper_content_id, tutor_id, date, name, subject, price, thumbnail, covering_chapters FROM model_paper_content WHERE subject = :subject AND active = 1", ['subject' => $subject]);
-        if($model_paper){
-            //add type to the model paper array
-            foreach($model_paper as $m){
-                $m->type = 'model_paper';
-                //get tutors name for the model paper
-                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $m->tutor_id]);
-                if($tutor){
-                    $m->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+            //get covering chapters for the model paper
+            $chapter_ids = explode('][', $model_paper[0]->covering_chapters);
+            $chapters = [];
+            foreach ($chapter_ids as $chapter_id) {
+                $chapter = $this->query("SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :chapter_id", ['chapter_id' => $chapter_id]);
+                if ($chapter) {
+                    $chapters[] = $chapter[0];
                 }
             }
-            $model_papers[] = $model_paper;
-        }
-    }
-    return $model_papers;
-}
-
-public function get_study_materials(){
-    $model_papers = $this->get_model_papers();
-    $videos = $this->get_videos();
-    //shuffle them
-    $study_materials = array_merge($model_papers, $videos);
-    shuffle($study_materials);
-    return $study_materials;
-}
-
-public function get_model_paper_overview($model_paper_content_id){
-    $model_paper = $this->query("SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper_content_id]);
-    if($model_paper){
-        //get tutors name for the model paper
-        $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper[0]->tutor_id]);
-        if($tutor){
-            $model_paper[0]->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
-            //get tutors image
-            $tutor_image = $this->query("SELECT image FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper[0]->tutor_id]);
-            if($tutor_image){
-                $model_paper[0]->tutor_image = $tutor_image[0]->image;
-            }
-        }
-
-        //get covering chapters for the model paper
-        $chapter_ids = explode('][' , $model_paper[0]->covering_chapters);
-        $chapters = [];
-        foreach($chapter_ids as $chapter_id){
-            $chapter = $this->query("SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :chapter_id", ['chapter_id' => $chapter_id]);
-            if($chapter){
-                $chapters[] = $chapter[0];
-            }
-        }
-        $model_paper[0]->chapters = $chapters;
-        return $model_paper[0];
-    }
-    else{
-        return false;
-    }
-}
-
-public function get_video_overview($video_content_id){
-    $video = $this->query("SELECT video_content_id,tutor_id, name, subject, description, thumbnail, price, covering_chapters FROM video_content WHERE video_content_id = :video_content_id", ['video_content_id' => $video_content_id]);
-    if($video){
-        //get tutors name for the video
-        $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
-        if($tutor){
-            $video[0]->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
-            //get tutors image
-            $tutor_image = $this->query("SELECT image FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
-            if($tutor_image){
-                $video[0]->tutor_image = $tutor_image[0]->image;
-            }
-        }
-
-        //get covering chapters for the video
-        $chapter_ids = explode('][' , $video[0]->covering_chapters);
-        $chapters = [];
-        foreach($chapter_ids as $chapter_id){
-            $chapter = $this->query("SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :chapter_id", ['chapter_id' => $chapter_id]);
-            if($chapter){
-                $chapters[] = $chapter[0];
-            }
-        }
-        $video[0]->chapters = $chapters;
-        return $video[0];
-    }
-    else{
-        return false;
-    }
-}
-
-public function purchase_video($video_content_id){
-    $student_id = $_SESSION['USER_DATA']['student_id'];
-    //check whether the student has already purchased the video
-    $result = $this->query("SELECT purchased_video FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
-    if($result){
-        $purchased_videos = explode(',', $result[0]->purchased_video);
-        if(in_array($video_content_id, $purchased_videos)){
-            return 'already_purchased';
-        }
-        else{
-            //if purchased video column is empty just insert the video_content_id. else append the video_content_id to the existing purchased videos
-            if($result[0]->purchased_video == ''){
-                $this->query("UPDATE premium_students SET purchased_video = :video_content_id WHERE student_id = :student_id", ['video_content_id' => $video_content_id, 'student_id' => $student_id]);
-            }
-            else{
-                $purchased_videos[] = $video_content_id;
-                $purchased_videos = implode(',', $purchased_videos);
-                $this->query("UPDATE premium_students SET purchased_video = :purchased_videos WHERE student_id = :student_id", ['purchased_videos' => $purchased_videos, 'student_id' => $student_id]);
-            }
-            return 'true';
-
+            $model_paper[0]->chapters = $chapters;
+            return $model_paper[0];
+        } else {
+            return false;
         }
     }
 
-}
+    public function get_video_overview($video_content_id)
+    {
+        $video = $this->query("SELECT video_content_id,tutor_id, name, subject, description, thumbnail, price, covering_chapters FROM video_content WHERE video_content_id = :video_content_id", ['video_content_id' => $video_content_id]);
+        if ($video) {
+            //get tutors name for the video
+            $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
+            if ($tutor) {
+                $video[0]->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                //get tutors image
+                $tutor_image = $this->query("SELECT image FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
+                if ($tutor_image) {
+                    $video[0]->tutor_image = $tutor_image[0]->image;
+                }
+            }
 
+            //get covering chapters for the video
+            $chapter_ids = explode('][', $video[0]->covering_chapters);
+            $chapters = [];
+            foreach ($chapter_ids as $chapter_id) {
+                $chapter = $this->query("SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :chapter_id", ['chapter_id' => $chapter_id]);
+                if ($chapter) {
+                    $chapters[] = $chapter[0];
+                }
+            }
+            $video[0]->chapters = $chapters;
+            return $video[0];
+        } else {
+            return false;
+        }
+    }
 
+    public function purchase_video($video_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        //check whether the student has already purchased the video
+        $result = $this->query("SELECT purchased_video FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+        if ($result) {
+            $purchased_videos = explode(',', $result[0]->purchased_video);
+            if (in_array($video_content_id, $purchased_videos)) {
+                return 'already_purchased';
+            } else {
+                //if purchased video column is empty just insert the video_content_id. else append the video_content_id to the existing purchased videos
+                if ($result[0]->purchased_video == '') {
+                    $this->query("UPDATE premium_students SET purchased_video = :video_content_id WHERE student_id = :student_id", ['video_content_id' => $video_content_id, 'student_id' => $student_id]);
+                } else {
+                    $purchased_videos[] = $video_content_id;
+                    $purchased_videos = implode(',', $purchased_videos);
+                    $this->query("UPDATE premium_students SET purchased_video = :purchased_videos WHERE student_id = :student_id", ['purchased_videos' => $purchased_videos, 'student_id' => $student_id]);
+                }
+                return true;
+            }
+        }
+    }
+
+    public function is_video_purchased($video_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $result = $this->query("SELECT purchased_video FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+        if ($result) {
+            $purchased_videos = explode(',', $result[0]->purchased_video);
+            if (in_array($video_content_id, $purchased_videos)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function purchase_model_paper($model_paper_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        //check whether the student has already purchased the model paper
+        $result = $this->query("SELECT purchased_model_paper FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+        if ($result) {
+            $purchased_model_papers = explode(',', $result[0]->purchased_model_paper);
+            if (in_array($model_paper_content_id, $purchased_model_papers)) {
+                return 'already_purchased';
+            } else {
+                //if purchased model paper column is empty just insert the model_paper_content_id. else append the model_paper_content_id to the existing purchased model papers
+                if ($result[0]->purchased_model_paper == '') {
+                    $this->query("UPDATE premium_students SET purchased_model_paper = :model_paper_content_id WHERE student_id = :student_id", ['model_paper_content_id' => $model_paper_content_id, 'student_id' => $student_id]);
+                } else {
+                    $purchased_model_papers[] = $model_paper_content_id;
+                    $purchased_model_papers = implode(',', $purchased_model_papers);
+                    $this->query("UPDATE premium_students SET purchased_model_paper = :purchased_model_papers WHERE student_id = :student_id", ['purchased_model_papers' => $purchased_model_papers, 'student_id' => $student_id]);
+                }
+                return true;
+            }
+        }
+    }
+
+    public function is_model_paper_purchased($model_paper_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $result = $this->query("SELECT purchased_model_paper FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+        if ($result) {
+            $purchased_model_papers = explode(',', $result[0]->purchased_model_paper);
+            if (in_array($model_paper_content_id, $purchased_model_papers)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

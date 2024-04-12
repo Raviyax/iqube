@@ -73,12 +73,6 @@
   const newRow = $('<tr><td>-</td><td contenteditable></td><td contenteditable></td><td style="display:flex; flex-direction:row;"><button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red;" id="savenew"><i class="fa-solid fa-floppy-disk"></i></button><button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="removenew"><i class="fa-solid fa-xmark"></i></button></td></tr>');
   table.append(newRow);
 });
-
-
-
-
-
-
   //if any edit for the subunit or weight, show the save button
   document.querySelectorAll('td[contenteditable]').forEach(td => {
     td.addEventListener('input', () => {
@@ -124,8 +118,6 @@
         });
     
 });
-
-
 //delete sub unit with id
     $('button#delete').click(function() {
       const id = $(this).closest('tr').find('td').eq(0).text();
@@ -208,8 +200,6 @@
 
   });
 });
-  
-
 </script>
 
 <?php $this->view('inc/Footer') ?>

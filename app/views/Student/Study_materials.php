@@ -1,7 +1,5 @@
 <?php $this->view('inc/Header', $data) ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-
 <section class="contents">
     <h1 class="heading">Study Materials</h1>
 

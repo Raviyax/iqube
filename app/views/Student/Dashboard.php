@@ -1,8 +1,6 @@
 <?php $this->view('inc/Header',$data) ?>
 <section class="courses">
     <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1>
-   
-
         <div class="ongoing">
             
         <h1 class="heading">Kinematics</h1>

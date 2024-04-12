@@ -40,8 +40,6 @@ if($_POST['action'] == 'show_typing_status') {
 	);
 	echo json_encode($data);
 }
-
-
 	
 	
 ?>

@@ -65,14 +65,20 @@ $chapters = $video->chapters;
                     }
                     ?>
                 </div>
-                <form action="<?php echo URLROOT; ?>/student/purchase_video" method="post" enctype="multipart/form-data">
+                <?php if (!$data['status'] == 'purchased') { ?>
+                    <form action="<?php echo URLROOT; ?>/student/purchase_video" method="post" enctype="multipart/form-data">
 
                     <input type="hidden" name="video_id" value="<?php echo  $video->video_content_id; ?>">
                     <button type="submit" class="btn" style="width: fit-content;"><?php echo $data['video']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
                 </form>
+                <?php } else { ?>
+                    <button class="btn" style="width: fit-content;"  type="button">Continue Watching <i class="fa-solid fa-arrow-right"></i></button>
+                        <i class="fa-solid fa-arrow-right"></i></button>
+                <?php } ?>
+                
+                
 
-
-
+                
             </div>
         </div>
     </div>

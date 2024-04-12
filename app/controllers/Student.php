@@ -118,8 +118,6 @@ class Student extends Controller
                     'subjects' => $this->user->query("SELECT * FROM subjects"),
                 ];
                 if (isset($_POST['proceed'])) {
-
-
                     if ($this->student->validate_complete_profile($_POST)) {
                         if ($this->student->complete_profile($_POST)) {
                             redirect('/Student');
@@ -210,8 +208,6 @@ class Student extends Controller
     public function chat()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
-
-
             $this->view('Student/Chat');
         } else {
             redirect('/Login');
@@ -259,9 +255,8 @@ class Student extends Controller
                 'title' => 'Student',
                 'view' => 'Video Overview',
                 'video' => $this->student->get_video_overview($id),
+                'status' => $this->student->is_video_purchased($id),
             ];
-
-
             $this->view('Student/Video_overview', $data);
         } else {
             $this->view('Noaccess');
@@ -275,6 +270,8 @@ class Student extends Controller
                 'title' => 'Student',
                 'view' => 'Model Paper Overview',
                 'model_paper' => $this->student->get_model_paper_overview($id),
+                'status' => $this->student->is_model_paper_purchased($id),
+
             ];
             $this->view('Student/Model_paper_overview', $data);
         } else {
@@ -286,8 +283,10 @@ class Student extends Controller
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (isset($_POST['video_id'])) {
-
-
+                if ($this->student->is_video_purchased($_POST['video_id'])) {
+                    redirect('/Student');
+                    return;
+                }
                 $premiumdata = $this->student->get_premium_data($_SESSION['USER_DATA']['student_id']);
                 if ($premiumdata) {
                     $video_data = $this->student->get_video_overview($_POST['video_id']);
@@ -299,7 +298,52 @@ class Student extends Controller
                 }
             }
 
-       
+            if (isset($_POST['status'])) {
+                if ($_POST['status'] == 'ok') {
+
+                    $video_content_id = $_POST['video_content_id'];
+                    $result = $this->student->purchase_video($video_content_id);
+                    header('Content-Type: application/json');
+                    echo json_encode(['message' => 'ok']);
+
+                    return;
+                }
+            }
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+
+    public function purchase_model_paper()
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (isset($_POST['model_paper_id'])) {
+                if ($this->student->is_model_paper_purchased($_POST['model_paper_id'])) {
+                    redirect('/Student');
+                    return;
+                }
+                $premiumdata = $this->student->get_premium_data($_SESSION['USER_DATA']['student_id']);
+                if ($premiumdata) {
+                    $model_paper_data = $this->student->get_model_paper_overview($_POST['model_paper_id']);
+                    $data['payment'] = $this->payhere->purchase_material($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname, $model_paper_data->price, $model_paper_data->name);
+                    $data['premiumdata'] = $premiumdata;
+                    $data['model_paper'] = $model_paper_data;
+                    $this->view('Student/Pay_for_model_paper', $data);
+                    return;
+                }
+            }
+
+            if (isset($_POST['status'])) {
+                if ($_POST['status'] == 'ok') {
+
+                    $model_paper_id = $_POST['model_paper_content_id'];
+                    $result = $this->student->purchase_model_paper($model_paper_id);
+                    header('Content-Type: application/json');
+                    echo json_encode(['message' => 'ok']);
+
+                    return;
+                }
+            }
         } else {
             $this->view('Noaccess');
         }

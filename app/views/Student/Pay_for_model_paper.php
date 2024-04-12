@@ -1,24 +1,24 @@
 <?php $this->view('inc/Header', $data); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <section class="courses">
-  <h1 class="heading">Study Materials / Videos / <?php echo $data['video']->name; ?> / Purchase Confirmation</h1>
+  <h1 class="heading">Study Materials / model_papers / <?php echo $data['model_paper']->name; ?> / Purchase Confirmation</h1>
   <section class="form-container" style="display: block;">
     <form>
       <?php if (isset($data['premiumdata'])) {
         $premiumdata = $data['premiumdata'];
-        $video = $data['video'];
+        $model_paper = $data['model_paper'];
       } ?>
       <!-- section for general overview -->
       <section class="playlist chaptercontainer">
-        <h3>Purchase Summary of Video</h3>
+        <h3>Purchase Summary of model_paper</h3>
         <div class="row">
           <div class="col">
             <div class="tutor">
-              <img src="<?php echo URLROOT; ?>/student/userimage/<?php echo $data['video']->tutor_image; ?>" alt="">
+              <img src="<?php echo URLROOT; ?>/student/userimage/<?php echo $data['model_paper']->tutor_image; ?>" alt="">
               <div>
-                <h3><?php echo $data['video']->name; ?></h3>
-                <p>By <?php echo $data['video']->tutor; ?></p>
-                <p><?php echo $data['video']->price; ?> LKR</p>
+                <h3><?php echo $data['model_paper']->name; ?></h3>
+                <p>By <?php echo $data['model_paper']->tutor; ?></p>
+                <p><?php echo $data['model_paper']->price; ?> LKR</p>
               </div>
 
             </div>
@@ -27,7 +27,7 @@
           <div class="col">
             <div class="thumb">
               <span>30 Minutes</span>
-              <img src="<?php echo URLROOT; ?>/student/video_thumbnail/<?php echo $data['video']->thumbnail; ?>" alt="">
+              <img src="<?php echo URLROOT; ?>/student/model_paper_thumbnail/<?php echo $data['model_paper']->thumbnail; ?>" alt="">
             </div>
           </div>
 
@@ -67,9 +67,9 @@
             <input type="text" value="<?php echo $_SESSION['USER_DATA']['email'] ?>" disabled class="box">
             <!-- amount -->
             <p>Amount<span>*</span></p>
-            <input type="text" value="<?php echo $data['video']->price; ?> LKR" disabled class="box">
+            <input type="text" value="<?php echo $data['model_paper']->price; ?> LKR" disabled class="box">
 
-            <input type="hidden" name="video_content_id" value="<?php echo $data['video']->video_content_id; ?>">
+            <input type="hidden" name="model_paper_content_id" value="<?php echo $data['model_paper']->model_paper_content_id; ?>">
           </div>
         </div>
       </section>
@@ -92,9 +92,9 @@ Not the correct method to verify payment. Notify url is not working in payhere
         // Create a FormData object and append the data you want to send
         var formData = new FormData();
         formData.append('status', 'ok');
-        formData.append('video_content_id', document.querySelector('input[name="video_content_id"]').value);
+        formData.append('model_paper_content_id', document.querySelector('input[name="model_paper_content_id"]').value);
         // Make a POST request using the fetch API
-        fetch('<?= URLROOT ?>/student/purchase_video', {
+        fetch('<?= URLROOT ?>/student/purchase_model_paper', {
             method: 'POST',
             body: formData,
             // Add any headers if needed (e.g., content-type)
