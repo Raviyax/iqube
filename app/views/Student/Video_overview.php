@@ -76,9 +76,6 @@ $chapters = $video->chapters;
                         <i class="fa-solid fa-arrow-right"></i></button>
                 <?php } ?>
                 
-                
-
-                
             </div>
         </div>
     </div>

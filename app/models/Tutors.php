@@ -553,5 +553,4 @@ class Tutors extends Model
         }
         return false;
     }
-
 }

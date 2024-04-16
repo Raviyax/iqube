@@ -26,7 +26,7 @@
           </div>
           <div class="col">
             <div class="thumb">
-              <span>30 Minutes</span>
+              <span><?php echo $data['model_paper']->time_duration; ?> Minutes</span>
               <img src="<?php echo URLROOT; ?>/student/model_paper_thumbnail/<?php echo $data['model_paper']->thumbnail; ?>" alt="">
             </div>
           </div>

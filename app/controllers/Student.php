@@ -348,4 +348,75 @@ class Student extends Controller
             $this->view('Noaccess');
         }
     }
+
+    public function do_model_paper()
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (isset($_POST['model_paper_id']) || isset($_GET['model_paper_id'])) {
+                $modelPaperId = isset($_POST['model_paper_id']) ? $_POST['model_paper_id'] : $_GET['model_paper_id'];
+                
+                if ($this->student->is_model_paper_purchased($modelPaperId)) {
+                    // Check if the paper has already been started
+                    // if($this->student->is_model_paper_started($modelPaperId)){
+                    //     echo "Browser refreshed. You can't start the paper again.";
+                    //     return;
+                    // }
+                    
+                    // Check if the start paper button is clicked
+                    if (isset($_POST['start_paper'])) {
+                        $data['model_paper'] = $this->student->get_model_paper_overview($modelPaperId);
+                        $this->view('Student/Paper_instructions', $data);
+                        return;
+                    } else {
+                        // Load model paper questions for exam
+                        $data['model_paper'] = $this->student->get_model_paper_overview($modelPaperId);
+                        $data['questions'] = $this->student->get_model_paper_mcqs($modelPaperId);
+                        
+                        // Update database to mark the paper as started
+                        if($this->student->update_as_model_paper_started($modelPaperId)){
+                            $this->view('Student/Do_model_paper', $data);
+                            return;
+                        } else {
+                            // Handle database update failure
+                            $this->view('Error_page', ['error' => 'Failed to update model paper status.']);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // If the conditions above are not met, it might indicate unauthorized access or missing parameters
+        $this->view('Noaccess');
+    }
+
+
+    public function submit_model_paper()
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (isset($_POST['model_paper_content_id'])) {
+                $modelPaperId = $_POST['model_paper_content_id'];
+                if ($this->student->is_model_paper_purchased($modelPaperId)) {
+                   
+                        $modelPaperId = $_POST['model_paper_content_id'];
+                    
+                        $result = $this->student->submit_model_paper_answers($_POST);
+                        if ($result) {
+                            $data = [
+                                'title' => 'Student',
+                                'view' => 'Model Paper Results',
+                                'model_paper' => $this->student->get_model_paper_overview($modelPaperId),
+                                'result' => $result,
+                            ];
+                            $this->view('Student/Model_paper_results', $data);
+                            return;
+                        }
+                    
+                }
+            }
+        }
+        $this->view('Noaccess');
+    }
+        
+    
 }

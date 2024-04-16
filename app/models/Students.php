@@ -333,30 +333,44 @@ class Students extends Model
             return false;
         }
     }
-
     public function purchase_video($video_content_id)
     {
+        // Check if user is logged in
+        if (!isset($_SESSION['USER_DATA']['student_id'])) {
+            return false; // Return false if user is not logged in
+        }
+
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        //check whether the student has already purchased the video
+
+        // Check whether the student has already purchased the video
         $result = $this->query("SELECT purchased_video FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+
         if ($result) {
             $purchased_videos = explode(',', $result[0]->purchased_video);
+
+            // Check if video is already purchased
             if (in_array($video_content_id, $purchased_videos)) {
                 return 'already_purchased';
             } else {
-                //if purchased video column is empty just insert the video_content_id. else append the video_content_id to the existing purchased videos
+                // If purchased video column is empty, insert the video_content_id
                 if ($result[0]->purchased_video == '') {
                     $this->query("UPDATE premium_students SET purchased_video = :video_content_id WHERE student_id = :student_id", ['video_content_id' => $video_content_id, 'student_id' => $student_id]);
                 } else {
+                    // Append the video_content_id to the existing purchased videos
                     $purchased_videos[] = $video_content_id;
                     $purchased_videos = implode(',', $purchased_videos);
                     $this->query("UPDATE premium_students SET purchased_video = :purchased_videos WHERE student_id = :student_id", ['purchased_videos' => $purchased_videos, 'student_id' => $student_id]);
                 }
-                return true;
+
+                // Insert into purchased_videos table
+                $this->query("INSERT INTO purchased_videos (student_id, video_content_id) VALUES (:student_id, :video_content_id)", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
+
+                return true; // Return true if the purchase is successful
             }
+        } else {
+            return false; // Return false if query fails
         }
     }
-
     public function is_video_purchased($video_content_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -375,27 +389,42 @@ class Students extends Model
 
     public function purchase_model_paper($model_paper_content_id)
     {
+        // Check if user is logged in
+        if (!isset($_SESSION['USER_DATA']['student_id'])) {
+            return false; // Return false if user is not logged in
+        }
+
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        //check whether the student has already purchased the model paper
+
+        // Check whether the student has already purchased the model paper
         $result = $this->query("SELECT purchased_model_paper FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
+
         if ($result) {
             $purchased_model_papers = explode(',', $result[0]->purchased_model_paper);
+
+            // Check if model paper is already purchased
             if (in_array($model_paper_content_id, $purchased_model_papers)) {
                 return 'already_purchased';
             } else {
-                //if purchased model paper column is empty just insert the model_paper_content_id. else append the model_paper_content_id to the existing purchased model papers
+                // If purchased model paper column is empty, insert the model_paper_content_id
                 if ($result[0]->purchased_model_paper == '') {
                     $this->query("UPDATE premium_students SET purchased_model_paper = :model_paper_content_id WHERE student_id = :student_id", ['model_paper_content_id' => $model_paper_content_id, 'student_id' => $student_id]);
                 } else {
+                    // Append the model_paper_content_id to the existing purchased model papers
                     $purchased_model_papers[] = $model_paper_content_id;
                     $purchased_model_papers = implode(',', $purchased_model_papers);
                     $this->query("UPDATE premium_students SET purchased_model_paper = :purchased_model_papers WHERE student_id = :student_id", ['purchased_model_papers' => $purchased_model_papers, 'student_id' => $student_id]);
                 }
-                return true;
+
+                // Insert into purchased_model_papers table
+                $this->query("INSERT INTO purchased_model_papers (student_id, model_paper_content_id) VALUES (:student_id, :model_paper_content_id)", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+
+                return true; // Return true if the purchase is successful
             }
+        } else {
+            return false; // Return false if query fails
         }
     }
-
     public function is_model_paper_purchased($model_paper_content_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -403,6 +432,90 @@ class Students extends Model
         if ($result) {
             $purchased_model_papers = explode(',', $result[0]->purchased_model_paper);
             if (in_array($model_paper_content_id, $purchased_model_papers)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function get_model_paper_mcqs($model_paper_content_id)
+    {
+        $questions = $this->query("SELECT * FROM mcqs_for_model_paper WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper_content_id]);
+        if ($questions) {
+            return $questions;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_as_model_paper_started($model_paper_content_id)
+    {
+        $this->query("UPDATE purchased_model_papers SET started = 1 WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'model_paper_content_id' => $model_paper_content_id]);
+        $result = $this->is_model_paper_started($model_paper_content_id);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function is_model_paper_started($model_paper_content_id)
+    {
+        $result = $this->query("SELECT started FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'model_paper_content_id' => $model_paper_content_id]);
+        if ($result) {
+            if ($result[0]->started == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function is_model_paper_completed($model_paper_content_id)
+    {
+        $result = $this->query("SELECT completed FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'model_paper_content_id' => $model_paper_content_id]);
+        if ($result) {
+            if ($result[0]->completed == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function check_model_paper_answers($data)
+    {
+        $model_paper_content_id = $data['model_paper_content_id'];
+        $questions = $this->get_model_paper_mcqs($model_paper_content_id);
+        $correct_answers = 0;
+        $total_questions = count($questions);
+        foreach ($questions as $question) {
+           
+            if ($data[$question->mcq_id] == $question->correct) {
+                $correct_answers++;
+            }
+        }
+        $percentage = ($correct_answers / $total_questions) * 100;
+        return $percentage;
+    }
+
+    public function submit_model_paper_answers($data)
+    {
+        $model_paper_content_id = $data['model_paper_content_id'];
+        $percentage = $this->check_model_paper_answers($data);
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $this->query("UPDATE purchased_model_papers SET score = :percentage WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['percentage' => $percentage, 'student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+        $this->query("UPDATE purchased_model_papers SET completed = 1, started = 0 WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+        $result = $this->query("SELECT score, completed FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+        if ($result) {
+            if ($result[0]->score == $percentage && $result[0]->completed == 1) {
                 return true;
             } else {
                 return false;

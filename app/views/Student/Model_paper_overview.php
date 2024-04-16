@@ -11,11 +11,11 @@ $chapters = $model_paper->chapters;
     <h1 class="heading">Study Materials / model_papers / <?php echo $data['model_paper']->name; ?></h1>
     <div class="row">
         <div class="col">
-            <form action="" method="post" class="save-list">
+            <form method="post" class="save-list">
                 <button type="submit" name="save_list"><i class="fas fa-bookmark"></i><span>Add to favourite</span></button>
             </form>
             <div class="thumb">
-                <span>30 Minutes</span>
+                <span><?php echo $data['model_paper']->time_duration; ?> Minutes</span>
                 <img src="<?php echo URLROOT; ?>/student/model_paper_thumbnail/<?php echo $data['model_paper']->thumbnail; ?>" alt="">
             </div>
         </div>
@@ -68,17 +68,16 @@ $chapters = $model_paper->chapters;
                 <?php if (!$data['status'] == 'purchased') { ?>
                     <form action="<?php echo URLROOT; ?>/student/purchase_model_paper" method="post" enctype="multipart/form-data">
 
-                    <input type="hidden" name="model_paper_id" value="<?php echo  $model_paper->model_paper_content_id; ?>">
-                    <button type="submit" class="btn" style="width: fit-content;"><?php echo $data['model_paper']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
-                </form>
+                        <input type="hidden" name="model_paper_id" value="<?php echo  $model_paper->model_paper_content_id; ?>">
+                        <button type="submit" class="btn" style="width: fit-content;"><?php echo $data['model_paper']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
+                    </form>
                 <?php } else { ?>
-                    <button class="btn" style="width: fit-content;"  type="button">Continue Watching <i class="fa-solid fa-arrow-right"></i></button>
-                        <i class="fa-solid fa-arrow-right"></i></button>
-                <?php } ?>
-                
-                
+                    <form action="<?php echo URLROOT; ?>/student/do_model_paper" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="model_paper_id" value="<?php echo  $model_paper->model_paper_content_id; ?>">
+                        <button class="btn" style="width: fit-content;" type="submit" name="start_paper">Start Paper <i class="fa-solid fa-stopwatch-20"></i></button>
+                    </form>
 
-                
+                <?php } ?>
             </div>
         </div>
     </div>
