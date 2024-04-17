@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+
+  iqube:
+    build: ./build/app
+    depends_on:
+      - db
+    container_name: iqube
+    restart: unless-stopped
+    volumes:
+      - ./App:/var/iqube/html/
+    networks:
+      - app-network
+
+  pma:
+    build: ./build/pma
+    depends_on:
+      - db
+    container_name: pma
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - pma:/var/pma/html/
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 50M
+
+  webserver:
+    depends_on:
+      - pma
+      - iqube
+    image: httpd:latest
+    container_name: webserver
+    restart: unless-stopped
+    volumes:
+      - ./App:/var/iqube/html/
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+  pma:
+  iqube:
+
+networks:
+  app-network:
+    driver: bridge

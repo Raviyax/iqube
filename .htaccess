@@ -1,0 +1,5 @@
+<IFModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^$ App/ [L]
+RewriteRule (.*) App/$1 [L]
+</IFModule>
