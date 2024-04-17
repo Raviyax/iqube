@@ -271,6 +271,7 @@ class Student extends Controller
                 'view' => 'Model Paper Overview',
                 'model_paper' => $this->student->get_model_paper_overview($id),
                 'status' => $this->student->is_model_paper_purchased($id),
+                'completed' => $this->student->is_model_paper_completed($id),
 
             ];
             $this->view('Student/Model_paper_overview', $data);
@@ -357,10 +358,10 @@ class Student extends Controller
 
                 if ($this->student->is_model_paper_purchased($modelPaperId)) {
 
-                    if ($this->student->is_model_paper_started($modelPaperId)) {
-                        echo "Browser refreshed. You can't start the paper again.";
-                        return;
-                    }
+                    // if ($this->student->is_model_paper_started($modelPaperId)) {
+                    //     echo "Browser refreshed. You can't start the paper again.";
+                    //     return;
+                    // }
 
                     // Check if the start paper button is clicked
                     if (isset($_POST['start_paper'])) {

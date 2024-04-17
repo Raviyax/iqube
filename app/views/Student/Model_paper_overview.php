@@ -78,6 +78,9 @@ $chapters = $model_paper->chapters;
                     </form>
 
                 <?php } ?>
+                <?php if ($data['completed']) { ?>
+                    <a href="<?php echo URLROOT; ?>/student/view_model_paper_answers/<?php echo $model_paper->model_paper_content_id; ?>" class="btn" style="width: fit-content;">View Answers <i class="fa-solid fa-eye"></i></a>
+                <?php } ?>
             </div>
         </div>
     </div>

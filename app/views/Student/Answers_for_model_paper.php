@@ -64,6 +64,11 @@
         </div>
     <?php endforeach; ?>
 
-    <button class="btn" style="width: fit-content;" onclick="window.location.href='<?php echo URLROOT . '/Student/Model_paper/' . $model_paper->model_paper_id; ?>'">Attempt Again</button>
+    <button class="btn" type="button" style="width: fit-content;" id="attemptAgain">Attempt Again</button>
 </section>
+<script>
+    document.getElementById('attemptAgain').addEventListener('click', () => {
+        window.location.href = `<?php echo URLROOT . 'student/model_paper_overview/' . $model_paper->model_paper_id; ?>`;
+    });
+</script>
 <?php $this->view('inc/Footer') ?>
