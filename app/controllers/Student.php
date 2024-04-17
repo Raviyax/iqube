@@ -354,14 +354,14 @@ class Student extends Controller
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (isset($_POST['model_paper_id']) || isset($_GET['model_paper_id'])) {
                 $modelPaperId = isset($_POST['model_paper_id']) ? $_POST['model_paper_id'] : $_GET['model_paper_id'];
-                
+
                 if ($this->student->is_model_paper_purchased($modelPaperId)) {
-                    // Check if the paper has already been started
-                    // if($this->student->is_model_paper_started($modelPaperId)){
-                    //     echo "Browser refreshed. You can't start the paper again.";
-                    //     return;
-                    // }
-                    
+
+                    if ($this->student->is_model_paper_started($modelPaperId)) {
+                        echo "Browser refreshed. You can't start the paper again.";
+                        return;
+                    }
+
                     // Check if the start paper button is clicked
                     if (isset($_POST['start_paper'])) {
                         $data['model_paper'] = $this->student->get_model_paper_overview($modelPaperId);
@@ -371,9 +371,9 @@ class Student extends Controller
                         // Load model paper questions for exam
                         $data['model_paper'] = $this->student->get_model_paper_overview($modelPaperId);
                         $data['questions'] = $this->student->get_model_paper_mcqs($modelPaperId);
-                        
+
                         // Update database to mark the paper as started
-                        if($this->student->update_as_model_paper_started($modelPaperId)){
+                        if ($this->student->update_as_model_paper_started($modelPaperId)) {
                             $this->view('Student/Do_model_paper', $data);
                             return;
                         } else {
@@ -385,7 +385,7 @@ class Student extends Controller
                 }
             }
         }
-        
+
         // If the conditions above are not met, it might indicate unauthorized access or missing parameters
         $this->view('Noaccess');
     }
@@ -397,26 +397,42 @@ class Student extends Controller
             if (isset($_POST['model_paper_content_id'])) {
                 $modelPaperId = $_POST['model_paper_content_id'];
                 if ($this->student->is_model_paper_purchased($modelPaperId)) {
-                   
-                        $modelPaperId = $_POST['model_paper_content_id'];
-                    
-                        $result = $this->student->submit_model_paper_answers($_POST);
-                        if ($result) {
-                            $data = [
-                                'title' => 'Student',
-                                'view' => 'Model Paper Results',
-                                'model_paper' => $this->student->get_model_paper_overview($modelPaperId),
-                                'result' => $result,
-                            ];
-                            $this->view('Student/Model_paper_results', $data);
-                            return;
-                        }
-                    
+
+                    $modelPaperId = $_POST['model_paper_content_id'];
+
+                    $this->student->submit_model_paper_answers($_POST);
+
+                    $data = [
+                        
+                        'model_paper' => $this->student->get_model_paper_overview($modelPaperId),
+                       
+                    ];
+                    $this->view('Student/Model_paper_completed', $data);
+                    return;
                 }
             }
         }
         $this->view('Noaccess');
     }
-        
-    
+
+    public function view_model_paper_answers($modelPaperId)
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if ($this->student->is_model_paper_purchased($modelPaperId)) {
+                if ($this->student->is_model_paper_completed($modelPaperId)) {
+                    $data = [
+                        'title' => 'Student',
+                        'view' => 'Model Paper Results',
+                        'model_paper' => $this->student->get_model_paper_overview($modelPaperId),
+                        'result' => $this->student->get_model_paper_result($modelPaperId),
+                        'questions' => $this->student->get_model_paper_mcqs($modelPaperId),
+                        'students_answers' => $this->student->get_student_answers_for_model_paper_mcq($modelPaperId),
+                    ];
+                    $this->view('Student/Answers_for_model_paper', $data);
+                    return;
+                }
+            }
+        }
+        $this->view('Noaccess');
+    }
 }

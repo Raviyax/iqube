@@ -108,12 +108,27 @@
 </body>
 
 <script>
-function openPaper() {
-    var modelPaperId = "<?php echo urlencode($data['model_paper']->model_paper_content_id); ?>";
-    var url = "<?php echo URLROOT; ?>/Student/Do_model_paper?model_paper_id=" + modelPaperId;
-    window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
-}
+    function openPaper() {
+        <?php if(isset($data['model_paper']) && isset($data['model_paper']->model_paper_content_id)): ?>
+            var modelPaperId = "<?php echo urlencode($data['model_paper']->model_paper_content_id); ?>";
+            var url = "<?php echo URLROOT; ?>/Student/Do_model_paper?model_paper_id=" + modelPaperId;
+            var childWindow = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+
+            // Listen for message from the child window
+            window.addEventListener('message', function(event) {
+                // Check if the message is a redirection request
+                if (event.data && event.data.type === 'redirect') {
+                    // Redirect to the specified URL
+                    var redirectUrl = "<?php echo URLROOT; ?>/Student/view_model_paper_answers/<?php echo $data['model_paper']->model_paper_content_id; ?>";
+                    window.location.href = redirectUrl;
+                }
+            });
+        <?php else: ?>
+            console.error("Model paper data is missing or invalid.");
+        <?php endif; ?>
+    }
 </script>
+
 
 </html>
 </body>

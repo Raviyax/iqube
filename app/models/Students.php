@@ -502,24 +502,89 @@ class Students extends Model
                 $correct_answers++;
             }
         }
-        $percentage = ($correct_answers / $total_questions) * 100;
-        return $percentage;
+    
+        return $correct_answers;
     }
 
     public function submit_model_paper_answers($data)
     {
+        // Extract data from the input
         $model_paper_content_id = $data['model_paper_content_id'];
-        $percentage = $this->check_model_paper_answers($data);
+        $correct_answers = $this->check_model_paper_answers($data);
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        $this->query("UPDATE purchased_model_papers SET score = :percentage WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['percentage' => $percentage, 'student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-        $this->query("UPDATE purchased_model_papers SET completed = 1, started = 0 WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-        $result = $this->query("SELECT score, completed FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-        if ($result) {
-            if ($result[0]->score == $percentage && $result[0]->completed == 1) {
-                return true;
+    
+        // Update purchased_model_papers table
+        $this->query("
+            UPDATE purchased_model_papers 
+            SET score = :percentage, completed = 1, started = 0 
+            WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id
+        ", ['percentage' => $correct_answers, 'student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+    
+        // Check if the update was successful
+        $result = $this->query("
+            SELECT score, completed 
+            FROM purchased_model_papers 
+            WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id
+        ", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+    
+        if ($result && $result[0]->score == $correct_answers && $result[0]->completed == 1) {
+            // Check whether the previous answers are already inserted
+            $answers = $this->query("
+                SELECT * 
+                FROM student_answers_for_model_paper_mcq 
+                WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id
+            ", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+    
+            if ($answers) {
+                // Update the answers
+                foreach ($data as $key => $value) {
+                    if ($key != 'model_paper_content_id' && $key != 'submit') {
+                        $this->query("
+                            UPDATE student_answers_for_model_paper_mcq 
+                            SET answer = :answer 
+                            WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id AND mcq_id = :mcq_id
+                        ", ['answer' => $value, 'student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id, 'mcq_id' => $key]);
+                    }
+                }
+            } else {
+                // Insert new answers
+                foreach ($data as $key => $value) {
+                    if ($key != 'model_paper_content_id' && $key != 'submit') {
+                        $this->query("
+                            INSERT INTO student_answers_for_model_paper_mcq (student_id, model_paper_content_id, mcq_id, answer) 
+                            VALUES (:student_id, :model_paper_content_id, :mcq_id, :answer)
+                        ", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id, 'mcq_id' => $key, 'answer' => $value]);
+                    }
+                }
+            }
+            return $correct_answers; // Success
+        } else {
+            return false; // Failure
+        }
+    }
+    
+
+    public function get_model_paper_result($model_paper_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        if($this->is_model_paper_completed($model_paper_content_id)){
+            $result = $this->query("SELECT score FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+            if ($result) {
+                return $result[0]->score;
             } else {
                 return false;
             }
+        }else{
+            return false;
+        }
+    }
+
+    public function get_student_answers_for_model_paper_mcq($model_paper_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $answers = $this->query("SELECT * FROM student_answers_for_model_paper_mcq WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+        if ($answers) {
+            return $answers;
         } else {
             return false;
         }
