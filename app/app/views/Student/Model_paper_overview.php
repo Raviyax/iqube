@@ -1,11 +1,8 @@
 <?php $this->view('inc/Header', $data) ?>
-
 <?php $model_paper = $data['model_paper'];
-
 // Accessing chapters array
 $chapters = $model_paper->chapters;
 ?>
-
 <!-- playlist section starts  -->
 <section class="playlist">
     <h1 class="heading">Study Materials / model_papers / <?php echo $data['model_paper']->name; ?></h1>
@@ -36,7 +33,6 @@ $chapters = $model_paper->chapters;
                     <?php
                     // Initialize an array to hold sub-chapters grouped by level 1 chapters
                     $groupedChapters = [];
-
                     // Group sub-chapters by level 1 chapters
                     foreach ($chapters as $chapter) {
                         $level1 = $chapter->chapter_level_1;
@@ -47,7 +43,6 @@ $chapters = $model_paper->chapters;
                         // Add the current sub-chapter to its corresponding level 1 chapter
                         $groupedChapters[$level1][] = $chapter;
                     }
-
                     // Output the grouped chapters
                     foreach ($groupedChapters as $level1 => $subChapters) {
                         echo '<div class="chaptercontainer">';
@@ -67,7 +62,6 @@ $chapters = $model_paper->chapters;
                 </div>
                 <?php if (!$data['status'] == 'purchased') { ?>
                     <form action="<?php echo URLROOT; ?>/student/purchase_model_paper" method="post" enctype="multipart/form-data">
-
                         <input type="hidden" name="model_paper_id" value="<?php echo  $model_paper->model_paper_content_id; ?>">
                         <button type="submit" class="btn" style="width: fit-content;"><?php echo $data['model_paper']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
                     </form>
@@ -76,7 +70,6 @@ $chapters = $model_paper->chapters;
                         <input type="hidden" name="model_paper_id" value="<?php echo  $model_paper->model_paper_content_id; ?>">
                         <button class="btn" style="width: fit-content;" type="submit" name="start_paper">Start Paper <i class="fa-solid fa-stopwatch-20"></i></button>
                     </form>
-
                 <?php } ?>
                 <?php if ($data['completed']) { ?>
                     <a href="<?php echo URLROOT; ?>/student/view_model_paper_answers/<?php echo $model_paper->model_paper_content_id; ?>" class="btn" style="width: fit-content;">View Answers <i class="fa-solid fa-eye"></i></a>
@@ -86,8 +79,6 @@ $chapters = $model_paper->chapters;
     </div>
 </section>
 <!-- playlist section ends -->
-
 <?php $this->view('inc/Footer') ?>
 </body>
-
 </html>

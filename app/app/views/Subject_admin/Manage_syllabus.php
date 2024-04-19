@@ -2,12 +2,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <section>
     <h1 class="heading">Manage <?php echo $_SESSION['USER_DATA']['subject']; ?> Syllabus</h1>
-
     <?php
     $chapters = $data['syllabus'];
-
     $currentChapter = null; // To keep track of the current chapter
-
     foreach ($chapters as $chapter) {
         // Check if this is a new chapter
         if ($currentChapter !== $chapter->chapter_level_1) {
@@ -15,10 +12,8 @@
             if ($currentChapter !== null) {
                 echo '</table>';
                 echo '<button class="btn addnewsubunit"  name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>';
-
                 echo '</section>'; // Closing the section for previous chapter_level_1
             }
-
             // Open a new section for the current chapter_level_1
             echo '<section class="unit-container" id="chapter_level_1">';
             echo '<h1 class="heading" style="border:none;">' . $chapter->chapter_level_1 . '</h1>';
@@ -28,10 +23,8 @@
             echo '<th>Sub unit</th>';
             echo '<th>Weight</th>';
             echo '<th>Action</th>';
-      
             echo '</tr>';
         }
-
         // Print the chapter_level_2 and weight as table rows
         echo '<tr style="cursor:default;">';
         echo '<td>';
@@ -45,26 +38,20 @@
         echo '</td>';
         echo '<td style="display:flex; flex-direction:row;">';
         echo '<button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red; display:none;" id="save"><i class="fa-solid fa-circle-check"></i> Save</button>';
-
         echo '<button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="delete"><i class="fa-solid fa-trash-can"></i></button>';
-
         echo '</td>';
         echo '</tr>';
-
         $currentChapter = $chapter->chapter_level_1; // Update the current chapter
     }
-
     // Close the last section
     if ($currentChapter !== null) {
         echo '</table>';
         echo '<button class="btn addnewsubunit"  name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>';
-
         echo '</section>'; 
         // Closing the section for last chapter_level_1
         echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
     }
     ?>
-
 </section>
 <script>
   //add a new empty row for the current table when addnewsubunit button is clicked
@@ -79,7 +66,6 @@
       td.parentElement.querySelector('#save').style.display = 'block';
     });
   });
-
   const URLROOT = '<?= URLROOT ?>';
   const api_root = URLROOT + '/api.php';
   $(document).ready(function() {
@@ -87,12 +73,10 @@
     $('button#save').click(function() {
     // Get the chapter_level_1 from the closest section's h1
     const chapter_level_1 = $(this).closest('section').find('h1').text();
-
     // Get the id, subunit, and weight from the table row
     const id = $(this).closest('tr').find('td').eq(0).text();
     const subunit = $(this).closest('tr').find('td').eq(1).text();
     const weight = $(this).closest('tr').find('td').eq(2).text();
-
         $.ajax({
             url: api_root,
             type: 'POST',
@@ -116,7 +100,6 @@
                 alert('An error occurred while processing your request');
             }
         });
-    
 });
 //delete sub unit with id
     $('button#delete').click(function() {
@@ -139,16 +122,13 @@
         }
       });
     });
-
     // Save the new subunit and weight
     $(document).on('click', 'button#savenew', function() {
       // Get the chapter_level_1 from the closest section's h1
       const chapter_level_1 = $(this).closest('section').find('h1').text();
-
       // Get the subunit and weight from the new row
       const subunit = $(this).closest('tr').find('td').eq(1).text();
       const weight = $(this).closest('tr').find('td').eq(2).text();
-
       $.ajax({
         url: api_root,
         type: 'POST',
@@ -169,12 +149,10 @@
         }
       });
     });
-
     // Remove the new subunit and weight
     $(document).on('click', 'button#removenew', function() {
       $(this).closest('tr').remove();
     });
-
     //add a new complete section with empty row when addnewunit button is clicked
     $('button#addnewunit').click(function() {
       //ask name of the unit by a alert
@@ -197,11 +175,9 @@
         //insert the new section before the addnewunit button
         document.querySelector('button#addnewunit').before(section);
       }
-
   });
 });
 </script>
-
 <?php $this->view('inc/Footer') ?>
 </body>
 </html>

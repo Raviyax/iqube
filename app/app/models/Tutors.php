@@ -259,11 +259,11 @@ class Tutors extends Model
         chapter_level_1";
         return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
-    public function insert_to_video_content($data,$video,$thumbnail,$duration)
+    public function insert_to_video_content($data,$video,$thumbnail)
     {
         //generate uniqe string in 16 characters for video_content_id
         $video_content_id = bin2hex(random_bytes(8));
-        $this->query("INSERT INTO video_content (video_content_id, tutor_id, name, subject, description, video, thumbnail, price, covering_chapters, duration) VALUES (:video_content_id, :tutor_id, :name, :subject, :description, :video, :thumbnail, :price, :covering_chapters, :duration)", [
+        $this->query("INSERT INTO video_content (video_content_id, tutor_id, name, subject, description, video, thumbnail, price, covering_chapters) VALUES (:video_content_id, :tutor_id, :name, :subject, :description, :video, :thumbnail, :price, :covering_chapters)", [
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
             'name' => $data['name'],
             'subject' => $_SESSION['USER_DATA']['subject'],
@@ -272,10 +272,8 @@ class Tutors extends Model
             'thumbnail' => $thumbnail,
             'price' => $data['price'],
             'covering_chapters' => $data['subOption'],
-            'duration' => $duration,
             'video_content_id' => $video_content_id
         ]);
-  
         return $video_content_id;
     } 
     public function validate_insert_to_video_content($data,$video,$thumbnail)
@@ -337,6 +335,9 @@ class Tutors extends Model
             if (empty($data[$i . 'option4'])) {
                 $this->errors[$i . 'option4_err'] = '*Enter option 4';
             }
+            if (empty($data[$i . 'option5'])) {
+                $this->errors[$i . 'option5_err'] = '*Enter option 5';
+            }
             if (empty($data[$i . 'correct'])) {
                 $this->errors[$i . 'correct_err'] = '*Select the correct answer';
             }
@@ -351,13 +352,14 @@ class Tutors extends Model
     {
         $i = 1;
         while (isset($data[$i . 'question'])) {
-            $this->query("INSERT INTO mcq_for_video (video_content_id, tutor_id, question, option1, option2, option3, option4, correct) VALUES (:video_content_id, :tutor_id, :question, :option1, :option2, :option3, :option4, :correct)", [
+            $this->query("INSERT INTO mcq_for_video (video_content_id, tutor_id, question, option1, option2, option3, option4, option5, correct) VALUES (:video_content_id, :tutor_id, :question, :option1, :option2, :option3, :option4, :option5, :correct)", [
                 'video_content_id' => $video_content_id,
                 'question' => $data[$i . 'question'],
                 'option1' => $data[$i . 'option1'],
                 'option2' => $data[$i . 'option2'],
                 'option3' => $data[$i . 'option3'],
                 'option4' => $data[$i . 'option4'],
+                'option5' => $data[$i . 'option5'],
                 'correct' => $data[$i . 'correct'],
                 'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
             ]);
@@ -374,7 +376,6 @@ class Tutors extends Model
     }
     public function get_my_videos()
     {
-
         // Fetch video uploads
         $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
         $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);

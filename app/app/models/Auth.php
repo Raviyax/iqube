@@ -19,7 +19,8 @@
                     'premium' => $studentdata->premium,
                     'student_id' => $studentdata->student_id,
                     'completed' => $studentdata->completed,
-                    'verify' => $studentdata->verify
+                    'verify' => $studentdata->verify,
+                    'chat_agent' => $studentdata->chat_agent
                 ];
             }
             if(($row->role == 'student') && ($studentdata->premium == 1)){
@@ -37,8 +38,10 @@
                     'image' => $studentdata->image,
                     'premium' => $studentdata->premium,
                     'completed' => $studentdata->completed,
-                    'verify' => $studentdata->verify
+                    'verify' => $studentdata->verify,
+                    'chat_agent' => $studentdata->chat_agent
                 ];
+
             }
             return true;
         }

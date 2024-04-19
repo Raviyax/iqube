@@ -20,17 +20,14 @@
             <?php endif;?>
         <header class="header">
             <section class="flex">
-              
                     <input type="text" name="searchbar" placeholder="search here..." id="searchbar" onkeyup="search()" maxlength="100">
                     <button type="submit" class="fas fa-search" name="search_btn"></button>
-               
                 </a>
             </section>
         </header>
         <div class="flex">
             <div class="col">
                 <div class="chaptercontainer">
-
                     <?php
                     $subjects = $data['subjects'];
                     foreach ($subjects as $subject) {
@@ -50,5 +47,4 @@
 </section>
 <?php $this->view('inc/Footer') ?>
 </body>
-
 </html>

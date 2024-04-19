@@ -230,7 +230,6 @@ if ($mail->send($tutor_request->email, 'Tutor Account Created', 'Please <a href=
     echo "<script>alert('Error');</script>";
 }
 }
-
 public function get_chapters()
 {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
     $query = "SELECT
@@ -246,10 +245,8 @@ ORDER BY
     chapter_level_1,
     weight";
 ;
-
     return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
 }
-
 public function update_syllabus($id, $subunit, $weight)
 {
     $this->query("UPDATE chapters SET chapter_level_2=?, weight=? WHERE id=?", [
@@ -258,16 +255,12 @@ public function update_syllabus($id, $subunit, $weight)
         $id
     ]);
     return true;
-
 }
-
 public function delete_syllabus($id)
 {
     $this->query("DELETE FROM chapters WHERE id=?", [$id]);
     return true;
-
 }
-
 public function insert_subunit($chapter_level_1, $subunit, $weight)
 {
     $this->query("INSERT INTO chapters (subject, chapter_level_1, chapter_level_2, weight) VALUES (:subject, :chapter_level_1, :chapter_level_2, :weight)", [
@@ -277,5 +270,12 @@ public function insert_subunit($chapter_level_1, $subunit, $weight)
         'weight' => $weight
     ]);
     return true;
+}
+
+public function get_a_chat_agent(){
+    $subjectadmins = $this->query("SELECT user_id FROM subject_admins WHERE 1");
+    //get a random subject admin
+    $user_id = $subjectadmins[array_rand($subjectadmins)]->user_id;
+    return $user_id; 
 }
 }

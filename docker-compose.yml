@@ -1,7 +1,5 @@
 version: '3'
-
 services:
-
   db:
     image: mysql:latest
     container_name: db
@@ -10,7 +8,6 @@ services:
       - dbdata:/var/lib/mysql
     networks:
       - app-network
-
   iqube:
     build: ./build/app
     depends_on:
@@ -21,7 +18,6 @@ services:
       - ./App:/var/iqube/html/
     networks:
       - app-network
-
   pma:
     build: ./build/pma
     depends_on:
@@ -35,7 +31,6 @@ services:
     environment:
       PMA_HOST: db
       UPLOAD_LIMIT: 50M
-
   webserver:
     depends_on:
       - pma
@@ -47,12 +42,10 @@ services:
       - ./App:/var/iqube/html/
     networks:
       - app-network
-
 volumes:
   dbdata:
   pma:
   iqube:
-
 networks:
   app-network:
     driver: bridge

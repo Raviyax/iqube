@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
+    <link href="<?php echo URLROOT; ?>/assets/css/Chat.css" rel="stylesheet" id="bootstrap-css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +28,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
-
 <body>
     <!-- subject admin header  -->
     <?php if (Auth::is_logged_in() && Auth::is_subject_admin()) { ?>
@@ -292,7 +291,6 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
-
                 </ul>
             </nav>
             <div class="profile">
@@ -353,6 +351,14 @@
             </nav>
         </div>
         <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
-        <div class="chat-popup" id="chat"></div>
-
+        <div class="chat-popup"  id="chat">
+            <?php $this->view('Student/Support_chat'); ?>
+       
+        </div>
+        <script>
+            //onclick open chat
+            document.getElementById("openchat").addEventListener("click", function() {
+                document.getElementById("chat").style.display = "block";
+            });
+        </script>
     <?php } ?>

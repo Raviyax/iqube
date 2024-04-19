@@ -1,7 +1,6 @@
 <?php
 include (APPROOT.'/Chat/Chat.php');
 class chat_action{
-
 	public function do_chat($_POST) {
 $chat = new Chat();
 if($_POST['action'] == 'update_user_list') {

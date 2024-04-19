@@ -14,13 +14,11 @@ if($_POST['action'] == 'update_syllabus') {
     $subjectadmins->update_syllabus($id, $subunit, $weight);
     echo 'success';
 }
-
 if($_POST['action'] == 'delete_syllabus') {
     $id = $_POST['id'];
     $subjectadmins->delete_syllabus($id);
     echo 'success';
 }
-
 //insert_subunit
 if($_POST['action'] == 'insert_subunit') {
     $chapter_level_1 = $_POST['chapter_level_1'];
@@ -29,4 +27,3 @@ if($_POST['action'] == 'insert_subunit') {
     $subjectadmins->insert_subunit($chapter_level_1, $subunit, $weight);
     echo 'success';
 }
-

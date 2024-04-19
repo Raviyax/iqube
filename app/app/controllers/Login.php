@@ -10,6 +10,7 @@ class Login extends Controller
         $data['title'] = 'Login';
         $data['errors'] = [];
         $user = $this->model('User');
+    $subjectadmin = $this->model('SubjectAdmins');
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -23,7 +24,11 @@ class Login extends Controller
             $row = $user->first(['email' => $email], 'users', 'user_id');
             if ($studentdata && password_verify($password, $row->password)) {
                 if ($studentdata && $studentdata->verify == 1) {
+                    $chat_agent = $subjectadmin->get_a_chat_agent();
+                    //append to the student data
+                    $studentdata->chat_agent = $chat_agent;
                     $premiumdata = $user->first(['student_id' => $studentdata->student_id], 'premium_students', 'student_id');
+                
                     if (Auth::authenticate($row, $studentdata, $premiumdata)) {
                         if (Auth::is_student()) {
                             if (!Auth::is_completed()) {

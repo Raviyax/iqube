@@ -2,7 +2,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <section class="contents">
     <h1 class="heading">Study Materials</h1>
-
     <div class="box-container">
     <?php foreach ($data['study_materials'] as $materials): ?>
     <?php foreach ($materials as $material): ?>
@@ -25,10 +24,8 @@
         </div>
     <?php endforeach; ?>
 <?php endforeach; ?>
-
     </div>
 </section>
-
 <script>
    //on click of div class box
     $('.box').click(function() {
@@ -37,7 +34,6 @@
         window.location.href = "<?php echo URLROOT; ?>/student/" + type + "_overview/" + content_id;
     });
 </script>
-
 <?php $this->view('inc/Footer') ?>
 </body>
 </html>

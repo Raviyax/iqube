@@ -119,21 +119,17 @@ class Tutor extends Controller
                     $commaSeparatedValues = implode('][', $selectedValues);
                     $_POST['subOption'] = $commaSeparatedValues;
                     $video = $this->upload_media($_FILES['video'], '/uploads/video_content/videos/');
-                    
-                    // $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/video_content/thumbnails/');
-                    $duration = $this->getDuration("C:\Users\RaviyaX\Downloads/as.mp4");
-                    echo $duration;
-                    return;
-                    // if ($video && $thumbnail) {
-                    //     $video_content_id = $this->tutor->insert_to_video_content($_POST, $video, $thumbnail, $duration);
-                    //     if ($video_content_id) {
-                    //         $data['video_content_id'] = $video_content_id;
-                    //         $this->view('Tutor/Add_mcq_for_video', $data);
-                    //         return;
-                    //     }
-                    // } else {
-                    //     $data['errors'] = "Error uploading file";
-                    // }
+                    $thumbnail = $this->upload_media($_FILES['thumbnail'], '/uploads/video_content/thumbnails/');
+                    if ($video && $thumbnail) {
+                        $video_content_id = $this->tutor->insert_to_video_content($_POST, $video, $thumbnail);
+                        if ($video_content_id) {
+                            $data['video_content_id'] = $video_content_id;
+                            $this->view('Tutor/Add_mcq_for_video', $data);
+                            return;
+                        }
+                    } else {
+                        $data['errors'] = "Error uploading file";
+                    }
                 } else {
                     $data['errors'] = $this->tutor->errors;
                     $this->view('Tutor/Add_new_video', $data);

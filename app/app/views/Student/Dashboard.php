@@ -2,7 +2,6 @@
 <section class="courses">
     <h1 class="heading">Hello <?php echo $_SESSION['USER_DATA']['username'];?>!</h1>
         <div class="ongoing">
-            
         <h1 class="heading">Kinematics</h1>
                 <div class="percent">
                     <svg>
@@ -15,7 +14,6 @@
                 </div>
                 <h2 class="text">Progress</h2>
             </div>
-
 </section>
 <?php $this->view('inc/Footer') ?>
 </body>

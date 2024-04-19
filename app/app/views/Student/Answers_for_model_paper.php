@@ -6,19 +6,13 @@
     ?>
 <section class="courses">
     <h1 class="heading">Study Materials / Model Papers / <?php echo $model_paper->name;?> / Answers</h1>
-
     <section class="playlist">
-
     <div class="row" style="margin-bottom: 10px;">
-
 <div class="col">
     <div class="tutor" style="flex-direction: column;">
-        
         <div>
             <!-- numver of correct answers out of number of questions -->
             <h3>Result of the last attempt - <?php echo $result . ' / ' . count($questions); ?></h3>
-            
-
         </div>
     </div>
 </div>
@@ -39,7 +33,6 @@
                     </ul>
                 </li>
             </ul>
-
             <?php
             $matched_answer = null;
             foreach ($student_answers as $student_answer) {
@@ -49,7 +42,6 @@
                 }
             }
             ?>
-
             <?php if ($matched_answer !== null) : ?>
                 <?php if ($matched_answer->answer == $question->correct) : ?>
                     <p style="color: green;"><b>Answer - <?php echo $question->correct; ?></b></p>
@@ -63,8 +55,6 @@
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
-
     <a href="<?php echo URLROOT . '/student/model_paper_overview/' . $model_paper->model_paper_content_id; ?>" class="btn" type="button" style="width: fit-content;" id="attemptAgain">Attempt Again</a>
 </section>
-
 <?php $this->view('inc/Footer') ?>

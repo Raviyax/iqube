@@ -6,13 +6,13 @@ class Student extends Controller
     public $student;
     public $payhere;
     public $tutor;
-
     public function __construct()
     {
         $this->user = $this->model('User');
         $this->payhere = new Payhere;
         $this->student = $this->model('Students');
         $this->tutor = $this->model('Tutors');
+        
     }
     public function index()
     {
@@ -96,7 +96,6 @@ class Student extends Controller
     }
     public function study_materials()
     {
-
         if (Auth::is_logged_in() && Auth::is_student() && Auth::is_completed()) {
             $data = [
                 'title' => 'Student',
@@ -183,7 +182,6 @@ class Student extends Controller
                 'tutors' => $this->student->get_all_tutors_for_my_subjects($_SESSION['USER_DATA']['student_id']),
                 'subjects' => $this->student->get_my_subject_names($_SESSION['USER_DATA']['student_id']),
             ];
-
             $this->view('Student/Tutors', $data);
         } else {
             redirect('/Login');
@@ -213,24 +211,19 @@ class Student extends Controller
             redirect('/Login');
         }
     }
-
     public function tutor_profile($id)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
-
             $data = [
                 'title' => 'Tutor',
                 'view' => 'Tutor Profile',
-
             ];
             $data['tutor'] = $this->tutor->get_tutor($id);
-
             $this->view('Student/Tutorprofile', $data);
         } else {
             $this->view('Noaccess');
         }
     }
-
     public function video_thumbnail($thumbnail)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -247,7 +240,6 @@ class Student extends Controller
             $this->view('Noaccess');
         }
     }
-
     public function video_overview($id)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -262,7 +254,6 @@ class Student extends Controller
             $this->view('Noaccess');
         }
     }
-
     public function model_paper_overview($id)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -272,14 +263,12 @@ class Student extends Controller
                 'model_paper' => $this->student->get_model_paper_overview($id),
                 'status' => $this->student->is_model_paper_purchased($id),
                 'completed' => $this->student->is_model_paper_completed($id),
-
             ];
             $this->view('Student/Model_paper_overview', $data);
         } else {
             $this->view('Noaccess');
         }
     }
-
     public function purchase_video()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -298,15 +287,12 @@ class Student extends Controller
                     return;
                 }
             }
-
             if (isset($_POST['status'])) {
                 if ($_POST['status'] == 'ok') {
-
                     $video_content_id = $_POST['video_content_id'];
                     $result = $this->student->purchase_video($video_content_id);
                     header('Content-Type: application/json');
                     echo json_encode(['message' => 'ok']);
-
                     return;
                 }
             }
@@ -314,7 +300,6 @@ class Student extends Controller
             $this->view('Noaccess');
         }
     }
-
     public function purchase_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -333,15 +318,12 @@ class Student extends Controller
                     return;
                 }
             }
-
             if (isset($_POST['status'])) {
                 if ($_POST['status'] == 'ok') {
-
                     $model_paper_id = $_POST['model_paper_content_id'];
                     $result = $this->student->purchase_model_paper($model_paper_id);
                     header('Content-Type: application/json');
                     echo json_encode(['message' => 'ok']);
-
                     return;
                 }
             }
@@ -349,20 +331,16 @@ class Student extends Controller
             $this->view('Noaccess');
         }
     }
-
     public function do_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (isset($_POST['model_paper_id']) || isset($_GET['model_paper_id'])) {
                 $modelPaperId = isset($_POST['model_paper_id']) ? $_POST['model_paper_id'] : $_GET['model_paper_id'];
-
                 if ($this->student->is_model_paper_purchased($modelPaperId)) {
-
-                    // if ($this->student->is_model_paper_started($modelPaperId)) {
-                    //     echo "Browser refreshed. You can't start the paper again.";
-                    //     return;
-                    // }
-
+                    if ($this->student->is_model_paper_started($modelPaperId)) {
+                        echo "Browser refreshed. You can't start the paper again.";
+                        return;
+                    }
                     // Check if the start paper button is clicked
                     if (isset($_POST['start_paper'])) {
                         $data['model_paper'] = $this->student->get_model_paper_overview($modelPaperId);
@@ -372,7 +350,6 @@ class Student extends Controller
                         // Load model paper questions for exam
                         $data['model_paper'] = $this->student->get_model_paper_overview($modelPaperId);
                         $data['questions'] = $this->student->get_model_paper_mcqs($modelPaperId);
-
                         // Update database to mark the paper as started
                         if ($this->student->update_as_model_paper_started($modelPaperId)) {
                             $this->view('Student/Do_model_paper', $data);
@@ -386,27 +363,19 @@ class Student extends Controller
                 }
             }
         }
-
         // If the conditions above are not met, it might indicate unauthorized access or missing parameters
         $this->view('Noaccess');
     }
-
-
     public function submit_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (isset($_POST['model_paper_content_id'])) {
                 $modelPaperId = $_POST['model_paper_content_id'];
-                if ($this->student->is_model_paper_purchased($modelPaperId)) {
-
+                if ($this->student->is_model_paper_purchased($modelPaperId)&&$this->student->is_model_paper_started($modelPaperId)) {
                     $modelPaperId = $_POST['model_paper_content_id'];
-
                     $this->student->submit_model_paper_answers($_POST);
-
                     $data = [
-                        
                         'model_paper' => $this->student->get_model_paper_overview($modelPaperId),
-                       
                     ];
                     $this->view('Student/Model_paper_completed', $data);
                     return;
@@ -415,7 +384,6 @@ class Student extends Controller
         }
         $this->view('Noaccess');
     }
-
     public function view_model_paper_answers($modelPaperId)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
@@ -430,6 +398,78 @@ class Student extends Controller
                         'students_answers' => $this->student->get_student_answers_for_model_paper_mcq($modelPaperId),
                     ];
                     $this->view('Student/Answers_for_model_paper', $data);
+                    return;
+                }
+            }
+        }
+        $this->view('Noaccess');
+    }
+    public function watch_video($id)
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if ($this->student->is_video_purchased($id)) {
+                $data = [
+                    'title' => 'Student',
+                    'view' => 'Watch Video',
+                    'video' => $this->student->get_video($id),
+                ];
+                $this->view('Student/Watch_video', $data);
+            } else {
+                $this->view('Noaccess');
+            }
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+    public function retrieve_video($video)
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            $this->retrive_media($video, '/uploads/video_content/videos/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+    public function do_questions_of_video($videoId)
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+                if ($this->student->is_video_purchased($videoId)) {
+                    $data['video'] = $this->student->get_video($videoId);
+                    $data['questions'] = $this->student->get_video_mcqs($videoId);
+                    $this->view('Student/Do_questions_of_video', $data);
+                    return;
+                }
+        }
+        $this->view('Noaccess');
+    }
+    public function submit_video_answers()
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (isset($_POST['video_content_id'])) {
+                $videoId = $_POST['video_content_id'];
+                if ($this->student->is_video_purchased($videoId)) {
+                    $this->student->submit_video_answers($_POST);
+                    $data = [
+                        'video' => $this->student->get_video_overview($videoId),
+                    ];
+                    $this->view('Student/Video_completed', $data);
+                    return;
+                }
+            }
+        }
+        $this->view('Noaccess');
+    }
+    public function video_results($videoId)
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if ($this->student->is_video_purchased($videoId)) {
+                if ($this->student->is_video_completed($videoId)) {
+                    $data = [
+                        'video' => $this->student->get_video($videoId),
+                        'result' => $this->student->get_video_result($videoId),
+                        'questions' => $this->student->get_video_mcqs($videoId),
+                        'students_answers' => $this->student->get_student_answers_for_video_mcq($videoId),
+                    ];
+                    $this->view('Student/Answers_for_video', $data);
                     return;
                 }
             }

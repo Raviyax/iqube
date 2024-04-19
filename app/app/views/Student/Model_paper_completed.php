@@ -52,7 +52,6 @@
         <h1>Paper <?php echo $data['model_paper']->name;?> Completed Successfully!</h1>
         <p>You will be redirected to the results shortly. If not you can close this window and check results manually</p>
     </div>
-
     <script>
         setTimeout(() => {
             // Send message to parent window

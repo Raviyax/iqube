@@ -31,7 +31,6 @@ class core {
             $url = $_GET['url']??'Landing';
             $url = filter_var($url,FILTER_SANITIZE_URL);
             $url = explode('/',$url);
-           
             return $url;
     }
 }

@@ -1,4 +1,3 @@
-
 let body = document.body;
 document.querySelector('#user-btn').onclick = () => {
    let profile = document.getElementById('profile');

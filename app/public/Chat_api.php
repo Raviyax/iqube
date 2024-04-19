@@ -13,6 +13,17 @@ if($_POST['action'] == 'update_user_list') {
 if($_POST['action'] == 'insert_chat') {
 	$chat->insertChat($_POST['to_user_id'], $_SESSION['USER_DATA']['user_id'], $_POST['chat_message']);
 }
+
+if($_POST['action'] == 'insert_support_messages') {
+	$chat->insertSupportMessages($_SESSION['USER_DATA']['chat_agent'], $_SESSION['USER_DATA']['user_id'], $_POST['chat_message']);
+}
+if($_POST['action'] == 'update_support_messages') {
+	$conversation = $chat->getSupportChat();
+	$data = array(
+		"conversation" => $conversation			
+	);
+	echo json_encode($data);
+}
 if($_POST['action'] == 'show_chat') {
 	$chat->showUserChat($_SESSION['USER_DATA']['user_id'], $_POST['to_user_id']);
 }
@@ -30,9 +41,9 @@ if($_POST['action'] == 'update_unread_message') {
 	);
 	echo json_encode($data);
 }
-if($_POST['action'] == 'update_typing_status') {
-	$chat->updateTypingStatus($_POST["is_type"], $_SESSION["login_details_id"]);
-}
+// if($_POST['action'] == 'update_typing_status') {
+// 	$chat->updateTypingStatus($_POST["is_type"], $_SESSION["login_details_id"]);
+// }
 if($_POST['action'] == 'show_typing_status') {
 	$message = $chat->fetchIsTypeStatus($_POST['to_user_id']);
 	$data = array(
@@ -40,6 +51,7 @@ if($_POST['action'] == 'show_typing_status') {
 	);
 	echo json_encode($data);
 }
-	
-	
+if($_POST['action'] == 'start_support') {
+	$chat->startSupport($_SESSION['USER_DATA']['user_id'], $_POST['support_request']);
+}
 ?>

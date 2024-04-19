@@ -13,7 +13,6 @@ class Students extends Model
             $_SESSION['USER_DATA']['completed'] = 1;
         }
         $_SESSION['USER_DATA']['subjects'] = $data['subject'];
-
         return true;
     }
     public function insert_to_premium_students($data)
@@ -109,7 +108,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function validate_complete_profile($data)
     {
         if (empty($data['subject'])) {
@@ -136,7 +134,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_my_subject_names($student_id)
     {
         $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
@@ -154,7 +151,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_all_tutors_for_my_subjects($student_id)
     {
         $subjects = $this->query("SELECT subjects FROM students WHERE student_id = :student_id", ['student_id' => $student_id]);
@@ -181,7 +177,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_chapters_for_subject()
     {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
         $query = "SELECT
@@ -196,13 +191,10 @@ class Students extends Model
    ORDER BY
        chapter_level_1,
        weight";;
-
         return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
-
     public function get_chapters_for_my_subjects()
     {
-
         $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
         //get chapters for each subject
         $chapters = [];
@@ -214,7 +206,6 @@ class Students extends Model
         }
         return $chapters;
     }
-
     public function get_videos()
     {
         // Fetch video uploads where subject = my subjects and active
@@ -238,7 +229,6 @@ class Students extends Model
         }
         return $videos;
     }
-
     public function get_model_papers()
     {
         // Fetch model papers where subject = my subjects and active
@@ -261,7 +251,6 @@ class Students extends Model
         }
         return $model_papers;
     }
-
     public function get_study_materials()
     {
         $model_papers = $this->get_model_papers();
@@ -271,7 +260,6 @@ class Students extends Model
         shuffle($study_materials);
         return $study_materials;
     }
-
     public function get_model_paper_overview($model_paper_content_id)
     {
         $model_paper = $this->query("SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper_content_id]);
@@ -286,7 +274,6 @@ class Students extends Model
                     $model_paper[0]->tutor_image = $tutor_image[0]->image;
                 }
             }
-
             //get covering chapters for the model paper
             $chapter_ids = explode('][', $model_paper[0]->covering_chapters);
             $chapters = [];
@@ -302,10 +289,9 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_video_overview($video_content_id)
     {
-        $video = $this->query("SELECT video_content_id,tutor_id, name, subject, description, thumbnail, price, covering_chapters FROM video_content WHERE video_content_id = :video_content_id", ['video_content_id' => $video_content_id]);
+        $video = $this->query("SELECT video_content_id,tutor_id, name, subject, description, thumbnail, price, covering_chapters, date FROM video_content WHERE video_content_id = :video_content_id AND active = 1", ['video_content_id' => $video_content_id]);
         if ($video) {
             //get tutors name for the video
             $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video[0]->tutor_id]);
@@ -317,7 +303,6 @@ class Students extends Model
                     $video[0]->tutor_image = $tutor_image[0]->image;
                 }
             }
-
             //get covering chapters for the video
             $chapter_ids = explode('][', $video[0]->covering_chapters);
             $chapters = [];
@@ -339,15 +324,11 @@ class Students extends Model
         if (!isset($_SESSION['USER_DATA']['student_id'])) {
             return false; // Return false if user is not logged in
         }
-
         $student_id = $_SESSION['USER_DATA']['student_id'];
-
         // Check whether the student has already purchased the video
         $result = $this->query("SELECT purchased_video FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
-
         if ($result) {
             $purchased_videos = explode(',', $result[0]->purchased_video);
-
             // Check if video is already purchased
             if (in_array($video_content_id, $purchased_videos)) {
                 return 'already_purchased';
@@ -361,10 +342,8 @@ class Students extends Model
                     $purchased_videos = implode(',', $purchased_videos);
                     $this->query("UPDATE premium_students SET purchased_video = :purchased_videos WHERE student_id = :student_id", ['purchased_videos' => $purchased_videos, 'student_id' => $student_id]);
                 }
-
                 // Insert into purchased_videos table
                 $this->query("INSERT INTO purchased_videos (student_id, video_content_id) VALUES (:student_id, :video_content_id)", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
-
                 return true; // Return true if the purchase is successful
             }
         } else {
@@ -386,22 +365,17 @@ class Students extends Model
             return false;
         }
     }
-
     public function purchase_model_paper($model_paper_content_id)
     {
         // Check if user is logged in
         if (!isset($_SESSION['USER_DATA']['student_id'])) {
             return false; // Return false if user is not logged in
         }
-
         $student_id = $_SESSION['USER_DATA']['student_id'];
-
         // Check whether the student has already purchased the model paper
         $result = $this->query("SELECT purchased_model_paper FROM premium_students WHERE student_id = :student_id", ['student_id' => $student_id]);
-
         if ($result) {
             $purchased_model_papers = explode(',', $result[0]->purchased_model_paper);
-
             // Check if model paper is already purchased
             if (in_array($model_paper_content_id, $purchased_model_papers)) {
                 return 'already_purchased';
@@ -415,10 +389,8 @@ class Students extends Model
                     $purchased_model_papers = implode(',', $purchased_model_papers);
                     $this->query("UPDATE premium_students SET purchased_model_paper = :purchased_model_papers WHERE student_id = :student_id", ['purchased_model_papers' => $purchased_model_papers, 'student_id' => $student_id]);
                 }
-
                 // Insert into purchased_model_papers table
                 $this->query("INSERT INTO purchased_model_papers (student_id, model_paper_content_id) VALUES (:student_id, :model_paper_content_id)", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-
                 return true; // Return true if the purchase is successful
             }
         } else {
@@ -440,7 +412,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_model_paper_mcqs($model_paper_content_id)
     {
         $questions = $this->query("SELECT * FROM mcqs_for_model_paper WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper_content_id]);
@@ -450,7 +421,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function update_as_model_paper_started($model_paper_content_id)
     {
         $this->query("UPDATE purchased_model_papers SET started = 1 WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'model_paper_content_id' => $model_paper_content_id]);
@@ -461,7 +431,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function is_model_paper_started($model_paper_content_id)
     {
         $result = $this->query("SELECT started FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'model_paper_content_id' => $model_paper_content_id]);
@@ -475,7 +444,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function is_model_paper_completed($model_paper_content_id)
     {
         $result = $this->query("SELECT completed FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'model_paper_content_id' => $model_paper_content_id]);
@@ -489,7 +457,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function check_model_paper_answers($data)
     {
         $model_paper_content_id = $data['model_paper_content_id'];
@@ -497,36 +464,30 @@ class Students extends Model
         $correct_answers = 0;
         $total_questions = count($questions);
         foreach ($questions as $question) {
-           
             if ($data[$question->mcq_id] == $question->correct) {
                 $correct_answers++;
             }
         }
-    
         return $correct_answers;
     }
-
     public function submit_model_paper_answers($data)
     {
         // Extract data from the input
         $model_paper_content_id = $data['model_paper_content_id'];
         $correct_answers = $this->check_model_paper_answers($data);
         $student_id = $_SESSION['USER_DATA']['student_id'];
-    
         // Update purchased_model_papers table
         $this->query("
             UPDATE purchased_model_papers 
             SET score = :percentage, completed = 1, started = 0 
             WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id
         ", ['percentage' => $correct_answers, 'student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-    
         // Check if the update was successful
         $result = $this->query("
             SELECT score, completed 
             FROM purchased_model_papers 
             WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id
         ", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-    
         if ($result && $result[0]->score == $correct_answers && $result[0]->completed == 1) {
             // Check whether the previous answers are already inserted
             $answers = $this->query("
@@ -534,7 +495,6 @@ class Students extends Model
                 FROM student_answers_for_model_paper_mcq 
                 WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id
             ", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
-    
             if ($answers) {
                 // Update the answers
                 foreach ($data as $key => $value) {
@@ -562,8 +522,6 @@ class Students extends Model
             return false; // Failure
         }
     }
-    
-
     public function get_model_paper_result($model_paper_content_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -578,11 +536,138 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_student_answers_for_model_paper_mcq($model_paper_content_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
         $answers = $this->query("SELECT * FROM student_answers_for_model_paper_mcq WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+        if ($answers) {
+            return $answers;
+        } else {
+            return false;
+        }
+    }
+    public function get_video($video_content_id)
+    {
+        //get video overview
+        $video = $this->get_video_overview($video_content_id);
+        if ($video) {
+            //get video url
+            $video_url = $this->query("SELECT video FROM video_content WHERE video_content_id = :video_content_id", ['video_content_id' => $video_content_id]);
+            if ($video_url) {
+                $video->video = $video_url[0]->video;
+                return $video;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    public function get_video_mcqs($video_content_id)
+    {
+        $questions = $this->query("SELECT * FROM mcq_for_video WHERE video_content_id = :video_content_id", ['video_content_id' => $video_content_id]);
+        if ($questions) {
+            return $questions;
+        } else {
+            return false;
+        }
+    }
+    public function submit_video_answers($data)
+    {
+        // Extract data from the input
+        $video_content_id = $data['video_content_id'];
+        $correct_answers = $this->check_video_answers($data);
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        // Update purchased_videos table
+        $this->query("
+            UPDATE purchased_videos 
+            SET score = :percentage, completed = 1
+            WHERE student_id = :student_id AND video_content_id = :video_content_id
+        ", ['percentage' => $correct_answers, 'student_id' => $student_id, 'video_content_id' => $video_content_id]);
+        // Check if the update was successful
+        $result = $this->query("
+            SELECT score, completed 
+            FROM purchased_videos 
+            WHERE student_id = :student_id AND video_content_id = :video_content_id
+        ", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
+        if ($result && $result[0]->score == $correct_answers && $result[0]->completed == 1) {
+            // Check whether the previous answers are already inserted
+            $answers = $this->query("
+                SELECT * 
+                FROM student_answers_for_video_mcq 
+                WHERE student_id = :student_id AND video_content_id = :video_content_id
+            ", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
+            if ($answers) {
+                // Update the answers
+                foreach ($data as $key => $value) {
+                    if ($key != 'video_content_id' && $key != 'submit') {
+                        $this->query("
+                            UPDATE student_answers_for_video_mcq 
+                            SET answer = :answer 
+                            WHERE student_id = :student_id AND video_content_id = :video_content_id AND mcq_id = :mcq_id
+                        ", ['answer' => $value, 'student_id' => $student_id, 'video_content_id' => $video_content_id, 'mcq_id' => $key]);
+                    }
+                }
+            } else {
+                // Insert new answers
+                foreach ($data as $key => $value) {
+                    if ($key != 'video_content_id' && $key != 'submit') {
+                        $this->query("
+                            INSERT INTO student_answers_for_video_mcq (student_id, video_content_id, mcq_id, answer)
+                            VALUES (:student_id, :video_content_id, :mcq_id, :answer)
+                        ", ['student_id' => $student_id, 'video_content_id' => $video_content_id, 'mcq_id' => $key, 'answer' => $value]);
+                    }
+                }
+            }
+            return $correct_answers; // Success
+        } else {
+            return false; // Failure
+        }
+    }
+    public function check_video_answers($data)
+    {
+        $video_content_id = $data['video_content_id'];
+        $questions = $this->get_video_mcqs($video_content_id);
+        $correct_answers = 0;
+        $total_questions = count($questions);
+        foreach ($questions as $question) {
+            if ($data[$question->mcq_id] == $question->correct) {
+                $correct_answers++;
+            }
+        }
+        return $correct_answers;
+    }
+    public function get_video_result($video_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        if($this->is_video_completed($video_content_id)){
+            $result = $this->query("SELECT score FROM purchased_videos WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
+            if ($result) {
+                return $result[0]->score;
+            } else {
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }   
+    public function is_video_completed($video_content_id)
+    {
+        $result = $this->query("SELECT completed FROM purchased_videos WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'video_content_id' => $video_content_id]);
+        if ($result) {
+            if ($result[0]->completed == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    public function get_student_answers_for_video_mcq($video_content_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $answers = $this->query("SELECT * FROM student_answers_for_video_mcq WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
         if ($answers) {
             return $answers;
         } else {

@@ -18,6 +18,8 @@
       <input type="text" name="1option3" placeholder="Enter the third option..." maxlength="400" required class="box">
       <p>Option 4<span>*</span></p>
       <input type="text" name="1option4" placeholder="Enter the fourth option..." maxlength="400" required class="box">
+      <p>Option 5<span>*</span></p>
+      <input type="text" name="1option5" placeholder="Enter the fifth option..." maxlength="400" required class="box">
       <p>Correct Answer<span>*</span></p>
       <select name="1correct" class="box" required>
         <option value="" disabled selected>-- Select the correct answer</option>
@@ -25,6 +27,7 @@
         <option value="option2">Option 2</option>
         <option value="option3">Option 3</option>
         <option value="option4">Option 4</option>
+        <option value="option5">Option 5</option>
       </select>
     </div>
   </div>

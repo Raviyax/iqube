@@ -4,7 +4,6 @@
 <!-- omplode the subjects in the array with , -->
 <?php $printsubjects = implode(', ', $subjects); ?>
 <!-- print the subjects -->
-
     <h1 class="heading">Tutors for <?php echo $printsubjects; ?></h1>
     <header class="header">
         <section style="border-radius: 10px; ">
@@ -15,21 +14,16 @@
     <option value="date">Rating</option>
     <option value="price">Purchases</option>
 </select>
-
                 <select name="content_type" id="content_type" onchange="filterContainer()">
                     <option value="all" selected>All subjects</option>
-                   
                     <?php foreach ($subjects as $subject) : ?>
                         <option value="<?php echo $subject; ?>"><?php echo $subject; ?></option>
                     <?php endforeach; ?>
-                   
-                 
                 </select>
             </form>
         </section>
     </header>
     <div class="box-container" style="margin-top: 10px;">
-    
         <?php $tutors = $data['tutors'];
         if (empty($tutors)) {
             echo "<h3 class='title'>No Tutors Found</h3>";
@@ -43,7 +37,6 @@
                     $lname = ucfirst($tutor->lname);
                     $image = $tutor->image;
                     $approved_date = $tutor->approved_date;
-
                     echo '  <div class="box" id="tutor">
                     <img src="'.URLROOT.'/Student/userimage/'.$image.'" class="thumb" alt="">
                     <h3 class="title">'.$fname.' '.$lname.'</h3>
@@ -55,13 +48,9 @@
                     <a href="'. URLROOT.'/Student/tutor_profile/'.$tutor_id.'" class="inline-btn">view Tutor</a>
                 </div>';
                 }
-
                 // Display each tutor's data in a box
-             
             }
         } ?>
-      
-      
     </div>
 </section>
 <script>

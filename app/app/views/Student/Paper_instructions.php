@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,37 +14,30 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
-
 <body style="padding-left: 0;">
     <?php $model_paper = $data['model_paper'];
-
     // Accessing chapters array
     $chapters = $model_paper->chapters;
     ?>
-
     <section class="playlist">
         <h1 class="heading"><?php echo $data['model_paper']->name; ?></h1>
         <div class="row" style="margin-bottom: 10px;">
-
             <div class="col">
                 <div class="tutor">
                     <img src="<?php echo URLROOT; ?>/assets/img/iqube.png" alt="">
                     <div>
                         <h3>Please read following carefully</h3>
-
                     </div>
                 </div>
             </div>
         </div>
         <div class="row" style="margin-bottom: 10px;">
-
             <div class="col">
                 <div class="details">
                     <h3>Make sure that you have covered following chapters in <?php echo $data['model_paper']->subject; ?> syllabus </h3>
                     <?php
                     // Initialize an array to hold sub-chapters grouped by level 1 chapters
                     $groupedChapters = [];
-
                     // Group sub-chapters by level 1 chapters
                     foreach ($chapters as $chapter) {
                         $level1 = $chapter->chapter_level_1;
@@ -56,7 +48,6 @@
                         // Add the current sub-chapter to its corresponding level 1 chapter
                         $groupedChapters[$level1][] = $chapter;
                     }
-
                     // Output the grouped chapters
                     foreach ($groupedChapters as $level1 => $subChapters) {
                         echo '<div class="chaptercontainer">';
@@ -76,7 +67,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-bottom: 10px;">
             <div class="col">
                 <div class="details">
@@ -85,7 +75,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row" style="margin-bottom: 10px;">
             <div class="col">
                 <div class="details">
@@ -100,20 +89,14 @@
                 </div>
                 <button class="btn" onclick="openPaper()">Start Paper <i class="fa-solid fa-stopwatch-20"></i></button>
             </div>
-
-           
     </section>
-
-  
 </body>
-
 <script>
     function openPaper() {
         <?php if(isset($data['model_paper']) && isset($data['model_paper']->model_paper_content_id)): ?>
             var modelPaperId = "<?php echo urlencode($data['model_paper']->model_paper_content_id); ?>";
             var url = "<?php echo URLROOT; ?>/Student/Do_model_paper?model_paper_id=" + modelPaperId;
             var childWindow = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
-
             // Listen for message from the child window
             window.addEventListener('message', function(event) {
                 // Check if the message is a redirection request
@@ -128,9 +111,6 @@
         <?php endif; ?>
     }
 </script>
-
-
 </html>
 </body>
-
 </html>

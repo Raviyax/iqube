@@ -36,10 +36,8 @@
 </head>
 <?php $questions = $data['questions']; ?>
 <?php $model_paper = $data['model_paper']; ?>
-
 <body>
     <div id="timer"></div>
-
     <section class="courses">
         <h1 class="heading"><?php echo $model_paper->name; ?> - <?php echo $model_paper->time_duration; ?> Mins </h1>
         <section class="form-container" style="display: block;">
@@ -67,7 +65,6 @@
             </form>
         </section>
     </section>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
@@ -89,19 +86,15 @@
                 clearInterval(interval);
                 timerDisplay.text('00:00');
                 $('#submit').click();
-
             }
         }, 1000);
-
         $(document).on('contextmenu', function(e) {
             e.preventDefault();
         });
-
         $(document).on('keydown', function(e) {
             e.preventDefault();
             alert("Keyboard inputs are disabled for this exam.");
         });
-
         var lastClickTime = 0;
         $('input[type="radio"]').on('click', function(event) {
             var currentTime = new Date().getTime();

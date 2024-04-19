@@ -52,9 +52,7 @@ class Payhere
         );
         return json_encode($payhere_args);
     }
-
     public function purchase_material($cno, $address, $city, $fname, $lname,$amount,$items){
-
         $merchant_id = '1226057'; // Replace your Merchant ID
         // $merchant_secret = 'NDgyNjY3NzExMjgxODQyMDAyNTIxMDQ5Nzg3MzY3MDE5NDEyNQ=='; iqube.me
         $merchant_secret = 'MzkxOTE0NDQxNjIwNTU4MzM3MDEzMjcyODMzNjcyNTQ0NjAyODg3'; 

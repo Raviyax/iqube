@@ -160,4 +160,19 @@ class Subjectadmin extends Controller
             redirect('/Login');
         }
     }
+
+    public function iqube_support()
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $notifications = $this->Subjectadmin->get_notifications(); 
+            $data = [
+                'title' => 'IQube Support',
+                'view' => 'IQube Support',
+                'notifications' => $notifications,
+            ];
+            $this->view('Subject_admin/Support_chat', $data);
+        } else {
+            redirect('/Login');
+        }
+    }
 }

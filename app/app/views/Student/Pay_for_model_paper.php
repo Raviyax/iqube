@@ -20,9 +20,7 @@
                 <p>By <?php echo $data['model_paper']->tutor; ?></p>
                 <p><?php echo $data['model_paper']->price; ?> LKR</p>
               </div>
-
             </div>
-
           </div>
           <div class="col">
             <div class="thumb">
@@ -30,10 +28,8 @@
               <img src="<?php echo URLROOT; ?>/student/model_paper_thumbnail/<?php echo $data['model_paper']->thumbnail; ?>" alt="">
             </div>
           </div>
-
         </div>
       </section>
-
       <section id="general" style="display: block;">
         <div class="flex">
           <div class="col">
@@ -68,19 +64,16 @@
             <!-- amount -->
             <p>Amount<span>*</span></p>
             <input type="text" value="<?php echo $data['model_paper']->price; ?> LKR" disabled class="box">
-
             <input type="hidden" name="model_paper_content_id" value="<?php echo $data['model_paper']->model_paper_content_id; ?>">
           </div>
         </div>
       </section>
       </form>
       <!-- section for content -->
-   
     <div style="display: flex; flex-direction:row-reverse">
       <button class="btn" style="width: fit-content;" onclick="pay();" type="button">Confirm & Proceed
         <i class="fa-solid fa-arrow-right"></i></button>
     </div>
-    
   </section>
 </section>
 <!-- 
@@ -114,11 +107,9 @@ Not the correct method to verify payment. Notify url is not working in payhere
     console.log("Error:" + error);
   };
   var payment = <?php echo  $data['payment']; ?>;
-
   function pay() {
     payhere.startPayment(payment);
   }
 </script>
-
 <?php $this->view('inc/Footer'); ?>
 </html>
