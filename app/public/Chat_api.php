@@ -3,16 +3,8 @@ session_start();
 include("../app/config/config.php");
 include ("../app/Chat/Chat.php");
 $chat = new Chat();
-if($_POST['action'] == 'update_user_list') {
-	$chatUsers = $chat->chatUsers($_SESSION['USER_DATA']['user_id']);
-	$data = array(
-		"profileHTML" => $chatUsers,	
-	);
-	echo json_encode($data);	
-}
-if($_POST['action'] == 'insert_chat') {
-	$chat->insertChat($_POST['to_user_id'], $_SESSION['USER_DATA']['user_id'], $_POST['chat_message']);
-}
+
+
 
 if($_POST['action'] == 'insert_support_messages') {
 	$chat->insertSupportMessages($_SESSION['USER_DATA']['chat_agent'], $_SESSION['USER_DATA']['user_id'], $_POST['chat_message']);
@@ -24,34 +16,21 @@ if($_POST['action'] == 'update_support_messages') {
 	);
 	echo json_encode($data);
 }
-if($_POST['action'] == 'show_chat') {
-	$chat->showUserChat($_SESSION['USER_DATA']['user_id'], $_POST['to_user_id']);
-}
-if($_POST['action'] == 'update_user_chat') {
-	$conversation = $chat->getUserChat($_SESSION['USER_DATA']['user_id'], $_POST['to_user_id']);
-	$data = array(
-		"conversation" => $conversation			
-	);
-	echo json_encode($data);
-}
-if($_POST['action'] == 'update_unread_message') {
-	$count = $chat->getUnreadMessageCount($_POST['to_user_id'], $_SESSION['USER_DATA']['user_id']);
-	$data = array(
-		"count" => $count			
-	);
-	echo json_encode($data);
-}
-// if($_POST['action'] == 'update_typing_status') {
-// 	$chat->updateTypingStatus($_POST["is_type"], $_SESSION["login_details_id"]);
-// }
-if($_POST['action'] == 'show_typing_status') {
-	$message = $chat->fetchIsTypeStatus($_POST['to_user_id']);
-	$data = array(
-		"message" => $message			
-	);
-	echo json_encode($data);
-}
+
+
 if($_POST['action'] == 'start_support') {
 	$chat->startSupport($_SESSION['USER_DATA']['user_id'], $_POST['support_request']);
+}
+
+if($_POST['action'] == 'subject_admin_update_user_chat') {
+	$chat->subjectAdminUpdateUserChat( $_POST['to_user_id']);
+}
+
+if($_POST['action'] == 'subject_admin_insert_chat') {
+	$chat->subjectAdminInsertChat($_POST['to_user_id'], $_POST['chat_message'], $_POST['lastIqubeSupportId']);
+}
+
+if($_POST['action'] == 'subject_admin_show_chat') {
+	$chat->subjectAdminshowUserChat($_POST['to_user_id']);
 }
 ?>

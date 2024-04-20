@@ -2,7 +2,7 @@
 include(APPROOT . "/Chat/Chat.php");
 $chat = new Chat();
 $loggedUser = $chat->getUserDetails($_SESSION['USER_DATA']['user_id']);
-$chat->updateUserOnline($_SESSION['USER_DATA']['user_id'], 1);
+
 $currentSession = $_SESSION['USER_DATA']['chat_agent'] ;
 
 
@@ -123,19 +123,7 @@ $currentSession = $_SESSION['USER_DATA']['chat_agent'] ;
             sendMessage(to_user_id);
         });
 
-        $(document).on('blur', '.message-input', function() {
-            var is_type = 'no';
 
-            $.ajax({
-                url: chat_root,
-                method: "POST",
-                data: {
-                    is_type: is_type,
-                    action: 'update_typing_status'
-                },
-                success: function() {}
-            });
-        });
     });
 
 
