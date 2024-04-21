@@ -30,15 +30,16 @@
         echo '<td>';
         echo $chapter->id;
         echo '</td>';
-        echo '<td contenteditable>';
+        echo '<td contenteditable style="cursor:auto;">';
         echo $chapter->chapter_level_2;
         echo '</td>';
-        echo '<td contenteditable>';
+        echo '<td contenteditable style="cursor:auto;">';
         echo $chapter->weight;
         echo '</td>';
         echo '<td style="display:flex; flex-direction:row;">';
         echo '<button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red; display:none;" id="save"><i class="fa-solid fa-circle-check"></i> Save</button>';
         echo '<button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="delete"><i class="fa-solid fa-trash-can"></i></button>';
+        echo '<button class="btn" style="width:min-content; height:min-content; background-color:unset; color: green;" id="edit"><i class="fa-solid fa-file-pen"></i></button>';
         echo '</td>';
         echo '</tr>';
         $currentChapter = $chapter->chapter_level_1; // Update the current chapter
@@ -152,6 +153,11 @@
     // Remove the new subunit and weight
     $(document).on('click', 'button#removenew', function() {
       $(this).closest('tr').remove();
+    });
+    //edit button takes to urlroot/Subjectadmin/about_subunit/id
+    $('button#edit').click(function() {
+      const id = $(this).closest('tr').find('td').eq(0).text();
+      window.location.href = URLROOT + '/Subjectadmin/about_subunit/' + id;
     });
     //add a new complete section with empty row when addnewunit button is clicked
     $('button#addnewunit').click(function() {

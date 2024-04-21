@@ -353,19 +353,14 @@
         <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
         <div class="chat-popup"  id="chat">
             <?php $this->view('Student/Support_chat'); ?>
-       
         </div>
-        
         <script>
-         
             document.getElementById("openchat").addEventListener("click", function() {
                 if (document.getElementById("chat").style.display == "block") {
                     document.getElementById("chat").style.display = "none";
-                    
                 } else {
                     document.getElementById("chat").style.display = "block";
                 }
             });
-
         </script>
     <?php } ?>

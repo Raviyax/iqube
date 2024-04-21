@@ -1,5 +1,4 @@
 <?php $this->view('inc/Header') ?>
-
 	<!DOCTYPE html>
 	<html>
 	<head>
@@ -129,7 +128,6 @@
 		</div>
 	</body>
 	</html>
-
 <?php $this->view('inc/Footer') ?>
 </body>
 <script>

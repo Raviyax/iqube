@@ -3,9 +3,7 @@
 include(APPROOT . "/Chat/Chat.php");
 $chat = new Chat();
 $chatUsers = $chat->subjectadmin_get_chat_users();
-
 ?>
-
 <body class="">
     <div class="container" style="min-height:500px;">
         <div class="container">
@@ -13,7 +11,6 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
                 <div class="chat" style="min-height: auto; background-color:unset;">
                     <div class="frame" style="width: 100%; max-width:none;">
                         <div id="sidepanel">
-
                             <div id="search">
                                 <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
                                 <input type="text" placeholder="Search contacts..." />
@@ -21,8 +18,6 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
                             <div id="contacts" style="height: 100%;">
                                 <?php
                                 echo '<ul>';
-
-                               
                                 foreach ($chatUsers as $userArray) {
                                     foreach ($userArray as $user) {
                                         echo '<li id="' . $user['user_id'] . '" class="contact" data-touserid="' . $user['user_id'] . '" data-tousername="' . $user['username'] . '">';
@@ -37,19 +32,14 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
                                         echo '</li>';
                                     }
                                 }
-                                
                                 echo '</ul>';
                                 ?>
                             </div>
-
                         </div>
                         <div class="content" id="content">
                             <div class="contact-profile" id="userSection">
-
                             </div>
                             <div class="messages" id="conversation">
-                              
-
                             </div>
                             <div class="message-input" id="replySection">
                                 <div class="message-input" id="replyContainer">
@@ -63,22 +53,17 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
                     </div>
                 </div>
             <?php }  ?>
-
 </body>
-
 </html>
-
 <script src="<?php echo URLROOT; ?>/assets/js/main.js"></script>
 </body>
 <script>
     const URLROOT = "<?php echo URLROOT; ?>";
     const chat_root = URLROOT + '/chat_api.php';
-
     $(document).ready(function() {
         setInterval(function() {
             updateUserChat(); 
         }, 2000);
-
         $(".messages").animate({
             scrollTop: $(document).height()
         }, "fast");
@@ -91,13 +76,11 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
         });
         // 
         $(document).on("click", '#status-options ul li', function(event) {
-    
             $("#profile-img").removeClass();
             $("#status-online").removeClass("active");
             $("#status-away").removeClass("active");
             $("#status-busy").removeClass("active");
             $("#status-offline").removeClass("active");
-
             $(this).addClass("active");
             if ($("#status-online").hasClass("active")) {
                 $("#profile-img").addClass("online");
@@ -113,7 +96,6 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
             // Hide the status options
             $("#status-options").removeClass("active");
         });
-
         $(document).on('click', '.contact', function() {
             $('.contact').removeClass('active'); 
             $(this).addClass('active'); 
@@ -122,8 +104,6 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
             $(".chatMessage").attr('id', 'chatMessage' + to_user_id);
             $(".chatButton").attr('id', 'chatButton' + to_user_id);
         });
-
-  
         $(document).on("click", '.submit', function(event) {
             // Get the user ID from the button ID
             var to_user_id = $(this).attr('id').replace(/chatButton/g, "");
@@ -163,15 +143,11 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
             });
         });
     });
-
-
     // Function to send a message to a specified user
     function sendMessage(to_user_id) {
         var message = $(".message-input input").val();
         var lastIqubeSupportId = $('#lastIqubeSupportId').attr('data-lastIqubeSupportId');
         console.log(lastIqubeSupportId);
-
-
         $('.message-input input').val('');
         if ($.trim(message) == '') {
             return false;
@@ -186,7 +162,6 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
                 action: 'subject_admin_insert_chat'
             },
             dataType: "json",
-
         });
     }
     // Function to display the chat for a specific user
@@ -200,7 +175,6 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
             },
             dataType: "json",
             success: function(response) {
-                
                 $('#userSection').html(response.userSection);
                 $('#conversation').html(response.conversation);
                 $(".messages").animate({
@@ -231,5 +205,4 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
         });
     }
 </script>
-
 </html>

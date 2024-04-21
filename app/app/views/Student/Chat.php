@@ -4,16 +4,13 @@ include(APPROOT . "/Chat/Chat.php");
 $chat = new Chat();
 $loggedUser = $chat->getUserDetails($_SESSION['USER_DATA']['user_id']);
 $chat->updateUserOnline($_SESSION['USER_DATA']['user_id'], 1);
-
 $currentSession = '';
 foreach ($loggedUser as $user) {
     $currentSession = $user['current_session'];
 }
-
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -26,15 +23,9 @@ foreach ($loggedUser as $user) {
         }
     </style>
 </head>
-
 <body class="">
-
-
-
         <?php if (isset($_SESSION['USER_DATA']['user_id']) && $_SESSION['USER_DATA']['user_id']) { ?>
-
             <div id="frame">
-
                 <div class="content" id="content" style="width: auto;">
                     <div class="contact-profile" id="userSection">
                         <?php
@@ -54,7 +45,6 @@ foreach ($loggedUser as $user) {
                         <?php
                         echo $chat->getUserChat($_SESSION['USER_DATA']['user_id'], $currentSession);
                         ?>
-
                     </div>
                     <div class="message-input" id="replySection">
                         <div class="message-input" id="replyContainer">
@@ -66,38 +56,25 @@ foreach ($loggedUser as $user) {
                     </div>
                 </div>
             </div>
-  
 <?php }  ?>
-
-
-
-
-
-
 </body>
 <?php $this->view('inc/Footer') ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
 <script>
     const URLROOT = "<?php echo URLROOT; ?>";
     const chat_root = URLROOT + '/chat_api.php';
-
     $(document).ready(function() {
         setInterval(function() {
             showTypingStatus();
-
             updateUserChat();
         }, 2000);
         $(".messages").animate({
             scrollTop: $(document).height()
         }, "fast");
-
-
         $(document).on("click", '.submit', function(event) {
             var to_user_id = $(this).attr('id').replace(/chatButton/g, "");
             sendMessage(to_user_id);
         });
-
         $(document).on('focus', '.message-input', function() {
             var is_type = 'yes';
             $.ajax({
@@ -110,10 +87,8 @@ foreach ($loggedUser as $user) {
                 success: function() {}
             });
         });
-
         $(document).on('blur', '.message-input', function() {
             var is_type = 'no';
-
             $.ajax({
                 url: chat_root,
                 method: "POST",
@@ -125,8 +100,6 @@ foreach ($loggedUser as $user) {
             });
         });
     });
-
-
     function sendMessage(to_user_id) {
         var message = $(".message-input input").val();
         $('.message-input input').val('');
@@ -145,7 +118,6 @@ foreach ($loggedUser as $user) {
             success: function(response) {
                 console.log(response);
                 var resp = response;
-
                 $('#conversation').html(resp.conversation);
                 $(".messages").animate({
                     scrollTop: $('.messages').height()
@@ -153,10 +125,7 @@ foreach ($loggedUser as $user) {
             }
         });
     }
-
-
     function updateUserChat() {
-
         var to_user_id = 6;
         $.ajax({
             url: chat_root,
@@ -173,10 +142,7 @@ foreach ($loggedUser as $user) {
                 }, "fast");
             }
         });
-
     }
-
-
     function showTypingStatus() {
         $('li.contact.active').each(function() {
             var to_user_id = $(this).attr('data-touserid');
@@ -195,5 +161,4 @@ foreach ($loggedUser as $user) {
         });
     }
 </script>
-
 </html>

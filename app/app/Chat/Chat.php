@@ -5,7 +5,6 @@ class Chat
 	private $user  = DB_USER;
 	private $password   = DB_PASS;
 	private $database  = DB_NAME;
-
 	private $dbConnect = false;
 	public function __construct()
 	{
@@ -18,7 +17,6 @@ class Chat
 			}
 		}
 	}
-
 	public function getUserDetails($userid)
 	{
 		$sqlQuery = "
@@ -26,40 +24,29 @@ class Chat
 			WHERE user_id = '$userid'";
 		return  $this->getData($sqlQuery);
 	}
-
 	private function getData($sqlQuery)
 {
     // Prepare the SQL statement
     $statement = $this->dbConnect->prepare($sqlQuery);
-    
     // Execute the prepared statement
     $statement->execute();
-    
     // Get the result set
     $result = $statement->get_result();
-    
     // Check for errors
     if (!$result) {
         // Handle errors gracefully (e.g., log, throw exception)
         error_log('Error in query: ' . $statement->error);
         return false; // Or handle the error in a different way based on your application's requirements
     }
-    
     // Fetch data from the result set
     $data = array();
     while ($row = $result->fetch_assoc()) {
         $data[] = $row;
     }
-    
     // Free the result set
     $result->free();
-    
     return $data;
 }
-
-
-	
-
 	public function subjectadmin_get_chat_users()
 	{
 		$sqlQuery = "
@@ -67,18 +54,13 @@ class Chat
 			$users = $this->getData($sqlQuery);
 			$chatUsers = array();
 			foreach ($users as $user) {
-				
 				$sqlQuery = "
 				SELECT username,user_id,image FROM users where user_id = '".$user['user_id']."'";
 				$userDetails = $this->getData($sqlQuery);
 				$chatUsers[] = $userDetails;
 			}
 			return $chatUsers;
-			
-		
 	}
-
-
 	public function startSupport($user_id, $support_request)
 	{
 		$random_subject_admin = $_SESSION['USER_DATA']['chat_agent'];
@@ -86,7 +68,6 @@ class Chat
 		$iqube_support_id = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
 		$_SESSION['USER_DATA']['iqube_support_id'] = $iqube_support_id;
 		$sqlInsert = "INSERT INTO iqube_support (iqube_support_id, user_id, subject_admin_user_id, support_request) VALUES (?, ?, ?, ?)";
-		
 		$insert_stmt = $this->dbConnect->prepare($sqlInsert);
 		$insert_stmt->bind_param("siis", $iqube_support_id, $user_id, $random_subject_admin, $support_request);
 		$insert_result = $insert_stmt->execute();
@@ -100,35 +81,25 @@ class Chat
 		} else {
 			return ('Error in query: ' . $insert_stmt->error);
 		}
-		
-	
 	}
-
 	public function insertSupportMessages($receiver_user_id, $user_id, $chat_message)
 	{
 		// Ensure the iqube_support_id exists in the session data
 		if (!isset($_SESSION['USER_DATA']['iqube_support_id'])) {
 			return 'Error: iqube_support_id not found in session data';
 		}
-		
 		// Retrieve iqube_support_id from session data
 		$iqube_support_id = $_SESSION['USER_DATA']['iqube_support_id'];
-	
 		// Prepare the SQL query
 		$sqlInsert = "INSERT INTO support_messages (iqube_support_id, sender_user_id, reciever_user_id, message) VALUES (?, ?, ?, ?)";
-
 		// Prepare the SQL statement
 		$insert_stmt = $this->dbConnect->prepare($sqlInsert);
 		$insert_stmt->bind_param("siss", $iqube_support_id, $user_id, $receiver_user_id, $chat_message);
 		$insert_result = $insert_stmt->execute();
-
-	
-
 		// Prepare the SQL statement
 		if ($insert_result) {
 			// Get the updated conversation
 			$conversation = $this->getSupportChat();
-			
 			// Return the conversation as JSON
 			$data = array(
 				"conversation" => $conversation
@@ -139,8 +110,6 @@ class Chat
 			return ('Error in query: ' . $insert_stmt->error);
 		}
 	}
-	
-
 	public function getSupportChat()
 	{
 		$iqube_support_id = $_SESSION['USER_DATA']['iqube_support_id'];
@@ -162,13 +131,10 @@ class Chat
 		$data = array(
 			"conversation" => $conversation
 		);
-		
 		return $conversation;
 	}
-
 	public function subjectAdminUpdateUserChat($to_user_id)
 	{
-		
 		//select the messages both sender_user_id = subject_admin_user_id and reciever_user_id = user_id and vice versa
 		$sqlQuery = "
 			SELECT * FROM support_messages 
@@ -197,51 +163,38 @@ class Chat
 			return $conversation;
 		}
 		echo json_encode($data);
-		
 	}
-
 	public function subjectAdminInsertChat($to_user_id, $chat_message, $lastIqubeSupportId)
 	{
-	
 		// Prepare the SQL query
 		$sqlInsert = "INSERT INTO support_messages (iqube_support_id, sender_user_id, reciever_user_id, message) VALUES (?, ?, ?, ?)";
-
 		// Prepare the SQL statement
 		$insert_stmt = $this->dbConnect->prepare($sqlInsert);
 		$insert_stmt->bind_param("siss", $lastIqubeSupportId, $_SESSION['USER_DATA']['user_id'], $to_user_id, $chat_message);
 		$insert_result = $insert_stmt->execute();
-
 		// Prepare the SQL statement
 		if ($insert_result) {
 			// Get the updated conversation
 			$this->subjectAdminUpdateUserChat($to_user_id);
 			return true;
-
-			
 		} else {
 			// Return an error message if the insertion failed
 			return ('Error in query: ' . $insert_stmt->error);
 		}
 	}
-
 	public function subjectAdminshowUserChat($to_user_id)
 	{
 		$userDetails = $this->getUserDetails($to_user_id);
-		
 		foreach ($userDetails as $user) {
-		
 			$userSection = '<img src="' . URLROOT . '/subjectadmin/userimage/' . $user['image'] . '" alt="" />
 				<p>' . $user['username'] . '</p>';
 		}
 		// get user conversation
 		$conversation = $this->subjectAdminUpdateUserChat($to_user_id);
-
 		$data = array(
 			"userSection" => $userSection,
 			"conversation" => $conversation
 		);
 		echo json_encode($data);
 	}
-	
-	
 }

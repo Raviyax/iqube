@@ -46,38 +46,30 @@
 </html>
 <script>
 function addNewQuestion() {
-    // Get the reference to the last existing section
     var existingSections = document.querySelectorAll('[id^=question]');
-    // Check if the number of existing sections is less than 50 before duplicating
     if (existingSections.length >= 50) {
         alert("You have reached the maximum limit of 50 questions.");
         return;
     }
     var lastExistingSection = existingSections[existingSections.length - 1];
-    // Clone the last existing section
     var newSection = lastExistingSection.cloneNode(true);
-    // Clear the values of input fields in the new section
     var newInputs = newSection.querySelectorAll('input, select');
     newInputs.forEach(function(input) {
         if (input.type !== 'button') {
             input.value = '';
         }
     });
-    // Increment the ID of the new section
     var currentId = parseInt(newSection.id.replace('question', ''));
     var newId = currentId + 1;
     newSection.id = 'question' + newId;
-    // Increment the question number
     var question = newSection.querySelector('h3');
     question.textContent = 'Question ' + newId;
-    // Increment the names of inputs in the new section
     var inputs = newSection.querySelectorAll('input, select');
     inputs.forEach(function(input) {
         if (input.type !== 'button') {
             input.name = input.name.replace(/\d+/, newId);
         }
     });
-    // Insert the new section after the last existing one
     lastExistingSection.parentNode.insertBefore(newSection, lastExistingSection.nextSibling);
 }
   function displaycontent() {

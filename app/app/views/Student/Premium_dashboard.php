@@ -81,11 +81,9 @@
     $('.courses').hide();
     //<section class="courses" id="physics"> is shown
     $('.courses').first().show();
- 
     //on click of button
 <?php foreach ($subjects as $subjectData) : ?>
     $('#<?php echo $subjectData[0]->subject;?>').click(function() {
-        
         $('.courses').hide();
         $('.courses#<?php echo $subjectData[0]->subject;?>').show();
     });

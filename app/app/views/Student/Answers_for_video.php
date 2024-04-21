@@ -73,7 +73,6 @@ $student_answers = $data['students_answers'];
     <?php endforeach; ?>
     <a href="<?php echo URLROOT . '/student/video_overview/' . $video->video_content_id; ?>" class="btn" type="button" style="width: fit-content;" id="attemptAgain">Try again</a>
 </section>
-
 <section class="comments">
     <h1 class="heading">add a comment</h1>
     <form action="" method="post" class="add-comment">
