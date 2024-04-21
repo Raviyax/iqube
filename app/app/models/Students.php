@@ -674,4 +674,55 @@ class Students extends Model
             return false;
         }
     }
+    public function get_not_completed_model_papers()
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $model_paper_ids = $this->query("SELECT model_paper_content_id FROM purchased_model_papers WHERE student_id = :student_id AND completed = 0", ['student_id' => $student_id]);
+        if ($model_paper_ids) {
+            $model_papers = [];
+            foreach ($model_paper_ids as $model_paper_id) {
+                $model_paper = $this->get_model_paper_overview($model_paper_id->model_paper_content_id);
+                if ($model_paper) {
+                    $model_paper->type = 'model_paper';
+                    $model_papers[] = $model_paper;
+                }
+            }
+            return $model_papers;
+        } else {
+            return false;
+        }
+    }
+    public function get_not_completed_videos()
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $video_ids = $this->query("SELECT video_content_id FROM purchased_videos WHERE student_id = :student_id AND completed = 0", ['student_id' => $student_id]);
+        if ($video_ids) {
+            $videos = [];
+            foreach ($video_ids as $video_id) {
+                $video = $this->get_video_overview($video_id->video_content_id);
+                if ($video) {
+                    $video->type = 'video';
+                    $videos[] = $video;
+                }
+            }
+            return $videos;
+        } else {
+            return false;
+        }
+    }
+    public function get_my_not_completed_study_materials()
+    {
+        $model_papers = $this->get_not_completed_model_papers();
+        $videos = $this->get_not_completed_videos();
+        if ($model_papers && $videos) {
+            $study_materials = array_merge($model_papers, $videos);
+            return $study_materials;
+        } else if ($model_papers) {
+            return $model_papers;
+        } else if ($videos) {
+            return $videos;
+        } else {
+            return false;
+        }
+    }
 }

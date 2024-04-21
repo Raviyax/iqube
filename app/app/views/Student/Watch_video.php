@@ -11,6 +11,9 @@
       </div>
       <div class="description"><p><?php echo $video->description?></p></div>
       <a href="<?php echo URLROOT;?>/student/do_questions_of_video/<?php echo $video->video_content_id;?>" class="inline-btn">Try Questions</a>
+      <?php if($data['is_completed']){ ?>
+      <a href="<?php echo URLROOT;?>/student/video_results/<?php echo $video->video_content_id;?>" class="inline-btn">Result & Answers</a>
+      <?php } ?>
       <div class="tutor">
          <img src="<?php echo URLROOT;?>/student/userimage/<?php echo $video->tutor_image?>" alt="">
          <div>
@@ -29,7 +32,7 @@
 <section class="comments">
    <h1 class="heading">add a comment</h1>
    <form action="" method="post" class="add-comment">
-      <input type="hidden" name="content_id" value="<?= $get_id; ?>">
+      <input type="hidden" name="content_id" value="">
       <textarea name="comment_box" required placeholder="write your comment..." maxlength="1000" cols="30" rows="10"></textarea>
       <input type="submit" value="add comment" name="add_comment" class="inline-btn">
    </form>

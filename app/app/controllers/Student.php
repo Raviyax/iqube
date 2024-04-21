@@ -12,7 +12,6 @@ class Student extends Controller
         $this->payhere = new Payhere;
         $this->student = $this->model('Students');
         $this->tutor = $this->model('Tutors');
-        
     }
     public function index()
     {
@@ -22,6 +21,7 @@ class Student extends Controller
                     'title' => 'Student',
                     'view' => 'Dashboard',
                     'chapters' => $this->student->get_chapters_for_my_subjects(),
+                    'not_completed_study_materials' => $this->student->get_my_not_completed_study_materials(),
                 ];
                 $this->view('Student/Premium_dashboard', $data);
                 return;
@@ -412,6 +412,7 @@ class Student extends Controller
                     'title' => 'Student',
                     'view' => 'Watch Video',
                     'video' => $this->student->get_video($id),
+                    'is_completed' => $this->student->is_video_completed($id),
                 ];
                 $this->view('Student/Watch_video', $data);
             } else {

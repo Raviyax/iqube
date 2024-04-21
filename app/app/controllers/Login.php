@@ -28,7 +28,6 @@ class Login extends Controller
                     //append to the student data
                     $studentdata->chat_agent = $chat_agent;
                     $premiumdata = $user->first(['student_id' => $studentdata->student_id], 'premium_students', 'student_id');
-                
                     if (Auth::authenticate($row, $studentdata, $premiumdata)) {
                         if (Auth::is_student()) {
                             if (!Auth::is_completed()) {

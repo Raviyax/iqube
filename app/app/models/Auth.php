@@ -41,7 +41,6 @@
                     'verify' => $studentdata->verify,
                     'chat_agent' => $studentdata->chat_agent
                 ];
-
             }
             return true;
         }

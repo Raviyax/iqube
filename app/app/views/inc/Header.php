@@ -355,10 +355,17 @@
             <?php $this->view('Student/Support_chat'); ?>
        
         </div>
+        
         <script>
-            //onclick open chat
+         
             document.getElementById("openchat").addEventListener("click", function() {
-                document.getElementById("chat").style.display = "block";
+                if (document.getElementById("chat").style.display == "block") {
+                    document.getElementById("chat").style.display = "none";
+                    
+                } else {
+                    document.getElementById("chat").style.display = "block";
+                }
             });
+
         </script>
     <?php } ?>

@@ -271,7 +271,6 @@ public function insert_subunit($chapter_level_1, $subunit, $weight)
     ]);
     return true;
 }
-
 public function get_a_chat_agent(){
     $subjectadmins = $this->query("SELECT user_id FROM subject_admins WHERE 1");
     //get a random subject admin
