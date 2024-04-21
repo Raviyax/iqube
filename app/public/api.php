@@ -5,25 +5,79 @@ include("../app/lib/Database.php");
 include("../app/lib/Model.php");
 include ("../app/models/Subjectadmins.php");
 include ("../app/models/Students.php");
+
+// Initialize objects
 $subjectadmins = new Subjectadmins();
 $students = new Students();
-if($_POST['action'] == 'update_syllabus') {
-    $id = $_POST['id'];
-    $subunit = $_POST['subunit'];
-    $weight = $_POST['weight'];
-    $subjectadmins->update_syllabus($id, $subunit, $weight);
-    echo 'success';
+
+// Check if the action is specified in the POST data
+if(isset($_POST['action'])) {
+    $action = $_POST['action'];
+
+    // Handle updating syllabus
+    if($action == 'update_syllabus') {
+        // Sanitize input
+        $id = intval($_POST['id']);
+        $subunit = $_POST['subunit'];
+        $weight = floatval($_POST['weight']);
+        
+        // Perform update and echo response
+        if($subjectadmins->update_syllabus($id, $subunit, $weight)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+    
+    // Handle deleting syllabus
+    if($action == 'delete_syllabus') {
+        // Sanitize input
+        $id = intval($_POST['id']);
+        
+        // Perform deletion and echo response
+        if($subjectadmins->delete_syllabus($id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+    
+    // Handle inserting subunit
+    if($action == 'insert_subunit') {
+        // Sanitize input
+        $chapter_level_1 = $_POST['chapter_level_1'];
+        $subunit = $_POST['subunit'];
+        $weight = floatval($_POST['weight']);
+        
+        // Perform insertion and echo response
+        if($subjectadmins->insert_subunit($chapter_level_1, $subunit, $weight)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    // Handle saving MCQ edited by subject admin
+    if($action == 'subject_admin_save_mcq') {
+        // Sanitize input
+        $mcq_id = intval($_POST['mcq_id']);
+        $question = $_POST['question'];
+        $option1 = $_POST['option1'];
+        $option2 = $_POST['option2'];
+        $option3 = $_POST['option3'];
+        $option4 = $_POST['option4'];
+        $option5 = $_POST['option5'];
+        $correct = $_POST['correct'];
+        
+        // Perform saving and echo response
+        if($subjectadmins->save_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+} else {
+    // If action is not specified, return an error response
+    echo 'error';
 }
-if($_POST['action'] == 'delete_syllabus') {
-    $id = $_POST['id'];
-    $subjectadmins->delete_syllabus($id);
-    echo 'success';
-}
-//insert_subunit
-if($_POST['action'] == 'insert_subunit') {
-    $chapter_level_1 = $_POST['chapter_level_1'];
-    $subunit = $_POST['subunit'];
-    $weight = $_POST['weight'];
-    $subjectadmins->insert_subunit($chapter_level_1, $subunit, $weight);
-    echo 'success';
-}
+?>

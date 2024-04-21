@@ -317,7 +317,7 @@ ORDER BY
         $sql = "SELECT * FROM model_paper_content WHERE CONCAT('[', covering_chapters, ']') LIKE ?";
         $id = '%[' . $id . ']%';
         $model_papers = $this->query($sql, [$id]);
-      
+
         if ($model_papers) {
             //add tutor name to each model paper
             foreach ($model_papers as $model_paper) {
@@ -328,5 +328,36 @@ ORDER BY
         } else {
             false;
         }
+    }
+
+    public function get_mcqs_for_progress_tracking_by_subunit($id)
+    {
+        $mcqs = $this->query("SELECT * FROM mcqs_for_progress_tracking WHERE subunit_id=?", [$id]);
+        if ($mcqs) {
+            return $mcqs;
+        } else {
+            return false;
+        }
+    }
+
+    public function save_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
+    {
+        $this->query("UPDATE mcqs_for_progress_tracking SET question=?, option1=?, option2=?, option3=?, option4=?, option5=?, correct=? WHERE mcq_id=?", [
+            $question,
+            $option1,
+            $option2,
+            $option3,
+            $option4,
+            $option5,
+            $correct,
+            $mcq_id
+        ]);
+        //update the date and done subject admin id
+        $this->query("UPDATE chapters SET last_edited_date=?, last_edited_subject_admin=? WHERE id=?", [
+            date('Y-m-d H:i:s'),
+            $_SESSION['USER_DATA']['subject_admin_id'],
+            $mcq_id
+        ]);
+        return true;
     }
 }
