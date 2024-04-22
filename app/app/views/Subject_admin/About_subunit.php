@@ -12,15 +12,8 @@ if (isset($data['mcqs'])) {
 ?>
 <section class="dashboard">
     <h1 class="heading"><?php echo ucfirst($_SESSION['USER_DATA']['subject']); ?> syllabus / <?php echo $subunit->chapter_level_1; ?> / <?php echo $subunit->chapter_level_2; ?></h1>
-
-
-
-
-
-
     <section class="unit-container" style="margin-bottom:20px;">
         <div class="box-container" style="margin-bottom: 10px;">
-
             <div class="box">
                 <h3>Materials for <?php echo ucfirst($subunit->chapter_level_2); ?> </h3>
             </div>
@@ -55,14 +48,10 @@ if (isset($data['mcqs'])) {
                 <?php endif; ?>
             </section>
         </section>
-
-
-
         <section class="courses" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
             <section class="unit-container">
                 <h2 class="heading" style="border:none;">Videos</h2>
                 <?php if (isset($videos_by_subunit) && count($videos_by_subunit) > 0) : ?>
-
                     <table id="table">
                         <tr>
                             <th>ID</th>
@@ -83,43 +72,33 @@ if (isset($data['mcqs'])) {
                             </tr>
                         <?php endforeach; ?>
                     </table>
-
                 <?php else : ?>
                     <p>No videos found</p>
                 <?php endif; ?>
             </section>
         </section>
     </section>
-
-
     <section class="unit-container">
         <div class="box-container" style="margin-bottom: 10px;">
-
             <div class="box">
                 <h3>Questions for track progress in <?php echo ucfirst($subunit->chapter_level_2); ?> </h3>
             </div>
         </div>
         <section class="courses" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-
-
             <section class="form-container" style="display: block;">
-
                 <form id="duration">
                     <section style="display: block;">
                         <div class="flex">
                             <div class="col">
                                 <p>Paper Duration in Minutes</p>
                                 <input type="text" name="duration" placeholder="Enter the duration in minutes..." maxlength="400" required value="<?php echo $subunit->model_paper_duration; ?>" class="box">
-
                             </div>
                         </div>
                         <div style="display: none; flex-direction:row-reverse" id="saveDurationDiv">
                             <button id="saveDuration" class="btn" style="width: fit-content; background-color:red;">Change Duration <i class="fa-solid fa-clock"></i></button>
                         </div>
-                     
                     </section>
                 </form>
-
                 <form id="new" style="display: none;">
                     <!-- section for mcqs from the video -->
                     <section style="display: block;">
@@ -157,7 +136,6 @@ if (isset($data['mcqs'])) {
                         </div>
                     </section>
                 </form>
-
                 <?php foreach ($mcqs as $key => $mcq) : ?>
                     <form action="" id="<?php echo $mcq->mcq_id; ?>" data-contains="backend" method="post" enctype="multipart/form-data">
                         <!-- section for mcqs from the video -->
@@ -197,7 +175,6 @@ if (isset($data['mcqs'])) {
                         </section>
                     </form>
                 <?php endforeach; ?>
-
                 <div style="display: flex;" id="addnewbuttondiv">
                     <button onclick="addNewQuestion()" class="btn" style="width: fit-content;">Add New Question <i class="fa-solid fa-circle-plus"></i></button>
                 </div>
@@ -207,9 +184,7 @@ if (isset($data['mcqs'])) {
 </section>
 <!-- registe section ends -->
 </body>
-
 </html>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const URLROOT = '<?= URLROOT ?>';
@@ -219,28 +194,20 @@ if (isset($data['mcqs'])) {
     function addNewQuestion() {
         $('#new').clone().attr('id', 'newmcq').insertBefore('#addnewbuttondiv').css('display', 'block');
     }
-
     //if any form with data-contains="backend" is changed then display savechangesdiv of respective form
     $('form[data-contains="backend"]').change(function() {
         $(this).find('#savechangesdiv').css('display', 'flex');
     });
-
     //if duration form is changed then display saveDurationDiv
     $('#duration').change(function() {
         $('#saveDurationDiv').css('display', 'flex');
     });
-
-  
-
-
     $(document).ready(function() {
         $(document).on('click', '#remove', function(event) {
             event.preventDefault(); // Prevent default form submission behavior
             // Remove the form which contains the remove button
             $(this).closest('form').remove();
-
         });
-
           //on click of saveDuration button
             $(document).on('click', '#saveDuration', function(event) {
                 event.preventDefault();
@@ -260,8 +227,6 @@ if (isset($data['mcqs'])) {
                     }
                 });
             });
-
-
         $(document).on('click', '#saveAddNew', function(event) {
             event.preventDefault();
             var form = $(this).closest('form');
@@ -281,7 +246,6 @@ if (isset($data['mcqs'])) {
             });
         });
     });
-
     //on click of delete button
     $('[id^=delete-mcq_]').click(function(e) {
         e.preventDefault();
@@ -302,14 +266,7 @@ if (isset($data['mcqs'])) {
             });
         }
     });
-
-
     //onclick saveAddNew button
-
-
-
-
-
     //on click of save button
     $('[id^=save-mcq_]').click(function(e) {
         e.preventDefault();
@@ -333,5 +290,4 @@ if (isset($data['mcqs'])) {
 </script>
 <?php $this->view('inc/Footer') ?>
 </body>
-
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,10 +14,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
-
 <body style="padding-left: 0;">
     <?php $subunit = $data['subunit'];
-
     ?>
     <section class="playlist">
         <h1 class="heading">Progress Tracking for <?php echo $subunit->chapter_level_2; ?></h1>
@@ -37,19 +34,16 @@
                 <div class="details">
                     <h3>Make sure that you have covered the following chapter</h3>
                     <div class="chaptercontainer" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
-
                         <ul>
                             <li>
                                 <h2 class="heading" style="border:none;"><i class="fa-solid fa-arrow-right"></i> <b><?php echo $subunit->subject; ?></b></h2>
                                 <ul>
-
                                     <li>
                                         <h2 class="heading" style="border:none; margin-left:10px;"><i class="fa-solid fa-arrow-right"></i> <?php echo $subunit->chapter_level_1; ?></h2>
                                     </li>
                                     <li>
                                         <h2 class="heading" style="border:none; margin-left:20px;"><i class="fa-solid fa-arrow-right"></i> <?php echo $subunit->chapter_level_2; ?></h2>
                                     </li>
-
                                 </ul>
                             </li>
                         </ul>
@@ -100,8 +94,6 @@
         <?php endif; ?>
     }
 </script>
-
 </html>
 </body>
-
 </html>
