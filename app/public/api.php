@@ -110,6 +110,20 @@ if(isset($_POST['action'])) {
         }
     }
 
+    //handle subject_admin_save_duration
+    if($action == 'subject_admin_save_duration') {
+        // Sanitize input
+        $subunit_id = intval($_POST['subunit_id']);
+        $duration = $_POST['duration'];
+
+        // Perform insertion and echo response
+        if($subjectadmins->save_duration($subunit_id, $duration)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
 
         
 

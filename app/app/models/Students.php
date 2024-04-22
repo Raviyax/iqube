@@ -525,14 +525,14 @@ class Students extends Model
     public function get_model_paper_result($model_paper_content_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        if($this->is_model_paper_completed($model_paper_content_id)){
+        if ($this->is_model_paper_completed($model_paper_content_id)) {
             $result = $this->query("SELECT score FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
             if ($result) {
                 return $result[0]->score;
             } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
@@ -640,17 +640,17 @@ class Students extends Model
     public function get_video_result($video_content_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        if($this->is_video_completed($video_content_id)){
+        if ($this->is_video_completed($video_content_id)) {
             $result = $this->query("SELECT score FROM purchased_videos WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
             if ($result) {
                 return $result[0]->score;
             } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
-    }   
+    }
     public function is_video_completed($video_content_id)
     {
         $result = $this->query("SELECT completed FROM purchased_videos WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'video_content_id' => $video_content_id]);
@@ -721,6 +721,21 @@ class Students extends Model
             return $model_papers;
         } else if ($videos) {
             return $videos;
+        } else {
+            return false;
+        }
+    }
+
+    public function is_subunit_available_and_belong_to_my_subjects($subunit_id)
+    {
+        $subunit = $this->query("SELECT * FROM chapters WHERE id = :subunit_id", ['subunit_id' => $subunit_id]);
+        if ($subunit) {
+            $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+            if (in_array($subunit[0]->subject, $my_subjects)) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

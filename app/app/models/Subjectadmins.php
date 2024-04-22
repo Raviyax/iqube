@@ -393,4 +393,13 @@ ORDER BY
         ]);
         return true;
     }
+
+    public function save_duration($id, $duration)
+    {
+        $this->query("UPDATE chapters SET model_paper_duration=? WHERE id=?", [
+            $duration,
+            $id
+        ]);
+        return true;
+    }
 }

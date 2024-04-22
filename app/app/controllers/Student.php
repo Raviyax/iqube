@@ -477,4 +477,21 @@ class Student extends Controller
         }
         $this->view('Noaccess');
     }
+
+    public function where_am_i($subunit_id){
+        if (Auth::is_logged_in() && Auth::is_student()) {
+           if($this->student->is_subunit_available_and_belong_to_my_subjects($subunit_id)){
+                $data = [
+                    'title' => 'Student',
+                    'view' => 'Where am I',
+               
+                ];
+                $this->view('Student/Where_am_i_on_subunit', $data);
+            } else {
+                echo "You are not allowed to access this page";
+            }
+        } else {
+            redirect('/Login');
+        }
+    }
 }

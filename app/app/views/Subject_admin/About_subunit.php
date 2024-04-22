@@ -104,6 +104,22 @@ if (isset($data['mcqs'])) {
 
             <section class="form-container" style="display: block;">
 
+                <form id="duration">
+                    <section style="display: block;">
+                        <div class="flex">
+                            <div class="col">
+                                <p>Paper Duration in Minutes</p>
+                                <input type="text" name="duration" placeholder="Enter the duration in minutes..." maxlength="400" required value="<?php echo $subunit->model_paper_duration; ?>" class="box">
+
+                            </div>
+                        </div>
+                        <div style="display: none; flex-direction:row-reverse" id="saveDurationDiv">
+                            <button id="saveDuration" class="btn" style="width: fit-content; background-color:red;">Change Duration <i class="fa-solid fa-clock"></i></button>
+                        </div>
+                     
+                    </section>
+                </form>
+
                 <form id="new" style="display: none;">
                     <!-- section for mcqs from the video -->
                     <section style="display: block;">
@@ -196,7 +212,7 @@ if (isset($data['mcqs'])) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-       const URLROOT = '<?= URLROOT ?>';
+    const URLROOT = '<?= URLROOT ?>';
     const api_root = URLROOT + '/api.php';
     var subunit_id = <?php echo $subunit->id; ?>;
     //on click addnewquestion clone the form id = new and add before addnewquestion button
@@ -209,34 +225,62 @@ if (isset($data['mcqs'])) {
         $(this).find('#savechangesdiv').css('display', 'flex');
     });
 
-    $(document).ready(function() {
-    $(document).on('click', '#remove', function(event) {
-        event.preventDefault(); // Prevent default form submission behavior
-        // Remove the form which contains the remove button
-        $(this).closest('form').remove();
-       
+    //if duration form is changed then display saveDurationDiv
+    $('#duration').change(function() {
+        $('#saveDurationDiv').css('display', 'flex');
     });
 
+  
 
-    $(document).on('click', '#saveAddNew', function(event) {
-        event.preventDefault();
-        var form = $(this).closest('form');
-        var data = form.serialize();
-        $.ajax({
-            url: api_root,
-            type: 'POST',
-            data: data + '&action=subject_admin_add_mcq&subunit_id=' + subunit_id,
-            success: function(response) {
-                if (response === 'success') {
-                    alert('Question saved successfully');
-                    window.location.reload();
-                } else {
-                    alert('Failed to save question');
+
+    $(document).ready(function() {
+        $(document).on('click', '#remove', function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            // Remove the form which contains the remove button
+            $(this).closest('form').remove();
+
+        });
+
+          //on click of saveDuration button
+            $(document).on('click', '#saveDuration', function(event) {
+                event.preventDefault();
+                var form = $(this).closest('form');
+                var data = form.serialize();
+                $.ajax({
+                    url: api_root,
+                    type: 'POST',
+                    data: data + '&action=subject_admin_save_duration&subunit_id=' + subunit_id,
+                    success: function(response) {
+                        if (response === 'success') {
+                            alert('Duration saved successfully');
+                            window.location.reload();
+                        } else {
+                            alert('Failed to save duration');
+                        }
+                    }
+                });
+            });
+
+
+        $(document).on('click', '#saveAddNew', function(event) {
+            event.preventDefault();
+            var form = $(this).closest('form');
+            var data = form.serialize();
+            $.ajax({
+                url: api_root,
+                type: 'POST',
+                data: data + '&action=subject_admin_add_mcq&subunit_id=' + subunit_id,
+                success: function(response) {
+                    if (response === 'success') {
+                        alert('Question saved successfully');
+                        window.location.reload();
+                    } else {
+                        alert('Failed to save question');
+                    }
                 }
-            }
+            });
         });
     });
-});
 
     //on click of delete button
     $('[id^=delete-mcq_]').click(function(e) {
@@ -264,7 +308,7 @@ if (isset($data['mcqs'])) {
 
 
 
- 
+
 
     //on click of save button
     $('[id^=save-mcq_]').click(function(e) {
