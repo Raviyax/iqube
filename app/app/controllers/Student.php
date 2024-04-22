@@ -487,6 +487,11 @@ class Student extends Controller
                     'view' => 'Where am I',
                     'about_subunit' => $this->student->get_subunit_overview($subunit_id),
                     'completed' => $this->student->is_progress_tracking_completed($subunit_id),
+                    'score' => $this->student->get_my_score_for_subunit($subunit_id),
+                    'my_videos' => $this->student->get_my_purchased_videos_by_subunit_id($subunit_id),
+                    'my_model_papers' => $this->student->get_my_purchased_model_papers_by_subunit_id($subunit_id),
+                    'not_purchased_videos' => $this->student->get_videos_by_subunit_not_purchased($subunit_id),
+                    'not_purchased_model_papers' => $this->student->get_model_papers_by_subunit_not_purchased($subunit_id),
 
                 ];
                 $this->view('Student/Where_am_i_on_subunit', $data);

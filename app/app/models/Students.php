@@ -851,8 +851,6 @@ class Students extends Model
         } else {
             return false; // Failure
         }
-
-        
     }
 
     public function check_progress_tracking_answers($data)
@@ -869,6 +867,147 @@ class Students extends Model
         $correct_answers = ($correct_answers / $total_questions) * 100;
         return $correct_answers;
     }
-        
 
+    public function get_my_score_for_subunit($subunit_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        if ($this->is_progress_tracking_completed($subunit_id)) {
+            $result = $this->query("SELECT score FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $student_id, 'subunit_id' => $subunit_id]);
+            if ($result) {
+                return $result[0]->score;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function get_my_purchased_videos_by_subunit_id($subunit_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $videos = $this->query("SELECT video_content_id, score FROM purchased_videos WHERE student_id = :student_id AND completed = 1", ['student_id' => $student_id]);
+        //get video overview for each video and if any video belongs to the subunit add it to the array
+        $my_videos = [];
+        if ($videos) {
+            foreach ($videos as $video) {
+                $video_overview = $this->get_video_overview($video->video_content_id);
+                if ($video_overview) {
+                    $covering_chapters = explode('][', $video_overview->covering_chapters);
+                    if (in_array($subunit_id, $covering_chapters)) {
+                        $mcqs = $this->get_video_mcqs($video->video_content_id);
+                        $video->score = $video->score . "/" . count($mcqs);
+                        $video_overview->score = $video->score;
+                        $video_overview->video_content_id = $video->video_content_id;
+                        $my_videos[] = $video_overview;
+                    }
+                }
+            }
+        }
+        if ($my_videos) {
+            return $my_videos;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_my_purchased_model_papers_by_subunit_id($subunit_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $model_papers = $this->query("SELECT model_paper_content_id, score FROM purchased_model_papers WHERE student_id = :student_id AND completed = 1", ['student_id' => $student_id]);
+        //get model paper overview for each model paper and if any model paper belongs to the subunit add it to the array
+        $my_model_papers = [];
+        if ($model_papers) {
+            foreach ($model_papers as $model_paper) {
+                $model_paper_overview = $this->get_model_paper_overview($model_paper->model_paper_content_id);
+                if ($model_paper_overview) {
+                    $covering_chapters = explode('][', $model_paper_overview->covering_chapters);
+                    if (in_array($subunit_id, $covering_chapters)) {
+                        $mcqs = $this->get_model_paper_mcqs($model_paper->model_paper_content_id);
+                        $model_paper->score = $model_paper->score . "/" . count($mcqs);
+                        $model_paper_overview->score = $model_paper->score;
+                        $model_paper_overview->model_paper_content_id = $model_paper->model_paper_content_id;
+                        $my_model_papers[] = $model_paper_overview;
+                    }
+                }
+            }
+        }
+        if ($my_model_papers) {
+            return $my_model_papers;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_videos_by_subunit_not_purchased($subunit_id)
+    {
+        //get all videos that covering chapters include the subunit_id
+        $videos = $this->query("SELECT *
+        FROM video_content
+        WHERE CONCAT('[', covering_chapters, ']') LIKE '%[{$subunit_id}]%'");
+        //get my purchased videos
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $purchased_videos = $this->query("SELECT video_content_id FROM purchased_videos WHERE student_id = :student_id", ['student_id' => $student_id]);
+        //remove my purchased videos from the videos array
+        if ($purchased_videos && $videos) {
+            foreach ($purchased_videos as $purchased_video) {
+                foreach ($videos as $key => $video) {
+                    if ($video->video_content_id == $purchased_video->video_content_id) {
+                        unset($videos[$key]);
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+
+        //get tutors name for each video
+        foreach ($videos as $video) {
+            $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video->tutor_id]);
+            if ($tutor) {
+                $video->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+            }
+        }
+        if ($videos) {
+            return $videos;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_model_papers_by_subunit_not_purchased($subunit_id)
+    {
+        //get all model papers that covering chapters include the subunit_id
+        $model_papers = $this->query("SELECT *
+        FROM model_paper_content
+        WHERE CONCAT('[', covering_chapters, ']') LIKE '%[{$subunit_id}]%'");
+        //get my purchased model papers
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $purchased_model_papers = $this->query("SELECT model_paper_content_id FROM purchased_model_papers WHERE student_id = :student_id", ['student_id' => $student_id]);
+        //remove my purchased model papers from the model papers array
+        if ($purchased_model_papers && $model_papers) {
+            foreach ($purchased_model_papers as $purchased_model_paper) {
+                foreach ($model_papers as $key => $model_paper) {
+                    if ($model_paper->model_paper_content_id == $purchased_model_paper->model_paper_content_id) {
+                        unset($model_papers[$key]);
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+
+        //get tutors name for each model paper
+        foreach ($model_papers as $model_paper) {
+            $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper->tutor_id]);
+            if ($tutor) {
+                $model_paper->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+            }
+        }
+        if ($model_papers) {
+            return $model_papers;
+        } else {
+            return false;
+        }
+    }
 }
