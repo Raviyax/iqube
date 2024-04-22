@@ -740,4 +740,135 @@ class Students extends Model
             return false;
         }
     }
+
+    public function get_subunit_overview($subunit_id)
+    {
+        $subunit = $this->query("SELECT * FROM chapters WHERE id = :subunit_id", ['subunit_id' => $subunit_id]);
+        if ($subunit) {
+            return $subunit[0];
+        } else {
+            return false;
+        }
+    }
+
+    public function is_progress_tracking_started($subunit_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $result = $this->query("SELECT started FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $student_id, 'subunit_id' => $subunit_id]);
+        if ($result) {
+            if ($result[0]->started == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function is_progress_tracking_completed($subunit_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $result = $this->query("SELECT completed FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $student_id, 'subunit_id' => $subunit_id]);
+        if ($result) {
+            if ($result[0]->completed == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    public function is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id)
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $result = $this->query("SELECT last_attempted_time FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $student_id, 'subunit_id' => $subunit_id]);
+        if ($result) {
+            $last_attempted_time = $result[0]->last_attempted_time;
+            $current_date = date('Y-m-d H:i:s');
+            $last_attempted_time = strtotime($last_attempted_time);
+            $current_date = strtotime($current_date);
+            $difference = $current_date - $last_attempted_time;
+            if ($difference > 86400) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function start_progress_tracking($subunit_id)
+    {
+        //check whether there is a previous attempt
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $result = $this->query("SELECT * FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $student_id, 'subunit_id' => $subunit_id]);
+        if ($result) {
+            //update the attempt
+            $this->query("UPDATE do_progress_tracking_paper SET started = 1, completed = 0, last_attempted_time = :last_attempted_time WHERE student_id = :student_id AND subunit_id = :subunit_id", ['last_attempted_time' => date('Y-m-d H:i:s'), 'student_id' => $student_id, 'subunit_id' => $subunit_id]);
+            return true;
+        } else {
+            //insert a new attempt
+            $this->query("INSERT INTO do_progress_tracking_paper (student_id, subunit_id, started, completed, last_attempted_time) VALUES (:student_id, :subunit_id, 1, 0, :last_attempted_time)", ['student_id' => $student_id, 'subunit_id' => $subunit_id, 'last_attempted_time' => date('Y-m-d H:i:s')]);
+            return true;
+        }
+    }
+
+    public function get_mcqs_for_progress_tracking($subunit_id)
+    {
+        $mcqs = $this->query("SELECT * FROM mcqs_for_progress_tracking WHERE subunit_id = :subunit_id", ['subunit_id' => $subunit_id]);
+        if ($mcqs) {
+            return $mcqs;
+        } else {
+            return false;
+        }
+    }
+
+    public function submit_progress_tracking_answers($data)
+    {
+        // Extract data from the input
+        $subunit_id = $data['subunit_id'];
+        $score = $this->check_progress_tracking_answers($data);
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        // Update do_progress_tracking_paper table
+        $this->query("
+            UPDATE do_progress_tracking_paper 
+            SET score = :percentage, completed = 1, started = 0
+            WHERE student_id = :student_id AND subunit_id = :subunit_id
+        ", ['percentage' => $score, 'student_id' => $student_id, 'subunit_id' => $subunit_id]);
+        // Check if the update was successful
+        $result = $this->query("
+            SELECT score, completed 
+            FROM do_progress_tracking_paper 
+            WHERE student_id = :student_id AND subunit_id = :subunit_id
+        ", ['student_id' => $student_id, 'subunit_id' => $subunit_id]);
+        if ($result && $result[0]->score == $score && $result[0]->completed == 1) {
+            return true; // Success
+        } else {
+            return false; // Failure
+        }
+
+        
+    }
+
+    public function check_progress_tracking_answers($data)
+    {
+        $subunit_id = $data['subunit_id'];
+        $questions = $this->get_mcqs_for_progress_tracking($subunit_id);
+        $correct_answers = 0;
+        $total_questions = count($questions);
+        foreach ($questions as $question) {
+            if ($data[$question->mcq_id] == $question->correct) {
+                $correct_answers++;
+            }
+        }
+        $correct_answers = ($correct_answers / $total_questions) * 100;
+        return $correct_answers;
+    }
+        
+
 }

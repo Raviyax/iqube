@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,44 +23,49 @@
             border-radius: 5px;
             font-size: 16px;
         }
+
         section {
             margin-bottom: 20px;
         }
+
         .col p {
             font-weight: bold;
             margin-bottom: 10px;
         }
+
         .col input[type="radio"] {
             margin-right: 10px;
         }
     </style>
 </head>
-<?php $questions = $data['questions']; ?>
-<?php $model_paper = $data['model_paper']; ?>
+<?php $subunit = $data['subunit']; ?>
+<?php $mcqs = $data['mcqs']; ?>
+
 <body>
     <div id="timer"></div>
     <section class="courses">
-        <h1 class="heading"><?php echo $model_paper->name; ?> - <?php echo $model_paper->time_duration; ?> Mins </h1>
+        <h1 class="heading"><?php echo $subunit->chapter_level_2; ?> - <?php echo $subunit->model_paper_duration; ?> Mins </h1>
         <section class="form-container" style="display: block;">
-            <form id="modelPaperForm" action="<?php echo URLROOT; ?>/student/submit_model_paper" method="post" enctype="multipart/form-data">
+            <form id="modelPaperForm" action="<?php echo URLROOT; ?>/student/submit_progress_tracking_paper" method="post" enctype="multipart/form-data">
                 <?php $i = 1;
-                foreach ($questions as $question) : ?>
+                foreach ($mcqs as $mcq) : ?>
                     <section style="display: block;">
                         <div class="flex">
                             <div class="col">
-                                <p><?php echo $i; $i++; ?>. <?php echo $question->question; ?></p>
-                                <input type="radio" hidden checked name="<?php echo $question->mcq_id; ?>" value="null">
-                                <input type="radio" name="<?php echo $question->mcq_id; ?>" value="option1"> <?php echo $question->option1; ?><br>
-                                <input type="radio" name="<?php echo $question->mcq_id; ?>" value="option2"> <?php echo $question->option2; ?><br>
-                                <input type="radio" name="<?php echo $question->mcq_id; ?>" value="option3"> <?php echo $question->option3; ?><br>
-                                <input type="radio" name="<?php echo $question->mcq_id; ?>" value="option4"> <?php echo $question->option4; ?><br>
-                                <input type="radio" name="<?php echo $question->mcq_id; ?>" value="option5"> <?php echo $question->option5; ?><br>
+                                <p><?php echo $i;
+                                    $i++; ?>. <?php echo $mcq->question; ?></p>
+                                <input type="radio" hidden checked name="<?php echo $mcq->mcq_id; ?>" value="null">
+                                <input type="radio" name="<?php echo $mcq->mcq_id; ?>" value="option1"> <?php echo $mcq->option1; ?><br>
+                                <input type="radio" name="<?php echo $mcq->mcq_id; ?>" value="option2"> <?php echo $mcq->option2; ?><br>
+                                <input type="radio" name="<?php echo $mcq->mcq_id; ?>" value="option3"> <?php echo $mcq->option3; ?><br>
+                                <input type="radio" name="<?php echo $mcq->mcq_id; ?>" value="option4"> <?php echo $mcq->option4; ?><br>
+                                <input type="radio" name="<?php echo $mcq->mcq_id; ?>" value="option5"> <?php echo $mcq->option5; ?><br>
                             </div>
                         </div>
                     </section>
                 <?php endforeach; ?>
                 <div style="display: flex; flex-direction:row-reverse">
-                    <input type="hidden" name="model_paper_content_id" value="<?php echo $model_paper->model_paper_content_id; ?>">
+                    <input type="hidden" name="subunit_id" value="<?php echo $subunit->id; ?>">
                     <button type="submit" id="submit" name="submit" class="btn" style="width: fit-content;">Submit <i class="fa-solid fa-file-arrow-up"></i></button>
                 </div>
             </form>
@@ -67,9 +73,9 @@
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    $(document).ready(function() {
-        var timerDisplay = $('#timer');
-            var timerInMinutes = <?php echo $model_paper->time_duration; ?>;
+        $(document).ready(function() {
+            var timerDisplay = $('#timer');
+            var timerInMinutes = <?php echo $subunit->model_paper_duration; ?>;
             var timerInSeconds = timerInMinutes * 60; // Convert minutes to seconds
             var minutes = Math.floor(timerInMinutes);
             var seconds = 0;
@@ -92,22 +98,24 @@
                     seconds = timerInSeconds % 60;
                 }
             }, 1000);
-        $(document).on('contextmenu', function(e) {
-            e.preventDefault();
+
+            $(document).on('contextmenu', function(e) {
+                e.preventDefault();
+            });
+            $(document).on('keydown', function(e) {
+                e.preventDefault();
+                alert("Keyboard inputs are disabled for this exam.");
+            });
+            var lastClickTime = 0;
+            $('input[type="radio"]').on('click', function(event) {
+                var currentTime = new Date().getTime();
+                if (currentTime - lastClickTime < 1000) {
+                    alert("Please answer the questions without rushing.");
+                }
+                lastClickTime = currentTime;
+            });
         });
-        $(document).on('keydown', function(e) {
-            e.preventDefault();
-            alert("Keyboard inputs are disabled for this exam.");
-        });
-        var lastClickTime = 0;
-        $('input[type="radio"]').on('click', function(event) {
-            var currentTime = new Date().getTime();
-            if (currentTime - lastClickTime < 1000) {
-                alert("Please answer the questions without rushing.");
-            }
-            lastClickTime = currentTime;
-        });
-    });
-</script>
+    </script>
 </body>
+
 </html>

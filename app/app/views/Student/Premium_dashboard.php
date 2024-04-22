@@ -51,7 +51,7 @@
                         echo '</tr>';
                         $currentChapter = $chapter->chapter_level_1;
                     }
-                    echo '<tr onclick="window.location.href = '.URLROOT.'/student/where_am_i/'.$chapter->id.'">';
+                    echo '<tr onclick="window.location.href = \'' . URLROOT . '/student/where_am_i/' . $chapter->id . '\'">';
                     echo '<td >' . $chapter->id . '</td>';
                     echo '<td >' . $chapter->chapter_level_2 . '</td>';
                     echo '<td>completed</td>';

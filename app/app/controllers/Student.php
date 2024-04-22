@@ -371,7 +371,7 @@ class Student extends Controller
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (isset($_POST['model_paper_content_id'])) {
                 $modelPaperId = $_POST['model_paper_content_id'];
-                if ($this->student->is_model_paper_purchased($modelPaperId)&&$this->student->is_model_paper_started($modelPaperId)) {
+                if ($this->student->is_model_paper_purchased($modelPaperId) && $this->student->is_model_paper_started($modelPaperId)) {
                     $modelPaperId = $_POST['model_paper_content_id'];
                     $this->student->submit_model_paper_answers($_POST);
                     $data = [
@@ -433,12 +433,12 @@ class Student extends Controller
     public function do_questions_of_video($videoId)
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
-                if ($this->student->is_video_purchased($videoId)) {
-                    $data['video'] = $this->student->get_video($videoId);
-                    $data['questions'] = $this->student->get_video_mcqs($videoId);
-                    $this->view('Student/Do_questions_of_video', $data);
-                    return;
-                }
+            if ($this->student->is_video_purchased($videoId)) {
+                $data['video'] = $this->student->get_video($videoId);
+                $data['questions'] = $this->student->get_video_mcqs($videoId);
+                $this->view('Student/Do_questions_of_video', $data);
+                return;
+            }
         }
         $this->view('Noaccess');
     }
@@ -478,13 +478,16 @@ class Student extends Controller
         $this->view('Noaccess');
     }
 
-    public function where_am_i($subunit_id){
+    public function where_am_i($subunit_id)
+    {
         if (Auth::is_logged_in() && Auth::is_student()) {
-           if($this->student->is_subunit_available_and_belong_to_my_subjects($subunit_id)){
+            if ($this->student->is_subunit_available_and_belong_to_my_subjects($subunit_id)) {
                 $data = [
                     'title' => 'Student',
                     'view' => 'Where am I',
-               
+                    'about_subunit' => $this->student->get_subunit_overview($subunit_id),
+                    'completed' => $this->student->is_progress_tracking_completed($subunit_id),
+
                 ];
                 $this->view('Student/Where_am_i_on_subunit', $data);
             } else {
@@ -494,4 +497,82 @@ class Student extends Controller
             redirect('/Login');
         }
     }
+
+    public function do_progress_tracking_paper($subunit_id)
+    {
+        try {
+            // Check if $subunit_id is valid
+            if (!isset($subunit_id) || !is_numeric($subunit_id) || $subunit_id == null) {
+                throw new Exception("Invalid request");
+            }
+    
+            // Check if user is logged in and is a student
+            if (!Auth::is_logged_in() || !Auth::is_student()) {
+                throw new Exception("You are not authorized to access this page. Please log in as a student.");
+            }
+    
+            // Check if progress tracking is available for this subunit
+            if ($this->student->get_subunit_overview($subunit_id)->model_paper_duration <= 0) {
+                throw new Exception("Progress tracking is not available for this subunit.");
+            }
+    
+            // Check if the subunit belongs to the user's subjects
+            if (!$this->student->is_subunit_available_and_belong_to_my_subjects($subunit_id)) {
+                throw new Exception("You are not allowed to access this page.");
+            }
+    
+            // Check if the last attempt date for progress tracking is more than 24 hours ago
+            if ($this->student->is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id)) {
+                throw new Exception("You have already attempted this paper. You can attempt it again after 24 hours.");
+            }
+    
+            // Check if 'start' parameter is provided in the URL
+            if (isset($_GET['start']) && $_GET['start'] == 'true') {
+                // Start progress tracking
+                if (!$this->student->start_progress_tracking($subunit_id)) {
+                    throw new Exception("Failed to start progress tracking.");
+                }
+            }
+    
+            // Load the appropriate view based on the conditions
+            if (isset($_GET['start']) && $_GET['start'] == 'true') {
+                $data = [
+                    'title' => 'Student',
+                    'view' => 'Do Progress Tracking Paper',
+                    'subunit' => $this->student->get_subunit_overview($subunit_id),
+                    'mcqs' => $this->student->get_mcqs_for_progress_tracking($subunit_id),
+                ];
+                $this->view('Student/Do_progress_tracking_paper', $data);
+            } else {
+                $data = [
+                    'title' => 'Student',
+                    'view' => 'Progress Tracking Paper',
+                    'subunit' => $this->student->get_subunit_overview($subunit_id),
+                ];
+                $this->view('Student/Progress_tracking_paper_instructions', $data);
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage(); // Output the error message
+        }
+    }
+
+    public function submit_progress_tracking_paper()
+    {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (isset($_POST['subunit_id'])) {
+                $subunitId = $_POST['subunit_id'];
+                if ($this->student->is_subunit_available_and_belong_to_my_subjects($subunitId)) {
+                    $this->student->submit_progress_tracking_answers($_POST);
+                    $data = [
+                        'subunit' => $this->student->get_subunit_overview($subunitId),
+                    ];
+                    $this->view('Student/Progress_tracking_paper_completed', $data);
+                    return;
+                }
+            }
+        }
+        $this->view('Noaccess');
+    }
+     
+
 }
