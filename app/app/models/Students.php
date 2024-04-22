@@ -1010,4 +1010,39 @@ class Students extends Model
             return false;
         }
     }
+
+    public function get_subunit_ids_of_purchased_materials()
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $model_papers = $this->query("SELECT covering_chapters FROM model_paper_content WHERE model_paper_content_id IN (SELECT model_paper_content_id FROM purchased_model_papers WHERE student_id = :student_id AND completed = 1)", ['student_id' => $student_id]);
+        $videos = $this->query("SELECT covering_chapters FROM video_content WHERE video_content_id IN (SELECT video_content_id FROM purchased_videos WHERE student_id = :student_id AND completed = 1)", ['student_id' => $student_id]);
+        $subunit_ids = [];
+        if ($model_papers) {
+            foreach ($model_papers as $model_paper) {
+                $subunit_ids = array_merge($subunit_ids, explode('][', $model_paper->covering_chapters));
+            }
+        }
+        if ($videos) {
+            foreach ($videos as $video) {
+                $subunit_ids = array_merge($subunit_ids, explode('][', $video->covering_chapters));
+            }
+        }
+        $subunit_ids = array_unique($subunit_ids);
+        if ($subunit_ids) {
+            return $subunit_ids;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_progress_tracked_subunits()
+    {
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $subunit_ids = $this->query("SELECT subunit_id FROM do_progress_tracking_paper WHERE student_id = :student_id AND completed = 1", ['student_id' => $student_id]);
+        if ($subunit_ids) {
+            return $subunit_ids;
+        } else {
+            return false;
+        }
+    }
 }
