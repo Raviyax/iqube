@@ -104,43 +104,46 @@ if (isset($data['mcqs'])) {
 
             <section class="form-container" style="display: block;">
 
-            <form action="" id="new" method="post" enctype="multipart/form-data" style="display: none;">
-                        <!-- section for mcqs from the video -->
-                        <section style="display: block;">
-                            <h3>New Question</h3>
-                            <div class="flex">
-                                <div class="col">
-                                    <p>Question<span>*</span></p>
-                                    <input type="text" name="question" placeholder="Enter the question..." maxlength="400" required class="box">
-                                    <p>Option 1<span>*</span></p>
-                                    <input type="text" name="option1" placeholder="Enter the first option..." maxlength="400" required class="box">
-                                    <p>Option 2<span>*</span></p>
-                                    <input type="text" name="option2" placeholder="Enter the second option..." maxlength="400" required class="box">
-                                    <p>Option 3<span>*</span></p>
-                                    <input type="text" name="option3" placeholder="Enter the third option..." maxlength="400" required class="box">
-                                    <p>Option 4<span>*</span></p>
-                                    <input type="text" name="option4" placeholder="Enter the fourth option..." maxlength="400" required class="box">
-                                    <p>Option 5<span>*</span></p>
-                                    <input type="text" name="option5" placeholder="Enter the fifth option..." maxlength="400" required class="box">
-                                    <p>Correct Answer<span>*</span></p>
-                                    <select name="correct" class="box" required>
-                                        <option value="" disabled selected>-- Select the correct answer</option>
-                                        <option value="option1">Option 1</option>
-                                        <option value="option2">Option 2</option>
-                                        <option value="option3">Option 3</option>
-                                        <option value="option4">Option 4</option>
-                                        <option value="option5">Option 5</option>
-                                    </select>
-                                </div>
+                <form id="new" style="display: none;">
+                    <!-- section for mcqs from the video -->
+                    <section style="display: block;">
+                        <h3>New Question</h3>
+                        <div class="flex">
+                            <div class="col">
+                                <p>Question<span>*</span></p>
+                                <input type="text" name="question" placeholder="Enter the question..." maxlength="400" required class="box">
+                                <p>Option 1<span>*</span></p>
+                                <input type="text" name="option1" placeholder="Enter the first option..." maxlength="400" required class="box">
+                                <p>Option 2<span>*</span></p>
+                                <input type="text" name="option2" placeholder="Enter the second option..." maxlength="400" required class="box">
+                                <p>Option 3<span>*</span></p>
+                                <input type="text" name="option3" placeholder="Enter the third option..." maxlength="400" required class="box">
+                                <p>Option 4<span>*</span></p>
+                                <input type="text" name="option4" placeholder="Enter the fourth option..." maxlength="400" required class="box">
+                                <p>Option 5<span>*</span></p>
+                                <input type="text" name="option5" placeholder="Enter the fifth option..." maxlength="400" required class="box">
+                                <p>Correct Answer<span>*</span></p>
+                                <select name="correct" class="box" required>
+                                    <option value="" disabled selected>-- Select the correct answer</option>
+                                    <option value="option1">Option 1</option>
+                                    <option value="option2">Option 2</option>
+                                    <option value="option3">Option 3</option>
+                                    <option value="option4">Option 4</option>
+                                    <option value="option5">Option 5</option>
+                                </select>
                             </div>
-                            <div style="display: flex; flex-direction:row-reverse">
-                                <button type="submit" class="btn" style="width: fit-content;">Save Question<i class="fa-solid fa-file-arrow-up"></i></button>
-                            </div>
-                        </section>
-                    </form>
+                        </div>
+                        <div style="display: flex; flex-direction:row-reverse">
+                            <button id="saveAddNew" class="btn" style="width: fit-content;">Save Question<i class="fa-solid fa-file-arrow-up"></i></button>
+                        </div>
+                        <div style="display:flex; flex-direction:row-reverse">
+                            <button id="remove" class="btn" style="width: fit-content; background-color:red;">Remove <i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </section>
+                </form>
 
                 <?php foreach ($mcqs as $key => $mcq) : ?>
-                    <form action="" id="<?php echo $mcq->mcq_id; ?>"  data-contains="backend" method="post" enctype="multipart/form-data">
+                    <form action="" id="<?php echo $mcq->mcq_id; ?>" data-contains="backend" method="post" enctype="multipart/form-data">
                         <!-- section for mcqs from the video -->
                         <section style="display: block;">
                             <h3>Question <?php echo $key + 1; ?></h3>
@@ -172,6 +175,9 @@ if (isset($data['mcqs'])) {
                             <div style="display:none; flex-direction:row-reverse" id="savechangesdiv">
                                 <button type="submit" id="save-mcq_<?php echo $mcq->mcq_id; ?>" class="btn" style="width: fit-content; background-color:red;">Save Changes <i class="fa-solid fa-file-arrow-up"></i></button>
                             </div>
+                            <div style="display:flex; flex-direction:row-reverse">
+                                <button type="btn" id="delete-mcq_<?php echo $mcq->mcq_id; ?>" class="btn" style="width: fit-content; background-color:red;">Delete Question <i class="fa-solid fa-trash"></i></button>
+                            </div>
                         </section>
                     </form>
                 <?php endforeach; ?>
@@ -190,21 +196,75 @@ if (isset($data['mcqs'])) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-//on click addnewquestion clone the form id = new and add before addnewquestion button and display flex 
+       const URLROOT = '<?= URLROOT ?>';
+    const api_root = URLROOT + '/api.php';
+    var subunit_id = <?php echo $subunit->id; ?>;
+    //on click addnewquestion clone the form id = new and add before addnewquestion button
     function addNewQuestion() {
         $('#new').clone().attr('id', 'newmcq').insertBefore('#addnewbuttondiv').css('display', 'block');
     }
-    
-//if any form with data-contains="backend" is changed then display savechangesdiv of respective form
-$('form[data-contains="backend"]').change(function() {
-    //display only the save changes button of the form that is changed
-    $(this).find('#savechangesdiv').css('display', 'flex');
+
+    //if any form with data-contains="backend" is changed then display savechangesdiv of respective form
+    $('form[data-contains="backend"]').change(function() {
+        $(this).find('#savechangesdiv').css('display', 'flex');
+    });
+
+    $(document).ready(function() {
+    $(document).on('click', '#remove', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        // Remove the form which contains the remove button
+        $(this).closest('form').remove();
+       
+    });
+
+
+    $(document).on('click', '#saveAddNew', function(event) {
+        event.preventDefault();
+        var form = $(this).closest('form');
+        var data = form.serialize();
+        $.ajax({
+            url: api_root,
+            type: 'POST',
+            data: data + '&action=subject_admin_add_mcq&subunit_id=' + subunit_id,
+            success: function(response) {
+                if (response === 'success') {
+                    alert('Question saved successfully');
+                    window.location.reload();
+                } else {
+                    alert('Failed to save question');
+                }
+            }
+        });
+    });
 });
 
+    //on click of delete button
+    $('[id^=delete-mcq_]').click(function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id').split('_')[1];
+        if (confirm('Are you sure you want to delete this question?')) {
+            $.ajax({
+                url: api_root,
+                type: 'POST',
+                data: 'action=subject_admin_delete_mcq&mcq_id=' + id,
+                success: function(response) {
+                    if (response === 'success') {
+                        alert('Question deleted successfully');
+                        window.location.reload();
+                    } else {
+                        alert('Failed to delete question');
+                    }
+                }
+            });
+        }
+    });
 
 
-    const URLROOT = '<?= URLROOT ?>';
-    const api_root = URLROOT + '/api.php';
+    //onclick saveAddNew button
+
+
+
+ 
 
     //on click of save button
     $('[id^=save-mcq_]').click(function(e) {

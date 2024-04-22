@@ -76,6 +76,46 @@ if(isset($_POST['action'])) {
             echo 'error';
         }
     }
+
+    // Handle deleting MCQ
+    if($action == 'subject_admin_delete_mcq') {
+        // Sanitize input
+        $mcq_id = intval($_POST['mcq_id']);
+        
+        // Perform deletion and echo response
+        if($subjectadmins->delete_mcq($mcq_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    // Handle inserting MCQ
+    if($action == 'subject_admin_add_mcq') {
+        // Sanitize input
+        $subunit_id = intval($_POST['subunit_id']);
+        $question = $_POST['question'];
+        $option1 = $_POST['option1'];
+        $option2 = $_POST['option2'];
+        $option3 = $_POST['option3'];
+        $option4 = $_POST['option4'];
+        $option5 = $_POST['option5'];
+        $correct = $_POST['correct'];
+
+        // Perform insertion and echo response
+        if($subjectadmins->add_mcq($subunit_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+
+        
+
+
+    
+    
 } else {
     // If action is not specified, return an error response
     echo 'error';

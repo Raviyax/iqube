@@ -360,4 +360,37 @@ ORDER BY
         ]);
         return true;
     }
+
+    public function delete_mcq($mcq_id)
+    {
+        $this->query("DELETE FROM mcqs_for_progress_tracking WHERE mcq_id=?", [$mcq_id]);
+        //update the date and done subject admin id
+        $this->query("UPDATE chapters SET last_edited_date=?, last_edited_subject_admin=? WHERE id=?", [
+            date('Y-m-d H:i:s'),
+            $_SESSION['USER_DATA']['subject_admin_id'],
+            $mcq_id
+        ]);
+        return true;
+    }
+
+    public function add_mcq($subunit_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
+    {
+        $this->query("INSERT INTO mcqs_for_progress_tracking (subunit_id, question, option1, option2, option3, option4, option5, correct) VALUES (:subunit_id, :question, :option1, :option2, :option3, :option4, :option5, :correct)", [
+            'subunit_id' => $subunit_id,
+            'question' => $question,
+            'option1' => $option1,
+            'option2' => $option2,
+            'option3' => $option3,
+            'option4' => $option4,
+            'option5' => $option5,
+            'correct' => $correct
+        ]);
+        //update the date and done subject admin id
+        $this->query("UPDATE chapters SET last_edited_date=?, last_edited_subject_admin=? WHERE id=?", [
+            date('Y-m-d H:i:s'),
+            $_SESSION['USER_DATA']['subject_admin_id'],
+            $subunit_id
+        ]);
+        return true;
+    }
 }
