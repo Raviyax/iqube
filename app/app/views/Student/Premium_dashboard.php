@@ -7,6 +7,7 @@ $progress_tracked_subunits = $data['progress_tracked_subunits'];
 $mainunit_progresses = $data['mainunit_progresses'];
 $subject_progresses = $data['subject_progresses'];
 $subject_completions = $data['subject_completions'];
+$unit_weights = $data['unit_weights'];
 ?>
 
 
@@ -23,44 +24,68 @@ $subject_completions = $data['subject_completions'];
     <section class="dashboard">
 
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-        <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:20px;">
-                
-                    <button id="" class="button-17">My Summary</button>
-                
+        <div style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; padding: 20px;">
+            <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:20px;">
+
+                <button id="" class="button-17">My Summary</button>
+
             </div>
-            <div class="box-container">
+            <div class="box-container" style="display:flex;">
 
 
-                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
-                <div id="overallProgress" style="height: 200px; width: 100%;"></div>
-                <h2>Overall Progress</h2>
+                <div class="box" style="width:500px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                    <div id="overallProgress" style="height: 200px; width: 100%;"></div>
+
 
                 </div>
 
-                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
-                <div id="subject_completions" style="height:200px; width: 100%;"></div>
-                <h2>Overall Completion</h2>
+                <div class="box" style="width:500px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                    <div id="subject_completions" style="height:200px; width: 100%;"></div>
+
 
                 </div>
 
 
+            </div>
+            </div>
+            <div style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; padding: 20px; margin-top: 10px;">
+            <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:20px; margin-top:20px;">
+
+                <button id="" class="button-17">About My Subjects</button>
+
+            </div>
+            <div class="box-container" style="display:flex;">
+
+                <?php foreach ($unit_weights as $subject => $weights) : ?>
+                    <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; width:400px;">
+                        <div id="<?php echo $subject ?>Container" style="height: 200px; width: 100%;"></div>
+
+
+                    </div>
+
+
+
+
+                <?php endforeach; ?>
+
+            </div>
             </div>
         </section>
 
-        <?php if($not_completed_study_materials){ ?>
-        <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-            <h1 class="heading">Ongoing Studies</h1>
-            <div class="box-container">
-             
+        <?php if ($not_completed_study_materials) { ?>
+            <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+                <h1 class="heading">Ongoing Studies</h1>
+                <div class="box-container">
+
                     <?php foreach ($not_completed_study_materials as $not_completed_study_material) : ?>
                         <div class="box" id="<?php echo $not_completed_study_material->id; ?>" data-type="where_am_i">
                             <h2><?php echo $not_completed_study_material->chapter_level_1; ?></h2>
                             <p><?php echo $not_completed_study_material->chapter_level_2; ?></p>
                         </div>
                     <?php endforeach; ?>
-             
-            </div>
-        </section>
+
+                </div>
+            </section>
         <?php } ?>
 
 
@@ -177,79 +202,129 @@ $subject_completions = $data['subject_completions'];
     <?php endforeach; ?>
 
 
-    window.onload = function () {
+    window.onload = function() {
 
-// Assuming $subject_progresses is already defined
-var subjectProgresses = <?php echo json_encode($subject_progresses); ?>;
-var dataPoints = [];
+        // Assuming $subject_progresses is already defined
+        var subjectProgresses = <?php echo json_encode($subject_progresses); ?>;
+        var dataPoints = [];
 
-// Loop through each subject progress
-subjectProgresses.forEach(function(subject) {
-    dataPoints.push({
-        y: subject.overall_progress_percentage,
-        label: subject.subject
-    });
-});
+        // Loop through each subject progress
+        subjectProgresses.forEach(function(subject) {
+            dataPoints.push({
+                y: subject.overall_progress_percentage,
+                label: subject.subject
+            });
+        });
 
-var chart = new CanvasJS.Chart("overallProgress", {
-    animationEnabled: true,
-    theme: "light2",
-    axisX: {
-        interval: 1,
-        title: "Subjects"
-    },
-    axisY: {
-        minimum: 0,
-        maximum: 100,
-        interval: 20,
-        title: "Percentage"
-    },
-    data: [{
-        type: "bar",
-        dataPoints: dataPoints
-    }]
-});
-chart.render();
+        var chart = new CanvasJS.Chart("overallProgress", {
+            animationEnabled: true,
+            title: {
+                text: 'My Overall progress'
+            },
+            theme: "light2",
+            axisX: {
+                interval: 1,
+                title: "Subjects"
+            },
+            axisY: {
+                minimum: 0,
+                maximum: 100,
+                interval: 20,
+                title: "Percentage"
+            },
+            data: [{
+                type: "bar",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
 
-var chart2 = new CanvasJS.Chart("subject_completions", {
-    animationEnabled: true,
-    theme: "light2", //"light1", "dark1", "dark2"
-  
-    axisY:{
-        interval: 20,
-        suffix: "%"
-    },
-    toolTip:{
-        shared: true,
-        content: "{label}: {y}% completed" // Updated tooltip content format
-    },
-    data:[
-        {
-            type: "stackedBar100",
-            showInLegend: false, 
-            name: "Completion Percentage",
-            color: "green", // Green color for completed percentage
-            dataPoints: [
-                <?php foreach($subject_completions as $completion): ?>
-                { y: <?php echo $completion->percentage; ?>, label: "<?php echo $completion->subject; ?>" },
-                <?php endforeach; ?>
+        var chart2 = new CanvasJS.Chart("subject_completions", {
+            animationEnabled: true,
+            title: {
+                text: 'My Overall Completion'
+            },
+            theme: "light2", //"light1", "dark1", "dark2"
+
+            axisY: {
+                interval: 20,
+                suffix: "%"
+            },
+            toolTip: {
+                shared: true,
+                content: "{label}: {y}% completed" // Updated tooltip content format
+            },
+            data: [{
+                    type: "stackedBar100",
+                    showInLegend: false,
+                    name: "Completion Percentage",
+                    color: "green", // Green color for completed percentage
+                    dataPoints: [
+                        <?php foreach ($subject_completions as $completion) : ?> {
+                                y: <?php echo $completion->percentage; ?>,
+                                label: "<?php echo $completion->subject; ?>"
+                            },
+                        <?php endforeach; ?>
+                    ]
+                },
+                {
+                    type: "stackedBar100",
+                    showInLegend: false,
+                    name: "Remaining Percentage",
+                    color: "red", // Red color for remaining percentage
+                    dataPoints: [
+                        <?php foreach ($subject_completions as $completion) : ?> {
+                                y: <?php echo 100 - $completion->percentage; ?>,
+                                label: "<?php echo $completion->subject; ?>"
+                            },
+                        <?php endforeach; ?>
+                    ]
+                }
             ]
-        },
-        {
-            type: "stackedBar100",
-            showInLegend: false, 
-            name: "Remaining Percentage",
-            color: "red", // Red color for remaining percentage
-            dataPoints: [
-                <?php foreach($subject_completions as $completion): ?>
-                { y: <?php echo 100 - $completion->percentage; ?>, label: "<?php echo $completion->subject; ?>" },
-                <?php endforeach; ?>
-            ]
+        });
+        chart2.render();
+
+        //kelawena eka
+        function generateChart(subject, weights) {
+            var dataPoints = [];
+            // Iterate over units in the subject
+            weights.forEach(function(unit) {
+                // Push unit data to dataPoints
+                dataPoints.push({
+                    y: unit.total_weight,
+                    label: unit.unit
+                });
+            });
+
+            // Create chart
+            var chart3 = new CanvasJS.Chart(subject + "Container", {
+                animationEnabled: true,
+                title: {
+                    text: subject
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 240,
+                    yValueFormatString: "##0.00\"\"",
+                    toolTipContent: "{y} (#percent%)",
+                    indexLabel: "{label} #percent%",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart3.render();
         }
-    ]
-});
-chart2.render();
-}
+
+        // Define data
+        var unitWeights = <?php echo json_encode($unit_weights); ?>;
+
+        // Iterate over subjects
+        for (var subject in unitWeights) {
+            if (unitWeights.hasOwnProperty(subject)) {
+                // Generate chart for each subject
+                generateChart(subject, unitWeights[subject]);
+            }
+        }
+    }
 </script>
 
 </html>

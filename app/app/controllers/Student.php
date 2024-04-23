@@ -17,6 +17,7 @@ class Student extends Controller
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (Auth::is_premium()) {
+                $this->student->get_total_weights_of_my_subjects();
                 $data = [
                     'title' => 'Student',
                     'view' => 'Dashboard',
@@ -27,6 +28,8 @@ class Student extends Controller
                     'mainunit_progresses' => $this->student->track_progress_for_my_mainunits(),
                     'subject_progresses' => $this->student->track_progress_for_my_subjects(),
                     'subject_completions' => $this->student->get_overall_completion_of_subjects(),
+                    'subject_weights' => $this->student->get_total_weights_of_my_subjects(),
+                    'unit_weights' => $this->student->get_total_weights_of_my_subjects(),
                 ];
                 $this->view('Student/Premium_dashboard', $data);
                 return;

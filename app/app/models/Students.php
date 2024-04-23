@@ -1151,4 +1151,59 @@ class Students extends Model
         }
     }
 
+    public function get_total_weights_of_my_subjects()
+    {
+        // Get my subject names
+        $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+        $organized_result = [];
+    
+        foreach ($my_subjects as $subject) {
+            $chapter_level_1s = $this->query("SELECT DISTINCT chapter_level_1 FROM chapters WHERE subject = :subject", ['subject' => $subject]);
+    
+            if ($chapter_level_1s) {
+                $subject_data = [];
+                $total_weight_subject = 0;
+    
+                // Calculate total weight of all chapter_level_1s within the subject
+                foreach ($chapter_level_1s as $chapter_level_1) {
+                    $chapter_level_2s = $this->query("SELECT * FROM chapters WHERE subject = :subject AND chapter_level_1 = :chapter_level_1", ['subject' => $subject, 'chapter_level_1' => $chapter_level_1->chapter_level_1]);
+    
+                    if ($chapter_level_2s) {
+                        $total_weight = 0;
+    
+                        foreach ($chapter_level_2s as $chapter_level_2) {
+                            $total_weight += $chapter_level_2->Weight;
+                        }
+    
+                        $total_weight_subject += $total_weight;
+    
+                        $unit_object = new stdClass();
+                        $unit_object->unit = $chapter_level_1->chapter_level_1;
+                        $unit_object->total_weight = $total_weight;
+    
+                        $subject_data[] = $unit_object;
+                    }
+                }
+    
+                // Calculate weight percentage and adjust total weights if total weight is not 100%
+             
+    
+                // Add subject data to organized result
+                if (!empty($subject_data)) {
+                    $organized_result[$subject] = $subject_data;
+                }
+            }
+        }
+    
+        if (!empty($organized_result)) {
+           return $organized_result;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    
+
+    
 }
