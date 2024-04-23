@@ -23,17 +23,21 @@ $subject_completions = $data['subject_completions'];
     <section class="dashboard">
 
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-            <h1 class="heading">My Summary</h1>
+        <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:20px;">
+                
+                    <button id="" class="button-17">My Summary</button>
+                
+            </div>
             <div class="box-container">
 
 
-                <div class="box" style="box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
                 <div id="overallProgress" style="height: 200px; width: 100%;"></div>
                 <h2>Overall Progress</h2>
 
                 </div>
 
-                <div class="box" style="box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
                 <div id="subject_completions" style="height:200px; width: 100%;"></div>
                 <h2>Overall Completion</h2>
 
@@ -43,23 +47,21 @@ $subject_completions = $data['subject_completions'];
             </div>
         </section>
 
+        <?php if($not_completed_study_materials){ ?>
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
             <h1 class="heading">Ongoing Studies</h1>
             <div class="box-container">
-                <?php if ($not_completed_study_materials == null) : ?>
-                    <div class="box" id="no_study_materials" data-type="no_study_materials">
-                        <h2>No ongoing Study Materials</h2>
-                    </div>
-                <?php else : ?>
+             
                     <?php foreach ($not_completed_study_materials as $not_completed_study_material) : ?>
                         <div class="box" id="<?php echo $not_completed_study_material->id; ?>" data-type="where_am_i">
                             <h2><?php echo $not_completed_study_material->chapter_level_1; ?></h2>
                             <p><?php echo $not_completed_study_material->chapter_level_2; ?></p>
                         </div>
                     <?php endforeach; ?>
-                <?php endif; ?>
+             
             </div>
         </section>
+        <?php } ?>
 
 
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
