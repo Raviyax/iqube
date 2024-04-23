@@ -6,16 +6,47 @@ $progress_tracked_subunits = $data['progress_tracked_subunits'];
 //  print_r($subjects);
 $mainunit_progresses = $data['mainunit_progresses'];
 $subject_progresses = $data['subject_progresses'];
-print_r($subject_progresses);
+$subject_completions = $data['subject_completions'];
 ?>
+
+
+
 
 <body>
 
+
+
+
+
+
+
     <section class="dashboard">
+
+        <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+            <h1 class="heading">My Summary</h1>
+            <div class="box-container">
+
+
+                <div class="box" style="box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                <div id="overallProgress" style="height: 200px; width: 100%;"></div>
+                <h2>Overall Progress</h2>
+
+                </div>
+
+                <div class="box" style="box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;">
+                <div id="subject_completions" style="height:200px; width: 100%;"></div>
+                <h2>Overall Completion</h2>
+
+                </div>
+
+
+            </div>
+        </section>
+
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
             <h1 class="heading">Ongoing Studies</h1>
             <div class="box-container">
-               <?php if ($not_completed_study_materials == null) : ?>
+                <?php if ($not_completed_study_materials == null) : ?>
                     <div class="box" id="no_study_materials" data-type="no_study_materials">
                         <h2>No ongoing Study Materials</h2>
                     </div>
@@ -29,8 +60,10 @@ print_r($subject_progresses);
                 <?php endif; ?>
             </div>
         </section>
+
+
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-            <h1 class="heading">My Progress</h1>
+            <h1 class="heading">Where am I</h1>
             <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center;">
                 <?php foreach ($subjects as $subjectData) : ?>
                     <button id="<?php echo htmlspecialchars($subjectData[0]->subject); ?>" class="button-17" role="button"><?php echo ucfirst(htmlspecialchars($subjectData[0]->subject)); ?></button>
@@ -120,6 +153,8 @@ print_r($subject_progresses);
     <?php $this->view('inc/Footer') ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
 <script>
     //on click of div class box
     $('.box').click(function() {
@@ -138,6 +173,81 @@ print_r($subject_progresses);
             $('.courses#<?php echo $subjectData[0]->subject; ?>').show();
         });
     <?php endforeach; ?>
+
+
+    window.onload = function () {
+
+// Assuming $subject_progresses is already defined
+var subjectProgresses = <?php echo json_encode($subject_progresses); ?>;
+var dataPoints = [];
+
+// Loop through each subject progress
+subjectProgresses.forEach(function(subject) {
+    dataPoints.push({
+        y: subject.overall_progress_percentage,
+        label: subject.subject
+    });
+});
+
+var chart = new CanvasJS.Chart("overallProgress", {
+    animationEnabled: true,
+    theme: "light2",
+    axisX: {
+        interval: 1,
+        title: "Subjects"
+    },
+    axisY: {
+        minimum: 0,
+        maximum: 100,
+        interval: 20,
+        title: "Percentage"
+    },
+    data: [{
+        type: "bar",
+        dataPoints: dataPoints
+    }]
+});
+chart.render();
+
+var chart2 = new CanvasJS.Chart("subject_completions", {
+    animationEnabled: true,
+    theme: "light2", //"light1", "dark1", "dark2"
+  
+    axisY:{
+        interval: 20,
+        suffix: "%"
+    },
+    toolTip:{
+        shared: true,
+        content: "{label}: {y}% completed" // Updated tooltip content format
+    },
+    data:[
+        {
+            type: "stackedBar100",
+            showInLegend: false, 
+            name: "Completion Percentage",
+            color: "green", // Green color for completed percentage
+            dataPoints: [
+                <?php foreach($subject_completions as $completion): ?>
+                { y: <?php echo $completion->percentage; ?>, label: "<?php echo $completion->subject; ?>" },
+                <?php endforeach; ?>
+            ]
+        },
+        {
+            type: "stackedBar100",
+            showInLegend: false, 
+            name: "Remaining Percentage",
+            color: "red", // Red color for remaining percentage
+            dataPoints: [
+                <?php foreach($subject_completions as $completion): ?>
+                { y: <?php echo 100 - $completion->percentage; ?>, label: "<?php echo $completion->subject; ?>" },
+                <?php endforeach; ?>
+            ]
+        }
+    ]
+});
+chart2.render();
+}
 </script>
 
 </html>

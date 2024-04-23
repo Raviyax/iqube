@@ -26,6 +26,7 @@ class Student extends Controller
                     'progress_tracked_subunits' => $this->student->get_progress_tracked_subunits(),
                     'mainunit_progresses' => $this->student->track_progress_for_my_mainunits(),
                     'subject_progresses' => $this->student->track_progress_for_my_subjects(),
+                    'subject_completions' => $this->student->get_overall_completion_of_subjects(),
                 ];
                 $this->view('Student/Premium_dashboard', $data);
                 return;

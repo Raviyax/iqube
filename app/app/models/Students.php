@@ -207,7 +207,7 @@ class Students extends Model
                     $score = $this->query("SELECT score FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'subunit_id' => $c->id]);
                     if ($score) {
                         $c->score = $score[0]->score;
-                    }else{
+                    } else {
                         $c->score = 0;
                     }
                 }
@@ -1061,14 +1061,13 @@ class Students extends Model
         $progress_tracker = new progress_tracker();
         // Get all subunits for my subjects
         $sub_units = $this->get_chapters_for_my_subjects();
-    
-   $progress_objects = $progress_tracker->calculateUnitOverallProgress($sub_units);
+
+        $progress_objects = $progress_tracker->calculateUnitOverallProgress($sub_units);
         if ($progress_objects) {
             return $progress_objects;
         } else {
             return false;
         }
-    
     }
 
     public function track_progress_for_my_subjects()
@@ -1083,7 +1082,73 @@ class Students extends Model
             return false;
         }
     }
-    
 
-   
+    public function get_overall_completion_of_subject($subject)
+    {
+        //get all subunits for the subject
+        $sub_units = $this->query("SELECT * FROM chapters WHERE subject = :subject", ['subject' => $subject]);
+        if ($sub_units) {
+            //add all weights together 
+            $total_weight = 0;
+            foreach ($sub_units as $sub_unit) {
+                $total_weight += $sub_unit->Weight;
+            }
+            //get all subunits that are completed
+            $student_id = $_SESSION['USER_DATA']['student_id'];
+            $completed_sub_units = $this->query("SELECT subunit_id FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id IN (SELECT id FROM chapters WHERE subject = :subject) AND completed = 1", ['student_id' => $student_id, 'subject' => $subject]);
+            if ($completed_sub_units) {
+                //add all weights of completed subunits together
+                $completed_weight = 0;
+                foreach ($completed_sub_units as $completed_sub_unit) {
+                    foreach ($sub_units as $sub_unit) {
+                        if ($sub_unit->id == $completed_sub_unit->subunit_id) {
+                            $completed_weight += $sub_unit->Weight;
+                        }
+                    }
+                }
+                //calculate the percentage
+                $percentage = ($completed_weight / $total_weight) * 100;
+                //create a object with subject and percentage
+                $subject_object = new stdClass();
+                $subject_object->subject = $subject;
+                $subject_object->percentage = $percentage;
+                return $subject_object;
+                
+            } else {
+                //create a object with subject and percentage 0
+                $subject_object = new stdClass();
+                $subject_object->subject = $subject;
+                $subject_object->percentage = 0;
+                return $subject_object;
+            }
+        } else {
+            //create a object with subject and percentage 0
+            $subject_object = new stdClass();
+            $subject_object->subject = $subject;
+            $subject_object->percentage = 0;
+            return $subject_object;
+            
+        }
+            
+      
+    }
+
+    public function get_overall_completion_of_subjects()
+    {
+        //get my subject names
+        $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+        $subject_objects = [];
+        foreach ($my_subjects as $subject) {
+            $subject_object = $this->get_overall_completion_of_subject($subject);
+           
+                $subject_objects[] = $subject_object;
+          
+        }
+        if ($subject_objects) {
+            return $subject_objects;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -2,6 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <section>
     <h1 class="heading">Manage <?php echo $_SESSION['USER_DATA']['subject']; ?> Syllabus</h1>
+    <?php if($data['syllabus'] ) { ?>
     <?php
     $chapters = $data['syllabus'];
     $currentChapter = null; // To keep track of the current chapter
@@ -53,6 +54,12 @@
         echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
     }
     ?>
+    <?php } else { 
+              echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
+          } 
+
+      ?>
+    
 </section>
 <script>
   //add a new empty row for the current table when addnewsubunit button is clicked

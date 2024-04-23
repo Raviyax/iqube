@@ -136,6 +136,7 @@ if (isset($data['mcqs'])) {
                         </div>
                     </section>
                 </form>
+                <?php if ($mcqs) { ?>
                 <?php foreach ($mcqs as $key => $mcq) : ?>
                     <form action="" id="<?php echo $mcq->mcq_id; ?>" data-contains="backend" method="post" enctype="multipart/form-data">
                         <!-- section for mcqs from the video -->
@@ -175,6 +176,9 @@ if (isset($data['mcqs'])) {
                         </section>
                     </form>
                 <?php endforeach; ?>
+                <?php } else{ ?>
+                    <p>No questions found</p>
+                <?php } ?>
                 <div style="display: flex;" id="addnewbuttondiv">
                     <button onclick="addNewQuestion()" class="btn" style="width: fit-content;">Add New Question <i class="fa-solid fa-circle-plus"></i></button>
                 </div>
