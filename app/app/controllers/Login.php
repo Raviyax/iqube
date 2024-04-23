@@ -10,7 +10,7 @@ class Login extends Controller
         $data['title'] = 'Login';
         $data['errors'] = [];
         $user = $this->model('User');
-    $subjectadmin = $this->model('SubjectAdmins');
+    $subjectadmin = $this->model('Subjectadmins');
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
             $password = $_POST['password'];
