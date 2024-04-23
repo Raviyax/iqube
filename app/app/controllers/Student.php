@@ -24,6 +24,7 @@ class Student extends Controller
                     'not_completed_study_materials' => $this->student->get_my_not_completed_study_materials(),
                     'studied_subunits' => $this->student->get_subunit_ids_of_purchased_materials(),
                     'progress_tracked_subunits' => $this->student->get_progress_tracked_subunits(),
+                    'mainunit_progresses' => $this->student->track_progress_for_my_mainunits(),
                 ];
                 $this->view('Student/Premium_dashboard', $data);
                 return;

@@ -199,8 +199,18 @@ class Students extends Model
         //get chapters for each subject
         $chapters = [];
         foreach ($my_subjects as $subject) {
-            $chapter = $this->query("SELECT * FROM chapters WHERE subject = :subject", ['subject' => $subject]);
+            $chapter = $this->query("SELECT * FROM chapters WHERE subject = :subject ORDER BY chapter_level_1", ['subject' => $subject]);
+
             if ($chapter) {
+                //get my score for each chapter and add it to the chapter object
+                foreach ($chapter as $c) {
+                    $score = $this->query("SELECT score FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id = :subunit_id", ['student_id' => $_SESSION['USER_DATA']['student_id'], 'subunit_id' => $c->id]);
+                    if ($score) {
+                        $c->score = $score[0]->score;
+                    }else{
+                        $c->score = 0;
+                    }
+                }
                 $chapters[] = $chapter;
             }
         }
@@ -1045,4 +1055,22 @@ class Students extends Model
             return false;
         }
     }
+
+    public function track_progress_for_my_mainunits()
+    {
+        $progress_tracker = new progress_tracker();
+        // Get all subunits for my subjects
+        $sub_units = $this->get_chapters_for_my_subjects();
+    
+   $progress_objects = $progress_tracker->calculateOverallProgress($sub_units);
+        if ($progress_objects) {
+            return $progress_objects;
+        } else {
+            return false;
+        }
+    
+    }
+    
+
+   
 }

@@ -12,5 +12,6 @@
     require_once "lib/Payhere.php";
 // Autoload Core Libraries
         require_once "models/User.php";
+        require_once "models/Progress_tracker.php";
 $init = new Core;
 ?>
