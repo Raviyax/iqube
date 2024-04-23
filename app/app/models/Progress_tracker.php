@@ -1,6 +1,6 @@
 <?php
 class progress_tracker extends Model{
-    function calculateOverallProgress($subunits_data) {
+    function calculateUnitOverallProgress($subunits_data) {
         $chapter_level_1_data = [];
     
         // Iterate through each subject
@@ -41,6 +41,39 @@ class progress_tracker extends Model{
         }
     
         return array_values($chapter_level_1_data);
+    }
+    
+
+    function calculateSubjectOverallProgress($subunits_data) {
+        $subject_progress = [];
+    
+        // Iterate through each subject
+        foreach ($subunits_data as $subject_data) {
+            $subject_name = $subject_data[0]->subject;
+            $total_weight = 0;
+            $total_score = 0;
+    
+            // Iterate through each subunit
+            foreach ($subject_data as $subunit) {
+                $total_weight += $subunit->Weight;
+                $total_score += $subunit->score;
+            }
+    
+            // Calculate overall progress percentage for the subject
+            if ($total_weight != 0) {
+                $overall_progress_percentage = ($total_score / $total_weight) * 100;
+            } else {
+                $overall_progress_percentage = 0; // Set progress to 0 if total weight is zero
+            }
+    
+            // Create object for subject progress
+            $subject_progress[] = [
+                'subject' => $subject_name,
+                'overall_progress_percentage' => $overall_progress_percentage
+            ];
+        }
+    
+        return $subject_progress;
     }
     
 

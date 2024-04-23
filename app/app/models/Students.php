@@ -1062,13 +1062,26 @@ class Students extends Model
         // Get all subunits for my subjects
         $sub_units = $this->get_chapters_for_my_subjects();
     
-   $progress_objects = $progress_tracker->calculateOverallProgress($sub_units);
+   $progress_objects = $progress_tracker->calculateUnitOverallProgress($sub_units);
         if ($progress_objects) {
             return $progress_objects;
         } else {
             return false;
         }
     
+    }
+
+    public function track_progress_for_my_subjects()
+    {
+        $progress_tracker = new progress_tracker();
+        // Get all subunits for my subjects
+        $sub_units = $this->get_chapters_for_my_subjects();
+        $progress_objects = $progress_tracker->calculateSubjectOverallProgress($sub_units);
+        if ($progress_objects) {
+            return $progress_objects;
+        } else {
+            return false;
+        }
     }
     
 

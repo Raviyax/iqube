@@ -5,6 +5,8 @@ $studied_subunits = $data['studied_subunits'];
 $progress_tracked_subunits = $data['progress_tracked_subunits'];
 //  print_r($subjects);
 $mainunit_progresses = $data['mainunit_progresses'];
+$subject_progresses = $data['subject_progresses'];
+print_r($subject_progresses);
 ?>
 
 <body>
@@ -55,7 +57,7 @@ $mainunit_progresses = $data['mainunit_progresses'];
                         }
                         // Output the progress
                         if ($currentProgress !== null) {
-                            echo '<div class="ongoing"><p>Sub Unit Overall Progress</p><div class="ongoing-bar ongoing1 wow slideInLeft animated" style="width:' . htmlspecialchars($currentProgress) . '%"><span class="ongoing-count">' . htmlspecialchars($currentProgress) . '%</span></div></div>';
+                            echo '<div class="ongoing"><p>Unit Overall Progress</p><div class="ongoing-bar ongoing1 wow slideInLeft animated" style="width:' . htmlspecialchars($currentProgress) . '%"><span class="ongoing-count">' . htmlspecialchars($currentProgress) . '%</span></div></div>';
                         }
                         echo '<table id="table">';
                         echo '<tr>';
