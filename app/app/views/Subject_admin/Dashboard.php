@@ -102,7 +102,8 @@ if (isset($data['video_count']) && is_array($data['video_count']) && count($data
                     <span>New Complains</span>
                     <p><?php echo $openSupportCount; ?></p>
                 </div>
-                <div class="box">
+                <div class="box" onclick="window.location.href = '<?php echo URLROOT; ?>/subjectadmin/tutor_requests'">
+              
                     <span>New Tutor Requests</span>
                     <p><?php echo $tutorRequests; ?></p>
                 </div>

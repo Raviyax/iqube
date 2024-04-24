@@ -107,6 +107,18 @@ if(isset($_POST['action'])) {
             echo 'error';
         }
     }
+
+    if($action == 'markFlagged') {
+        // Sanitize input
+        $tutor_id = intval($_POST['tutor_id']);
+        // Perform insertion and echo response
+        if($subjectadmins->markFlagged($tutor_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+    
 } else {
     // If action is not specified, return an error response
     echo 'error';

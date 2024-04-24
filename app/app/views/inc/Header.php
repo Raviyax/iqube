@@ -56,48 +56,7 @@
                     <a href="<?php echo URLROOT ?>/subjectadmin/profile" class="btn">View Profile</a>
                     <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
                 </div>
-                <div class="profile" id="notifications" style="overflow-y: scroll;">
-                    <?php
-                    if ($data['notifications']) {
-                        $notifications = $data['notifications'];
-                        if ($notifications['last_tutor_requests']) {
-                            echo '<div id="tutorrequests" style="margin-bottom: 10px;">';
-                            echo '<h3 class="heading">Tutor Requests</h3>';
-                            foreach ($notifications['last_tutor_requests'] as $last_tutor_request) {
-                                echo "<div class='notification'>";
-                                echo "<h3>" . $last_tutor_request['fname'] . " " . $last_tutor_request['lname'] . "</h3>";
-                                echo "<span>" . $last_tutor_request['requested_days_passed'] . " days ago</span>";
-                                echo "<div class='flex-btn'>";
-                                echo "<a href='' class='option-btn'>Dismiss</a>";
-                                echo "<a href='' class='option-btn'>View</a>";
-                                echo "</div>";
-                                echo "</div>";
-                            }
-                            echo '<a href="' . URLROOT . '/Subjectadmin/tutor_requests" class="option-btn">View All</a>';
-                            echo '</div>';
-                        }
-                    }
-                    ?>
-                    <div id="complains">
-                        <h3 class="heading">complains</h3>
-                        <div class="notification">
-                            <h3>Kasun Chamara</h3>
-                            <span>5 days ago</span>
-                            <div class="flex-btn">
-                                <a href="login.php" class="option-btn">login</a>
-                                <a href="register.php" class="option-btn">register</a>
-                            </div>
-                        </div>
-                        <div class="notification">
-                            <h3>Kasun Chamara</h3>
-                            <span>5 days ago</span>
-                            <div class="flex-btn">
-                                <a href="login.php" class="option-btn">login</a>
-                                <a href="register.php" class="option-btn">register</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          
             </section>
         </header>
         <!-- header section ends -->

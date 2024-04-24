@@ -462,4 +462,11 @@ ORDER BY
         $query = "SELECT COUNT(*) as count FROM video_content WHERE subject=? AND active=1";
         return $this->query($query, [$_SESSION['USER_DATA']['subject']]);
     }
+
+    public function markFlagged($tutor_id)
+    {
+        $query = "UPDATE tutors SET flagged=1 WHERE tutor_id=?";
+         $this->query($query, [$tutor_id]);
+         return true;
+    }
 }
