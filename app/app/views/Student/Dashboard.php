@@ -3,7 +3,6 @@
 $subjects = $data['chapters'];
 $studied_subunits = false;
 $progress_tracked_subunits = false;
-//  print_r($subjects);
 $mainunit_progresses = false;
 $subject_progresses = false;
 $subject_completions = false;
