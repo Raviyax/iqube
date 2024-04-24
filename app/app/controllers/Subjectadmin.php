@@ -188,7 +188,6 @@ class Subjectadmin extends Controller
                 'model_papers_by_subunit' => $this->Subjectadmin->get_model_paper_by_subunit($id),
                 'mcqs' => $this->Subjectadmin->get_mcqs_for_progress_tracking_by_subunit($id),
             ];
-
             $this->view('Subject_admin/About_subunit', $data);
         } else {
             echo "<script>alert('Subunit not found');</script>";

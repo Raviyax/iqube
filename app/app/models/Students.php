@@ -5,16 +5,15 @@ class Students extends Model
     public function complete_profile($data)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
-        //separate the subjects with a comma
         $subjects = implode(',', $data['subject']);
-        if ($this->query("UPDATE students SET subjects = :subjects WHERE student_id = $student_id", ['subjects' => $subjects])) {
-            //update completed to 1
-            $this->query("UPDATE students SET completed = 1 WHERE student_id = $student_id");
-            $_SESSION['USER_DATA']['completed'] = 1;
-        }
-        $_SESSION['USER_DATA']['subjects'] = $data['subject'];
+        $this->query("UPDATE students SET subjects = :subjects WHERE student_id = :student_id AND completed = 1", ['subjects' => $subjects, 'student_id' => $student_id]);
+        $_SESSION['USER_DATA']['subjects'] = $subjects;
+        $_SESSION['USER_DATA']['completed'] = 1;
+
         return true;
     }
+        
+    
     public function insert_to_premium_students($data)
     {
         $this->query("INSERT INTO premium_students (student_id, fname, lname, cno, address, city) VALUES (:student_id, :fname, :lname, :cno, :address, :city)", [
@@ -200,7 +199,6 @@ class Students extends Model
         $chapters = [];
         foreach ($my_subjects as $subject) {
             $chapter = $this->query("SELECT * FROM chapters WHERE subject = :subject ORDER BY chapter_level_1", ['subject' => $subject]);
-
             if ($chapter) {
                 //get my score for each chapter and add it to the chapter object
                 foreach ($chapter as $c) {
@@ -735,7 +733,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function is_subunit_available_and_belong_to_my_subjects($subunit_id)
     {
         $subunit = $this->query("SELECT * FROM chapters WHERE id = :subunit_id", ['subunit_id' => $subunit_id]);
@@ -750,7 +747,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_subunit_overview($subunit_id)
     {
         $subunit = $this->query("SELECT * FROM chapters WHERE id = :subunit_id", ['subunit_id' => $subunit_id]);
@@ -760,7 +756,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function is_progress_tracking_started($subunit_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -775,7 +770,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function is_progress_tracking_completed($subunit_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -790,8 +784,6 @@ class Students extends Model
             return false;
         }
     }
-
-
     public function is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -811,7 +803,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function start_progress_tracking($subunit_id)
     {
         //check whether there is a previous attempt
@@ -827,7 +818,6 @@ class Students extends Model
             return true;
         }
     }
-
     public function get_mcqs_for_progress_tracking($subunit_id)
     {
         $mcqs = $this->query("SELECT * FROM mcqs_for_progress_tracking WHERE subunit_id = :subunit_id", ['subunit_id' => $subunit_id]);
@@ -837,7 +827,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function submit_progress_tracking_answers($data)
     {
         // Extract data from the input
@@ -862,7 +851,6 @@ class Students extends Model
             return false; // Failure
         }
     }
-
     public function check_progress_tracking_answers($data)
     {
         $subunit_id = $data['subunit_id'];
@@ -877,7 +865,6 @@ class Students extends Model
         $correct_answers = ($correct_answers / $total_questions) * 100;
         return $correct_answers;
     }
-
     public function get_my_score_for_subunit($subunit_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -892,7 +879,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_my_purchased_videos_by_subunit_id($subunit_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -920,7 +906,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_my_purchased_model_papers_by_subunit_id($subunit_id)
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -948,79 +933,88 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_videos_by_subunit_not_purchased($subunit_id)
     {
-        //get all videos that covering chapters include the subunit_id
-        $videos = $this->query("SELECT *
-        FROM video_content
-        WHERE CONCAT('[', covering_chapters, ']') LIKE '%[{$subunit_id}]%'");
-        //get my purchased videos
-        $student_id = $_SESSION['USER_DATA']['student_id'];
-        $purchased_videos = $this->query("SELECT video_content_id FROM purchased_videos WHERE student_id = :student_id", ['student_id' => $student_id]);
-        //remove my purchased videos from the videos array
-        if ($purchased_videos && $videos) {
-            foreach ($purchased_videos as $purchased_video) {
-                foreach ($videos as $key => $video) {
-                    if ($video->video_content_id == $purchased_video->video_content_id) {
-                        unset($videos[$key]);
+        try {
+            // Get all videos covering chapters that include the subunit_id
+            $videos = $this->query("SELECT * FROM video_content WHERE CONCAT('[', covering_chapters, ']') LIKE '%[{$subunit_id}]%'");
+    
+            if (!$videos) {
+                throw new Exception("Failed to fetch videos.");
+            }
+    
+            // Get purchased videos by the current student
+            $student_id = $_SESSION['USER_DATA']['student_id'];
+            $purchased_videos = $this->query("SELECT video_content_id FROM purchased_videos WHERE student_id = :student_id", ['student_id' => $student_id]);
+    
+            // If there are purchased videos, remove them from the videos array
+            if ($purchased_videos) {
+                foreach ($purchased_videos as $purchased_video) {
+                    foreach ($videos as $key => $video) {
+                        if ($video->video_content_id == $purchased_video->video_content_id) {
+                            unset($videos[$key]);
+                        }
                     }
                 }
             }
-        } else {
-            return false;
-        }
-
-        //get tutors name for each video
-        foreach ($videos as $video) {
-            $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video->tutor_id]);
-            if ($tutor) {
-                $video->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+    
+            // Get tutors' names for each video
+            foreach ($videos as $video) {
+                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $video->tutor_id]);
+                if ($tutor) {
+                    $video->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                }
             }
-        }
-        if ($videos) {
+    
             return $videos;
-        } else {
+        } catch (Exception $e) {
+            // Log or handle the error as needed
+            error_log("Error in get_videos_by_subunit_not_purchased: " . $e->getMessage());
             return false;
         }
     }
-
+    
     public function get_model_papers_by_subunit_not_purchased($subunit_id)
     {
-        //get all model papers that covering chapters include the subunit_id
-        $model_papers = $this->query("SELECT *
-        FROM model_paper_content
-        WHERE CONCAT('[', covering_chapters, ']') LIKE '%[{$subunit_id}]%'");
-        //get my purchased model papers
-        $student_id = $_SESSION['USER_DATA']['student_id'];
-        $purchased_model_papers = $this->query("SELECT model_paper_content_id FROM purchased_model_papers WHERE student_id = :student_id", ['student_id' => $student_id]);
-        //remove my purchased model papers from the model papers array
-        if ($purchased_model_papers && $model_papers) {
-            foreach ($purchased_model_papers as $purchased_model_paper) {
-                foreach ($model_papers as $key => $model_paper) {
-                    if ($model_paper->model_paper_content_id == $purchased_model_paper->model_paper_content_id) {
-                        unset($model_papers[$key]);
+        try {
+            // Get all model papers covering chapters that include the subunit_id
+            $model_papers = $this->query("SELECT * FROM model_paper_content WHERE CONCAT('[', covering_chapters, ']') LIKE '%[{$subunit_id}]%'");
+    
+            if (!$model_papers) {
+                throw new Exception("Failed to fetch model papers.");
+            }
+    
+            // Get purchased model papers by the current student
+            $student_id = $_SESSION['USER_DATA']['student_id'];
+            $purchased_model_papers = $this->query("SELECT model_paper_content_id FROM purchased_model_papers WHERE student_id = :student_id", ['student_id' => $student_id]);
+    
+            // If there are purchased model papers, remove them from the model papers array
+            if ($purchased_model_papers) {
+                foreach ($purchased_model_papers as $purchased_model_paper) {
+                    foreach ($model_papers as $key => $model_paper) {
+                        if ($model_paper->model_paper_content_id == $purchased_model_paper->model_paper_content_id) {
+                            unset($model_papers[$key]);
+                        }
                     }
                 }
             }
-        } else {
-            return false;
-        }
-
-        //get tutors name for each model paper
-        foreach ($model_papers as $model_paper) {
-            $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper->tutor_id]);
-            if ($tutor) {
-                $model_paper->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+    
+            // Get tutors' names for each model paper
+            foreach ($model_papers as $model_paper) {
+                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper->tutor_id]);
+                if ($tutor) {
+                    $model_paper->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                }
             }
-        }
-        if ($model_papers) {
+    
             return $model_papers;
-        } else {
+        } catch (Exception $e) {
+            // Log or handle the error as needed
+            error_log("Error in get_model_papers_by_subunit_not_purchased: " . $e->getMessage());
             return false;
         }
     }
-
+    
     public function get_subunit_ids_of_purchased_materials()
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -1044,7 +1038,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_progress_tracked_subunits()
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
@@ -1055,13 +1048,11 @@ class Students extends Model
             return false;
         }
     }
-
     public function track_progress_for_my_mainunits()
     {
         $progress_tracker = new progress_tracker();
         // Get all subunits for my subjects
         $sub_units = $this->get_chapters_for_my_subjects();
-
         $progress_objects = $progress_tracker->calculateUnitOverallProgress($sub_units);
         if ($progress_objects) {
             return $progress_objects;
@@ -1069,7 +1060,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function track_progress_for_my_subjects()
     {
         $progress_tracker = new progress_tracker();
@@ -1082,7 +1072,6 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_overall_completion_of_subject($subject)
     {
         //get all subunits for the subject
@@ -1113,7 +1102,6 @@ class Students extends Model
                 $subject_object->subject = $subject;
                 $subject_object->percentage = $percentage;
                 return $subject_object;
-                
             } else {
                 //create a object with subject and percentage 0
                 $subject_object = new stdClass();
@@ -1127,12 +1115,8 @@ class Students extends Model
             $subject_object->subject = $subject;
             $subject_object->percentage = 0;
             return $subject_object;
-            
         }
-            
-      
     }
-
     public function get_overall_completion_of_subjects()
     {
         //get my subject names
@@ -1140,9 +1124,7 @@ class Students extends Model
         $subject_objects = [];
         foreach ($my_subjects as $subject) {
             $subject_object = $this->get_overall_completion_of_subject($subject);
-           
                 $subject_objects[] = $subject_object;
-          
         }
         if ($subject_objects) {
             return $subject_objects;
@@ -1150,60 +1132,42 @@ class Students extends Model
             return false;
         }
     }
-
     public function get_total_weights_of_my_subjects()
     {
         // Get my subject names
         $my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
         $organized_result = [];
-    
         foreach ($my_subjects as $subject) {
             $chapter_level_1s = $this->query("SELECT DISTINCT chapter_level_1 FROM chapters WHERE subject = :subject", ['subject' => $subject]);
-    
             if ($chapter_level_1s) {
                 $subject_data = [];
                 $total_weight_subject = 0;
-    
                 // Calculate total weight of all chapter_level_1s within the subject
                 foreach ($chapter_level_1s as $chapter_level_1) {
                     $chapter_level_2s = $this->query("SELECT * FROM chapters WHERE subject = :subject AND chapter_level_1 = :chapter_level_1", ['subject' => $subject, 'chapter_level_1' => $chapter_level_1->chapter_level_1]);
-    
                     if ($chapter_level_2s) {
                         $total_weight = 0;
-    
                         foreach ($chapter_level_2s as $chapter_level_2) {
                             $total_weight += $chapter_level_2->Weight;
                         }
-    
                         $total_weight_subject += $total_weight;
-    
                         $unit_object = new stdClass();
                         $unit_object->unit = $chapter_level_1->chapter_level_1;
                         $unit_object->total_weight = $total_weight;
-    
                         $subject_data[] = $unit_object;
                     }
                 }
-    
                 // Calculate weight percentage and adjust total weights if total weight is not 100%
-             
-    
                 // Add subject data to organized result
                 if (!empty($subject_data)) {
                     $organized_result[$subject] = $subject_data;
                 }
             }
         }
-    
         if (!empty($organized_result)) {
            return $organized_result;
         } else {
             return false;
         }
     }
-    
-    
-    
-
-    
 }

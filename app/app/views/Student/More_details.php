@@ -4,12 +4,7 @@
         <h1 class="heading">We Need to Know Few Details About You</h1>
         <p>Subject/s you are planing to work on<span>* Select 1 to 3 subjects</span></p>
         <br>
-        <!-- <div style="background-color: red; width:100%; padding:10px; border-radius:5px;">
-                <p style="color: black; ">
-                    <b>errorrrrrrrrr</b>
-                </p>
-            </div>
-            <br> -->
+
             <?php if(isset($data['errors']['subjects'])):?>
                 <div style="background-color: red; width:100%; padding:10px; border-radius:5px;">
                     <p style="color: black; ">
@@ -27,13 +22,13 @@
         </header>
         <div class="flex">
             <div class="col">
-                <div class="chaptercontainer">
+                <div class="chaptercontainer" >
                     <?php
                     $subjects = $data['subjects'];
                     foreach ($subjects as $subject) {
-                        echo '<div class="col">';
+                        echo '<div class="col" style="display: flex;">';
                         echo '<input type="checkbox" name="subject[]" value="' . $subject->subject_id . '" id="' . $subject->subject_id . '">';
-                        echo '<label for="' . $subject->subject_id . '">' . $subject->subject_name . '</label>';
+                        echo '<label style="margin-left: 5px;" for="' . $subject->subject_id . '">' . ucfirst($subject->subject_name) . '</label>';
                         echo '</div>';
                     }
                     ?>

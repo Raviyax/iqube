@@ -60,6 +60,8 @@ $chapters = $model_paper->chapters;
                     }
                     ?>
                 </div>
+                <?php if(Auth::is_premium()){ ?>
+                    
                 <?php if (!$data['status'] == 'purchased') { ?>
                     <form action="<?php echo URLROOT; ?>/student/purchase_model_paper" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="model_paper_id" value="<?php echo  $model_paper->model_paper_content_id; ?>">
@@ -74,6 +76,12 @@ $chapters = $model_paper->chapters;
                 <?php if ($data['completed']) { ?>
                     <a href="<?php echo URLROOT; ?>/student/view_model_paper_answers/<?php echo $model_paper->model_paper_content_id; ?>" class="btn" style="width: fit-content;">View Answers <i class="fa-solid fa-eye"></i></a>
                 <?php } ?>
+                <?php } else { ?>
+                <button type="submit" class="btn" style="width: fit-content;  opacity: 0.5;"><?php echo $data['model_paper']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
+                <a href="<?php echo URLROOT ?>/Student/purchase_premium" style="width: fit-content; " class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
+                <?php } ?>
+
+
             </div>
         </div>
     </div>

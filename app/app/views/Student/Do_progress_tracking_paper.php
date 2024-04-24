@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,16 +22,13 @@
             border-radius: 5px;
             font-size: 16px;
         }
-
         section {
             margin-bottom: 20px;
         }
-
         .col p {
             font-weight: bold;
             margin-bottom: 10px;
         }
-
         .col input[type="radio"] {
             margin-right: 10px;
         }
@@ -40,7 +36,6 @@
 </head>
 <?php $subunit = $data['subunit']; ?>
 <?php $mcqs = $data['mcqs']; ?>
-
 <body>
     <div id="timer"></div>
     <section class="courses">
@@ -98,7 +93,6 @@
                     seconds = timerInSeconds % 60;
                 }
             }, 1000);
-
             $(document).on('contextmenu', function(e) {
                 e.preventDefault();
             });
@@ -117,5 +111,4 @@
         });
     </script>
 </body>
-
 </html>

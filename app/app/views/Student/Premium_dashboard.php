@@ -9,86 +9,48 @@ $subject_progresses = $data['subject_progresses'];
 $subject_completions = $data['subject_completions'];
 $unit_weights = $data['unit_weights'];
 ?>
-
-
-
-
 <body>
-
-
-
-
-
-
-
     <section class="dashboard">
-
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
         <div style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; padding: 20px;">
             <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:20px;">
-
                 <button id="" class="button-17">My Summary</button>
-
             </div>
             <div class="box-container" style="display:flex;">
-
-
                 <div class="box" style="width:500px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
                     <div id="overallProgress" style="height: 200px; width: 100%;"></div>
-
-
                 </div>
-
                 <div class="box" style="width:500px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
                     <div id="subject_completions" style="height:200px; width: 100%;"></div>
-
-
                 </div>
-
-
             </div>
             </div>
             <div style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; padding: 20px; margin-top: 10px;">
             <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:20px; margin-top:20px;">
-
                 <button id="" class="button-17">About My Subjects</button>
-
             </div>
             <div class="box-container" style="display:flex;">
-
                 <?php foreach ($unit_weights as $subject => $weights) : ?>
                     <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; width:400px;">
                         <div id="<?php echo $subject ?>Container" style="height: 200px; width: 100%;"></div>
-
-
                     </div>
-
-
-
-
                 <?php endforeach; ?>
-
             </div>
             </div>
         </section>
-
         <?php if ($not_completed_study_materials) { ?>
             <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
                 <h1 class="heading">Ongoing Studies</h1>
                 <div class="box-container">
-
                     <?php foreach ($not_completed_study_materials as $not_completed_study_material) : ?>
                         <div class="box" id="<?php echo $not_completed_study_material->id; ?>" data-type="where_am_i">
                             <h2><?php echo $not_completed_study_material->chapter_level_1; ?></h2>
                             <p><?php echo $not_completed_study_material->chapter_level_2; ?></p>
                         </div>
                     <?php endforeach; ?>
-
                 </div>
             </section>
         <?php } ?>
-
-
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
             <h1 class="heading">Where am I</h1>
             <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center;">
@@ -130,11 +92,10 @@ $unit_weights = $data['unit_weights'];
                     echo '<tr onclick="window.location.href = \'' . htmlspecialchars(URLROOT . '/student/where_am_i/' . $chapter->id) . '\'">';
                     echo '<td>' . htmlspecialchars($chapter->chapter_level_2) . '</td>';
                     echo '<td style="display:flex; flex-direction:horizontal;">';
-
                     $studied = false;
-                    if ($studied_subunits == null) {
+                    if (!$studied_subunits) {
                         echo '<button class="button-34" style="background-color:red" role="button">Not Studied</button>';
-                    }
+                    }else{
                     foreach ($studied_subunits as $studied_subunit) {
                         if ($studied_subunit == $chapter->id) {
                             echo '<button class="button-34" style="background-color:green" role="button">Studied</button>';
@@ -142,10 +103,10 @@ $unit_weights = $data['unit_weights'];
                             break;
                         }
                     }
+                    }
                     if (!$studied) {
                         echo '<button class="button-34" style="background-color:red" role="button">Not Studied</button>';
                     }
-
                     $progress_tracked = false;
                     if ($progress_tracked_subunits == null) {
                         echo '<button class="button-34" style="background-color:red" role="button">Progress Not Tracked</button>';
@@ -161,7 +122,6 @@ $unit_weights = $data['unit_weights'];
                             echo '<button class="button-34" style="background-color:red" role="button">Progress Not Tracked</button>';
                         }
                     }
-
                     echo '</td>';
                     echo '<td>' . htmlspecialchars($chapter->score) . '%</td>';
                     echo '</tr>';
@@ -174,14 +134,11 @@ $unit_weights = $data['unit_weights'];
             }
             ?>
         </section>
-
     </section>
-
     <?php $this->view('inc/Footer') ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-
 <script>
     //on click of div class box
     $('.box').click(function() {
@@ -200,14 +157,10 @@ $unit_weights = $data['unit_weights'];
             $('.courses#<?php echo $subjectData[0]->subject; ?>').show();
         });
     <?php endforeach; ?>
-
-
     window.onload = function() {
-
         // Assuming $subject_progresses is already defined
         var subjectProgresses = <?php echo json_encode($subject_progresses); ?>;
         var dataPoints = [];
-
         // Loop through each subject progress
         subjectProgresses.forEach(function(subject) {
             dataPoints.push({
@@ -215,7 +168,6 @@ $unit_weights = $data['unit_weights'];
                 label: subject.subject
             });
         });
-
         var chart = new CanvasJS.Chart("overallProgress", {
             animationEnabled: true,
             title: {
@@ -238,14 +190,12 @@ $unit_weights = $data['unit_weights'];
             }]
         });
         chart.render();
-
         var chart2 = new CanvasJS.Chart("subject_completions", {
             animationEnabled: true,
             title: {
                 text: 'My Overall Completion'
             },
             theme: "light2", //"light1", "dark1", "dark2"
-
             axisY: {
                 interval: 20,
                 suffix: "%"
@@ -283,7 +233,6 @@ $unit_weights = $data['unit_weights'];
             ]
         });
         chart2.render();
-
         //kelawena eka
         function generateChart(subject, weights) {
             var dataPoints = [];
@@ -295,7 +244,6 @@ $unit_weights = $data['unit_weights'];
                     label: unit.unit
                 });
             });
-
             // Create chart
             var chart3 = new CanvasJS.Chart(subject + "Container", {
                 animationEnabled: true,
@@ -313,10 +261,8 @@ $unit_weights = $data['unit_weights'];
             });
             chart3.render();
         }
-
         // Define data
         var unitWeights = <?php echo json_encode($unit_weights); ?>;
-
         // Iterate over subjects
         for (var subject in unitWeights) {
             if (unitWeights.hasOwnProperty(subject)) {
@@ -326,5 +272,4 @@ $unit_weights = $data['unit_weights'];
         }
     }
 </script>
-
 </html>

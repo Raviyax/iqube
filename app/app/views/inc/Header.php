@@ -279,8 +279,7 @@
             </div>
             <div class="profile">
                 <img src="<?php echo URLROOT ?>/assets/img/Landing/iqube.png" alt="">
-                <!-- <h3></h3>
-        <span></span> -->
+      
                 <a href="#" class="btn">About Us</a>
             </div>
             <nav class="navbar">

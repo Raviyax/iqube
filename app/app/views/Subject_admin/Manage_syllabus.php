@@ -57,9 +57,7 @@
     <?php } else { 
               echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
           } 
-
       ?>
-    
 </section>
 <script>
   //add a new empty row for the current table when addnewsubunit button is clicked

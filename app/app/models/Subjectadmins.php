@@ -317,7 +317,6 @@ ORDER BY
         $sql = "SELECT * FROM model_paper_content WHERE CONCAT('[', covering_chapters, ']') LIKE ?";
         $id = '%[' . $id . ']%';
         $model_papers = $this->query($sql, [$id]);
-
         if ($model_papers) {
             //add tutor name to each model paper
             foreach ($model_papers as $model_paper) {
@@ -329,7 +328,6 @@ ORDER BY
             false;
         }
     }
-
     public function get_mcqs_for_progress_tracking_by_subunit($id)
     {
         $mcqs = $this->query("SELECT * FROM mcqs_for_progress_tracking WHERE subunit_id=?", [$id]);
@@ -339,7 +337,6 @@ ORDER BY
             return false;
         }
     }
-
     public function save_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
     {
         $this->query("UPDATE mcqs_for_progress_tracking SET question=?, option1=?, option2=?, option3=?, option4=?, option5=?, correct=? WHERE mcq_id=?", [
@@ -360,7 +357,6 @@ ORDER BY
         ]);
         return true;
     }
-
     public function delete_mcq($mcq_id)
     {
         $this->query("DELETE FROM mcqs_for_progress_tracking WHERE mcq_id=?", [$mcq_id]);
@@ -372,7 +368,6 @@ ORDER BY
         ]);
         return true;
     }
-
     public function add_mcq($subunit_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
     {
         $this->query("INSERT INTO mcqs_for_progress_tracking (subunit_id, question, option1, option2, option3, option4, option5, correct) VALUES (:subunit_id, :question, :option1, :option2, :option3, :option4, :option5, :correct)", [
@@ -393,7 +388,6 @@ ORDER BY
         ]);
         return true;
     }
-
     public function save_duration($id, $duration)
     {
         $this->query("UPDATE chapters SET model_paper_duration=? WHERE id=?", [

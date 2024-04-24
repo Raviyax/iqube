@@ -16,6 +16,10 @@ class Student extends Controller
     public function index()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (Auth::is_premium()) {
                 $this->student->get_total_weights_of_my_subjects();
                 $data = [
@@ -28,7 +32,6 @@ class Student extends Controller
                     'mainunit_progresses' => $this->student->track_progress_for_my_mainunits(),
                     'subject_progresses' => $this->student->track_progress_for_my_subjects(),
                     'subject_completions' => $this->student->get_overall_completion_of_subjects(),
-                    'subject_weights' => $this->student->get_total_weights_of_my_subjects(),
                     'unit_weights' => $this->student->get_total_weights_of_my_subjects(),
                 ];
                 $this->view('Student/Premium_dashboard', $data);
@@ -36,7 +39,10 @@ class Student extends Controller
             }
             $data = [
                 'title' => 'Student',
-                'view' => 'Dashboard'
+                'view' => 'Dashboard',
+                'chapters' => $this->student->get_chapters_for_my_subjects(),
+               
+                'unit_weights' => $this->student->get_total_weights_of_my_subjects(),
             ];
             $this->view('Student/Dashboard', $data);
         } else {
@@ -56,7 +62,11 @@ class Student extends Controller
                 return;
             }
         }
-        if (Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium() && Auth::is_completed()) {
+        if (Auth::is_logged_in() && Auth::is_student() && !Auth::is_premium()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Purchase Premium',
@@ -104,7 +114,11 @@ class Student extends Controller
     }
     public function study_materials()
     {
-        if (Auth::is_logged_in() && Auth::is_student() && Auth::is_completed()) {
+        if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Study Materials',
@@ -124,14 +138,14 @@ class Student extends Controller
                     'view' => 'More Details',
                     'subjects' => $this->user->query("SELECT * FROM subjects"),
                 ];
-                if (isset($_POST['proceed'])) {
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proceed'])) {
                     if ($this->student->validate_complete_profile($_POST)) {
                         if ($this->student->complete_profile($_POST)) {
                             redirect('/Student');
                             return;
                         }
                     } else {
-                        $data['errors'] = $this->student->errors;
+                        $data['errors'] = $this->student->get_errors();
                     }
                 }
                 $this->view('Student/More_details', $data);
@@ -142,9 +156,14 @@ class Student extends Controller
             redirect('/Login');
         }
     }
+    
     public function profile()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Profile',
@@ -157,33 +176,13 @@ class Student extends Controller
             redirect('/Login');
         }
     }
-    public function syllabus()
-    {
-        if (Auth::is_logged_in() && Auth::is_student()) {
-            $data = [
-                'title' => 'Student',
-                'view' => 'Syllabus',
-            ];
-            $this->view('Student/Syllabus', $data);
-        } else {
-            redirect('/Login');
-        }
-    }
-    public function threads()
-    {
-        if (Auth::is_logged_in() && Auth::is_student()) {
-            $data = [
-                'title' => 'Student',
-                'view' => 'Threads',
-            ];
-            $this->view('Student/Threads', $data);
-        } else {
-            redirect('/Login');
-        }
-    }
     public function tutors()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Tutors',
@@ -211,17 +210,25 @@ class Student extends Controller
             echo "Invalid verification link";
         }
     }
-    public function chat()
-    {
-        if (Auth::is_logged_in() && Auth::is_student()) {
-            $this->view('Student/Chat');
-        } else {
-            redirect('/Login');
-        }
-    }
+    // public function chat()
+    // {
+    //     if (Auth::is_logged_in() && Auth::is_student()) {
+    //         $this->view('Student/Chat');
+    //     } else {
+    //         redirect('/Login');
+    //     }
+    // }
     public function tutor_profile($id)
     {
+        if (!$id) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Tutor',
                 'view' => 'Tutor Profile',
@@ -234,6 +241,10 @@ class Student extends Controller
     }
     public function video_thumbnail($thumbnail)
     {
+        if (!$thumbnail) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
             $this->retrive_media($thumbnail, '/uploads/video_content/thumbnails/');
         } else {
@@ -242,6 +253,10 @@ class Student extends Controller
     }
     public function model_paper_thumbnail($thumbnail)
     {
+        if (!$thumbnail) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
             $this->retrive_media($thumbnail, '/uploads/model_papers/thumbnails/');
         } else {
@@ -250,7 +265,15 @@ class Student extends Controller
     }
     public function video_overview($id)
     {
+        if (!$id) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Video Overview',
@@ -264,7 +287,15 @@ class Student extends Controller
     }
     public function model_paper_overview($id)
     {
+        if (!$id) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $data = [
                 'title' => 'Student',
                 'view' => 'Model Paper Overview',
@@ -278,8 +309,17 @@ class Student extends Controller
         }
     }
     public function purchase_video()
+
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_premium()) {
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (isset($_POST['video_id'])) {
                 if ($this->student->is_video_purchased($_POST['video_id'])) {
                     redirect('/Student');
@@ -311,6 +351,14 @@ class Student extends Controller
     public function purchase_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_premium()) {
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (isset($_POST['model_paper_id'])) {
                 if ($this->student->is_model_paper_purchased($_POST['model_paper_id'])) {
                     redirect('/Student');
@@ -342,6 +390,14 @@ class Student extends Controller
     public function do_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_premium()) {
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (isset($_POST['model_paper_id']) || isset($_GET['model_paper_id'])) {
                 $modelPaperId = isset($_POST['model_paper_id']) ? $_POST['model_paper_id'] : $_GET['model_paper_id'];
                 if ($this->student->is_model_paper_purchased($modelPaperId)) {
@@ -377,6 +433,14 @@ class Student extends Controller
     public function submit_model_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_premium()) {
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (isset($_POST['model_paper_content_id'])) {
                 $modelPaperId = $_POST['model_paper_content_id'];
                 if ($this->student->is_model_paper_purchased($modelPaperId) && $this->student->is_model_paper_started($modelPaperId)) {
@@ -394,7 +458,19 @@ class Student extends Controller
     }
     public function view_model_paper_answers($modelPaperId)
     {
+        if (!$modelPaperId) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_premium()) {
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if ($this->student->is_model_paper_purchased($modelPaperId)) {
                 if ($this->student->is_model_paper_completed($modelPaperId)) {
                     $data = [
@@ -414,7 +490,19 @@ class Student extends Controller
     }
     public function watch_video($id)
     {
+        if (!$id) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_premium()) {
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if ($this->student->is_video_purchased($id)) {
                 $data = [
                     'title' => 'Student',
@@ -432,7 +520,19 @@ class Student extends Controller
     }
     public function retrieve_video($video)
     {
+        if (!$video) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if(!Auth::is_premium()){
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             $this->retrive_media($video, '/uploads/video_content/videos/');
         } else {
             $this->view('Noaccess');
@@ -440,7 +540,19 @@ class Student extends Controller
     }
     public function do_questions_of_video($videoId)
     {
+        if (!$videoId) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if(!Auth::is_premium()){
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if ($this->student->is_video_purchased($videoId)) {
                 $data['video'] = $this->student->get_video($videoId);
                 $data['questions'] = $this->student->get_video_mcqs($videoId);
@@ -453,6 +565,14 @@ class Student extends Controller
     public function submit_video_answers()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if(!Auth::is_premium()){
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (isset($_POST['video_content_id'])) {
                 $videoId = $_POST['video_content_id'];
                 if ($this->student->is_video_purchased($videoId)) {
@@ -469,7 +589,19 @@ class Student extends Controller
     }
     public function video_results($videoId)
     {
+        if (!$videoId) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if(!Auth::is_premium()){
+                redirect('/Student/purchase_premium');
+                return;
+            }
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if ($this->student->is_video_purchased($videoId)) {
                 if ($this->student->is_video_completed($videoId)) {
                     $data = [
@@ -485,10 +617,18 @@ class Student extends Controller
         }
         $this->view('Noaccess');
     }
-
     public function where_am_i($subunit_id)
     {
+        if (!$subunit_id) {
+            echo "Invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
+        
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if ($this->student->is_subunit_available_and_belong_to_my_subjects($subunit_id)) {
                 $data = [
                     'title' => 'Student',
@@ -500,7 +640,6 @@ class Student extends Controller
                     'my_model_papers' => $this->student->get_my_purchased_model_papers_by_subunit_id($subunit_id),
                     'not_purchased_videos' => $this->student->get_videos_by_subunit_not_purchased($subunit_id),
                     'not_purchased_model_papers' => $this->student->get_model_papers_by_subunit_not_purchased($subunit_id),
-
                 ];
                 $this->view('Student/Where_am_i_on_subunit', $data);
             } else {
@@ -510,35 +649,37 @@ class Student extends Controller
             redirect('/Login');
         }
     }
-
     public function do_progress_tracking_paper($subunit_id)
     {
+        if (!$subunit_id) {
+            echo "Invalid request";
+            return;
+        }
         try {
             // Check if $subunit_id is valid
             if (!isset($subunit_id) || !is_numeric($subunit_id) || $subunit_id == null) {
                 throw new Exception("Invalid request");
             }
-    
             // Check if user is logged in and is a student
             if (!Auth::is_logged_in() || !Auth::is_student()) {
                 throw new Exception("You are not authorized to access this page. Please log in as a student.");
             }
-    
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             // Check if progress tracking is available for this subunit
             if ($this->student->get_subunit_overview($subunit_id)->model_paper_duration <= 0) {
                 throw new Exception("Progress tracking is not available for this subunit.");
             }
-    
             // Check if the subunit belongs to the user's subjects
             if (!$this->student->is_subunit_available_and_belong_to_my_subjects($subunit_id)) {
                 throw new Exception("You are not allowed to access this page.");
             }
-    
             // Check if the last attempt date for progress tracking is more than 24 hours ago
             if ($this->student->is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id)) {
                 throw new Exception("You have already attempted this paper. You can attempt it again after 24 hours.");
             }
-    
             // Check if 'start' parameter is provided in the URL
             if (isset($_GET['start']) && $_GET['start'] == 'true') {
                 // Start progress tracking
@@ -546,7 +687,6 @@ class Student extends Controller
                     throw new Exception("Failed to start progress tracking.");
                 }
             }
-    
             // Load the appropriate view based on the conditions
             if (isset($_GET['start']) && $_GET['start'] == 'true') {
                 $data = [
@@ -568,10 +708,13 @@ class Student extends Controller
             echo $e->getMessage(); // Output the error message
         }
     }
-
     public function submit_progress_tracking_paper()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+            if (!Auth::is_completed()) {
+                redirect('/Student/more_details');
+                return;
+            }
             if (isset($_POST['subunit_id'])) {
                 $subunitId = $_POST['subunit_id'];
                 if ($this->student->is_subunit_available_and_belong_to_my_subjects($subunitId)) {
@@ -586,6 +729,4 @@ class Student extends Controller
         }
         $this->view('Noaccess');
     }
-     
-
 }
