@@ -49,7 +49,7 @@
 <body>
     <div class="container">
         <div class="loader"></div>
-        <h1>Thank You for Verifying Your Email</h1>
+        <h1>Thank You for Verifying Your Email!</h1>
         <p>You will be redirected to the login page shortly.</p>
         <p>If you are not redirected, click <a href="YOUR_LOGIN_PAGE_URL">here</a> to go to the login page.</p>
     </div>
