@@ -475,7 +475,7 @@ class Tutors extends Model
         }
         return false;
     }
-    public function validate_insert_to_questions_for_model_paper($data,$essay_questions)
+    public function validate_insert_to_questions_for_model_paper($data)
     {
         $this->errors = [];
         $i = 1;
@@ -503,11 +503,7 @@ class Tutors extends Model
             }
             $i++;
         }
-        if (empty($essay_questions)) {
-            $this->errors['essay_questions_err'] = '*Please upload a document';
-        } elseif ($essay_questions['size'] > 1000000) {
-            $this->errors['essay_questions_err'] = '*File size too large';
-        }
+  
         if (empty($this->errors)) {
             return true;
         }
@@ -698,5 +694,7 @@ class Tutors extends Model
         return $earnings;
 
     }
+
+   
 
 }

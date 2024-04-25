@@ -36,10 +36,7 @@
 <button onclick="addNewMcq()" class="btn" style="width: fit-content;" >Add New Question <i class="fa-solid fa-circle-plus"></i></button>
 </div>
 <!-- upload document with essay questions -->
-<section style="display: block;">
-<p>Upload Document with Essay Questions<span>*</span></p>
-<input type="file" name="essay_questions" accept="application/pdf" class="box" required>
-</section>
+
   <div style="display: flex; flex-direction:row-reverse">
   <button type="submit" name="submit-questions" class="btn" style ="width: fit-content;">Submit <i class="fa-solid fa-file-arrow-up"></i></button>
   </div>
