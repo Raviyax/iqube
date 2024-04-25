@@ -1,9 +1,10 @@
 <?php $this->view('inc/Header',$data) ?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
+
    <h1 class="heading">My Profile</h1>
    <div class="details">
       <div class="tutor">
-         <img src=<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?> alt="profile" >
+      <img src=<?php echo URLROOT."/Tutor/userimage/".$_SESSION['USER_DATA']['image'];?> alt="profile" >
          <h3><?php echo ucwords($_SESSION['USER_DATA']['fname']." ".$_SESSION['USER_DATA']['lname']);?></h3>
             <span></span>
          <a class="inline-btn" onclick="openedit()"><i class="fa-solid fa-user-pen" ></i> Edit Profile</a>
@@ -24,7 +25,8 @@
             </div>
             <div class="box">
                 <span>Joined At</span>
-                <p><?php echo  $_SESSION['USER_DATA']['created_at'];?></p>
+                <p><?php $date_only = date('Y-m-d', strtotime( $_SESSION['USER_DATA']['approved_date'])); echo $date_only; ?><p>
+
             </div>
          <div class="box">
             <span>Email</span>
@@ -49,7 +51,7 @@
             </div>
             <h1 class="heading">Edit My Profile</h1>
             <div class="profile">
-<img src="<?php echo "data:image/jpg;base64,".$_SESSION['USER_DATA']['image'];?>" alt="">
+<img src="<?php echo URLROOT."/Tutor/userimage/".$_SESSION['USER_DATA']['image'];?>" alt="">
  <p style="text-align: center;">Change Profile Picture</p>
       <input type="file" name="image" accept="image/*"  class="box">
 </div>
@@ -61,8 +63,8 @@
             <input type="email" maxlength="100" required placeholder="<?php echo  $_SESSION['USER_DATA']['email'];?>" class="box" disabled >
             <p>Contact Number</p>
             <input type="text" name="cno" maxlength="100" required placeholder="Enter Contact Number" class="box" value="<?php echo  $_SESSION['USER_DATA']['cno'];?>">
-            <p>Username</p>
-            <input type="text" name="username" maxlength="100" required placeholder="Enter username" class="box" value="<?php echo  $_SESSION['USER_DATA']['username'];?>">
+            <p>Description</p>
+            <textarea name="description" maxlength="1000" required placeholder="Enter Description" class="box"><?php echo  $_SESSION['USER_DATA']['description'];?></textarea>
             <input type="submit" value="Save" name="submit" class="btn">
         </form>
     </section>

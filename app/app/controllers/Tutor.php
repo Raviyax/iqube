@@ -30,25 +30,26 @@ class Tutor extends Controller
             $this->view('Tutor/Profile', $data);
             if (isset($_POST["submit"])) {
                 if ($_FILES["image"]['size'] > 0) {
-                    $uniqueFilename = generate_unique_filename($_FILES["image"]);
-                    $this->me->update_image($_FILES["image"], APPROOT . "/uploads/userimages/", "UPDATE tutors SET image = '{$uniqueFilename}' WHERE user_id = '{$_SESSION['USER_DATA']['user_id']}'", $uniqueFilename);
-                    // $_SESSION['USER_DATA']['image'] = Database::get_image( $uniqueFilename, "/uploads/userimages/");
+                    $image = $this->upload_media($_FILES['image'], '/uploads/userimages/');
+                    if ($image) {
+                      if($this->tutor->update_profile_picture($image)){
+                        $_SESSION['USER_DATA']['image'] = $image;
+                      }
+                    }
                 }
-                $this->me->query("UPDATE users SET username=? WHERE email=?", [
-                    $_POST['username'],
-                    $_SESSION['USER_DATA']['email']
-                ]);
-                $this->me->query("UPDATE tutors SET username=?, fname=?, lname=?, cno=? WHERE user_id=?", [
-                    $_POST['username'],
-                    $_POST['fname'],
-                    $_POST['lname'],
-                    $_POST['cno'],
-                    $_SESSION['USER_DATA']['user_id']
-                ]);
-                $_SESSION['USER_DATA']['username'] = $_POST['username'];
-                $_SESSION['USER_DATA']['fname'] = $_POST['fname'];
-                $_SESSION['USER_DATA']['lname'] = $_POST['lname'];
-                $_SESSION['USER_DATA']['cno'] = $_POST['cno'];
+                if ($this->tutor->validate_update_profile($_POST)) {
+                    if ($this->tutor->update_profile($_POST)) {
+                        $_SESSION['USER_DATA']['fname'] = $_POST['fname'];
+                        $_SESSION['USER_DATA']['lname'] = $_POST['lname'];
+                        $_SESSION['USER_DATA']['cno'] = $_POST['cno'];
+                        $_SESSION['USER_DATA']['description'] = $_POST['description'];
+                        echo "<script>alert('Profile updated successfully')</script>";
+                        redirect('/Tutor/profile');
+                    }
+                } else {
+                    $data['errors'] = $this->tutor->errors;
+                    $this->view('Tutor/Profile', $data);
+                }
             }
         } else {
             redirect('/Login');

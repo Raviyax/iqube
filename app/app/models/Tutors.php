@@ -556,4 +556,45 @@ class Tutors extends Model
         }
         return false;
     }
+
+    public function update_profile_picture($image)
+    {
+        $this->query("UPDATE tutors SET image = :image WHERE tutor_id = :tutor_id", [
+            'image' => $image,
+            'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
+        ]);
+        return true;
+    } 
+
+    public function update_tutor_profile($data)
+    {
+        $this->query("UPDATE tutors SET fname = :fname, lname = :lname, cno = :cno, username = :username, description = :description WHERE tutor_id = :tutor_id", [
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'cno' => $data['cno'],
+            'description' => $data['description'],
+            'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
+        ]);
+ 
+        return true;
+    }
+
+    public function validate_update_tutor_profile($data)
+    {
+        $this->errors = [];
+        if (empty($data['fname'])) {
+            $this->errors['name_err'] = '*Enter First name';
+        }
+        if (empty($data['lname'])) {
+            $this->errors['name_err'] = '*Enter Last name';
+        }
+        if (empty($data['cno'])) {
+            $this->errors['name_err'] = '*Enter Contact Number';
+        }
+        if (empty($this->errors)) {
+            return true;
+        }   
+    
+        return false;
+    }
 }

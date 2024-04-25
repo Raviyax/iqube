@@ -71,6 +71,7 @@
                 'image' => $tutordata[0]->image,
                'approved_date' => $tutordata[0]->approved_date,
                'active' => $tutordata[0]->active,
+               'description' => $tutordata[0]->description,
             ];
         }
     }

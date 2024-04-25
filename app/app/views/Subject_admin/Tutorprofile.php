@@ -32,8 +32,7 @@
             <div class="box">
                 <span>Joined At</span>
 
-                <p><?php
-                    $date_only = date('Y-m-d', strtotime($tutor->approved_date)); echo $date_only; ?></p>
+                <p><?php $date_only = date('Y-m-d', strtotime($tutor->approved_date)); echo $date_only; ?></p>
             </div>
             <div class="box">
                 <span>Email</span>
