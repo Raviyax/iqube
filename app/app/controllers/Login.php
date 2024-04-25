@@ -30,13 +30,8 @@ class Login extends Controller
                     $premiumdata = $user->first(['student_id' => $studentdata->student_id], 'premium_students', 'student_id');
                     if (Auth::authenticate($row, $studentdata, $premiumdata)) {
                         if (Auth::is_student()) {
-                            if (!Auth::is_completed()) {
-                                redirect('/Student/more_details');
-                                return;
-                            } else {
-                                redirect('/Student');
-                                return;
-                            }
+                      redirect('/Student');
+                        
                         } 
                     }
                 } else {
