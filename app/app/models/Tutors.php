@@ -694,7 +694,7 @@ class Tutors extends Model
             }
         }
         return $earnings;
-
+//test
     }
 
 }
