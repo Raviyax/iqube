@@ -41,6 +41,11 @@
         echo '<button class="btn" style="width:fit-content; height:min-content; background-color:unset; color:red; display:none;" id="save"><i class="fa-solid fa-circle-check"></i> Save</button>';
         echo '<button class="btn" style="width:min-content; height:min-content; background-color:unset; color:red;" id="delete"><i class="fa-solid fa-trash-can"></i></button>';
         echo '<button class="btn" style="width:min-content; height:min-content; background-color:unset; color: green;" id="edit"><i class="fa-solid fa-file-pen"></i></button>';
+        if($chapter->model_paper_duration<=0){
+            echo '<button class="button-34" style="background-color:red" role="button">Quetions Not Available</button>';
+        }else{
+            echo '<button class="button-34" style="background-color:green" role="button">Quetions Available</button>';
+        }
         echo '</td>';
         echo '</tr>';
         $currentChapter = $chapter->chapter_level_1; // Update the current chapter

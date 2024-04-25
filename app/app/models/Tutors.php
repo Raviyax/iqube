@@ -693,8 +693,10 @@ class Tutors extends Model
                 }
             }
         }
+       //detuct 20% commission
+        $earnings = $earnings - ($earnings * 0.2);
         return $earnings;
-//test
+
     }
 
 }

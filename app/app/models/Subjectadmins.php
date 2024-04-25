@@ -237,6 +237,7 @@ class Subjectadmins extends Model
     id,
     chapter_level_1,
     chapter_level_2,
+    model_paper_duration,
     weight
 FROM
     chapters
