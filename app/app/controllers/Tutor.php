@@ -22,39 +22,51 @@ class Tutor extends Controller
     }
     public function profile()
     {
-        if (Auth::is_logged_in() && Auth::is_tutor()) {
-            $data = [
-                'title' => 'Tutor',
-                'view' => 'My Profile',
-            ];
-            $this->view('Tutor/Profile', $data);
-            if (isset($_POST["submit"])) {
-                if ($_FILES["image"]['size'] > 0) {
-                    $image = $this->upload_media($_FILES['image'], '/uploads/userimages/');
-                    if ($image) {
-                      if($this->tutor->update_profile_picture($image)){
-                        $_SESSION['USER_DATA']['image'] = $image;
-                      }
-                    }
-                }
-                if ($this->tutor->validate_update_profile($_POST)) {
-                    if ($this->tutor->update_profile($_POST)) {
-                        $_SESSION['USER_DATA']['fname'] = $_POST['fname'];
-                        $_SESSION['USER_DATA']['lname'] = $_POST['lname'];
-                        $_SESSION['USER_DATA']['cno'] = $_POST['cno'];
-                        $_SESSION['USER_DATA']['description'] = $_POST['description'];
-                        echo "<script>alert('Profile updated successfully')</script>";
-                        redirect('/Tutor/profile');
-                    }
+        if (!Auth::is_logged_in() || !Auth::is_tutor()) {
+            redirect('/Login');
+            return;
+        }
+        
+        $data = [
+            'title' => 'Tutor',
+            'view' => 'My Profile',
+        ];
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
+            $image = '';
+            if ($_FILES["image"]['size'] > 0) {
+                $image = $this->upload_media($_FILES['image'], '/uploads/userimages/');
+                if (!$image) {
+                    $data['errors'][] = 'Failed to upload image.';
                 } else {
-                    $data['errors'] = $this->tutor->errors;
-                    $this->view('Tutor/Profile', $data);
+                    if ($this->tutor->update_profile_picture($image)) {
+                        $_SESSION['USER_DATA']['image'] = $image;
+                    } else {
+                        $data['errors'][] = 'Failed to update profile picture.';
+                    }
                 }
             }
-        } else {
-            redirect('/Login');
+            
+            if ($this->tutor->validate_update_tutor_profile($_POST)) {
+                if ($this->tutor->update_tutor_profile($_POST)) {
+                    $_SESSION['USER_DATA']['fname'] = $_POST['fname'];
+                    $_SESSION['USER_DATA']['lname'] = $_POST['lname'];
+                    $_SESSION['USER_DATA']['cno'] = $_POST['cno'];
+                    $_SESSION['USER_DATA']['description'] = $_POST['description'];
+                    echo "<script>alert('Profile updated successfully')</script>";
+                    redirect('/Tutor/profile');
+                    return;
+                } else {
+                    $data['errors'][] = 'Failed to update profile.';
+                }
+            } else {
+                $data['errors'] = $this->tutor->errors;
+            }
         }
+        
+        $this->view('Tutor/Profile', $data);
     }
+    
     public function userimage($image)
     {
         if (Auth::is_logged_in() && Auth::is_tutor()) {

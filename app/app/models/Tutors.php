@@ -568,11 +568,11 @@ class Tutors extends Model
 
     public function update_tutor_profile($data)
     {
-        $this->query("UPDATE tutors SET fname = :fname, lname = :lname, cno = :cno, username = :username, description = :description WHERE tutor_id = :tutor_id", [
+        $this->query("UPDATE tutors SET fname = :fname, lname = :lname, cno = :cno, about_me = :about_me WHERE tutor_id = :tutor_id", [
             'fname' => $data['fname'],
             'lname' => $data['lname'],
             'cno' => $data['cno'],
-            'description' => $data['description'],
+            'about_me' => $data['description'],
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
         ]);
  
@@ -595,6 +595,18 @@ class Tutors extends Model
             return true;
         }   
     
+        return false;
+    }
+
+    public function updatePassword($oldpassword, $newpassword)
+    {
+        $query = "SELECT password FROM users WHERE user_id = :user_id";
+        $result = $this->query($query, ['user_id' => $_SESSION['USER_DATA']['user_id']]);
+        if (password_verify($oldpassword, $result[0]->password)) {
+            $query = "UPDATE users SET password = :password WHERE user_id = :user_id";
+            $this->query($query, ['password' => password_hash($newpassword, PASSWORD_DEFAULT), 'user_id' => $_SESSION['USER_DATA']['user_id']]);
+            return true;
+        }
         return false;
     }
 }

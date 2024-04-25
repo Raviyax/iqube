@@ -5,9 +5,11 @@ include("../app/lib/Database.php");
 include("../app/lib/Model.php");
 include ("../app/models/Subjectadmins.php");
 include ("../app/models/Students.php");
+include ("../app/models/Tutors.php");
 // Initialize objects
 $subjectadmins = new Subjectadmins();
 $students = new Students();
+$tutors = new Tutors();
 // Check if the action is specified in the POST data
 if(isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -113,6 +115,18 @@ if(isset($_POST['action'])) {
         $tutor_id = intval($_POST['tutor_id']);
         // Perform insertion and echo response
         if($subjectadmins->markFlagged($tutor_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutorUpdatePassword') {
+        // Sanitize input
+        $oldpassword = $_POST['oldpassword'];
+        $newpassword = $_POST['newpassword'];
+        // Perform insertion and echo response
+        if($tutors->updatePassword($oldpassword, $newpassword)) {
             echo 'success';
         } else {
             echo 'error';
