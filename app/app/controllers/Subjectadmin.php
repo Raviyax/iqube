@@ -61,16 +61,16 @@ class Subjectadmin extends Controller
             $data['view'] = 'Tutors';
             $data['notifications'] = $notifications;
             $data['tutors'] = $this->Subjectadmin->view_tutors($_SESSION['USER_DATA']['subject']);
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if ($this->tutor->validate($_POST)) {
-                    $this->tutor->add_new_tutor($_POST);
-                    redirect('/Subjectadmin/Tutors');
-                } else {
-                    $data['errors'] = $this->tutor->errors;
-                    $data['title'] = 'tutors';
-                    $this->view('Subject_admin/Tutors', $data);
-                }
-            }
+            // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //     if ($this->tutor->validate($_POST)) {
+            //         $this->tutor->add_new_tutor($_POST);
+            //         redirect('/Subjectadmin/Tutors');
+            //     } else {
+            //         $data['errors'] = $this->tutor->errors;
+            //         $data['title'] = 'tutors';
+            //         $this->view('Subject_admin/Tutors', $data);
+            //     }
+            // }
             $this->view('Subject_admin/Tutors', $data);
         } else {
             redirect('/Login');

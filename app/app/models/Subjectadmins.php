@@ -118,7 +118,7 @@ class Subjectadmins extends Model
     }
     public function view_tutors($subject)
     {
-        return $this->query("SELECT tutor_id, fname, lname, email FROM tutors WHERE subject='$subject'");
+        return $this->query("SELECT tutor_id, fname, lname, email, flagged FROM tutors WHERE subject='$subject'");
     }
     public function save_image_data($imagename, $id)
     {

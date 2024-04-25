@@ -1,5 +1,10 @@
 <?php $this->view('inc/Header',$data) ?>
-<?php $tutor = $data['tutor'];?>
+<?php $tutor = $data['tutor'];
+$student_count = $data['student_count'];
+$content_count = $data['content_count'];
+$purchase_count = $data['purchase_count'];
+
+?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
    <h1 class="heading">Tutors / <?php echo $tutor->fname." ".$tutor->lname;?>'s Profile</h1>
    <div class="details">
@@ -15,14 +20,15 @@
             <div class="box">
                 <p><i class="fa-solid fa-star"></i> 4.7 Tutor Ratings</p>
             </div>
+      
             <div class="box">
-                <p><i class="fa-solid fa-certificate"></i> 124 Reviews</p>
+                <p><i class="fa-solid fa-people-line"></i> <?php echo $student_count;?> Students</p>
             </div>
             <div class="box">
-                <p><i class="fa-solid fa-people-line"></i> 453 Students</p>
+                <p><i class="fa-solid fa-circle-play"></i> <?php echo $content_count;?> Contents</p>
             </div>
             <div class="box">
-                <p><i class="fa-solid fa-circle-play"></i> 56 Contents</p>
+                <p><i class="fa-solid fa-cart-shopping"></i> <?php echo $purchase_count;?> Total Purchases</p>
             </div>
       </div>
    </div>

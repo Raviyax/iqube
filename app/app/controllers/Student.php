@@ -232,6 +232,9 @@ class Student extends Controller
             $data = [
                 'title' => 'Tutor',
                 'view' => 'Tutor Profile',
+                'student_count' => $this->student->get_student_count_of_tutor($id),
+                'content_count' => $this->student->get_content_count_of_tutor($id),
+                'purchase_count' => $this->student->get_purchase_count_of_tutor($id),
             ];
             $data['tutor'] = $this->tutor->get_tutor($id);
             $this->view('Student/Tutorprofile', $data);

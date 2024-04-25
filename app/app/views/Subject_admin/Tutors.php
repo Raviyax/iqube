@@ -7,7 +7,7 @@
             <input type="text" name="searchbar" placeholder="search here..." id="searchbar" onkeyup="search()"  maxlength="100">
             <button type="submit" class="fas fa-search" name="search_btn" ></button>
         </form>
-        <a href="#" class="btn" onclick="addnewsubjectadmin()" style="width: fit-content;"><i class="fa-solid fa-user-plus"></i> Add New <?php echo ucwords($_SESSION['USER_DATA']['subject']);?> Tutor</a>
+        <!-- <a href="#" class="btn" onclick="addnewsubjectadmin()" style="width: fit-content;"><i class="fa-solid fa-user-plus"></i> Add New <?php echo ucwords($_SESSION['USER_DATA']['subject']);?> Tutor</a> -->
     </section>
 </header>
     <table id="table">
@@ -17,7 +17,20 @@
     <th>Email</th>
   </tr>
     <?php if($data['tutors']) foreach($data['tutors'] as $tutor): ?>
-  <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutor_profile/<?php echo $tutor->tutor_id; ?>'">
+      <?php if($tutor->flagged == 1) { ?>
+        <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutor_profile/<?php echo $tutor->tutor_id; ?>'">
+    <td style="color: red;">
+        <?php echo $tutor->tutor_id; ?>
+    </td>
+    <td style="color: red;">
+        <?php echo $tutor->fname." ".$tutor->lname; ?> <i class="fa-solid fa-flag"></i>
+    </td>
+    <td style="color: red;">
+        <?php echo $tutor->email; ?>
+    </td>
+  </tr>
+      <?php } else { ?>
+        <tr onclick="window.location='<?php echo URLROOT?>/Subjectadmin/tutor_profile/<?php echo $tutor->tutor_id; ?>'">
     <td>
         <?php echo $tutor->tutor_id; ?>
     </td>
@@ -28,10 +41,13 @@
         <?php echo $tutor->email; ?>
     </td>
   </tr>
+      <?php } ?>
     <?php endforeach; ?>
-</table>
+
+        
+    </table>
 </section>
-<div id="addnewsubjectadmin" class="overlay" style="z-index: 1000;">
+<!-- <div id="addnewsubjectadmin" class="overlay" style="z-index: 1000;">
     <section class="video-form">
         <form action="<?php echo URLROOT?>/Subjectadmin/tutors" method="post" enctype="multipart/form-data">
             <div class="flex-btn" style="justify-content: flex-end;">
@@ -59,7 +75,7 @@
             <input type="submit" value="Add Tutor" name="submit" class="btn">
         </form>
     </section>
-</div>
+</div> -->
 <script>
 function search(){
   var input, filter, table, tr, td, i, txtValue;
@@ -79,12 +95,12 @@ function search(){
     }
   }
 }
-function addnewsubjectadmin() {
-        document.getElementById("addnewsubjectadmin").style.display = "block";
-    }
-    function closeadd() {
-        document.getElementById("addnewsubjectadmin").style.display = "none";
-    }
+// function addnewsubjectadmin() {
+//         document.getElementById("addnewsubjectadmin").style.display = "block";
+//     }
+//     function closeadd() {
+//         document.getElementById("addnewsubjectadmin").style.display = "none";
+//     }
 </script>
 <?php $this->view('inc/Footer') ?>
 </body>

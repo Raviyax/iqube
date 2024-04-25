@@ -6,8 +6,15 @@
         <div class="tutor">
             <img src="<?php echo URLROOT . "/Subjectadmin/userimage/" . $data['tutor']->image; ?>" alt="profile">
             <h3><?php echo $tutor->fname . " " . $tutor->lname; ?></h3>
-            <span></span>
+            <?php if (!$tutor->flagged == 1) { ?>
+                <span></span>
             <a id="markFlagged" class="inline-btn" style="background-color: red;"><i class="fa-solid fa-triangle-exclamation"></i> Mark as flagged</a>
+            <?php } else { ?>
+                
+            <span></span>
+            <p style="color: red;">This tutor marked as flagged*</p>
+            <a id="removeFlagged" class="inline-btn" style="background-color: red;"><i class="fa-solid fa-triangle-exclamation"></i> Remove Flagged</a>
+            <?php } ?>
         </div>
         <div class="flex">
             <div class="box">
@@ -77,17 +84,21 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+      const URLROOT = '<?= URLROOT ?>';
+  const api_root = URLROOT + '/api.php';
+  var tutor_id = '<?php echo $tutor->tutor_id; ?>'; // Ensure tutor_id is properly quoted
 $(document).ready(function() {
     $('#markFlagged').click(function() {
-        var tutor_id = '<?php echo $tutor->tutor_id; ?>'; // Ensure tutor_id is properly quoted
+     
         $.ajax({
-            url: '<?php echo URLROOT; ?>/api.php',
+            url: api_root,
             type: 'POST',
             data: {
-                Action: 'markFlagged',
+                action: 'markFlagged',
                 tutor_id: tutor_id
             },
             success: function(response) {
+                console.log(response);
                 if (response == 'success') {
                     alert('Tutor has been marked as flagged');
                     location.reload();
