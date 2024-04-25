@@ -686,12 +686,13 @@ class Tutors extends Model
 
     }
 
+    
     public function get_my_video_analytics($tutor_id) {
         try {
             // Query to fetch video analytics with purchase count and revenue
-            $sql = "SELECT vc.video_content_id, vc.name, vc.price, vc.active, 
-                           COUNT(pv.student_id) AS purchase_count,
-                           SUM(vc.price * 0.8) AS revenue
+            $sql = "SELECT vc.video_content_id, vc.name, vc.price, vc.active,
+                           IFNULL(COUNT(pv.student_id), 0) AS purchase_count,
+                           IFNULL(SUM(IF(pv.student_id IS NULL, 0, vc.price * 0.8)), 0) AS revenue
                     FROM video_content vc
                     LEFT JOIN purchased_videos pv ON vc.video_content_id = pv.video_content_id
                     WHERE vc.tutor_id = :tutor_id
@@ -709,5 +710,34 @@ class Tutors extends Model
             return [];
         }
     }
+
+    public function get_my_model_paper_analytics($tutor_id) {
+        try {
+            // Query to fetch model paper analytics with purchase count and revenue
+            $sql = "SELECT mpc.model_paper_content_id, mpc.name, mpc.price, mpc.active,
+                           IFNULL(COUNT(pmp.student_id), 0) AS purchase_count,
+                           IFNULL(SUM(IF(pmp.student_id IS NULL, 0, mpc.price * 0.8)), 0) AS revenue
+                    FROM model_paper_content mpc
+                    LEFT JOIN purchased_model_papers pmp ON mpc.model_paper_content_id = pmp.model_paper_content_id
+                    WHERE mpc.tutor_id = :tutor_id
+                    GROUP BY mpc.model_paper_content_id";
+    
+            // Execute the query
+            $model_papers = $this->query($sql, ['tutor_id' => $tutor_id]);
+    
+            // Return model paper analytics
+            return $model_papers;
+        } catch (Exception $e) {
+            // Log or handle the error
+            error_log('Error in get_my_model_paper_analytics function: ' . $e->getMessage());
+            // Return an empty array or throw a custom exception
+            return [];
+        }
+    }
+    
+    
+
+
+
     
 }
