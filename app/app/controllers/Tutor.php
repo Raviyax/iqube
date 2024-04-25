@@ -18,6 +18,7 @@ class Tutor extends Controller
                 'content_count' => $this->tutor->get_my_content_count($_SESSION['USER_DATA']['tutor_id']),
                 'purchase_count' => $this->tutor->get_purchase_count_of_my_materials($_SESSION['USER_DATA']['tutor_id']),
                 'last_month_earnings' => $this->tutor->get_my_last_month_earnings($_SESSION['USER_DATA']['tutor_id']),
+                'video_analytics' => $this->tutor->get_my_video_analytics($_SESSION['USER_DATA']['tutor_id']),
             ];
             $this->view('Tutor/Dashboard', $data);
         } else {

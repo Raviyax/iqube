@@ -5,6 +5,8 @@ $student_count = $data['student_count'];
 $content_count = $data['content_count'];
 $purchase_count = $data['purchase_count'];
 $last_month_earnings = $data['last_month_earnings'];
+$video_analytics = $data['video_analytics'];
+print_r($video_analytics);
 
 ?>
 <section class="dashboard">

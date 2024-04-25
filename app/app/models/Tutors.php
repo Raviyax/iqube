@@ -686,12 +686,28 @@ class Tutors extends Model
 
     }
 
-    public function get_my_video_analytics($tutor_id){
-
-        $videos = $this->query("SELECT video_content_id,name, price,active FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
-        $video_analytics = [];
-        //get 
-
-   
+    public function get_my_video_analytics($tutor_id) {
+        try {
+            // Query to fetch video analytics with purchase count and revenue
+            $sql = "SELECT vc.video_content_id, vc.name, vc.price, vc.active, 
+                           COUNT(pv.student_id) AS purchase_count,
+                           SUM(vc.price * 0.8) AS revenue
+                    FROM video_content vc
+                    LEFT JOIN purchased_videos pv ON vc.video_content_id = pv.video_content_id
+                    WHERE vc.tutor_id = :tutor_id
+                    GROUP BY vc.video_content_id";
+    
+            // Execute the query
+            $videos = $this->query($sql, ['tutor_id' => $tutor_id]);
+    
+            // Return video analytics
+            return $videos;
+        } catch (Exception $e) {
+            // Log or handle the error
+            error_log('Error in get_my_video_analytics function: ' . $e->getMessage());
+            // Return an empty array or throw a custom exception
+            return [];
+        }
     }
+    
 }
