@@ -528,15 +528,6 @@ class Tutors extends Model
         }
         return true;
     }
-    public function insert_to_essays_for_model_paper($essay_questions, $model_paper_content_id)
-    {
-        $this->query("INSERT INTO essays_for_model_paper (model_paper_content_id, tutor_id, essay_questions) VALUES (:model_paper_content_id, :tutor_id, :essay_questions)", [
-            'model_paper_content_id' => $model_paper_content_id,
-            'essay_questions' => $essay_questions,
-            'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
-        ]);
-        return true;
-    }
     public function set_model_paper_content_active($model_paper_content_id)
     {
         $query = "UPDATE model_paper_content SET active = 1 WHERE model_paper_content_id = :model_paper_content_id";
@@ -695,6 +686,12 @@ class Tutors extends Model
 
     }
 
-   
+    public function get_my_video_analytics($tutor_id){
 
+        $videos = $this->query("SELECT video_content_id,name, price,active FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $video_analytics = [];
+        //get 
+
+   
+    }
 }
