@@ -35,7 +35,7 @@ $purchase_count = $data['purchase_count'];
    <div class="details">
    <div class="flex">
             <div class="box">
-                <p align="justify"> Stephane is a solutions architect, consultant and software developer that has a particular interest in all things related to Big Data, Cloud & API. He's also a many-times best seller instructor on Udemy for his courses in AWS and Apache Kafka.
+                <p> Stephane is a solutions architect, consultant and software developer that has a particular interest in all things related to Big Data, Cloud & API. He's also a many-times best seller instructor on Udemy for his courses in AWS and Apache Kafka.
 [See FAQ below to see in which order you can take my courses]
 Stéphane is recognized as an AWS Hero and is an AWS Certified Solutions Architect Professional & AWS Certified DevOps Professional. He loves to teach people how to use the AWS properly, to get them ready for their AWS certifications, and most importantly for the real world.
 He also loves Apache Kafka. He sits on the 2019 Program Committee organizing the Kafka Summit in New York, London and San Francisco. He is also an active member of the Apache Kafka community, authoring blogs on Medium and a guest blog for Confluent.  

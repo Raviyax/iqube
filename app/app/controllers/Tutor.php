@@ -13,7 +13,10 @@ class Tutor extends Controller
         if (Auth::is_logged_in() && Auth::is_tutor()) {
             $data = [
                 'title' => 'Tutor',
-                'view' => 'Dashboard'
+                'view' => 'Dashboard',
+                'student_count' => $this->tutor->get_my_student_count($_SESSION['USER_DATA']['tutor_id']),
+                'content_count' => $this->tutor->get_my_content_count($_SESSION['USER_DATA']['tutor_id']),
+                'purchase_count' => $this->tutor->get_purchase_count_of_my_materials($_SESSION['USER_DATA']['tutor_id']),
             ];
             $this->view('Tutor/Dashboard', $data);
         } else {

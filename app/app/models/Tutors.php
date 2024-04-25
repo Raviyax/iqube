@@ -609,4 +609,92 @@ class Tutors extends Model
         }
         return false;
     }
+
+    public function get_my_student_count($tutor_id){
+        //get all model_paper and video ids of the tutor
+        $model_papers = $this->query("SELECT model_paper_content_id FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $videos = $this->query("SELECT video_content_id FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $student_count = 0;
+        if ($model_papers) {
+            foreach ($model_papers as $model_paper) {
+                $students = $this->query("SELECT student_id FROM purchased_model_papers WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper->model_paper_content_id]);
+                if ($students) {
+                    $student_count += count($students);
+                }
+            }
+        }
+        if ($videos) {
+            foreach ($videos as $video) {
+                $students = $this->query("SELECT student_id FROM purchased_videos WHERE video_content_id = :video_content_id", ['video_content_id' => $video->video_content_id]);
+                if ($students) {
+                    $student_count += count($students);
+                }
+            }
+        }
+        return $student_count;
+    }
+
+    public function get_my_content_count($tutor_id){
+        //get all model_paper and video ids of the tutor
+        $model_papers = $this->query("SELECT model_paper_content_id FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $videos = $this->query("SELECT video_content_id FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $content_count = 0;
+        if ($model_papers) {
+            $content_count += count($model_papers);
+        }
+        if ($videos) {
+            $content_count += count($videos);
+        }
+        return $content_count;
+    }
+
+    public function get_purchase_count_of_my_materials($tutor_id){
+        //get all model_paper and video ids of the tutor
+        $model_papers = $this->query("SELECT model_paper_content_id FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $videos = $this->query("SELECT video_content_id FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $purchase_count = 0;
+        if ($model_papers) {
+            foreach ($model_papers as $model_paper) {
+                $purchases = $this->query("SELECT student_id FROM purchased_model_papers WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper->model_paper_content_id]);
+                if ($purchases) {
+                    $purchase_count += count($purchases);
+                }
+            }
+        }
+        if ($videos) {
+            foreach ($videos as $video) {
+                $purchases = $this->query("SELECT student_id FROM purchased_videos WHERE video_content_id = :video_content_id", ['video_content_id' => $video->video_content_id]);
+                if ($purchases) {
+                    $purchase_count += count($purchases);
+                }
+            }
+        }
+        return $purchase_count;
+    }
+
+    public function get_my_last_month_earnings($tutor_id){
+        //get all model_paper and video ids of the tutor
+        $model_papers = $this->query("SELECT model_paper_content_id,price FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $videos = $this->query("SELECT video_content_id,price FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
+        $earnings = 0;
+        if ($model_papers) {
+            foreach ($model_papers as $model_paper) {
+                $purchases = $this->query("SELECT student_id FROM purchased_model_papers WHERE model_paper_content_id = :model_paper_content_id", ['model_paper_content_id' => $model_paper->model_paper_content_id]);
+                if ($purchases) {
+                    $earnings += count($purchases) * $model_paper->price;
+                }
+            }
+        }
+        if ($videos) {
+            foreach ($videos as $video) {
+                $purchases = $this->query("SELECT student_id FROM purchased_videos WHERE video_content_id = :video_content_id", ['video_content_id' => $video->video_content_id]);
+                if ($purchases) {
+                    $earnings += count($purchases) * $video->price;
+                }
+            }
+        }
+        return $earnings;
+
+    }
+
 }
