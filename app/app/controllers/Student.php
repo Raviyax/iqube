@@ -12,14 +12,15 @@ class Student extends Controller
         $this->payhere = new Payhere;
         $this->student = $this->model('Students');
         $this->tutor = $this->model('Tutors');
+        if (!Auth::is_completed()) {
+            redirect('/Student/more_details');
+            return;
+        }
     }
     public function index()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
-            if (!Auth::is_completed()) {
-                redirect('/Student/more_details');
-                return;
-            }
+         
             if (Auth::is_premium()) {
                 $this->student->get_total_weights_of_my_subjects();
                 $data = [

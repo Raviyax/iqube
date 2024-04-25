@@ -6,11 +6,12 @@ $content_count = $data['content_count'];
 $purchase_count = $data['purchase_count'];
 $last_month_earnings = $data['last_month_earnings'];
 $video_analytics = $data['video_analytics'];
-print_r($video_analytics);
+$model_paper_analytics = $data['model_paper_analytics'];
+
 
 ?>
 <section class="dashboard">
-    <section class="tutor-profile" >
+    <section class="tutor-profile">
         <div class="details">
 
             <div class="flex">
@@ -45,25 +46,65 @@ print_r($video_analytics);
         </div>
         <section class="unit-container" id="video">
             <!-- table for tutor contents -->
-            <table id="table" class="table">
-                <thead>
-                    <tr>
-                    
-                        <th>Video Name</th>
-                        <th>Purchases</th>
-                        <th>Rating</th>
-                        <th>Price</th>
-                        <th>Revenue</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-             
-                </tbody>
-            </table>
+            <?php
+            echo '<table id="table" class="table">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Video Name</th>';
+            echo '<th>Purchases</th>';
+            echo '<th>Price</th>';
+            echo '<th>Revenue</th>';
+            echo '<th>Status</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            foreach ($video_analytics as $video) {
+                echo '<tr>';
+                echo '<td>' . $video->name . '</td>';
+                echo '<td>' . $video->purchase_count . '</td>';
+                echo '<td>' . $video->price . 'LKR</td>';
+                echo '<td>' . $video->revenue . 'LKR</td>';
+                echo '<td>' . ($video->active ? 'Active' : 'Inactive') . '</td>';
+                echo '</tr>';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+            ?>
+
 
 
         </section>
+
+        <section class="unit-container" id="model-paper" >
+            <!-- table for tutor contents -->
+            <?php
+            echo '<table id="table" class="table">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Model Paper Name</th>';
+            echo '<th>Purchases</th>';
+            echo '<th>Price</th>';
+            echo '<th>Revenue</th>';
+            echo '<th>Status</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            foreach ($model_paper_analytics as $model_paper) {
+                echo '<tr>';
+                echo '<td>' . $model_paper->name . '</td>';
+                echo '<td>' . $model_paper->purchase_count . '</td>';
+                echo '<td>' . $model_paper->price . 'LKR</td>';
+                echo '<td>' . $model_paper->revenue . 'LKR</td>';
+                echo '<td>' . ($model_paper->active ? 'Active' : 'Inactive') . '</td>';
+                echo '</tr>';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+            ?>
 
     </section>
 </section>

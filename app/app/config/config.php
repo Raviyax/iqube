@@ -23,6 +23,13 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
 // define('DBDRIVER','mysql');
 // define('URLROOT','http://localhost/iqube');
 
+// define('DB_HOST','150.230.141.154');
+// define('DB_USER','root');
+// define('DB_PORT','3306');
+// define('DB_PASS','Priuscaa4025');
+// define('DB_NAME','iqube');
+// define('DBDRIVER','mysql');
+// define('URLROOT','http://localhost/iqube');
 
 
 define('APPROOT',dirname(dirname(__FILE__)));
