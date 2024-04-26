@@ -120,19 +120,7 @@ class Tutor extends Controller
             redirect('/Landing');
         }
     }
-    public function myuploads()
-    {
-        if (Auth::is_logged_in() && Auth::is_tutor()) {
-            $data = [
-                'title' => 'Tutor',
-                'view' => 'My Uploads',
-                'courses' => $this->tutor->get_my_uploads()
-            ];
-            $this->view('Tutor/Myuploads', $data);
-        } else {
-            redirect('/Login');
-        }
-    }
+
     public function add_new_video()
     {
         if (Auth::is_logged_in() && Auth::is_tutor()) {
@@ -297,6 +285,7 @@ class Tutor extends Controller
                 'video' => $this->tutor->get_from_video_content($video_content_id),
                 'covering_chapters' => $this->tutor->get_covering_chapters_for_video($video_content_id),
                 'mcqs' => $this->tutor->get_mcqs_for_video($video_content_id),
+                'students' => $this->tutor->get_my_video_purchased_students($video_content_id),
             ];
             $this->view('Tutor/Video_overview', $data);
         } else {

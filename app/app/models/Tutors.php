@@ -1068,5 +1068,29 @@ class Tutors extends Model
         ]);
         return true;
     }
+    public function get_my_video_purchased_students($video_content_id)
+    {
+        try {
+            // Get all students who purchased the video along with their names concatenated
+            $query = "SELECT pv.student_id, pv.completed, pv.score, pv.purchased_date, CONCAT(s.fname, ' ', s.lname) AS name
+                      FROM purchased_videos pv 
+                      JOIN premium_students s ON pv.student_id = s.student_id 
+                      WHERE pv.video_content_id = :video_content_id";
+            $students = $this->query($query, ['video_content_id' => $video_content_id]);
+    
+            if ($students) {
+                return $students; // Return the fetched students' data
+            } else {
+                return false; // Return false if no students found
+            }
+        } catch (Exception $e) {
+            // Handle any exceptions
+            error_log("Error in get_my_video_purchased_students: " . $e->getMessage());
+            return false; // Return false indicating failure
+        }
+    }
+    
+    
+        
 
 }

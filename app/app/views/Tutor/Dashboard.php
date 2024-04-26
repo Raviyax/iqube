@@ -11,33 +11,40 @@ $model_paper_analytics = $data['model_paper_analytics'];
 
 ?>
 <section class="dashboard">
+<section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+<div class="box-container" >
+            <div class="box">
+                <h3>My Analytics</h3>
+            </div>
+        </div>
     <section class="tutor-profile">
         <div class="details">
 
             <div class="flex">
-                <div class="box">
+                <!-- <div class="box">
                     <p><i class="fa-solid fa-star"></i> 4.7 Tutor Ratings</p>
-                </div>
+                </div> -->
 
-                <div class="box">
+                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
                     <p><i class="fa-solid fa-people-line"></i> <?php echo $student_count; ?> Students</p>
                 </div>
-                <div class="box">
+                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
                     <p><i class="fa-solid fa-circle-play"></i> <?php echo $content_count; ?> Contents</p>
                 </div>
-                <div class="box">
+                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
                     <p><i class="fa-solid fa-cart-shopping"></i> <?php echo $purchase_count; ?> Total Purchases</p>
                 </div>
-                <div class="box">
-                    <p><i class="fa-solid fa-money-bill"></i> <?php echo $last_month_earnings; ?>LKR Last Month Earnings</p>
+                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
+                    <p><i class="fa-solid fa-money-bill"></i> <?php echo $last_month_earnings; ?>LKR in Last Month</p>
                 </div>
             </div>
         </div>
 
     </section>
+</section>
 
     <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-        <h1 class="heading">Analytics</h1>
+        <h1 class="heading">My Uploads</h1>
         <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center;">
 
             <button id="showVideo" class="button-17" role="button">Videos</button>
@@ -45,7 +52,11 @@ $model_paper_analytics = $data['model_paper_analytics'];
 
         </div>
         <section class="unit-container" id="video">
-            <!-- table for tutor contents -->
+        <div class="box-container" >
+            <div class="box">
+                <h3>Videos</h3>
+            </div>
+        </div>
             <?php
             echo '<table id="table" class="table">';
             echo '<thead>';
@@ -78,7 +89,11 @@ $model_paper_analytics = $data['model_paper_analytics'];
         </section>
 
         <section class="unit-container" id="model-paper">
-            <!-- table for tutor contents -->
+        <div class="box-container" >
+            <div class="box">
+                <h3>Model Papers</h3>
+            </div>
+        </div>
             <?php
             echo '<table id="table" class="table">';
             echo '<thead>';

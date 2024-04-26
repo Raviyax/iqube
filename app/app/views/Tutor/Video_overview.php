@@ -4,6 +4,7 @@
 
 // Accessing chapters array
 $chapters = $data['covering_chapters'];
+$students = $data['students'];
 
 $mcqs = $data['mcqs'];
 
@@ -78,13 +79,56 @@ $mcqs = $data['mcqs'];
                 </div>
             </div>
         </div>
-        <section class="watch-video">
+
+        <section class="unit-container">
+        <section class="unit-container" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+        <div class="box-container" style="margin-bottom: 10px;">
+            <div class="box">
+                <h3>Purchased Students</h3>
+            </div>
+        </div>
+            <!-- table for tutor contents -->
+            <?php
+            echo '<table id="table" class="table">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Student Name</th>';
+            echo '<th>Purchased On</th>';
+            echo '<th>Score</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+
+            foreach ($students as $student) {
+                echo '<tr>';
+                echo '<td>' . $student->name . '</td>';
+                echo '<td>' . date("Y-m-d", strtotime($student->purchased_date)) . '</td>';
+                echo '<td>';
+                if ($student->completed == 0) {
+                    echo 'Not Completed'; // Display "Not Completed" if completed is 0
+                } else {
+                    echo $student->score; // Otherwise, display the score
+                }
+                echo '</td>';
+                echo '</tr>';
+            }
+
+            echo '</tbody>';
+            echo '</table>';
+            ?>
+        </section>
+        </section>
+
+
+        <div class="row" style="margin-bottom: 7px;">
+            <section class="watch-video">
                 <div class="video-details">
-                <video src="<?php echo URLROOT;?>/Tutor/video_content/<?php echo $video->video;?>" class="video" poster="<?php echo URLROOT; ?>/Tutor/video_thumbnail/<?php echo $video->thumbnail; ?>" controls></video>
+                    <video src="<?php echo URLROOT; ?>/Tutor/video_content/<?php echo $video->video; ?>" class="video" poster="<?php echo URLROOT; ?>/Tutor/video_thumbnail/<?php echo $video->thumbnail; ?>" controls></video>
 
                 </div>
-                </section>
-    </section>
+            </section>
+        </div>
+    
 
     <section class="unit-container">
         <div class="box-container" style="margin-bottom: 10px;">
@@ -200,6 +244,7 @@ $mcqs = $data['mcqs'];
             </section>
         </section>
     </section>
+</section>
 </section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

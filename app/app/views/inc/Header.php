@@ -186,16 +186,12 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/students"><i class="fa-solid fa-user-pen"></i><span>My Students</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/myuploads"><i class="fa-solid fa-book"></i><span>My Contents</span></a>
-                        <div class="dropdown-content">
-                            <ul>
-                                <li><a href="<?php echo URLROOT; ?>/Tutor/myuploads"><i class="fa-solid fa-folder-open"></i>Overview</a></li>
-                                <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_video"><i class="fa-brands fa-youtube"></i>Add New video</a></li>
-                                <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_model_paper"><i class="fa-regular fa-file-lines"></i>New Model Paper</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-chalkboard-user"></i><span>My Teaching</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_video"><i class="fa-brands fa-youtube"></i>New video</a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_model_paper"><i class="fa-regular fa-file-lines"></i>New Model Paper</a></li>
+
+
+                
                     </li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
