@@ -98,7 +98,7 @@
 		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
 		border-bottom: dotted 1px;
-		color: #e89980;
+		color: #b66a23;
 		text-decoration: none;
 	}
 		a:hover {
@@ -2611,7 +2611,7 @@
 				}
 /* CTA */
 	#cta {
-		background: #e89980;
+		background:red;
 		color: #f9e6df;
 		padding: 3.5em 0 4em 0;
 		text-align: center;

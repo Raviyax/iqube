@@ -10,7 +10,7 @@
 	<div id="page-wrapper">
 		<!-- Header -->
 		<header id="header" class="alt">
-			<h1><a href="index.html">IQube</a> by Group 08</h1>
+			<h1><a href="index.html">IQube</a> </h1>
 			<nav id="nav">
 				<ul>
 					<li><a href="<?php echo URLROOT ?>/Landing">Home</a></li>
@@ -25,13 +25,13 @@
 		<section id="banner">
 			<div class="container">
 				<div class="box special" style="background-color:#00000888;">
-					<h2>IQUbe</h2>
+					<h2>iQUbe</h2>
 					<p>උසස් පෙළ සිසුන් සදහා ශ්‍රී ලංකාවේ අංක එකේ මාර්ගෝපදේශකත්ව අත්දැකීම!</p>
 					<p>Sri Lanka's number one guidance for Advanced Level students!</p>
 					<p>உயர்தர மாணவர்களுக்கான இலங்கையின் முதன்மையான வழிகாட்டல்!</p>
 					<ul class="actions special">
 						<li><a href="<?php echo URLROOT; ?>/Signup" class="button primary">Sign Up Today</a></li>
-						<li><a href="#" class="button">Learn More...</a></li>
+						<!-- <li><a href="#" class="button">Learn More...</a></li> -->
 					</ul>
 				</div>
 			</div>
@@ -53,42 +53,66 @@
 				<img src="<?php echo URLROOT ?>/assets/img/iqube.png" alt="iqube logo">
 			</section>
 			<div class="row">
-				<div class="col-6 col-12-narrower">
+				<!-- <div class="col-6 col-12-narrower">
 					<section class="box special">
 						<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-						<h3>Sed lorem adipiscing</h3>
+						<h3>Purchase the tutors 
+as you wish. </h3>
 						<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
 						<ul class="actions special">
-							<li><a href="#" class="button alt">Learn More</a></li>
+							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
+						</ul>
+					</section>
+				</div> -->
+				<div class="col-6 col-12-narrower">
+					<section class="box special">
+						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
+						<h3>Purchase the tutors as you wish ! </h3>
+						<p> You are free to purchase any tutor in our system to recieve their subject contents. </p>
+						<ul class="actions special">
+							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
 						</ul>
 					</section>
 				</div>
 				<div class="col-6 col-12-narrower">
 					<section class="box special">
 						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-						<h3>Accumsan integer</h3>
-						<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
+						<h3>Select the lessons as needed and only pay for that ! </h3>
+						<p>No need pay for the whole syllabus. You can just select the topics what you want and pay for it.</p>
 						<ul class="actions special">
-							<li><a href="#" class="button alt">Learn More</a></li>
+							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
 						</ul>
 					</section>
 				</div>
+				<div class="col-6 col-12-narrower">
+					<section class="box special">
+						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
+						<h3>Connect with tutors !</h3>
+						<p> When you purchase a tutor, you can get assitance of that relevant tutor through the system. </p>
+						<ul class="actions special">
+							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
+						</ul>
+					</section>
+				</div>
+
+				<div class="col-6 col-12-narrower">
+					<section class="box special">
+						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
+						<h3>Track your progress with the system !</h3>
+						<p> When you complete the tasks given in the system you can get an idea about your progress of that subject.</p>
+						<ul class="actions special">
+							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
+						</ul>
+					</section>	
+				</div>
+
 			</div>
 		</section>
 		<!-- CTA -->
 		<section id="cta">
-			<h2>Sign up for beta access</h2>
-			<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc.</p>
-			<form>
-				<div class="row gtr-50 gtr-uniform">
-					<div class="col-8 col-12-mobilep">
-						<input type="email" name="email" id="email" placeholder="Email Address" />
-					</div>
-					<div class="col-4 col-12-mobilep">
-						<input type="submit" value="Sign Up" class="fit" />
-					</div>
-				</div>
-			</form>
+			<h2>Contact Us</h2>
+			<p><b>iQube</b> Online Learning Platform</p>
+			
 		</section>
 		<!-- Footer -->
 		<footer id="footer">
@@ -101,8 +125,8 @@
 				<li><a href="#" class="icon brands fa-google-plus"><span class="label">Google+</span></a></li>
 			</ul>
 			<ul class="copyright">
-				<li>&copy; Untitled. All rights reserved.</li>
-				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				<li>&copy; 2024 © All rights reserved by iQube.</li>
+				
 			</ul>
 		</footer>
 	</div>

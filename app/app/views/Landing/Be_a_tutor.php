@@ -10,7 +10,7 @@
 	<div id="page-wrapper">
 		<!-- Header -->
 		<header id="header" class="alt">
-			<h1><a href="index.html">IQube</a> by Group 08</h1>
+			<h1><a href="index.html">IQube</a></h1>
 			<nav id="nav">
 				<ul>
 					<li><a href="<?php echo URLROOT ?>/Landing">Home</a></li>

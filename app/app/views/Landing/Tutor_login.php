@@ -48,4 +48,3 @@
             </div>
         </div>
     </div>
-    <?php $this->view('inc/Footer') ?>
