@@ -6,6 +6,7 @@ include("../app/lib/Model.php");
 include ("../app/models/Subjectadmins.php");
 include ("../app/models/Students.php");
 include ("../app/models/Tutors.php");
+include ("../app/models/Auth.php");
 // Initialize objects
 $subjectadmins = new Subjectadmins();
 $students = new Students();
@@ -190,7 +191,76 @@ if(isset($_POST['action'])) {
             echo 'error';
         }
     }
+
+    if($action == 'tutor_activate_model_paper') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        // Perform insertion and echo response
+        if($tutors->activate_model_paper($model_paper_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_deactivate_model_paper') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        // Perform insertion and echo response
+        if($tutors->deactivate_model_paper($model_paper_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
     
+    if($action == 'tutor_delete_mcq') {
+        // Sanitize input
+        $mcq_id = $_POST['mcq_id'];
+        // Perform deletion and echo response
+        if($tutors->delete_mcq($mcq_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+
+    if($action == 'tutor_add_mcq') {
+        // Sanitize input
+       $model_paper_id = $_POST['model_paper_id'];
+        $question = $_POST['question'];
+        $option1 = $_POST['option1'];
+        $option2 = $_POST['option2'];
+        $option3 = $_POST['option3'];
+        $option4 = $_POST['option4'];
+        $option5 = $_POST['option5'];
+        $correct = $_POST['correct'];
+        // Perform insertion and echo response
+        if($tutors->add_mcq($model_paper_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_update_mcq') {
+        // Sanitize input
+        $mcq_id = $_POST['mcq_id'];
+        $question = $_POST['question'];
+        $option1 = $_POST['option1'];
+        $option2 = $_POST['option2'];
+        $option3 = $_POST['option3'];
+        $option4 = $_POST['option4'];
+        $option5 = $_POST['option5'];
+        $correct = $_POST['correct'];
+        // Perform insertion and echo response
+        if($tutors->update_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
     
 } else {
     // If action is not specified, return an error response

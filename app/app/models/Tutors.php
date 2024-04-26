@@ -1,6 +1,16 @@
 <?php
 class Tutors extends Model
 {
+    //constructor
+    public function __construct()
+    {
+        if(!Auth::is_tutor()){
+           return;
+        }
+        if(!Auth::is_logged_in())
+        { return; }
+    }
+    
     public $errors = [];
     public $emailerrors;
     public $request_errors = [];
@@ -843,5 +853,84 @@ class Tutors extends Model
         // Return true to indicate successful update
         return true;
     }
+
+    public function activate_model_paper($model_paper_content_id)
+    {
+        // Construct SQL query
+        $query = "UPDATE model_paper_content SET active = 1 WHERE model_paper_content_id = :model_paper_content_id";
     
+        // Execute the query with parameters
+        $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+    
+        // Return true to indicate successful activation
+        return true;
+    }
+
+    public function deactivate_model_paper($model_paper_content_id)
+    {
+        // Construct SQL query
+        $query = "UPDATE model_paper_content SET active = 0 WHERE model_paper_content_id = :model_paper_content_id";
+    
+        // Execute the query with parameters
+        $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+    
+        // Return true to indicate successful deactivation
+        return true;
+    }
+    
+    public function delete_mcq($mcq_id)
+    {
+        // Construct SQL query
+        $query = "DELETE FROM mcqs_for_model_paper WHERE mcq_id = :mcq_id";
+    
+        // Execute the query with parameters
+        $this->query($query, ['mcq_id' => $mcq_id]);
+    
+        // Return true to indicate successful deletion
+        return true;
+    }
+
+    public function add_mcq($model_paper_content_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
+    {
+        //validate
+        if (empty($question) || empty($option1) || empty($option2) || empty($option3) || empty($option4) || empty($option5) || empty($correct)) {
+            return false;
+        }
+        // Construct SQL query
+        $query = "INSERT INTO mcqs_for_model_paper (model_paper_content_id, question, option1, option2, option3, option4, option5, correct) VALUES (:model_paper_content_id, :question, :option1, :option2, :option3, :option4, :option5, :correct)";
+        $this->query($query, [
+            'model_paper_content_id' => $model_paper_content_id,
+            'question' => $question,
+            'option1' => $option1,
+            'option2' => $option2,
+            'option3' => $option3,
+            'option4' => $option4,
+            'option5' => $option5,
+            'correct' => $correct
+        ]);
+        return true;
+    }
+
+
+    public function update_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
+    {
+        //validate
+        if (empty($question) || empty($option1) || empty($option2) || empty($option3) || empty($option4) || empty($option5) || empty($correct)) {
+            return false;
+        }
+        // Construct SQL query
+        $query = "UPDATE mcqs_for_model_paper SET question = :question, option1 = :option1, option2 = :option2, option3 = :option3, option4 = :option4, option5 = :option5, correct = :correct WHERE mcq_id = :mcq_id";
+        $this->query($query, [
+            'question' => $question,
+            'option1' => $option1,
+            'option2' => $option2,
+            'option3' => $option3,
+            'option4' => $option4,
+            'option5' => $option5,
+            'correct' => $correct,
+            'mcq_id' => $mcq_id
+        ]);
+        return true;
+    }
+
 }

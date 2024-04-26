@@ -22,8 +22,17 @@ $mcqs = $data['mcqs'];
                 <div class="details">
                     <h3><?php echo $model_paper->name; ?></h3>
                     <p><?php echo $model_paper->description; ?></p>
-                  
-                    <div class="date">Added date: <?php echo $model_paper->date; ?></div>
+
+                    <div class="date">Added date: <?php $date = $model_paper->date;
+                                                    $formattedDate = date('Y-m-d', strtotime($date));
+                                                    echo $formattedDate; ?></div>
+                    <div style="margin-top: 10px;">
+                        <?php if ($model_paper->active == 1) { ?>
+                            <button id="deactivate" class="button-34" style="background-color:Green" role="button">Active</button>
+                        <?php } else { ?>
+                            <button id="activate" class="button-34" style="background-color:Red" role="button">Inactive</button>
+                        <?php } ?>
+                    </div>
                     <div class="chaptercontainer">
                         <h3>Covering Areas</h3>
                         <?php
@@ -74,7 +83,7 @@ $mcqs = $data['mcqs'];
         </div>
         <section class="courses" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
             <section class="form-container" style="display: block;">
-                <form >
+                <form>
                     <section style="display: block;">
                         <div class="flex">
                             <div class="col">
@@ -188,7 +197,9 @@ $mcqs = $data['mcqs'];
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-           
+        function addNewQuestion() {
+        $('#new').clone().attr('id', 'newmcq').insertBefore('#addnewbuttondiv').css('display', 'block');
+    }
 
     $(document).ready(function() {
         const url = "<?php echo URLROOT; ?>/api.php";
@@ -210,7 +221,7 @@ $mcqs = $data['mcqs'];
             $('#saveThumbnailDiv').css('display', 'flex');
         });
 
-       //on click saveDuration
+        //on click saveDuration
         $('#saveDuration').click(function() {
             event.preventDefault();
             const duration = $('#duration').val();
@@ -260,49 +271,170 @@ $mcqs = $data['mcqs'];
 
         //on click saveThumbnail
         $('#saveThumbnail').click(function() {
-    const thumbnail = $('#thumbnail')[0].files[0];
-    if (!thumbnail) {
-        alert('Please select a thumbnail.');
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('thumbnail', thumbnail);
-    formData.append('model_paper_id', model_paper_id);
-    formData.append('action', 'tutor_update_model_paper_thumbnail');
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        beforeSend: function() {
-            // Show loading spinner or progress bar
-            // Optionally disable the button to prevent multiple submissions
-        },
-        success: function(response) {
-            if (response === 'success') {
-                alert('Thumbnail updated successfully');
-                $('#saveThumbnailDiv').hide();
-                // Reload the page
-                location.reload();
-            } else {
-                alert('Failed to update thumbnail');
+            const thumbnail = $('#thumbnail')[0].files[0];
+            if (!thumbnail) {
+                alert('Please select a thumbnail.');
+                return;
             }
-        },
-        error: function(xhr, status, error) {
-            alert('An error occurred while uploading the thumbnail. Please try again later.');
-            console.error(xhr, status, error);
-        },
-        complete: function() {
-            // Hide loading spinner or progress bar
-            // Optionally re-enable the button if disabled
-        }
+
+            const formData = new FormData();
+            formData.append('thumbnail', thumbnail);
+            formData.append('model_paper_id', model_paper_id);
+            formData.append('action', 'tutor_update_model_paper_thumbnail');
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    // Show loading spinner or progress bar
+                    // Optionally disable the button to prevent multiple submissions
+                },
+                success: function(response) {
+                    if (response === 'success') {
+                        alert('Thumbnail updated successfully');
+                        $('#saveThumbnailDiv').hide();
+                        // Reload the page
+                        location.reload();
+                    } else {
+                        alert('Failed to update thumbnail');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred while uploading the thumbnail. Please try again later.');
+                    console.error(xhr, status, error);
+                },
+                complete: function() {
+                    // Hide loading spinner or progress bar
+                    // Optionally re-enable the button if disabled
+                }
+            });
+        });
+
+        //active and deactive
+        $('#activate').click(function() {
+            event.preventDefault();
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    model_paper_id: model_paper_id,
+                    action: 'tutor_activate_model_paper'
+                },
+                success: function(response) {
+                    if (response === 'success') {
+                        alert('Model paper activated successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to activate model paper');
+                    }
+                }
+            });
+        });
+
+
+        $('#deactivate').click(function() {
+            event.preventDefault();
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    model_paper_id: model_paper_id,
+                    action: 'tutor_deactivate_model_paper'
+                },
+                success: function(response) {
+                    if (response === 'success') {
+                        alert('Model paper deactivated successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to deactivate model paper');
+                    }
+                }
+            });
+        });
+
+        $('form[data-contains="backend"]').change(function() {
+        $(this).find('#savechangesdiv').css('display', 'flex');
     });
-});
+
+    //remove the new question form
+    $(document).on('click', '#remove', function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            // Remove the form which contains the remove button
+            $(this).closest('form').remove();
+        });
 
 
+         //on click of delete button
+        $(document).on('click', '[id^=delete-mcq_]', function(event) {
+
+            if (confirm('Are you sure you want to delete this question?')) {
+                const mcq_id = $(this).attr('id').split('_')[1];
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        mcq_id: mcq_id,
+                        action: 'tutor_delete_mcq'
+                    },
+                    success: function(response) {
+                        if (response === 'success') {
+                            alert('Question deleted successfully');
+                            location.reload();
+                        } else {
+                            alert('Failed to delete question');
+                        }
+                    }
+                });
+            }
+        });
+         
+//save question
+        $(document).on('click', '#saveAddNew', function(event) {
+            event.preventDefault();
+            var form = $(this).closest('form');
+            var data = form.serialize();
+            data += '&model_paper_id=' + model_paper_id + '&action=tutor_add_mcq';
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    if (response === 'success') {
+                        console.log(response);
+                        alert('Question added successfully');
+                        location.reload();
+                    } else {
+                        alert('Failed to add question');
+                    }
+                }
+            });
+        });
+
+        $('[id^=save-mcq_]').click(function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id').split('_')[1];
+        var form = $('#' + id);
+        var data = form.serialize();
+        data += '&action=tutor_update_mcq&mcq_id=' + id;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                if (response === 'success') {
+                    alert('Question updated successfully');
+                    location.reload();
+                } else {
+                    alert('Failed to update question');
+                }
+            }
+        });
+    });
+
+       
 
 
     });

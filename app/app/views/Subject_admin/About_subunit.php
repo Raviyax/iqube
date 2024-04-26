@@ -270,7 +270,7 @@ if (isset($data['mcqs'])) {
             });
         }
     });
-    //onclick saveAddNew button
+   
     //on click of save button
     $('[id^=save-mcq_]').click(function(e) {
         e.preventDefault();
