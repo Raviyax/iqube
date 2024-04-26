@@ -29,7 +29,7 @@
 </section>
 <!-- watch video section ends -->
 <!-- comments section starts  -->
-<section class="comments">
+<!-- <section class="comments">
    <h1 class="heading">add a comment</h1>
    <form action="" method="post" class="add-comment">
       <input type="hidden" name="content_id" value="">
@@ -48,11 +48,11 @@
          </div>
          <p class="text">comment</p>
          <form action="" method="post" class="flex-btn">
-            <input type="hidden" name="comment_id" value="<?= $fetch_comment['id']; ?>">
+            <input type="hidden" name="comment_id" value="">
             <button type="submit" name="edit_comment" class="inline-option-btn">edit comment</button>
-            <button type="submit" name="delete_comment" class="inline-delete-btn" onclick="return confirm('delete this comment?');">delete comment</button>
+            <button type="submit" name="delete_comment" class="inline-delete-btn">delete comment</button>
          </form>
       </div>
       </div>
-</section>
+</section> -->
 <?php $this->view('inc/Footer') ?>
