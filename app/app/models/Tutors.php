@@ -259,7 +259,7 @@ class Tutors extends Model
         chapter_level_1";
         return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
-    public function insert_to_video_content($data,$video,$thumbnail)
+    public function insert_to_video_content($data, $video, $thumbnail)
     {
         //generate uniqe string in 16 characters for video_content_id
         $video_content_id = bin2hex(random_bytes(8));
@@ -275,8 +275,8 @@ class Tutors extends Model
             'video_content_id' => $video_content_id
         ]);
         return $video_content_id;
-    } 
-    public function validate_insert_to_video_content($data,$video,$thumbnail)
+    }
+    public function validate_insert_to_video_content($data, $video, $thumbnail)
     {
         $this->errors = [];
         if (empty($data['name'])) {
@@ -379,7 +379,7 @@ class Tutors extends Model
         // Fetch video uploads
         $query = "SELECT video_content_id, name, thumbnail, price FROM video_content WHERE tutor_id = :tutor_id AND active = 1";
         $result_video_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
-       if (empty($result_video_content)) {
+        if (empty($result_video_content)) {
             return [];
         }
         foreach ($result_video_content as &$video_content) {
@@ -395,7 +395,8 @@ class Tutors extends Model
         }
         return $result_video_content;
     }
-    public function get_my_model_papers(){
+    public function get_my_model_papers()
+    {
         $query = "SELECT model_paper_content_id, name, thumbnail, price FROM model_paper_content WHERE tutor_id = :tutor_id AND active = 1";
         $result_model_paper_content = $this->query($query, ['tutor_id' => $_SESSION['USER_DATA']['tutor_id']]);
         if (empty($result_model_paper_content)) {
@@ -452,7 +453,7 @@ class Tutors extends Model
     }
     public function insert_to_model_paper_content($data, $thumbnail)
     {
-       $model_paper_content_id = bin2hex(random_bytes(8));
+        $model_paper_content_id = bin2hex(random_bytes(8));
         $this->query("INSERT INTO model_paper_content (model_paper_content_id, tutor_id, name, subject, description, thumbnail, price, covering_chapters, time_duration) VALUES (:model_paper_content_id, :tutor_id, :name, :subject, :description, :thumbnail, :price, :covering_chapters, :time_duration)", [
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id'],
             'name' => $data['name'],
@@ -503,7 +504,7 @@ class Tutors extends Model
             }
             $i++;
         }
-  
+
         if (empty($this->errors)) {
             return true;
         }
@@ -551,7 +552,7 @@ class Tutors extends Model
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
         ]);
         return true;
-    } 
+    }
 
     public function update_tutor_profile($data)
     {
@@ -562,7 +563,7 @@ class Tutors extends Model
             'about_me' => $data['description'],
             'tutor_id' => $_SESSION['USER_DATA']['tutor_id']
         ]);
- 
+
         return true;
     }
 
@@ -580,8 +581,8 @@ class Tutors extends Model
         }
         if (empty($this->errors)) {
             return true;
-        }   
-    
+        }
+
         return false;
     }
 
@@ -597,7 +598,8 @@ class Tutors extends Model
         return false;
     }
 
-    public function get_my_student_count($tutor_id){
+    public function get_my_student_count($tutor_id)
+    {
         //get all model_paper and video ids of the tutor
         $model_papers = $this->query("SELECT model_paper_content_id FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
         $videos = $this->query("SELECT video_content_id FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
@@ -621,7 +623,8 @@ class Tutors extends Model
         return $student_count;
     }
 
-    public function get_my_content_count($tutor_id){
+    public function get_my_content_count($tutor_id)
+    {
         //get all model_paper and video ids of the tutor
         $model_papers = $this->query("SELECT model_paper_content_id FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
         $videos = $this->query("SELECT video_content_id FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
@@ -635,7 +638,8 @@ class Tutors extends Model
         return $content_count;
     }
 
-    public function get_purchase_count_of_my_materials($tutor_id){
+    public function get_purchase_count_of_my_materials($tutor_id)
+    {
         //get all model_paper and video ids of the tutor
         $model_papers = $this->query("SELECT model_paper_content_id FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
         $videos = $this->query("SELECT video_content_id FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
@@ -659,7 +663,8 @@ class Tutors extends Model
         return $purchase_count;
     }
 
-    public function get_my_last_month_earnings($tutor_id){
+    public function get_my_last_month_earnings($tutor_id)
+    {
         //get all model_paper and video ids of the tutor
         $model_papers = $this->query("SELECT model_paper_content_id,price FROM model_paper_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
         $videos = $this->query("SELECT video_content_id,price FROM video_content WHERE tutor_id = :tutor_id", ['tutor_id' => $tutor_id]);
@@ -680,14 +685,14 @@ class Tutors extends Model
                 }
             }
         }
-       //detuct 20% commission
+        //detuct 20% commission
         $earnings = $earnings - ($earnings * 0.2);
         return $earnings;
-
     }
 
-    
-    public function get_my_video_analytics($tutor_id) {
+
+    public function get_my_video_analytics($tutor_id)
+    {
         try {
             // Query to fetch video analytics with purchase count and revenue
             $sql = "SELECT vc.video_content_id, vc.name, vc.price, vc.active,
@@ -697,10 +702,10 @@ class Tutors extends Model
                     LEFT JOIN purchased_videos pv ON vc.video_content_id = pv.video_content_id
                     WHERE vc.tutor_id = :tutor_id
                     GROUP BY vc.video_content_id";
-    
+
             // Execute the query
             $videos = $this->query($sql, ['tutor_id' => $tutor_id]);
-    
+
             // Return video analytics
             return $videos;
         } catch (Exception $e) {
@@ -711,7 +716,8 @@ class Tutors extends Model
         }
     }
 
-    public function get_my_model_paper_analytics($tutor_id) {
+    public function get_my_model_paper_analytics($tutor_id)
+    {
         try {
             // Query to fetch model paper analytics with purchase count and revenue
             $sql = "SELECT mpc.model_paper_content_id, mpc.name, mpc.price, mpc.active,
@@ -721,10 +727,10 @@ class Tutors extends Model
                     LEFT JOIN purchased_model_papers pmp ON mpc.model_paper_content_id = pmp.model_paper_content_id
                     WHERE mpc.tutor_id = :tutor_id
                     GROUP BY mpc.model_paper_content_id";
-    
+
             // Execute the query
             $model_papers = $this->query($sql, ['tutor_id' => $tutor_id]);
-    
+
             // Return model paper analytics
             return $model_papers;
         } catch (Exception $e) {
@@ -734,10 +740,108 @@ class Tutors extends Model
             return [];
         }
     }
+
+    public function is_model_paper_belongs_to_me($model_paper_content_id, $tutor_id)
+    {
+        // Query to check if the model paper belongs to the tutor
+        $sql = "SELECT model_paper_content_id
+                FROM model_paper_content
+                WHERE model_paper_content_id = :model_paper_content_id
+                AND tutor_id = :tutor_id";
+
+        // Execute the query
+        $model_paper = $this->query($sql, ['model_paper_content_id' => $model_paper_content_id, 'tutor_id' => $tutor_id]);
+
+        if ($model_paper) {
+            return true;
+        }
+        return false;
+    }
+
+    public function get_from_model_paper_content($model_paper_content_id)
+    { //get model paper content by model paper content id
+        $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id";
+        $model_paper = $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+        if ($model_paper) {
+            return $model_paper[0];
+        } else {
+            return false;
+        }
+    }
+
+    public function get_covering_chapters_for_model_paper($model_paper_content_id)
+    {
+        //get covering chapters for model paper by model paper content id
+        $query = "SELECT covering_chapters FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id";
+        $result = $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+        if ($result) {
+            //explode the chapters and return
+            $chapter_ids = explode(',', $result[0]->covering_chapters);
+            //get chapter names
+            $chapters = [];
+            foreach ($chapter_ids as $chapter_id) {
+                $query = "SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :id";
+                $result = $this->query($query, ['id' => $chapter_id]);
+                if ($result) {
+                    $chapters[] = $result[0];
+                }
+            }
+            return $chapters;
+        }
+        return false;
+    }
+
+    public function get_mcqs_for_model_paper($model_paper_content_id)
+    {
+        //get mcqs for model paper by model paper content id
+        $query = "SELECT * FROM mcqs_for_model_paper WHERE model_paper_content_id = :model_paper_content_id";
+        $mcqs = $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+        if ($mcqs) {
+            return $mcqs;
+        }
+        return false;
+    }
+
+    public function update_model_paper_duration($model_paper_content_id, $time_duration)
+    {
+        // Validate time duration
+        if (!is_numeric($time_duration) || $time_duration < 0) {
+            // If time duration is not numeric or negative, return false
+            return false;
+        }
     
+        // Construct SQL query
+        $query = "UPDATE model_paper_content SET time_duration = :time_duration WHERE model_paper_content_id = :model_paper_content_id";
     
+        // Execute the query with parameters
+        $this->query($query, ['time_duration' => $time_duration, 'model_paper_content_id' => $model_paper_content_id]);
+    
+        // Return true to indicate successful update
+        return true;
+    }
 
+    public function update_model_paper_description($model_paper_content_id, $description)
+    {
+        // Construct SQL query
+        $query = "UPDATE model_paper_content SET description = :description WHERE model_paper_content_id = :model_paper_content_id";
+    
+        // Execute the query with parameters
+        $this->query($query, ['description' => $description, 'model_paper_content_id' => $model_paper_content_id]);
+    
+        // Return true to indicate successful update
+        return true;
+    }
 
-
+    public function update_model_paper_thumbnail($model_paper_content_id, $thumbnail)
+    {
+        // Construct SQL query
+        $query = "UPDATE model_paper_content SET thumbnail = :thumbnail WHERE model_paper_content_id = :model_paper_content_id";
+    
+        // Execute the query with parameters
+        $this->query($query, ['thumbnail' => $thumbnail, 'model_paper_content_id' => $model_paper_content_id]);
+    
+        // Return true to indicate successful update
+        return true;
+    }
     
 }

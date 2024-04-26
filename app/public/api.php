@@ -132,6 +132,65 @@ if(isset($_POST['action'])) {
             echo 'error';
         }
     }
+
+    if($action == 'tutor_update_model_paper_duration') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        $duration = $_POST['duration'];
+        // Perform insertion and echo response
+        if($tutors->update_model_paper_duration($model_paper_id, $duration)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_update_model_paper_description') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        $description = $_POST['description'];
+        // Perform insertion and echo response
+        if($tutors->update_model_paper_description($model_paper_id, $description)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if ($action == 'tutor_update_model_paper_thumbnail') {
+        // Sanitize input (if necessary)
+        $model_paper_id = $_POST['model_paper_id'];
+    
+        // Check if a file was uploaded
+        if (isset($_FILES['thumbnail'])) {
+            $thumbnail = $_FILES['thumbnail'];
+    
+            // Validate file type, size, etc. (if necessary)
+    
+            // Move the uploaded file to the desired directory on the server
+            $uploadDir = ''.APPROOT.'/uploads/model_papers/thumbnails/';
+     //rename the file with unique id
+            $uploadFilename = uniqid() . basename($thumbnail['name']);
+            $uploadFile = $uploadDir . $uploadFilename;
+            
+    
+            if (move_uploaded_file($thumbnail['tmp_name'], $uploadFile)) {
+                // The file has been successfully uploaded, update the database or perform any other necessary actions
+                if ($tutors->update_model_paper_thumbnail($model_paper_id, $uploadFilename)) {
+                    echo 'success';
+                } else {
+                    echo 'error';
+                }
+            } else {
+                // Failed to move the uploaded file, handle the error
+                echo 'error';
+            }
+        } else {
+            // No file uploaded, handle the error
+            echo 'error';
+        }
+    }
+    
     
 } else {
     // If action is not specified, return an error response

@@ -134,6 +134,7 @@ class Student extends Controller
     public function more_details()
     {
         if (Auth::is_logged_in() && Auth::is_student()) {
+     
             if (!Auth::is_completed()) {
                 $data = [
                     'title' => 'Student',

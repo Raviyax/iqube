@@ -40,8 +40,8 @@ $model_paper_analytics = $data['model_paper_analytics'];
         <h1 class="heading">Analytics</h1>
         <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center;">
 
-            <button id="" class="button-17" role="button">Videos</button>
-            <button id="" class="button-17" role="button">Model Papers</button>
+            <button id="showVideo" class="button-17" role="button">Videos</button>
+            <button id="showModelPaper" class="button-17" role="button">Model Papers</button>
 
         </div>
         <section class="unit-container" id="video">
@@ -77,7 +77,7 @@ $model_paper_analytics = $data['model_paper_analytics'];
 
         </section>
 
-        <section class="unit-container" id="model-paper" >
+        <section class="unit-container" id="model-paper">
             <!-- table for tutor contents -->
             <?php
             echo '<table id="table" class="table">';
@@ -93,7 +93,10 @@ $model_paper_analytics = $data['model_paper_analytics'];
             echo '<tbody>';
 
             foreach ($model_paper_analytics as $model_paper) {
-                echo '<tr>';
+                $url = URLROOT . '/Tutor/model_paper/' . $model_paper->model_paper_content_id;
+
+                // Output the table row with onclick event
+                echo '<tr onclick="window.location=\'' . $url . '\'">';
                 echo '<td>' . $model_paper->name . '</td>';
                 echo '<td>' . $model_paper->purchase_count . '</td>';
                 echo '<td>' . $model_paper->price . 'LKR</td>';
@@ -106,9 +109,24 @@ $model_paper_analytics = $data['model_paper_analytics'];
             echo '</table>';
             ?>
 
+        </section>
     </section>
-</section>
-<?php $this->view('inc/Footer') ?>
-</body>
 
-</html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#model-paper").hide();
+            $("#showVideo").click(function() {
+                $("#model-paper").hide();
+                $("#video").show();
+            });
+            $("#showModelPaper").click(function() {
+                $("#video").hide();
+                $("#model-paper").show();
+            });
+        });
+    </script>
+    <?php $this->view('inc/Footer') ?>
+    </body>
+
+    </html>

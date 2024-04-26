@@ -32,12 +32,12 @@ class Tutor extends Controller
             redirect('/Login');
             return;
         }
-        
+
         $data = [
             'title' => 'Tutor',
             'view' => 'My Profile',
         ];
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
             $image = '';
             if ($_FILES["image"]['size'] > 0) {
@@ -52,7 +52,7 @@ class Tutor extends Controller
                     }
                 }
             }
-            
+
             if ($this->tutor->validate_update_tutor_profile($_POST)) {
                 if ($this->tutor->update_tutor_profile($_POST)) {
                     $_SESSION['USER_DATA']['fname'] = $_POST['fname'];
@@ -69,10 +69,10 @@ class Tutor extends Controller
                 $data['errors'] = $this->tutor->errors;
             }
         }
-        
+
         $this->view('Tutor/Profile', $data);
     }
-    
+
     public function userimage($image)
     {
         if (Auth::is_logged_in() && Auth::is_tutor()) {
@@ -91,8 +91,8 @@ class Tutor extends Controller
                     'email' => $email,
                     'token' => $token,
                 ];
-                 if (isset($_POST['create'])) {
-                    if ($this->tutor->validate_new_password($_POST)) { 
+                if (isset($_POST['create'])) {
+                    if ($this->tutor->validate_new_password($_POST)) {
                         if ($this->tutor->create_new_password($_POST['password'], $email)) {
                             $this->tutor->set_tutor_active($email);
                             redirect('/Landing/Login_as_a_tutor');
@@ -164,19 +164,16 @@ class Tutor extends Controller
                                 redirect('/Tutor/myuploads');
                             }
                         }
-                    }
-                    else {
+                    } else {
                         $data['errors'] = $this->tutor->errors;
                         $this->view('Tutor/Add_mcq_for_video', $data);
                     }
                 } else {
                     echo "<script>alert('Video Content ID does not exist or is already active')</script>";
-                }
-                ;
-            } 
+                };
+            }
             $this->view('Tutor/Add_new_video', $data);
-        }
-        else {
+        } else {
             redirect('/Login');
         }
     }
@@ -235,15 +232,14 @@ class Tutor extends Controller
             if (isset($_POST['submit-questions']) && $model_paper_content_id != null) {
                 if ($this->tutor->is_model_paper_content_id_exists_and_not_active($model_paper_content_id)) {
                     if ($this->tutor->validate_insert_to_questions_for_model_paper($_POST)) {
-                        
-                    
-                            if ($this->tutor->insert_to_mcqs_for_model_paper($_POST,$model_paper_content_id) ) {
-                                if ($this->tutor->set_model_paper_content_active($model_paper_content_id)) {
-                                    echo "<script>alert('Questions added successfully')</script>";
-                                    redirect('/Tutor/myuploads');
-                                }
+
+
+                        if ($this->tutor->insert_to_mcqs_for_model_paper($_POST, $model_paper_content_id)) {
+                            if ($this->tutor->set_model_paper_content_active($model_paper_content_id)) {
+                                echo "<script>alert('Questions added successfully')</script>";
+                                redirect('/Tutor/myuploads');
                             }
-                    
+                        }
                     } else {
                         $data['errors'] = $this->tutor->errors;
                         $this->view('Tutor/Add_questions_to_model_paper', $data);
@@ -253,6 +249,27 @@ class Tutor extends Controller
                 }
             }
             $this->view('Tutor/Add_new_model_paper', $data);
+        } else {
+            redirect('/Login');
+        }
+    }
+
+    public function model_paper($model_paper_content_id)
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            if (!$this->tutor->is_model_paper_belongs_to_me($model_paper_content_id, $_SESSION['USER_DATA']['tutor_id'])) {
+                echo "invalid url";
+                return;
+            }
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'Model Paper',
+                'model_paper' => $this->tutor->get_from_model_paper_content($model_paper_content_id),
+                'covering_chapters' => $this->tutor->get_covering_chapters_for_model_paper($model_paper_content_id),
+                'mcqs' => $this->tutor->get_mcqs_for_model_paper($model_paper_content_id),
+               
+            ];
+            $this->view('Tutor/Model_paper_overview', $data);
         } else {
             redirect('/Login');
         }
