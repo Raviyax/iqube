@@ -786,7 +786,7 @@ class Tutors extends Model
         $result = $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
         if ($result) {
             //explode the chapters and return
-            $chapter_ids = explode(',', $result[0]->covering_chapters);
+            $chapter_ids = explode('][', $result[0]->covering_chapters);
             //get chapter names
             $chapters = [];
             foreach ($chapter_ids as $chapter_id) {
@@ -920,6 +920,151 @@ class Tutors extends Model
         }
         // Construct SQL query
         $query = "UPDATE mcqs_for_model_paper SET question = :question, option1 = :option1, option2 = :option2, option3 = :option3, option4 = :option4, option5 = :option5, correct = :correct WHERE mcq_id = :mcq_id";
+        $this->query($query, [
+            'question' => $question,
+            'option1' => $option1,
+            'option2' => $option2,
+            'option3' => $option3,
+            'option4' => $option4,
+            'option5' => $option5,
+            'correct' => $correct,
+            'mcq_id' => $mcq_id
+        ]);
+        return true;
+    }
+
+    public function is_video_belongs_to_me($video_content_id, $tutor_id)
+    {
+        // Query to check if the video belongs to the tutor
+        $sql = "SELECT video_content_id
+                FROM video_content
+                WHERE video_content_id = :video_content_id
+                AND tutor_id = :tutor_id";
+
+        // Execute the query
+        $video = $this->query($sql, ['video_content_id' => $video_content_id, 'tutor_id' => $tutor_id]);
+
+        if ($video) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public function get_from_video_content($video_content_id)
+    { 
+        $query = "SELECT * FROM video_content WHERE video_content_id = :video_content_id";
+        $video = $this->query($query, ['video_content_id' => $video_content_id]);
+        if ($video) {
+            return $video[0];
+        } else {
+            return false;
+        }
+    }
+
+    public function get_covering_chapters_for_video($video_content_id)
+    {
+        $query = "SELECT covering_chapters FROM video_content WHERE video_content_id = :video_content_id";
+        $result = $this->query($query, ['video_content_id' => $video_content_id]);
+        if ($result) {
+            $chapter_ids = explode('][', $result[0]->covering_chapters);
+            $chapters = [];
+            foreach ($chapter_ids as $chapter_id) {
+                $query = "SELECT chapter_level_1, chapter_level_2 FROM chapters WHERE id = :id";
+                $result = $this->query($query, ['id' => $chapter_id]);
+                if ($result) {
+                    $chapters[] = $result[0];
+                }
+            }
+            return $chapters;
+        }
+        return false;
+    }
+
+
+    public function get_mcqs_for_video($video_content_id)
+    {
+        $query = "SELECT * FROM mcq_for_video WHERE video_content_id = :video_content_id";
+        $mcqs = $this->query($query, ['video_content_id' => $video_content_id]);
+        if ($mcqs) {
+            return $mcqs;
+        }
+        return false;
+    }
+
+    public function update_video_description($video_content_id, $description)
+    {
+        //validate
+        if (empty($description)) {
+            return false;
+        }
+        // Construct SQL query
+        $query = "UPDATE video_content SET description = :description WHERE video_content_id = :video_content_id";
+        $this->query($query, ['description' => $description, 'video_content_id' => $video_content_id]);
+        return true;
+    }
+
+    public function update_video_thumbnail($video_content_id, $thumbnail)
+    {
+        // Construct SQL query
+        $query = "UPDATE video_content SET thumbnail = :thumbnail WHERE video_content_id = :video_content_id";
+        $this->query($query, ['thumbnail' => $thumbnail, 'video_content_id' => $video_content_id]);
+        return true;
+    }
+
+    public function activate_video($video_content_id)
+    {
+        // Construct SQL query
+        $query = "UPDATE video_content SET active = 1 WHERE video_content_id = :video_content_id";
+        $this->query($query, ['video_content_id' => $video_content_id]);
+        return true;
+    }
+
+    public function deactivate_video($video_content_id)
+    {
+        // Construct SQL query
+        $query = "UPDATE video_content SET active = 0 WHERE video_content_id = :video_content_id";
+        $this->query($query, ['video_content_id' => $video_content_id]);
+        return true;
+    }
+
+    public function delete_video_mcq($mcq_id)
+    {
+        // Construct SQL query
+        $query = "DELETE FROM mcq_for_video WHERE mcq_id = :mcq_id";
+        $this->query($query, ['mcq_id' => $mcq_id]);
+        return true;
+    }
+
+    public function add_video_mcq($video_content_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
+    {
+        //validate
+        if (empty($question) || empty($option1) || empty($option2) || empty($option3) || empty($option4) || empty($option5) || empty($correct)) {
+            return false;
+        }
+        // Construct SQL query
+        $query = "INSERT INTO mcq_for_video (video_content_id, question, option1, option2, option3, option4, option5, correct) VALUES (:video_content_id, :question, :option1, :option2, :option3, :option4, :option5, :correct)";
+        $this->query($query, [
+            'video_content_id' => $video_content_id,
+            'question' => $question,
+            'option1' => $option1,
+            'option2' => $option2,
+            'option3' => $option3,
+            'option4' => $option4,
+            'option5' => $option5,
+            'correct' => $correct
+        ]);
+        return true;
+    }
+
+    public function update_video_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
+    {
+        //validate
+        if (empty($question) || empty($option1) || empty($option2) || empty($option3) || empty($option4) || empty($option5) || empty($correct)) {
+            return false;
+        }
+        // Construct SQL query
+        $query = "UPDATE mcq_for_video SET question = :question, option1 = :option1, option2 = :option2, option3 = :option3, option4 = :option4, option5 = :option5, correct = :correct WHERE mcq_id = :mcq_id";
         $this->query($query, [
             'question' => $question,
             'option1' => $option1,

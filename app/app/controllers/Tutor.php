@@ -81,6 +81,15 @@ class Tutor extends Controller
             $this->view('Noaccess');
         }
     }
+
+    public function video_content($video)
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            $this->retrive_media($video, '/uploads/video_content/videos/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
     public function first_time_login()
     {
         $email = isset($_GET['email']) ? $_GET['email'] : null;
@@ -270,6 +279,26 @@ class Tutor extends Controller
                
             ];
             $this->view('Tutor/Model_paper_overview', $data);
+        } else {
+            redirect('/Login');
+        }
+    }
+
+    public function video($video_content_id)
+    {
+        if (Auth::is_logged_in() && Auth::is_tutor()) {
+            if (!$this->tutor->is_video_belongs_to_me($video_content_id, $_SESSION['USER_DATA']['tutor_id'])) {
+                echo "invalid url";
+                return;
+            }
+            $data = [
+                'title' => 'Tutor',
+                'view' => 'Video',
+                'video' => $this->tutor->get_from_video_content($video_content_id),
+                'covering_chapters' => $this->tutor->get_covering_chapters_for_video($video_content_id),
+                'mcqs' => $this->tutor->get_mcqs_for_video($video_content_id),
+            ];
+            $this->view('Tutor/Video_overview', $data);
         } else {
             redirect('/Login');
         }

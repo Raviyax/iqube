@@ -60,7 +60,7 @@ $model_paper_analytics = $data['model_paper_analytics'];
             echo '<tbody>';
 
             foreach ($video_analytics as $video) {
-                echo '<tr>';
+                echo '<tr onclick="window.location=\'' . URLROOT . '/Tutor/video/' . $video->video_content_id . '\'">';
                 echo '<td>' . $video->name . '</td>';
                 echo '<td>' . $video->purchase_count . '</td>';
                 echo '<td>' . $video->price . 'LKR</td>';

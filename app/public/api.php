@@ -171,7 +171,7 @@ if(isset($_POST['action'])) {
             // Move the uploaded file to the desired directory on the server
             $uploadDir = ''.APPROOT.'/uploads/model_papers/thumbnails/';
      //rename the file with unique id
-            $uploadFilename = uniqid() . basename($thumbnail['name']);
+            $uploadFilename = uniqid();
             $uploadFile = $uploadDir . $uploadFilename;
             
     
@@ -256,6 +256,121 @@ if(isset($_POST['action'])) {
         $correct = $_POST['correct'];
         // Perform insertion and echo response
         if($tutors->update_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_update_video_description') {
+        // Sanitize input
+        $video_id = $_POST['video_id'];
+        $description = $_POST['description'];
+        // Perform insertion and echo response
+        if($tutors->update_video_description($video_id, $description)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_update_video_thumbnail') {
+        // Sanitize input (if necessary)
+        $video_id = $_POST['video_id'];
+    
+        // Check if a file was uploaded
+        if (isset($_FILES['thumbnail'])) {
+            $thumbnail = $_FILES['thumbnail'];
+    
+            // Validate file type, size, etc. (if necessary)
+    
+            // Move the uploaded file to the desired directory on the server
+            $uploadDir = ''.APPROOT.'/uploads/video_content/thumbnails/';
+     //rename the file with unique id
+            $uploadFilename = uniqid();
+            $uploadFile = $uploadDir . $uploadFilename;
+            
+    
+            if (move_uploaded_file($thumbnail['tmp_name'], $uploadFile)) {
+                // The file has been successfully uploaded, update the database or perform any other necessary actions
+                if ($tutors->update_video_thumbnail($video_id, $uploadFilename)) {
+                    echo 'success';
+                } else {
+                    echo 'error';
+                }
+            } else {
+                // Failed to move the uploaded file, handle the error
+                echo 'error';
+            }
+        } else {
+            // No file uploaded, handle the error
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_activate_video') {
+        // Sanitize input
+        $video_id = $_POST['video_id'];
+        // Perform insertion and echo response
+        if($tutors->activate_video($video_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_deactivate_video') {
+        // Sanitize input
+        $video_id = $_POST['video_id'];
+        // Perform insertion and echo response
+        if($tutors->deactivate_video($video_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_delete_video_mcq') {
+        // Sanitize input
+        $mcq_id = $_POST['mcq_id'];
+        // Perform deletion and echo response
+        if($tutors->delete_video_mcq($mcq_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_add_video_mcq') {
+        // Sanitize input
+       $video_id = $_POST['video_id'];
+        $question = $_POST['question'];
+        $option1 = $_POST['option1'];
+        $option2 = $_POST['option2'];
+        $option3 = $_POST['option3'];
+        $option4 = $_POST['option4'];
+        $option5 = $_POST['option5'];
+        $correct = $_POST['correct'];
+        // Perform insertion and echo response
+        if($tutors->add_video_mcq($video_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'tutor_update_video_mcq') {
+        // Sanitize input
+        $mcq_id = $_POST['mcq_id'];
+        $question = $_POST['question'];
+        $option1 = $_POST['option1'];
+        $option2 = $_POST['option2'];
+        $option3 = $_POST['option3'];
+        $option4 = $_POST['option4'];
+        $option5 = $_POST['option5'];
+        $correct = $_POST['correct'];
+        // Perform insertion and echo response
+        if($tutors->update_video_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)) {
             echo 'success';
         } else {
             echo 'error';
