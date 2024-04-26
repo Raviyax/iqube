@@ -77,8 +77,16 @@ class Subjectadmin extends Controller
         }
     }
     public function tutor_profile($id)
-    {
+    {if($id == null){
+        echo "Invalid url";
+        return;
+    }
+    
         if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            if(!$this->Subjectadmin->is_tutor_belongs_to_subject($id)){
+                echo "<script>alert('Tutor not found');</script>";
+                return;
+            }
             $notifications = $this->Subjectadmin->get_notifications();
             $data = [
                 'title' => 'Tutor',

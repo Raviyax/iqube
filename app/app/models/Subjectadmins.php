@@ -470,4 +470,15 @@ ORDER BY
          $this->query($query, [$tutor_id]);
          return true;
     }
+
+    public function is_tutor_belongs_to_subject($tutor_id)
+    {
+        $query = "SELECT * FROM tutors WHERE tutor_id=? AND subject=?";
+        $result = $this->query($query, [$tutor_id, $_SESSION['USER_DATA']['subject']]);
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
