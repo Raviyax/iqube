@@ -1,16 +1,7 @@
 <?php
 class Tutors extends Model
 {
-    //constructor
-    public function __construct()
-    {
-        if(!Auth::is_tutor()){
-           return;
-        }
-        if(!Auth::is_logged_in())
-        { return; }
-    }
-    
+  
     public $errors = [];
     public $emailerrors;
     public $request_errors = [];
