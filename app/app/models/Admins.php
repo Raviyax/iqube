@@ -180,7 +180,7 @@ class Admins extends Model
         if (file_exists($backup_file_path)) {
             return $backup_file;
         } else {
-            echo "Error: Backup file was not created.";
+            echo "Error: Backup file was not created!";
             return false;
         }
     }
