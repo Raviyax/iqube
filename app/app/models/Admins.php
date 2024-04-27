@@ -210,13 +210,80 @@ class Admins extends Model
             return false;
         }
     }
+
+    public function get_video_purchases()
+    {
+        try {
+            // Get all purchased videos with student ID, tutor ID, price, and names
+            $query = "
+                SELECT pv.video_content_id, pv.student_id, pv.purchased_date, vc.tutor_id, vc.price, 
+                       CONCAT(t.fname, ' ', t.lname) AS tutor_name,
+                       CONCAT(ps.fname, ' ', ps.lname) AS student_name
+                FROM purchased_videos AS pv
+                INNER JOIN video_content AS vc ON pv.video_content_id = vc.video_content_id
+                LEFT JOIN tutors AS t ON vc.tutor_id = t.tutor_id
+                LEFT JOIN premium_students AS ps ON pv.student_id = ps.student_id
+            ";
     
+            // Execute the query
+            $purchases = $this->query($query);
     
+            // Check if any purchases found
+            if (!$purchases) {
+                throw new Exception("No video purchases found.");
+            }
     
+            return $purchases;
+        } catch (Exception $e) {
+            // Log or handle the error appropriately
+            error_log("Error in get_video_purchases(): " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function get_model_paper_purchase()
+    {
+        try {
+         // Get all purchased videos with student ID, tutor ID, price, and names
+            $query = "
+                SELECT pmp.model_paper_content_id, pmp.student_id, pmp.purchased_date, mpc.tutor_id, mpc.price, 
+                       CONCAT(t.fname, ' ', t.lname) AS tutor_name,
+                       CONCAT(ps.fname, ' ', ps.lname) AS student_name
+                FROM purchased_model_papers AS pmp
+                INNER JOIN model_paper_content AS mpc ON pmp.model_paper_content_id = mpc.model_paper_content_id
+                LEFT JOIN tutors AS t ON mpc.tutor_id = t.tutor_id
+                LEFT JOIN premium_students AS ps ON pmp.student_id = ps.student_id
+            ";
     
-  
+            // Execute the query
+            $purchases = $this->query($query);
     
+            // Check if any purchases found
+            if (!$purchases) {
+                throw new Exception("No model paper purchases found.");
+            }
     
+            return $purchases;
+        } catch (Exception $e) {
+            // Log or handle the error appropriately
+            error_log("Error in get_model_paper_purchase(): " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function get_available_subject_count()
+    {
+        // Get the count of available subjects
+        $query = "SELECT COUNT(*) AS available_subjects FROM subjects";
+        $result = $this->query($query);
+    
+        // Check if the query was successful
+        if ($result) {
+            return $result[0]->available_subjects;
+        } else {
+            return 0;
+        }
+    }
     
     
 

@@ -29,6 +29,7 @@ class Admin extends Controller
                 'premium_student_count' => $this->admin->get_total_premium_student_count(),
                 'video_purchases' => $this->admin->get_last_month_video_purchases(),
                 'model_paper_purchases' => $this->admin->get_last_month_model_paper_purchases(),
+                'subjects' => $this->admin->get_available_subject_count(),
             ];
             $this->view('Admin/Dashboard', $data);
         } else {
@@ -167,6 +168,9 @@ class Admin extends Controller
                 'title' => 'Revenue',
                 'view' => 'Revenue',
                 'premium' => $this->admin->get_premium_purchases(),
+                'video' => $this->admin->get_video_purchases(),
+                'model_paper' => $this->admin->get_model_paper_purchase(),
+            
             ];
             $this->view('Admin/Revenue', $data);
         } else {
