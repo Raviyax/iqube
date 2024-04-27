@@ -184,6 +184,34 @@ class Admins extends Model
             return false;
         }
     }
+    public function get_premium_purchases()
+    {
+        try {
+            // Get premium student purchases with their names and purchase date
+            $query = "
+                SELECT s.student_id, s.email, CONCAT(ps.fname, ' ', ps.lname) AS name, ps.purchased_date
+                FROM students AS s 
+                INNER JOIN premium_students AS ps ON s.student_id = ps.student_id
+                WHERE s.premium = 1
+            ";
+    
+            // Execute the query
+            $purchases = $this->query($query);
+    
+            // Check if any purchases found
+            if (!$purchases) {
+                throw new Exception("No premium purchases found.");
+            }
+    
+            return $purchases;
+        } catch (Exception $e) {
+            // Log or handle the error appropriately
+            error_log("Error in get_premium_purchases(): " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    
     
     
   

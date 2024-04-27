@@ -152,10 +152,25 @@ class Admin extends Controller
     }
 
     public function site_backup()
-    { if (Auth::is_logged_in() && Auth::is_admin()) {
-        $this->admin->sql_backup();
-    } else {
-        $this->view('Noaccess');
+    {
+        if (Auth::is_logged_in() && Auth::is_admin()) {
+            $this->admin->sql_backup();
+        } else {
+            $this->view('Noaccess');
+        }
     }
+
+    public function revenue()
+    {
+        if (Auth::is_logged_in() && Auth::is_admin()) {
+            $data = [
+                'title' => 'Revenue',
+                'view' => 'Revenue',
+                'premium' => $this->admin->get_premium_purchases(),
+            ];
+            $this->view('Admin/Revenue', $data);
+        } else {
+            $this->view('Noaccess');
+        }
     }
 }
