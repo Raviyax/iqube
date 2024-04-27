@@ -23,6 +23,7 @@ class Subjectadmin extends Controller
                 'tutor_requests' => $this->Subjectadmin->get_tutor_request_count(),
                 'model_paper_count' => $this->Subjectadmin->get_model_paper_count(),
                 'video_count' => $this->Subjectadmin->get_video_count(),
+                'support_requests' => $this->Subjectadmin->get_my_support_requests(),
             ];
             $this->view('Subject_admin/Dashboard', $data);
         } else {
@@ -211,4 +212,76 @@ class Subjectadmin extends Controller
             redirect('/Login');
         } 
     }
+
+
+
+
+    public function video_overview($id)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            if($this->Subjectadmin->is_video_available_and_belongs_to_subject($id)){
+       
+                $data = [
+                    'title' => 'Video Overview',
+                    'view' => 'Video Overview',
+       
+                    'video' => $this->Subjectadmin->get_video($id),
+                ];
+                $this->view('Subject_admin/Video_overview', $data);
+            } else {
+                echo "<script>alert('Video not found');</script>";
+            }
+        } else {
+            redirect('/Login');
+        }
+    }
+
+
+    public function video($video)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $this->retrive_media($video, '/uploads/video_content/videos/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+
+    public function video_thumbnail($thumbnail)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $this->retrive_media($thumbnail, '/uploads/video_content/thumbnails/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+
+    public function model_paper_overview($id)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            if($this->Subjectadmin->is_model_paper_available_and_belongs_to_subject($id)){
+                $data = [
+                    'title' => 'Model Paper Overview',
+                    'view' => 'Model Paper Overview',
+                    'model_paper' => $this->Subjectadmin->get_model_paper($id),
+                ];
+                $this->view('Subject_admin/Model_paper_overview', $data);
+            } else {
+                echo "<script>alert('Model paper not found');</script>";
+            }
+        } else {
+            redirect('/Login');
+        }
+    }
+
+
+    public function model_paper_thumbnail($thumbnail)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+            $this->retrive_media($thumbnail, '/uploads/model_papers/thumbnails/');
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+ 
+
 }

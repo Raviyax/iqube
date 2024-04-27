@@ -435,6 +435,74 @@ if(isset($_POST['action'])) {
         }
     }
 
+    if($action == 'removeFlagged') {
+        // Sanitize input
+        $tutor_id = intval($_POST['tutor_id']);
+        // Perform insertion and echo response
+        if($subjectadmins->removeFlagged($tutor_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+
+    if($action == 'subject_admin_activate_video') {
+        // Sanitize input
+        $video_id = $_POST['video_id'];
+        // Perform insertion and echo response
+        if($subjectadmins->activate_video($video_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'subject_admin_deactivate_video') {
+        // Sanitize input
+        $video_id = $_POST['video_id'];
+        // Perform insertion and echo response
+        if($subjectadmins->deactivate_video($video_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'subject_admin_activate_model_paper') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        // Perform insertion and echo response
+        if($subjectadmins->activate_model_paper($model_paper_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'subject_admin_deactivate_model_paper') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        // Perform insertion and echo response
+        if($subjectadmins->deactivate_model_paper($model_paper_id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'SubjectAdminUpdatePassword') {
+        // Sanitize input
+        $oldpassword = $_POST['oldpassword'];
+        $newpassword = $_POST['newpassword'];
+        // Perform insertion and echo response
+        if($subjectadmins->updatePassword($oldpassword, $newpassword)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
     
 } else {
     // If action is not specified, return an error response

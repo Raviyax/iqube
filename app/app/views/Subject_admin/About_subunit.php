@@ -30,16 +30,16 @@ if (isset($data['mcqs'])) {
                             <th>Tutor Name</th>
                             <th>Price</th>
                             <th>Added Date</th>
-                            <th>Active</th>
+                            <th>Status</th>
                         </tr>
                         <?php foreach ($model_papers_by_subunit as $model_paper) : ?>
-                            <tr>
+                            <tr onclick="window.location.href = '<?php echo URLROOT; ?>/subjectadmin/model_paper_overview/<?php echo $model_paper->model_paper_content_id; ?>';" style="cursor:pointer;">
                                 <td><?php echo $model_paper->model_paper_content_id; ?></td>
                                 <td><?php echo $model_paper->name; ?></td>
                                 <td><?php echo $model_paper->tutor_name; ?></td>
                                 <td><?php echo $model_paper->price; ?></td>
                                 <td><?php echo $model_paper->date; ?></td>
-                                <td><?php echo $model_paper->active; ?></td>
+                                <td><?php $activeStatus = ($model_paper->active == 1) ? "Active" : "Inactive"; echo $activeStatus; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>
@@ -59,16 +59,16 @@ if (isset($data['mcqs'])) {
                             <th>Tutor Name</th>
                             <th>Price</th>
                             <th>Added Date</th>
-                            <th>Active</th>
+                            <th>Status</th>
                         </tr>
                         <?php foreach ($videos_by_subunit as $video) : ?>
-                            <tr>
+                            <tr onclick="window.location.href = '<?php echo URLROOT; ?>/subjectadmin/video_overview/<?php echo $video->video_content_id; ?>';" style="cursor:pointer;">
                                 <td><?php echo $video->video_content_id; ?></td>
                                 <td><?php echo $video->name; ?></td>
                                 <td><?php echo $video->tutor_name; ?></td>
                                 <td><?php echo $video->price; ?></td>
                                 <td><?php echo $video->date; ?></td>
-                                <td><?php echo $video->active; ?></td>
+                                <td><?php $activeStatus = ($video->active == 1) ? "Active" : "Inactive"; echo $activeStatus; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>

@@ -1,7 +1,7 @@
 <?php $this->view('inc/Header', $data) ?>
 <?php $tutor = $data['tutor']; ?>
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
-    <h1 class="heading"><?php echo $_SESSION['USER_DATA']['subject']; ?> Tutors > <?php echo $tutor->fname . " " . $tutor->lname; ?>'s Profile</h1>
+    <h1 class="heading"><?php echo $_SESSION['USER_DATA']['subject']; ?> Tutors / <?php echo $tutor->fname . " " . $tutor->lname; ?>'s Profile</h1>
     <div class="details">
         <div class="tutor">
             <img src="<?php echo URLROOT . "/Subjectadmin/userimage/" . $data['tutor']->image; ?>" alt="profile">
@@ -100,6 +100,26 @@ $(document).ready(function() {
                 console.log(response);
                 if (response == 'success') {
                     alert('Tutor has been marked as flagged');
+                    location.reload();
+                } else {
+                    alert('Something went wrong');
+                }
+            }
+        });
+    });
+
+    $('#removeFlagged').click(function() {
+        $.ajax({
+            url: api_root,
+            type: 'POST',
+            data: {
+                action: 'removeFlagged',
+                tutor_id: tutor_id
+            },
+            success: function(response) {
+                console.log(response);
+                if (response == 'success') {
+                    alert('Tutor has been removed from flagged');
                     location.reload();
                 } else {
                     alert('Something went wrong');

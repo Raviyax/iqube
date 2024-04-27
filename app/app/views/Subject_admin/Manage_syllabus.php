@@ -2,6 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <section>
     <h1 class="heading">Manage <?php echo $_SESSION['USER_DATA']['subject']; ?> Syllabus</h1>
+    <button class="button-17 addUnitBtn" style="margin-bottom: 20px;" id="addnewunit"  role="button">Add New Unit</button>
     <?php if($data['syllabus'] ) { ?>
     <?php
     $chapters = $data['syllabus'];
@@ -12,7 +13,7 @@
             // If it's a new chapter, close the previous section if exists
             if ($currentChapter !== null) {
                 echo '</table>';
-                echo '<button class="btn addnewsubunit"  name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>';
+                echo '<button class="btn addnewsubunit" style="width:fit-content;"  name="addnewsubunit">Add new sub unit</button>';
                 echo '</section>'; // Closing the section for previous chapter_level_1
             }
             // Open a new section for the current chapter_level_1
@@ -53,16 +54,12 @@
     // Close the last section
     if ($currentChapter !== null) {
         echo '</table>';
-        echo '<button class="btn addnewsubunit"  name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>';
+        echo '<button class="btn addnewsubunit" style="width:fit-content;"  name="addnewsubunit">Add new sub unit</button>';
         echo '</section>'; 
-        // Closing the section for last chapter_level_1
-        echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
+
     }
     ?>
-    <?php } else { 
-              echo '<button class="btn addUnitBtn" style="width: fit-content;" id="addnewunit"><i class="fa-solid fa-circle-plus"></i> Add new unit</button>';
-          } 
-      ?>
+    <?php }  ?>
 </section>
 <script>
   //add a new empty row for the current table when addnewsubunit button is clicked
@@ -186,10 +183,10 @@
               <th>Action</th>
             </tr>
           </table>
-          <button class="btn addnewsubunit" name="addnewsubunit"><i class="fa-solid fa-circle-plus"></i> Add new sub unit</button>
+          <button class="btn addnewsubunit" style="width:fit-content;"  name="addnewsubunit">Add new sub unit</button>
         `;
         //insert the new section before the addnewunit button
-        document.querySelector('button#addnewunit').before(section);
+        document.querySelector('button#addnewunit').after(section);
       }
   });
 });

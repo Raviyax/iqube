@@ -1,4 +1,4 @@
-<?php $this->view('inc/Header') ?>
+<?php $this->view('inc/Header',$data)?>
 <?php
 include(APPROOT . "/Chat/Chat.php");
 $chat = new Chat();
@@ -11,10 +11,7 @@ $chatUsers = $chat->subjectadmin_get_chat_users();
                 <div class="chat" style="min-height: auto; background-color:unset;">
                     <div class="frame" style="width: 100%; max-width:none;">
                         <div id="sidepanel">
-                            <div id="search">
-                                <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-                                <input type="text" placeholder="Search contacts..." />
-                            </div>
+                       
                             <div id="contacts" style="height: 100%;">
                                 <?php
                                 echo '<ul>';

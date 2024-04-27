@@ -36,26 +36,6 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-                <form action="search_page.php" method="post" class="search-form">
-                    <input type="text" name="search" placeholder="search here..." required maxlength="100">
-                    <button type="submit" class="fas fa-search" name="search_btn"></button>
-                </form>
-                <div class="icons">
-                    <a href="dashboard.php" class="logo"><?php echo  ucfirst($role); ?></a>
-                    <div id="search-btn" class="fas fa-search"></div>
-                    <div id="user-btn" class="fas fa-user"></div>
-                    <div id="toggle-btn" class="fas fa-sun"></div>
-                    <div id="notification-btn" class="fa-regular fa-bell"></div>
-                    <div id="tutor-request-btn" class="fa-solid fa-user-plus"></div>
-                    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-                </div>
-                <div class="profile" id="profile">
-                    <img src="<?php echo URLROOT . "/Subjectadmin/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
-                    <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
-                    <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']); ?></span>
-                    <a href="<?php echo URLROOT ?>/subjectadmin/profile" class="btn">View Profile</a>
-                    <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
-                </div>
           
             </section>
         </header>
@@ -85,10 +65,8 @@
                             </p> -->
                         </div>
                     </li>
-                    <li><a href="<?php echo URLROOT; ?>/Subjectadmin/students"><i class="fa-solid fa-user-pen"></i><span>Students</span></a></li>
-                    <li><a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Subjectadmin/manage_syllabus"><i class="fa-solid fa-book"></i><span><?php echo ucfirst($_SESSION['USER_DATA']['subject']); ?> Syllabus</span></a></li>
-                    <li><a href="comments.php"><i class="fa-solid fa-person-circle-question"></i><span>Complaints</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Subjectadmin/iqube_support"><i class="fa-solid fa-person-circle-question"></i><span>iQube Support</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>

@@ -81,33 +81,35 @@ class Subjectadmins extends Model
     }
     public function update_subject_admin($data, $id)
     {
-        $this->query("UPDATE users SET email=?, username=? WHERE email=?", [
-            $data['email'],
-            $data['username'],
-            $data['email']
+        $this->query("UPDATE users SET email= :email, username= :username WHERE user_id= :id", [
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'id' => $id
         ]);
-        $this->query("UPDATE subject_admins SET email=?, username=?, fname=?, lname=?, cno=? WHERE subject_admin_id=?", [
-            $data['email'],
-            $data['username'],
-            $data['fname'],
-            $data['lname'],
-            $data['cno'],
-            $id
+
+        $this->query("UPDATE subject_admins SET email= :email, username= :username, fname= :fname, lname= :lname, cno= :cno WHERE subject_admin_id= :id", [
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'cno' => $data['cno'],
+            'id' => $id
         ]);
         return true;
     }
     public function update_profile($data, $id)
     {
-        $this->query("UPDATE users SET  username=? WHERE user_id=?", [
-            $data['username'],
-            $id
+        $this->query("UPDATE users SET  username= :username WHERE user_id= :id", [
+            'username' => $data['username'],
+            'id' => $id
         ]);
-        $this->query("UPDATE subject_admins SET username=?, fname=?, lname=?, cno=? WHERE user_id=?", [
-            $data['username'],
-            $data['fname'],
-            $data['lname'],
-            $data['cno'],
-            $id
+
+        $this->query("UPDATE subject_admins SET username= :username, fname= :fname, lname= :lname, cno= :cno WHERE subject_admin_id= :id", [
+            'username' => $data['username'],
+            'fname' => $data['fname'],
+            'lname' => $data['lname'],
+            'cno' => $data['cno'],
+            'id' => $id
         ]);
         $_SESSION['USER_DATA']['username'] = $data['username'];
         $_SESSION['USER_DATA']['fname'] = $data['fname'];
@@ -122,9 +124,9 @@ class Subjectadmins extends Model
     }
     public function save_image_data($imagename, $id)
     {
-        $this->query("UPDATE subject_admins SET image=? WHERE subject_admin_id=?", [
-            $imagename,
-            $id
+        $this->query("UPDATE subject_admins SET image= :image WHERE subject_admin_id= :id", [
+            'image' => $imagename,
+            'id' => $id
         ]);
         $_SESSION['USER_DATA']['image'] = $imagename;
         return true;
@@ -225,7 +227,7 @@ class Subjectadmins extends Model
                 'cv' => $tutor_request->cv,
             ]);
             // 2nd delete the row from tutor_requests
-            $this->query("DELETE FROM tutor_requests WHERE request_id=?", [$id]);
+            $this->query("DELETE FROM tutor_requests WHERE request_id= :id", ['id' => $id]);
             return true;
         } else {
             echo "<script>alert('Error');</script>";
@@ -250,16 +252,16 @@ ORDER BY
     }
     public function update_syllabus($id, $subunit, $weight)
     {
-        $this->query("UPDATE chapters SET chapter_level_2=?, weight=? WHERE id=?", [
-            $subunit,
-            $weight,
-            $id
+        $this->query("UPDATE chapters SET chapter_level_2= :subunit, weight= :weight WHERE id= :id", [
+            'subunit' => $subunit,
+            'weight' => $weight,
+            'id' => $id
         ]);
         return true;
     }
     public function delete_syllabus($id)
     {
-        $this->query("DELETE FROM chapters WHERE id=?", [$id]);
+        $this->query("DELETE FROM chapters WHERE id= :id", ['id' => $id]);
         return true;
     }
     public function insert_subunit($chapter_level_1, $subunit, $weight)
@@ -299,14 +301,15 @@ ORDER BY
     }
     public function get_videos_by_subunit($id)
     {
-        $sql = "SELECT * FROM video_content WHERE CONCAT('[', covering_chapters, ']') LIKE ?";
+        $sql = "SELECT * FROM video_content WHERE CONCAT('[', covering_chapters, ']') LIKE :id";
         $id = '%[' . $id . ']%';
-        $videos = $this->query($sql, [$id]);
+        $videos = $this->query($sql, ['id' => $id]);
         if ($videos) {
             //add tutor name to each video
             foreach ($videos as $video) {
-                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id=?", [$video->tutor_id]);
+                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id= :tutor_id", ['tutor_id' => $video->tutor_id]);
                 $video->tutor_name = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+
             }
             return $videos;
         } else {
@@ -315,13 +318,14 @@ ORDER BY
     }
     public function get_model_paper_by_subunit($id)
     {
-        $sql = "SELECT * FROM model_paper_content WHERE CONCAT('[', covering_chapters, ']') LIKE ?";
+        $sql = "SELECT * FROM model_paper_content WHERE CONCAT('[', covering_chapters, ']') LIKE :id";
         $id = '%[' . $id . ']%';
-        $model_papers = $this->query($sql, [$id]);
+        $model_papers = $this->query($sql, ['id' => $id]);
+
         if ($model_papers) {
             //add tutor name to each model paper
             foreach ($model_papers as $model_paper) {
-                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id=?", [$model_paper->tutor_id]);
+                $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id= :tutor_id", ['tutor_id' => $model_paper->tutor_id]);
                 $model_paper->tutor_name = $tutor[0]->fname . ' ' . $tutor[0]->lname;
             }
             return $model_papers;
@@ -331,7 +335,7 @@ ORDER BY
     }
     public function get_mcqs_for_progress_tracking_by_subunit($id)
     {
-        $mcqs = $this->query("SELECT * FROM mcqs_for_progress_tracking WHERE subunit_id=?", [$id]);
+        $mcqs = $this->query("SELECT * FROM mcqs_for_progress_tracking WHERE subunit_id= :id", ['id' => $id]);
         if ($mcqs) {
             return $mcqs;
         } else {
@@ -340,32 +344,32 @@ ORDER BY
     }
     public function save_mcq($mcq_id, $question, $option1, $option2, $option3, $option4, $option5, $correct)
     {
-        $this->query("UPDATE mcqs_for_progress_tracking SET question=?, option1=?, option2=?, option3=?, option4=?, option5=?, correct=? WHERE mcq_id=?", [
-            $question,
-            $option1,
-            $option2,
-            $option3,
-            $option4,
-            $option5,
-            $correct,
-            $mcq_id
+        $this->query("UPDATE mcqs_for_progress_tracking SET question= :question, option1= :option1, option2= :option2, option3= :option3, option4= :option4, option5= :option5, correct= :correct WHERE mcq_id= :mcq_id", [
+            'question' => $question,
+            'option1' => $option1,
+            'option2' => $option2,
+            'option3' => $option3,
+            'option4' => $option4,
+            'option5' => $option5,
+            'correct' => $correct,
+            'mcq_id' => $mcq_id
         ]);
         //update the date and done subject admin id
-        $this->query("UPDATE chapters SET last_edited_date=?, last_edited_subject_admin=? WHERE id=?", [
-            date('Y-m-d H:i:s'),
-            $_SESSION['USER_DATA']['subject_admin_id'],
-            $mcq_id
+        $this->query("UPDATE chapters SET last_edited_date= :last_edited_date, last_edited_subject_admin= :last_edited_subject_admin WHERE id= :id", [
+            'last_edited_date' => date('Y-m-d H:i:s'),
+            'last_edited_subject_admin' => $_SESSION['USER_DATA']['subject_admin_id'],
+            'id' => $mcq_id
         ]);
         return true;
     }
     public function delete_mcq($mcq_id)
     {
-        $this->query("DELETE FROM mcqs_for_progress_tracking WHERE mcq_id=?", [$mcq_id]);
+        $this->query("DELETE FROM mcqs_for_progress_tracking WHERE mcq_id= :mcq_id", ['mcq_id' => $mcq_id]);
         //update the date and done subject admin id
-        $this->query("UPDATE chapters SET last_edited_date=?, last_edited_subject_admin=? WHERE id=?", [
-            date('Y-m-d H:i:s'),
-            $_SESSION['USER_DATA']['subject_admin_id'],
-            $mcq_id
+        $this->query("UPDATE chapters SET last_edited_date= :last_edited_date, last_edited_subject_admin= :last_edited_subject_admin WHERE id= :id", [
+            'last_edited_date' => date('Y-m-d H:i:s'),
+            'last_edited_subject_admin' => $_SESSION['USER_DATA']['subject_admin_id'],
+            'id' => $mcq_id
         ]);
         return true;
     }
@@ -382,38 +386,45 @@ ORDER BY
             'correct' => $correct
         ]);
         //update the date and done subject admin id
-        $this->query("UPDATE chapters SET last_edited_date=?, last_edited_subject_admin=? WHERE id=?", [
-            date('Y-m-d H:i:s'),
-            $_SESSION['USER_DATA']['subject_admin_id'],
-            $subunit_id
+        $this->query("UPDATE chapters SET last_edited_date= :last_edited_date, last_edited_subject_admin= :last_edited_subject_admin WHERE id= :id", [
+            'last_edited_date' => date('Y-m-d H:i:s'),
+            'last_edited_subject_admin' => $_SESSION['USER_DATA']['subject_admin_id'],
+            'id' => $subunit_id
         ]);
         return true;
     }
     public function save_duration($id, $duration)
     {
-        $this->query("UPDATE chapters SET model_paper_duration=? WHERE id=?", [
-            $duration,
-            $id
+        $this->query("UPDATE chapters SET model_paper_duration= :duration WHERE id= :id", [
+            'duration' => $duration,
+            'id' => $id
         ]);
         return true;
     }
 
     public function get_my_subject_tutor_count()
     {
-        $query = "SELECT COUNT(*) as count FROM tutors WHERE subject=?";
-        return $this->query($query, [$_SESSION['USER_DATA']['subject']]);
+        $query = "SELECT COUNT(*) as count FROM tutors WHERE subject= :subject";
+        $tutor_count = $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
+        if ($tutor_count) {
+            return $tutor_count;
+        } else {
+            return false;
+        }
     }
 
     public function get_subject_id($subject)
     {
-        $query = "SELECT subject_id FROM subjects WHERE subject_name=?";
-        return $this->query($query, [$subject]);
+        $query = "SELECT subject_id FROM subjects WHERE subject_name = :subject";
+        $subject_id = $this->query($query, ['subject' => $subject]);
+        return $subject_id;
     }
 
     public function get_my_subject_student_Count()
     {
         $subject_id = $this->get_subject_id($_SESSION['USER_DATA']['subject']);
-        
+
+
 
         $query = "SELECT COUNT(*) AS student_count
               FROM students
@@ -442,43 +453,177 @@ ORDER BY
 
     public function get_my_not_completed_support_requests()
     {
-        $query = "SELECT COUNT(*) as count FROM iqube_support where subject_admin_user_id=? AND completed=0";
-        return $this->query($query, [$_SESSION['USER_DATA']['user_id']]);
+        $query = "SELECT COUNT(*) as count FROM iqube_support where subject_admin_user_id = :subject_admin_user_id AND completed = 0";
+        $support_requests = $this->query($query, ['subject_admin_user_id' => $_SESSION['USER_DATA']['user_id']]);
+        if ($support_requests) {
+            return $support_requests;
+        } else {
+            return false;
+        }
     }
 
     public function get_tutor_request_count()
     {
-        $query = "SELECT COUNT(*) as count FROM tutor_requests WHERE subject=? AND declined=0";
-        return $this->query($query, [$_SESSION['USER_DATA']['subject']]);
+        $query = "SELECT COUNT(*) as count FROM tutor_requests WHERE subject= :subject AND declined=0";
+        $tutor_requests = $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
+        if ($tutor_requests) {
+            return $tutor_requests;
+        } else {
+            return false;
+        }
     }
 
     public function get_model_paper_count()
     {
-        $query = "SELECT COUNT(*) as count FROM model_paper_content WHERE subject=? AND active=1";
-        return $this->query($query, [$_SESSION['USER_DATA']['subject']]);
+        $query = "SELECT COUNT(*) as count FROM model_paper_content WHERE subject= :subject AND active=1";
+        return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
 
     public function get_video_count()
     {
-        $query = "SELECT COUNT(*) as count FROM video_content WHERE subject=? AND active=1";
-        return $this->query($query, [$_SESSION['USER_DATA']['subject']]);
+        $query = "SELECT COUNT(*) as count FROM video_content WHERE subject= :subject AND active=1";
+        return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
 
     public function markFlagged($tutor_id)
     {
-        $query = "UPDATE tutors SET flagged=1 WHERE tutor_id=?";
-         $this->query($query, [$tutor_id]);
-         return true;
+        $query = "UPDATE tutors SET flagged=1 WHERE tutor_id= :tutor_id";
+        $this->query($query, ['tutor_id' => $tutor_id]);
+        return true;
     }
 
     public function is_tutor_belongs_to_subject($tutor_id)
     {
-        $query = "SELECT * FROM tutors WHERE tutor_id=? AND subject=?";
-        $result = $this->query($query, [$tutor_id, $_SESSION['USER_DATA']['subject']]);
-        if ($result) {
+        $query = "SELECT * FROM tutors WHERE tutor_id= :tutor_id AND subject= :subject";
+        $tutor = $this->query($query, ['tutor_id' => $tutor_id, 'subject' => $_SESSION['USER_DATA']['subject']]);
+        if ($tutor) {
             return true;
         } else {
             return false;
         }
     }
+
+    public function removeFlagged($tutor_id)
+    {
+        $query = "UPDATE tutors SET flagged=0 WHERE tutor_id= :tutor_id";
+        $this->query($query, ['tutor_id' => $tutor_id]);
+        return true;
+    }
+
+   
+    public function get_my_support_requests()
+    {
+        try {
+            $query = "SELECT iqube_support.*, users.username as student_name ,students.image as student_image
+                      FROM iqube_support 
+                      JOIN users ON iqube_support.user_id = users.user_id 
+                        JOIN students ON iqube_support.user_id = students.user_id
+                      WHERE iqube_support.subject_admin_user_id = :subject_admin_user_id 
+                      AND iqube_support.completed = 0";
+    
+            $support_requests = $this->query($query, ['subject_admin_user_id' => $_SESSION['USER_DATA']['user_id']]);
+         if ($support_requests) {
+            return $support_requests;
+        } else {
+            return false;
+        }
+        
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+
+    public function is_video_available_and_belongs_to_subject($id)
+    {
+        $query = "SELECT video_content_id FROM video_content WHERE video_content_id= :id AND subject= :subject";
+        $video = $this->query($query, ['id' => $id, 'subject' => $_SESSION['USER_DATA']['subject']]);
+        if ($video) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_video($id)
+    {
+       $query = "SELECT * FROM video_content WHERE video_content_id= :id";
+        $video = $this->query($query, ['id' => $id]);
+        if ($video) {
+    
+            return $video[0];
+        } else {
+            return false;
+        }
+    }
+
+
+    public function activate_video($id)
+    {
+        $query = "UPDATE video_content SET active=1 WHERE video_content_id= :id";
+        $this->query($query, ['id' => $id]);
+        return true;
+    }
+
+    public function deactivate_video($id)
+    {
+        $query = "UPDATE video_content SET active=0 WHERE video_content_id= :id";
+        $this->query($query, ['id' => $id]);
+        return true;
+    }
+
+    public function is_model_paper_available_and_belongs_to_subject($id)
+    {
+        $query = "SELECT model_paper_content_id FROM model_paper_content WHERE model_paper_content_id= :id AND subject= :subject";
+        $model_paper = $this->query($query, ['id' => $id, 'subject' => $_SESSION['USER_DATA']['subject']]);
+        if ($model_paper) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_model_paper($id)
+    {
+        $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id= :id";
+        $model_paper = $this->query($query, ['id' => $id]);
+        if ($model_paper) {
+ 
+            return $model_paper[0];
+        } else {
+            return false;
+        }
+    }
+
+    public function activate_model_paper($id)
+    {
+        $query = "UPDATE model_paper_content SET active=1 WHERE model_paper_content_id= :id";
+        $this->query($query, ['id' => $id]);
+        return true;
+    }
+
+    public function deactivate_model_paper($id)
+    {
+        $query = "UPDATE model_paper_content SET active=0 WHERE model_paper_content_id= :id";
+        $this->query($query, ['id' => $id]);
+        return true;
+    }
+
+    public function updatePassword($old_password, $new_password)
+    {
+        $user = $this->first([
+            'user_id' => $_SESSION['USER_DATA']['user_id']
+        ], 'users', 'user_id');
+        if (password_verify($old_password, $user->password)) {
+            $this->query("UPDATE users SET password= :password WHERE user_id= :id", [
+                'password' => password_hash($new_password, PASSWORD_DEFAULT),
+                'id' => $_SESSION['USER_DATA']['user_id']
+            ]);
+            return true;
+        } else {
+            return false;
+        }
+    }
+  
 }

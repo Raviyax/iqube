@@ -111,8 +111,14 @@ class User extends Model
         }
         if(!empty($data['email']) && !empty($data['password'])){
             $row = $this->query($query, ['email' => $data['email']]);
+            $query = "SELECT active FROM subject_admins WHERE email = :email";
+            $active = $this->query($query, ['email' => $data['email']]);
+            $row[0]->active = $active[0]->active;
             if(!empty($row) && !password_verify($data['password'], $row[0]->password)){
                 $this->login_errors['mismatch_err'] = 'Wrong user credentials*';
+            }
+            if(!empty($row) && $row[0]->active == 0){
+                $this->login_errors['inactive_err'] = 'Your account is inactive. Please contact the admin';
             }
         }
         if (empty($this->login_errors)) {
