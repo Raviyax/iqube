@@ -1,5 +1,6 @@
 <?php
 if($_SERVER['SERVER_NAME'] == 'localhost'){
+    define('PATH_MYSQLDUMP','C:\\xampp\\mysql\\bin\\mysqldump.exe');
     define('DB_HOST','localhost');
     define('DB_USER','root');
     define('DB_PASS','');

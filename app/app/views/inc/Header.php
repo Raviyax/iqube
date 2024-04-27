@@ -101,25 +101,8 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-                <form action="search_page.php" method="post" class="search-form">
-                    <input type="text" name="search" placeholder="search here..." required maxlength="100">
-                    <button type="submit" class="fas fa-search" name="search_btn"></button>
-                </form>
-                <div class="icons">
-                    <a href="dashboard.php" class="logo"><?php echo  ucfirst($role); ?></a>
-                    <div id="search-btn" class="fas fa-search"></div>
-                    <div id="user-btn" class="fas fa-user"></div>
-                    <div id="toggle-btn" class="fas fa-sun"></div>
-                    <div id="notification-btn" class="fa-regular fa-bell"></div>
-                    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-                </div>
-                <div class="profile">
-                    <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
-                    <h3><?php echo ucfirst($_SESSION['USER_DATA']['username']); ?></h3>
-                    <span><?php echo ucfirst($_SESSION['USER_DATA']['email']); ?></span>
-                    <a href="<?php echo URLROOT ?>/Admin/profile" class="btn">View Profile</a>
-                    <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
-                </div>
+          
+   
             </section>
         </header>
         <!-- header section ends -->
@@ -132,14 +115,13 @@
                 <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
                 <h3></h3>
                 <span></span>
-                <a href="profile.php" class="btn"><?php echo  $_SESSION['USER_DATA']['username']; ?></a>
+                <a href="<?php echo URLROOT;?>/admin/profile" class="btn">Howdy, iQubeAdmin!</a>
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="<?php echo URLROOT; ?>/admin/"><i class="fa-solid fa-gauge"></i><span>Admin Dashbard</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/admin/"><i class="fa-solid fa-gauge"></i><span>iQube Summary</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/admin/users"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
-                    <li><a href="contents.php"><i class="fa-solid fa-book"></i><span>Study Materials</span></a></li>
-                    <li><a href="comments.php"><i class="fa-solid fa-gear"></i><span>Site Settings</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/admin/payments"><i class="fa-solid fa-credit-card"></i><span>View Payments</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>

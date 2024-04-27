@@ -5,19 +5,30 @@ class Admin extends Controller
     public $user;
     public $subject;
     public $tutor;
+    public $admin;
     public function __construct()
     {
         $this->user = $this->model('User');
         $this->Subjectadmin = $this->model('Subjectadmins');
         $this->subject = $this->model('Subjects');
         $this->tutor = $this->model('Tutors');
+        $this->admin = $this->model('Admins');
     }
     public function index()
     {
         if (Auth::is_logged_in() && Auth::is_admin()) {
             $data = [
                 'title' => 'Admin',
-                'view' => 'Dashboard'
+                'view' => 'Dashboard',
+                'student_count' => $this->admin->get_total_student_count(),
+                'new_student_percentage' => $this->admin->get_student_joined_this_month(),
+                'tutor_count' => $this->admin->get_total_tutor_count(),
+                'new_tutor_percentage' => $this->admin->get_tutor_joined_this_month(),
+                'subject_admin_count' => $this->admin->get_total_subject_admin_count(),
+                'new_subject_admin_percentage' => $this->admin->get_subject_admin_joined_this_month(),
+                'premium_student_count' => $this->admin->get_total_premium_student_count(),
+                'video_purchases' => $this->admin->get_last_month_video_purchases(),
+                'model_paper_purchases' => $this->admin->get_last_month_model_paper_purchases(),
             ];
             $this->view('Admin/Dashboard', $data);
         } else {
@@ -138,5 +149,13 @@ class Admin extends Controller
         } else {
             $this->view('Noaccess');
         }
+    }
+
+    public function site_backup()
+    { if (Auth::is_logged_in() && Auth::is_admin()) {
+        $this->admin->sql_backup();
+    } else {
+        $this->view('Noaccess');
+    }
     }
 }
