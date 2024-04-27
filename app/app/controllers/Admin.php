@@ -30,8 +30,10 @@ class Admin extends Controller
                 'video_purchases' => $this->admin->get_last_month_video_purchases(),
                 'model_paper_purchases' => $this->admin->get_last_month_model_paper_purchases(),
                 'subjects' => $this->admin->get_available_subject_count(),
+                'content_count' => $this->admin->get_total_content_count(),
             ];
             $this->view('Admin/Dashboard', $data);
+          
         } else {
             $this->view('Noaccess');
         }
@@ -64,6 +66,7 @@ class Admin extends Controller
         if (Auth::is_logged_in() && Auth::is_admin()) {
             $data = [
                 'title' => 'Profile',
+                'view' => 'Profile',
             ];
             $this->view('Admin/profile', $data);
         } else {
@@ -154,9 +157,38 @@ class Admin extends Controller
 
     public function site_backup()
     {
+        // Ensure the user is logged in and is an admin
         if (Auth::is_logged_in() && Auth::is_admin()) {
-            $this->admin->sql_backup();
+            // Check if the request method is POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Validate password confirmation
+                if ($this->admin->validate_password($_POST['password'])) {
+                    $data = [
+                        'title' => 'Site Backup',
+                        'view' => 'Site Backup',
+                        'backups' => $this->admin->get_backup_files(),
+                    ];
+                   $this->view('Admin/Site_backups', $data);
+                   return;
+                } else {
+                    // If password confirmation fails, show error message
+                    $data = [
+                        'title' => 'Site Backup',
+                        'view' => 'Site Backup',
+                        'errors' => $this->admin->errors,
+                    ];
+                    $this->view('Admin/Confirm_password', $data);
+                }
+            } else {
+                // If not a POST request, show password confirmation form
+                $data = [
+                    'title' => 'Site Backup',
+                    'view' => 'Site Backup',
+                ];
+                $this->view('Admin/Confirm_password', $data);
+            }
         } else {
+            // If user is not logged in or not an admin, show access denied page
             $this->view('Noaccess');
         }
     }
@@ -174,6 +206,27 @@ class Admin extends Controller
             ];
             $this->view('Admin/Revenue', $data);
         } else {
+            $this->view('Noaccess');
+        }
+    }
+
+    public function download_backup($file)
+    {
+        if (Auth::is_logged_in() && Auth::is_admin()) {
+            $this->admin->download_backup($file);
+        } else {
+            $this->view('Noaccess');
+        }
+    }
+
+    public function create_backup()
+    {
+        if (Auth::is_logged_in() && Auth::is_admin()) {
+            $this->admin->sql_backup();
+            //redirect to site_backup after 2 seconds
+            header("refresh:2;url=" . URLROOT . "/admin/site_backup");
+           
+ } else {
             $this->view('Noaccess');
         }
     }

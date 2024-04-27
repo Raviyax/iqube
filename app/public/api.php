@@ -6,11 +6,13 @@ include("../app/lib/Model.php");
 include ("../app/models/Subjectadmins.php");
 include ("../app/models/Students.php");
 include ("../app/models/Tutors.php");
+include ("../app/models/Admins.php");
 include ("../app/models/Auth.php");
 // Initialize objects
 $subjectadmins = new Subjectadmins();
 $students = new Students();
 $tutors = new Tutors();
+$admins = new Admins();
 // Check if the action is specified in the POST data
 if(isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -376,6 +378,63 @@ if(isset($_POST['action'])) {
             echo 'error';
         }
     }
+
+    if($action == 'admin_deactivate_subject_admin') {
+        // Sanitize input
+        $id = intval($_POST['id']);
+        // Perform deactivation and echo response
+        if($admins->deactivate_subject_admin($id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'admin_activate_subject_admin') {
+        // Sanitize input
+        $id = intval($_POST['id']);
+        // Perform activation and echo response
+        if($admins->activate_subject_admin($id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'admin_deactivate_tutor') {
+        // Sanitize input
+        $id = intval($_POST['id']);
+        // Perform deactivation and echo response
+        if($admins->deactivate_tutor($id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'admin_activate_tutor') {
+        // Sanitize input
+        $id = intval($_POST['id']);
+        // Perform activation and echo response
+        if($admins->activate_tutor($id)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'admin_change_password') {
+        // Sanitize input
+        $current = $_POST['current'];
+        $new = $_POST['new'];
+        // Perform password change and echo response
+        if($admins->change_password($current, $new)) {
+            echo 'success';
+        } else {
+            echo 'Current password is incorrect or new password is invalid';
+        }
+    }
+
     
 } else {
     // If action is not specified, return an error response

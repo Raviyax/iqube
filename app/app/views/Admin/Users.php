@@ -1,15 +1,16 @@
 <?php $this->view('inc/Header', $data) ?>
 <section class="dashboard" id="users">
-    <h1 class="heading">Manage Users <a href="#" class="btn" style="width: fit-content;">View All Users</a></h1>
-    <div class="flex-btn">
-        <a class="option-btn " onclick="displaysubjectadmins()">Subject Admins</a>
-        <a class="option-btn option-btn-active" onclick="displaytutors()">Tutors</a>
-        <a class="option-btn" onclick="displaystudents()">Students</a>
+    <h1 class="heading">Manage Users </h1>
+    <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center; margin-bottom:30px;">
+
+        <button onclick="displaysubjectadmins()" class="button-17" role="button">Subject Admins</button>
+        <button onclick="displaytutors()" class="button-17" role="button">Tutors</button>
+
     </div>
-    <div class="box-container" id="view" style=" display:flex">
-        <a href="<?php echo URLROOT ?>/admin/students" class="btn" style="width: fit-content;display:none;" id="viewallstudentsbtn">View All Students</a>
-    </div>
+<section class="unit-container">
+  
     <div class="box-container" id="tutorlist" style="display: block;">
+        <h1 class="heading" style="border-bottom:none; text-align:center;">Tutors</h1>
         <div class="box-container" id="view" style=" display:flex">
             <a href="<?php echo URLROOT ?>/admin/all_tutors" class="btn" style="width: fit-content;" id="viewalltutorsbtn">View All Tutors</a>
         </div>
@@ -28,38 +29,39 @@
                     <th>Count</th>
                 </tr>
                 <?php if ($data['subjects'] && $data['tutorcount']) : ?>
-    <?php foreach ($data['subjects'] as $subject) : ?>
-        <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_tutors/<?php echo $subject->subject_name; ?>'">
-            <td>
-                <?php echo ucfirst($subject->subject_name) ?>
-            </td>
-            <td>
-                <?php
-                $subjectFound = false;
-                foreach ($data['tutorcount'] as $tutorCount) {
-                    if ($tutorCount->subject == $subject->subject_name) {
-                        echo $tutorCount->count;
-                        $subjectFound = true;
-                        break;
-                    }
-                }
-                if (!$subjectFound) {
-                    echo '0';
-                }
-                ?> Tutors
-            </td>
-        </tr>
-    <?php endforeach; ?>
-<?php endif; ?>
+                    <?php foreach ($data['subjects'] as $subject) : ?>
+                        <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_tutors/<?php echo $subject->subject_name; ?>'">
+                            <td>
+                                <?php echo ucfirst($subject->subject_name) ?>
+                            </td>
+                            <td>
+                                <?php
+                                $subjectFound = false;
+                                foreach ($data['tutorcount'] as $tutorCount) {
+                                    if ($tutorCount->subject == $subject->subject_name) {
+                                        echo $tutorCount->count;
+                                        $subjectFound = true;
+                                        break;
+                                    }
+                                }
+                                if (!$subjectFound) {
+                                    echo '0';
+                                }
+                                ?> Tutors
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </table>
         </div>
     </div>
     <div id="subjectadminlist" style=" display:none;">
+    <h1 class="heading" style="border-bottom:none; text-align:center;">Subject Admins</h1>
         <div class="box-container" id="view" style=" display:flex; padding: 10px">
             <button class="btn" style="width: fit-content; " onclick="addnewsubjectadmin()"><i class="fa-solid fa-square-plus"></i> Add New Subject Admin</button>
             <a href="<?php echo URLROOT ?>/admin/All_subject_admins" class="btn" style="width: fit-content;" id="viewallsubjectadminsbtn">View All Subject Admins</a>
         </div>
-            <header class="header">
+        <header class="header">
             <section class="flex">
                 <form class="search-form">
                     <button type="submit" class="fas fa-search" name="search_btn"></button>
@@ -74,44 +76,34 @@
                     <th>Count</th>
                 </tr>
                 <?php if ($data['subjects'] && $data['subjectadmincount']) : ?>
-    <?php foreach ($data['subjects'] as $subject) : ?>
-        <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_subject_admins/<?php echo $subject->subject_name; ?>'">
-            <td>
-                <?php echo ucfirst($subject->subject_name) ?>
-            </td>
-            <td>
-                <?php
-                $subjectFound = false;
-                foreach ($data['subjectadmincount'] as $subjectAdminCount) {
-                    if ($subjectAdminCount->subject == $subject->subject_name) {
-                        echo $subjectAdminCount->count;
-                        $subjectFound = true;
-                        break;
-                    }
-                }
-                if (!$subjectFound) {
-                    echo '0';
-                }
-                ?> Subject Admins
-            </td>
-        </tr>
-    <?php endforeach; ?>
-<?php endif; ?>
+                    <?php foreach ($data['subjects'] as $subject) : ?>
+                        <tr onclick="window.location='<?php echo URLROOT; ?>/Admin/all_subject_admins/<?php echo $subject->subject_name; ?>'">
+                            <td>
+                                <?php echo ucfirst($subject->subject_name) ?>
+                            </td>
+                            <td>
+                                <?php
+                                $subjectFound = false;
+                                foreach ($data['subjectadmincount'] as $subjectAdminCount) {
+                                    if ($subjectAdminCount->subject == $subject->subject_name) {
+                                        echo $subjectAdminCount->count;
+                                        $subjectFound = true;
+                                        break;
+                                    }
+                                }
+                                if (!$subjectFound) {
+                                    echo '0';
+                                }
+                                ?> Subject Admins
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </table>
         </div>
     </div>
-    <div class="box-container" id="studentlist" style=" display:none;">
-        <div class="box">
-            <h3>Premium Students</h3>
-            <p>833 Students</p>
-            <a href="#" class="btn">View</a>
-        </div>
-        <div class="box">
-            <h3>Free Students</h3>
-            <p>2543 Students</p>
-            <a href="#" class="btn">View</a>
-        </div>
-    </div>
+</section>
+
     </div>
 </section>
 <div id="addnewsubjectadmin" class="overlay">
@@ -144,29 +136,27 @@
             <input type="password" name="password" maxlength="100" required placeholder="Enter Password" class="box">
             <p>Confirm Password <span>*</span></p>
             <input type="password" name="confirm_password" maxlength="100" required placeholder="Enter Password" class="box">
-            <input type="submit" value="add_subject_admin" name="submit" class="btn">
+            <input type="submit" value="Add Subject Admin" name="submit" class="btn">
         </form>
     </section>
 </div>
 <script>
-    function displaystudents() {
-        document.getElementById("tutorlist").style.display = "none";
-        document.getElementById("subjectadminlist").style.display = "none";
-        document.getElementById("studentlist").style.display = "block";
-    }
     function displaytutors() {
         document.getElementById("tutorlist").style.display = "block";
         document.getElementById("subjectadminlist").style.display = "none";
         document.getElementById("studentlist").style.display = "none";
     }
+
     function displaysubjectadmins() {
         document.getElementById("tutorlist").style.display = "none";
         document.getElementById("subjectadminlist").style.display = "block";
         document.getElementById("studentlist").style.display = "none";
     }
+
     function addnewsubjectadmin() {
         document.getElementById("addnewsubjectadmin").style.display = "block";
     }
+
     function closeadd() {
         document.getElementById("addnewsubjectadmin").style.display = "none";
     }
@@ -179,26 +169,28 @@
             this.className += " option-btn-active";
         });
     }
+
     function search(sectionID, searchbarId) {
-    var input, filter, table, tr, td, i, txtValue, section;
-    input = document.getElementById(searchbarId);
-    filter = input.value.toUpperCase();
-    section = document.getElementById(sectionID);
-    table = section.querySelector("table"); // Corrected this line
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0]; // Assuming you want to search in the first column
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+        var input, filter, table, tr, td, i, txtValue, section;
+        input = document.getElementById(searchbarId);
+        filter = input.value.toUpperCase();
+        section = document.getElementById(sectionID);
+        table = section.querySelector("table"); // Corrected this line
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // Assuming you want to search in the first column
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
     }
-}
 </script>
 <?php $this->view('inc/Footer') ?>
 </body>
+
 </html>

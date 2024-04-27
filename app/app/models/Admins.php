@@ -1,6 +1,8 @@
 <?php
 class Admins extends Model 
 {
+    public $errors = [];
+
     public function get_total_student_count()
     {
         //get count of all students
@@ -165,23 +167,25 @@ class Admins extends Model
 
         public function sql_backup()
     {
-        // Set backup file name with timestamp
-        $backup_file = 'backup-' . date("Y-m-d-H-i-s") . '.sql';
-    
-        // Adjust the path format for Windows
-        $backup_file_path = 'C:\\xampp\\htdocs\\iqube\\' . $backup_file;
-    
-        // Enclose DB credentials in double quotes
-        $command = PATH_MYSQLDUMP . " --opt -h\"" . DB_HOST . "\" -u\"" . DB_USER . "\" -p\"" . DB_PASS . "\" " . DB_NAME . " > $backup_file_path";    
-        // Execute the command and capture both standard output and standard error
-        system($command);
-    
-        // Check if the backup file was created successfully
-        if (file_exists($backup_file_path)) {
-            return $backup_file;
-        } else {
-            echo "Error: Backup file was not created!";
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
             return false;
+        }
+        $backupFileName = 'iqube_backup_' . date('Y-m-d_H-i-s') . '.sql';
+
+        // Full path to the backup file
+        define('BACKUP_FILE_PATH', BACKUP_DIRECTORY . '/' . $backupFileName);
+        
+        // Command to execute
+        $command = PATH_MYSQLDUMP." --user=".DB_USER." --password=".DB_PASS." ".DB_NAME." > ".BACKUP_FILE_PATH;
+        
+        // Execute the command
+        exec($command, $output, $return_var);
+        
+        // Check if the command executed successfully
+        if ($return_var === 0) {
+            echo "Database backup successful. Backup saved as: {$backupFileName}";
+        } else {
+            echo "Error occurred during database backup.";
         }
     }
     public function get_premium_purchases()
@@ -284,7 +288,158 @@ class Admins extends Model
             return 0;
         }
     }
+
+    public function get_total_content_count()
+    {
+        // Get the count of video content
+        $count = 0;
+        $query = "SELECT COUNT(*) AS total_content FROM video_content";
+        $result = $this->query($query);
+        if ($result) {
+            $count = $result[0]->total_content;
+        }
+
+
+       //get the count of model paper content
+        $query = "SELECT COUNT(*) AS total_content FROM model_paper_content";
+        $result = $this->query($query);
+        if ($result) {
+            $count += $result[0]->total_content;
+        }
+
+        return $count;
+    }
     
+
+    public function validate_password($password)
+    {
+       $query = "SELECT password FROM admins WHERE email = :email";
+         $row = $this->query($query, ['email' => $_SESSION['USER_DATA']['email']]);
+            if(!empty($row) && !password_verify($password, $row[0]->password)){
+                $this->errors['mismatch_err'] = 'Wrong user credentials*';
+                return false;
+            }
+            return true;
+          
+
+    }
+
+    public function get_backup_files()
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Get all backup files
+        $backupFiles = scandir(BACKUP_DIRECTORY);
+    
+        // Remove . and .. from the list
+        $backupFiles = array_diff($backupFiles, ['.', '..']);
+    
+        return $backupFiles;
+    }
+
+    public function download_backup($backupFile)
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Full path to the backup file
+        $backupFilePath = BACKUP_DIRECTORY . '/' . $backupFile;
+    
+        // Check if the file exists
+        if (file_exists($backupFilePath)) {
+            // Set the headers
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($backupFilePath) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($backupFilePath));
+    
+            // Read the file
+            readfile($backupFilePath);
+            exit;
+        } else {
+            // Redirect to the backup page
+            header('Location: ' . URLROOT . '/admin/site_backups');
+        }
+    }
+
+
+    public function deactivate_subject_admin($id)
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Deactivate the subject admin
+        $query = "UPDATE subject_admins SET active = 0 WHERE user_id = :id";
+        $result = $this->query($query, ['id' => $id]);
+    
+        return true;
+    }
+
+    public function activate_subject_admin($id)
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Activate the subject admin
+        $query = "UPDATE subject_admins SET active = 1 WHERE user_id = :id";
+        $result = $this->query($query, ['id' => $id]);
+    
+        return true;
+    }
+
+    public function deactivate_tutor($id)
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Deactivate the tutor
+        $query = "UPDATE tutors SET active = 0 WHERE user_id = :id";
+        $result = $this->query($query, ['id' => $id]);
+    
+        return true;
+    }
+
+    public function activate_tutor($id)
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Activate the tutor
+        $query = "UPDATE tutors SET active = 1 WHERE user_id = :id";
+        $result = $this->query($query, ['id' => $id]);
+    
+        return true;
+    }
+
+    public function change_password($current, $new)
+    {
+        if(!Auth::is_logged_in() || !Auth::is_admin()) {
+            return false;
+        }
+        // Get the current password hash
+        $query = "SELECT password FROM admins WHERE email = :email";
+        $row = $this->query($query, ['email' => $_SESSION['USER_DATA']['email']]);
+    
+        // Check if the current password is correct
+        if (!empty($row) && password_verify($current, $row[0]->password)) {
+            // Hash the new password
+            $newPassword = password_hash($new, PASSWORD_DEFAULT);
+    
+            // Update the password
+            $query = "UPDATE admins SET password = :password WHERE email = :email";
+            $result = $this->query($query, ['password' => $newPassword, 'email' => $_SESSION['USER_DATA']['email']]);
+    
+            return true;
+        } else {
+            // Set an error message
+            $this->errors['mismatch_err'] = 'Wrong user credentials';
+            return false;
+        }
+    }
     
 
 

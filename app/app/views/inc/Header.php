@@ -120,8 +120,9 @@
             <nav class="navbar">
                 <ul>
                     <li><a href="<?php echo URLROOT; ?>/admin/"><i class="fa-solid fa-gauge"></i><span>iQube Summary</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/admin/users"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/admin/users"><i class="fa-solid fa-users"></i><span>Manage Users</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/admin/revenue"><i class="fa-solid fa-credit-card"></i><span>View Revenue</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/admin/site_backup"><i class="fa-solid fa-database"></i><span>Site Backups</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>

@@ -15,7 +15,7 @@
                             <div>
                                 <h3>Total Students</h3>
                                 <H3><?php echo $data['student_count']; ?></H3>
-                                <span style="color: red;"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo $data['new_student_percentage']; ?>% </span>
+                                <span style="color: red;"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo round($data['new_student_percentage'], 2); ?>% </span>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                             <div>
                                 <h3>Total Tutors</h3>
                                 <H3><?php echo $data['tutor_count']; ?></H3>
-                                <span style="color: red;"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo $data['new_tutor_percentage']; ?>% </span>
+                                <span style="color: red;"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo round($data['new_tutor_percentage'], 2); ?>% </span>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <div>
                                 <h3>Total Subject Admins</h3>
                                 <H3><?php echo $data['subject_admin_count']; ?></H3>
-                                <span style="color: red;"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo $data['new_subject_admin_percentage']; ?>% </span>
+                                <span style="color: red;"><i class="fa-solid fa-arrow-trend-up"></i> <?php echo round($data['new_subject_admin_percentage'], 2); ?>% </span>
                             </div>
                         </div>
                     </div>
@@ -80,6 +80,20 @@
                 </div>
             </div>
 
+            <div class="box" style="cursor:pointer;">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col">
+                        <div class="tutor">
+                            <img src="<?php echo URLROOT; ?>/public/assets/img/content.png" alt="">
+                            <div>
+                                <h3>Total Contents</h3>
+                                <H3><?php echo $data['content_count']; ?></H3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 
@@ -87,7 +101,7 @@
 
 
     <section style="margin-top: 50px;">
-        <h1 class="heading" style="border-bottom:none;">Revenue</h1>
+        <h1 class="heading" style="border-bottom:none; text-align:center;">Revenue</h1>
         <div class="box-container">
             <div class="box" style="cursor:pointer">
                 <div class="row" style="margin-bottom: 10px;">
