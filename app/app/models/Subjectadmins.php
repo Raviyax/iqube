@@ -233,6 +233,7 @@ class Subjectadmins extends Model
             echo "<script>alert('Error');</script>";
         }
     }
+    
     public function get_chapters()
     {  //get chapter level 1 and level 2 groups by chapter level 1 wher subject equals to the subject of the tutor
         $query = "SELECT
@@ -250,6 +251,7 @@ ORDER BY
     weight";;
         return $this->query($query, ['subject' => $_SESSION['USER_DATA']['subject']]);
     }
+
     public function update_syllabus($id, $subunit, $weight)
     {
         $this->query("UPDATE chapters SET chapter_level_2= :subunit, weight= :weight WHERE id= :id", [

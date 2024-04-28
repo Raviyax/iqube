@@ -9,50 +9,85 @@
          <p><i class="fas fa-calendar"></i><span><?php echo $video->date;?></span></p>
          <p><i class="fas fa-heart"></i><span>likes</span></p>
       </div>
+      <?php if(!$data['is_rated'] && $data['is_completed']){ ?>
+         <form class="rating">
+  <label>
+    <input type="radio" name="stars" value="1" />
+    <span class="icon">★</span>
+  </label>
+  <label>
+    <input type="radio" name="stars" value="2" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+  </label>
+  <label>
+    <input type="radio" name="stars" value="3" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>   
+  </label>
+  <label>
+    <input type="radio" name="stars" value="4" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+  </label>
+  <label>
+    <input type="radio" name="stars" value="5" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+  </label>
+</form>
+<?php } ?>
       <div class="description"><p><?php echo $video->description?></p></div>
       <a href="<?php echo URLROOT;?>/student/do_questions_of_video/<?php echo $video->video_content_id;?>" class="inline-btn">Try Questions</a>
       <?php if($data['is_completed']){ ?>
       <a href="<?php echo URLROOT;?>/student/video_results/<?php echo $video->video_content_id;?>" class="inline-btn">Result & Answers</a>
+    
       <?php } ?>
       <div class="tutor">
          <img src="<?php echo URLROOT;?>/student/userimage/<?php echo $video->tutor_image?>" alt="">
          <div>
             <h3><?php echo $video->tutor;?></h3>
-            <span>review</span>
          </div>
       </div>
-      <form action="" method="post" class="flex">
-         <input type="hidden" name="content_id" value="id">
-         <button type="submit" name="like_content"><i class="far fa-heart"></i><span>like</span></button>
-      </form>
+   
    </div>
 </section>
-<!-- watch video section ends -->
-<!-- comments section starts  -->
-<!-- <section class="comments">
-   <h1 class="heading">add a comment</h1>
-   <form action="" method="post" class="add-comment">
-      <input type="hidden" name="content_id" value="">
-      <textarea name="comment_box" required placeholder="write your comment..." maxlength="1000" cols="30" rows="10"></textarea>
-      <input type="submit" value="add comment" name="add_comment" class="inline-btn">
-   </form>
-   <h1 class="heading">user comments</h1>
-   <div class="show-comments">
-      <div class="box" style="">
-         <div class="user">
-            <img src="" alt="">
-            <div>
-               <h3>name</h3>
-               <span>date</span>
-            </div>
-         </div>
-         <p class="text">comment</p>
-         <form action="" method="post" class="flex-btn">
-            <input type="hidden" name="comment_id" value="">
-            <button type="submit" name="edit_comment" class="inline-option-btn">edit comment</button>
-            <button type="submit" name="delete_comment" class="inline-delete-btn">delete comment</button>
-         </form>
-      </div>
-      </div>
-</section> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+   const url = "<?php echo URLROOT;?>/api.php";
+   const video_id = "<?php echo $video->video_content_id;?>";
+
+   $(document).ready(function(){
+      $(".rating input:radio").attr("checked", false);
+
+      $('.rating input').click(function () {
+         $(".rating span").removeClass('checked');
+         $(this).parent().find('span').addClass('checked');
+         var rating = $(this).val();
+         $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+               video_id: video_id,
+               rating: rating,
+               action: 'rate_video'
+            },
+            success: function(response){
+               console.log(response);
+               alert("Rated successfully");
+               location.reload();
+            }
+         });
+      });
+   });
+</script>
+
+
 <?php $this->view('inc/Footer') ?>

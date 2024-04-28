@@ -125,6 +125,7 @@ class Student extends Controller
                 'title' => 'Student',
                 'view' => 'Study Materials',
                 'study_materials' => $this->student->get_study_materials(),
+                'subjects' => $this->student->get_my_subject_names($_SESSION['USER_DATA']['student_id']),
             ];
             $this->view('Student/Study_materials', $data);
         } else {
@@ -308,6 +309,7 @@ class Student extends Controller
                 'model_paper' => $this->student->get_model_paper_overview($id),
                 'status' => $this->student->is_model_paper_purchased($id),
                 'completed' => $this->student->is_model_paper_completed($id),
+                'is_rated' => $this->student->is_model_paper_rated($id),
             ];
             $this->view('Student/Model_paper_overview', $data);
         } else {
@@ -515,6 +517,7 @@ class Student extends Controller
                     'view' => 'Watch Video',
                     'video' => $this->student->get_video($id),
                     'is_completed' => $this->student->is_video_completed($id),
+                    'is_rated' => $this->student->is_video_rated($id),
                 ];
                 $this->view('Student/Watch_video', $data);
             } else {

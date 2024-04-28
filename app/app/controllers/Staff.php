@@ -33,4 +33,8 @@ class Staff extends Controller{
          $this->view('Staff_login/Login', $data);
     }
     }
+
+    public function index(){
+        $this->view('Staff_login/Login');
+    }
 }

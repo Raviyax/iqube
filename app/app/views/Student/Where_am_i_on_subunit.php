@@ -66,7 +66,8 @@ $score = $data['score'];
                      $content_id = $my_video->video_content_id;
                      $videothumbnail = 'video_thumbnail';
                      ?>
-                     <div class="box" style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;" id="<?php echo $content_id; ?>">
+                     <div class="box" style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;" id="<?php echo $content_id; ?>" onclick="window.location.href='<?php echo URLROOT; ?>/Student/video_overview/<?php echo $content_id; ?>'" >
+
                         <img src="<?php echo URLROOT; ?>/student/<?php echo $videothumbnail; ?>/<?php echo $my_video->thumbnail; ?>" class="thumb" alt="">
                         <h3 class="title">Score : <?php echo $my_video->score; ?></h3>
                         <h2 class="type"><?php echo $my_video->name; ?></h2>
@@ -101,7 +102,7 @@ $score = $data['score'];
                      $content_id = $model_paper->model_paper_content_id;
                      $model_paperthumbnail = 'model_paper_thumbnail';
                      ?>
-                     <div class="box" style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;" id="<?php echo $content_id; ?>">
+                     <div class="box" style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;" id="<?php echo $content_id; ?>" onclick="window.location.href='<?php echo URLROOT; ?>/Student/model_paper_overview/<?php echo $content_id; ?>'" >
                         <img src="<?php echo URLROOT; ?>/student/<?php echo $model_paperthumbnail; ?>/<?php echo $model_paper->thumbnail; ?>" class="thumb" alt="">
                         <h3 class="title">Score: <?php echo $model_paper->score; ?></h3>
                         <h2 class="type"><?php echo $model_paper->name; ?></h2>
@@ -136,7 +137,7 @@ $score = $data['score'];
                $content_id = $material->video_content_id;
                $thumbnail_directory = 'video_thumbnail';
                ?>
-               <div class="box" style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>">
+               <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>">
                   <div class="flex">
                      <div><i class="fas fa-dot-circle" style="color: limegreen;"></i><span style="color: red;">Active</span></div>
                      <div><i class="fas fa-calendar"></i><span><?php echo $material->date; ?></span></div>
@@ -145,7 +146,7 @@ $score = $data['score'];
                   <h3 class="title"><?php echo $material->name; ?></h3>
                   <h2 class="type"><?php echo ucfirst($tutor); ?></h2>
                   <h2 class="type"><?php echo $material->price; ?> LKR</h2>
-                  <p><i class="fa-solid fa-star-half-stroke"></i> 4.2</p>
+                  <p><i class="fa-solid fa-star-half-stroke"></i> <?php echo round($material->rating,1); ?></p>
                </div>
             <?php endforeach; ?>
          <?php else : ?>
@@ -167,7 +168,7 @@ $score = $data['score'];
                $content_id = $material->model_paper_content_id;
                $thumbnail_directory = 'model_paper_thumbnail';
                ?>
-               <div class="box" style="cursor: pointer; box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>">
+               <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>" >
                   <div class="flex">
                      <div><i class="fas fa-dot-circle" style="color: limegreen;"></i><span style="color: red;">Active</span></div>
                      <div><i class="fas fa-calendar"></i><span><?php echo $material->date; ?></span></div>
@@ -175,7 +176,7 @@ $score = $data['score'];
                   <img src="<?php echo URLROOT; ?>/student/<?php echo $thumbnail_directory; ?>/<?php echo $material->thumbnail; ?>" class="thumb" alt <h3 class="title"><?php echo $material->name; ?></h3>
                   <h2 class="type"><?php echo ucfirst($tutor); ?></h2>
                   <h2 class="type"><?php echo $material->price; ?> LKR</h2>
-                  <p><i class="fa-solid fa-star-half-stroke"></i> 4.2</p>
+                  <p><i class="fa-solid fa-star-half-stroke"></i> <?php echo round($material->rating,1); ?></p>
                </div>
             <?php endforeach; ?>
          <?php else : ?>

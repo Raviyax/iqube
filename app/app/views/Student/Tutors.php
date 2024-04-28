@@ -14,11 +14,7 @@
         <section>
             <form class="search-form">
                 <input type="text" name="searchbar" placeholder="Search name..." id="tutorsearchbar" maxlength="100">
-                <!-- <select name="sort" id="sort" style="margin-right:10px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding:5px;">
-                    <option value="none" selected disabled>Sort by</option>
-                    <option value="date">Rating</option>
-                    <option value="price">Purchases</option>
-                </select> -->
+     
                 <select name="content_type" id="subject" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding:5px;">
                     <option value="all" selected>All subjects</option>
                     <?php foreach ($subjects as $subject) : ?>

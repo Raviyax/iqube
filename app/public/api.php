@@ -601,6 +601,30 @@ if(isset($_POST['action'])) {
             echo 'error';
         }
     }
+
+    if($action == 'rate_video') {
+        // Sanitize input
+        $video_id = $_POST['video_id'];
+        $rating = $_POST['rating'];
+        // Perform insertion and echo response
+        if($students->rate_video($video_id, $rating)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'rate_model_paper') {
+        // Sanitize input
+        $model_paper_id = $_POST['model_paper_id'];
+        $rating = $_POST['rate'];
+        // Perform insertion and echo response
+        if($students->rate_model_paper($model_paper_id, $rating)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
     
 } else {
     // If action is not specified, return an error response

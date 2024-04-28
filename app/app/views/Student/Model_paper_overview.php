@@ -75,6 +75,40 @@ $chapters = $model_paper->chapters;
                 <?php } ?>
                 <?php if ($data['completed']) { ?>
                     <a href="<?php echo URLROOT; ?>/student/view_model_paper_answers/<?php echo $model_paper->model_paper_content_id; ?>" class="btn" style="width: fit-content;">View Answers <i class="fa-solid fa-eye"></i></a>
+                    <?php if (!$data['is_rated']) { ?>
+                        <form class="rating">
+  <label>
+    <input type="radio" name="stars" value="1" />
+    <span class="icon">★</span>
+  </label>
+  <label>
+    <input type="radio" name="stars" value="2" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+  </label>
+  <label>
+    <input type="radio" name="stars" value="3" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>   
+  </label>
+  <label>
+    <input type="radio" name="stars" value="4" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+  </label>
+  <label>
+    <input type="radio" name="stars" value="5" />
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+    <span class="icon">★</span>
+  </label>
+</form>
+                    <?php } ?>
                 <?php } ?>
                 <?php } else { ?>
                 <button type="submit" class="btn" style="width: fit-content;  opacity: 0.5;"><?php echo $data['model_paper']->price; ?> LKR <i class="fa-solid fa-arrow-right"></i></button>
@@ -86,6 +120,39 @@ $chapters = $model_paper->chapters;
         </div>
     </div>
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    const url = "<?php echo URLROOT; ?>/api.php";
+    const model_paper_id = "<?php echo $model_paper->model_paper_content_id; ?>";
+
+    $(document).ready(function() {
+        $(".rating input:radio").attr("checked", false);
+
+        $('.rating input').click(function() {
+            $(".rating span").removeClass('checked');
+            $(this).parent().addClass('checked');
+        });
+
+        $(".rating input").click(function() {
+            var rate = $(this).val();
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    model_paper_id: model_paper_id,
+                    rate: rate,
+                    action: 'rate_model_paper'
+                },
+                success: function(data) {
+                    console.log(data);
+                    alert("Thank you for rating");
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
 <!-- playlist section ends -->
 <?php $this->view('inc/Footer') ?>
 </body>

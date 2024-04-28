@@ -232,6 +232,13 @@ class Students extends Model
                     if ($tutor) {
                         $v->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
                     }
+                    //get rating for the video
+                    $rating = $this->query("SELECT AVG(rate) as rating FROM rating WHERE content_id = :content_id", ['content_id' => $v->video_content_id]);
+                    if ($rating) {
+                        $v->rating = $rating[0]->rating;
+                    } else {
+                        $v->rating = 0;
+                    }
                 }
                 $videos[] = $video;
             }
@@ -253,6 +260,14 @@ class Students extends Model
                     $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $m->tutor_id]);
                     if ($tutor) {
                         $m->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                    }
+
+                    //get rating for the model paper
+                    $rating = $this->query("SELECT AVG(rate) as rating FROM rating WHERE content_id = :content_id", ['content_id' => $m->model_paper_content_id]);
+                    if ($rating) {
+                        $m->rating = $rating[0]->rating;
+                    } else {
+                        $m->rating = 0;
                     }
                 }
                 $model_papers[] = $model_paper;
@@ -965,6 +980,13 @@ class Students extends Model
                 if ($tutor) {
                     $video->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
                 }
+
+                $rating = $this->query("SELECT AVG(rate) as rating FROM rating WHERE content_id = :content_id", ['content_id' => $video->video_content_id]);
+                if ($rating) {
+                    $video->rating = $rating[0]->rating;
+                } else {
+                    $video->rating = 0;
+                }
             }
     
             return $videos;
@@ -974,6 +996,8 @@ class Students extends Model
             return false;
         }
     }
+
+
     
     public function get_model_papers_by_subunit_not_purchased($subunit_id)
     {
@@ -1005,6 +1029,13 @@ class Students extends Model
                 $tutor = $this->query("SELECT fname, lname FROM tutors WHERE tutor_id = :tutor_id", ['tutor_id' => $model_paper->tutor_id]);
                 if ($tutor) {
                     $model_paper->tutor = $tutor[0]->fname . ' ' . $tutor[0]->lname;
+                }
+                //get rating
+                $rating = $this->query("SELECT AVG(rate) as rating FROM rating WHERE content_id = :content_id", ['content_id' => $model_paper->model_paper_content_id]);
+                if ($rating) {
+                    $model_paper->rating = $rating[0]->rating;
+                } else {
+                    $model_paper->rating = 0;
                 }
             }
     
@@ -1291,8 +1322,74 @@ class Students extends Model
 
 public function updateProfilePic($profile_pic){
     $student_id = $_SESSION['USER_DATA']['student_id'];
-    $this->query("UPDATE premium_students SET profile_pic = :profile_pic WHERE student_id = :student_id", ['profile_pic' => $profile_pic, 'student_id' => $student_id]);
+    $this->query("UPDATE students SET image = :image WHERE student_id = :student_id", ['image' => $profile_pic, 'student_id' => $student_id]);
     $_SESSION['USER_DATA']['image'] = $profile_pic;
+    return true;
+}
+
+public function is_video_rated($video_content_id){
+    $student_id = $_SESSION['USER_DATA']['student_id'];
+    $result = $this->query("SELECT rated FROM purchased_videos WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
+    if ($result) {
+        if ($result[0]->rated == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+
+public function rate_video($video_content_id, $rating){
+    if($this->is_video_rated($video_content_id)){
+        return false;
+    }
+    if(!$this->is_video_purchased($video_content_id)){
+        return false;
+    }
+
+    if($rating < 1 || $rating > 5){
+        return false;
+    }
+    $student_id = $_SESSION['USER_DATA']['student_id'];
+    $this->query("UPDATE purchased_videos SET  rated = 1 WHERE student_id = :student_id AND video_content_id = :video_content_id", ['student_id' => $student_id, 'video_content_id' => $video_content_id]);
+    $this->query("INSERT INTO rating (content_id, rate) VALUES (:content_id, :rate)", ['content_id' => $video_content_id, 'rate' => $rating]);
+
+    return true;
+}
+
+public function is_model_paper_rated($model_paper_content_id){
+    $student_id = $_SESSION['USER_DATA']['student_id'];
+    $result = $this->query("SELECT rated FROM purchased_model_papers WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+    if ($result) {
+        if ($result[0]->rated == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+
+}
+
+public function rate_model_paper($model_paper_content_id, $rating){
+    if($this->is_model_paper_rated($model_paper_content_id)){
+        return false;
+    }
+    if(!$this->is_model_paper_purchased($model_paper_content_id)){
+        return false;
+    }
+
+    if($rating < 1 || $rating > 5){
+        return false;
+    }
+    $student_id = $_SESSION['USER_DATA']['student_id'];
+    $this->query("UPDATE purchased_model_papers SET  rated = 1 WHERE student_id = :student_id AND model_paper_content_id = :model_paper_content_id", ['student_id' => $student_id, 'model_paper_content_id' => $model_paper_content_id]);
+    $this->query("INSERT INTO rating (content_id, rate) VALUES (:content_id, :rate)", ['content_id' => $model_paper_content_id, 'rate' => $rating]);
+
     return true;
 }
 }
