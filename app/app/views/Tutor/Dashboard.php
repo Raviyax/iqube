@@ -11,37 +11,97 @@ $model_paper_analytics = $data['model_paper_analytics'];
 
 ?>
 <section class="dashboard">
-<section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-<div class="box-container" >
+    <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+        <div class="box-container">
             <div class="box">
                 <h3>My Analytics</h3>
             </div>
         </div>
-    <section class="tutor-profile">
-        <div class="details">
+        <section class="courses">
+            <div class="box-container">
+                <div class="box" style="cursor:pointer; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col">
+                            <div class="tutor">
+                                <img src="<?php echo URLROOT; ?>/public/assets/img/student.png" alt="">
+                                <div>
+                                    <h3>Total Students</h3>
+                                    <H3> <?php echo $student_count; ?></H3>
 
-            <div class="flex">
-                <!-- <div class="box">
-                    <p><i class="fa-solid fa-star"></i> 4.7 Tutor Ratings</p>
-                </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
 
-                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
-                    <p><i class="fa-solid fa-people-line"></i> <?php echo $student_count; ?> Students</p>
+
+
+           
+                <div class="box" style="cursor:pointer; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col">
+                            <div class="tutor">
+                                <img src="<?php echo URLROOT; ?>/public/assets/img/content.png" alt="">
+                                <div>
+                                    <h3>Total Contents</h3>
+                                    <H3><?php echo $content_count; ?></H3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
-                    <p><i class="fa-solid fa-circle-play"></i> <?php echo $content_count; ?> Contents</p>
+          
+
+            
+
+         
+                <div class="box" style="cursor:pointer; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col">
+                            <div class="tutor">
+                                <img src="<?php echo URLROOT; ?>/public/assets/img/purchase.svg" alt="">
+                                <div>
+                                    <h3>Total Purchases</h3>
+                                    <H3><?php echo $purchase_count; ?></H3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
-                    <p><i class="fa-solid fa-cart-shopping"></i> <?php echo $purchase_count; ?> Total Purchases</p>
-                </div>
-                <div class="box" style="box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;">
-                    <p><i class="fa-solid fa-money-bill"></i> <?php echo $last_month_earnings; ?>LKR in Last Month</p>
+     
+
+    
+          
+
+
+            </div>
+        </section>
+
+        <section class="courses">
+            <div class="box-container">
+            <div class="box" style="cursor:pointer; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col">
+                            <div class="tutor">
+                                <img src="<?php echo URLROOT; ?>/public/assets/img/profit.jpg" alt="">
+                                <div>
+                                    <h3>Last Month Earnings</h3>
+                                    <H3><?php echo $last_month_earnings; ?> LKR</H3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+    
 
     </section>
-</section>
 
     <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
         <h1 class="heading">My Uploads</h1>
@@ -52,11 +112,11 @@ $model_paper_analytics = $data['model_paper_analytics'];
 
         </div>
         <section class="unit-container" id="video">
-        <div class="box-container" >
-            <div class="box">
-                <h3>Videos</h3>
+            <div class="box-container">
+                <div class="box">
+                    <h3>Videos</h3>
+                </div>
             </div>
-        </div>
             <?php
             echo '<table id="table" class="table">';
             echo '<thead>';
@@ -89,11 +149,11 @@ $model_paper_analytics = $data['model_paper_analytics'];
         </section>
 
         <section class="unit-container" id="model-paper">
-        <div class="box-container" >
-            <div class="box">
-                <h3>Model Papers</h3>
+            <div class="box-container">
+                <div class="box">
+                    <h3>Model Papers</h3>
+                </div>
             </div>
-        </div>
             <?php
             echo '<table id="table" class="table">';
             echo '<thead>';

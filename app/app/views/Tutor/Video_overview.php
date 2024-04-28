@@ -80,44 +80,57 @@ $mcqs = $data['mcqs'];
             </div>
         </div>
 
-        <section class="unit-container">
-        <section class="unit-container" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-        <div class="box-container" style="margin-bottom: 10px;">
-            <div class="box">
-                <h3>Purchased Students</h3>
-            </div>
-        </div>
-            <!-- table for tutor contents -->
-            <?php
-            echo '<table id="table" class="table">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Student Name</th>';
-            echo '<th>Purchased On</th>';
-            echo '<th>Score</th>';
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
+        <?php if ($students) { ?>
+            <section class="unit-container">
+                <section class="unit-container" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                    <div class="box-container" style="margin-bottom: 10px;">
+                        <div class="box">
+                            <h3>Purchased Students</h3>
+                        </div>
+                    </div>
+                    <!-- table for tutor contents -->
+                    <?php
+                    echo '<table id="table" class="table">';
+                    echo '<thead>';
+                    echo '<tr>';
+                    echo '<th>Student Name</th>';
+                    echo '<th>Purchased On</th>';
+                    echo '<th>Score</th>';
+                    echo '</tr>';
+                    echo '</thead>';
+                    echo '<tbody>';
 
-            foreach ($students as $student) {
-                echo '<tr>';
-                echo '<td>' . $student->name . '</td>';
-                echo '<td>' . date("Y-m-d", strtotime($student->purchased_date)) . '</td>';
-                echo '<td>';
-                if ($student->completed == 0) {
-                    echo 'Not Completed'; // Display "Not Completed" if completed is 0
-                } else {
-                    echo $student->score; // Otherwise, display the score
-                }
-                echo '</td>';
-                echo '</tr>';
-            }
+                    foreach ($students as $student) {
+                        echo '<tr>';
+                        echo '<td>' . $student->name . '</td>';
+                        echo '<td>' . date("Y-m-d", strtotime($student->purchased_date)) . '</td>';
+                        echo '<td>';
+                        if ($student->completed == 0) {
+                            echo 'Not Completed'; // Display "Not Completed" if completed is 0
+                        } else {
+                            echo $student->score; // Otherwise, display the score
+                        }
+                        echo '</td>';
+                        echo '</tr>';
+                    }
 
-            echo '</tbody>';
-            echo '</table>';
-            ?>
-        </section>
-        </section>
+                    echo '</tbody>';
+                    echo '</table>';
+                    ?>
+                </section>
+            </section>
+        <?php } else { ?>
+            <section class="unit-container">
+                <section class="unit-container" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                    <div class="box-container" style="margin-bottom: 10px;">
+                        <div class="box">
+                            <h3>Purchased Students</h3>
+                        </div>
+                    </div>
+                    <p>No students have purchased this video yet.</p>
+                </section>
+            </section>
+        <?php } ?>
 
 
         <div class="row" style="margin-bottom: 7px;">
@@ -128,123 +141,123 @@ $mcqs = $data['mcqs'];
                 </div>
             </section>
         </div>
-    
 
-    <section class="unit-container">
-        <div class="box-container" style="margin-bottom: 10px;">
-            <div class="box">
-                <h3>Edit Content</h3>
+
+        <section class="unit-container">
+            <div class="box-container" style="margin-bottom: 10px;">
+                <div class="box">
+                    <h3>Edit Content</h3>
+                </div>
             </div>
-        </div>
-        <section class="courses" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-            <section class="form-container" style="display: block;">
-                <form>
-                    <section style="display: block;">
-                        <div class="flex">
-                            <div class="col">
+            <section class="courses" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                <section class="form-container" style="display: block;">
+                    <form>
+                        <section style="display: block;">
+                            <div class="flex">
+                                <div class="col">
 
-                                <p>Description</p>
-                                <textarea id="description" name="description" placeholder="Enter the description..." maxlength="400" required class="box"><?php echo $video->description; ?></textarea>
-                                <div style="display: none; flex-direction:row-reverse" id="saveDescriptionDiv">
-                                    <button id="saveDescription" class="btn" style="width: fit-content; background-color:red;">Change Description <i class="fa-solid fa-file-alt"></i></button>
-                                </div>
-                                <p>Change Thumbnail</p>
-                                <input id="thumbnail" type="file" name="thumbnail" class="box" accept="image/*">
-                                <div style="display: none; flex-direction:row-reverse" id="saveThumbnailDiv">
-                                    <button id="saveThumbnail" class="btn" style="width: fit-content; background-color:red;">Change Thumbnail <i class="fa-solid fa-image"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </section>
-                </form>
-                <form id="new" style="display: none;">
-                    <!-- section for mcqs from the video -->
-                    <section style="display: block;">
-                        <h3>New Question</h3>
-                        <div class="flex">
-                            <div class="col">
-                                <p>Question<span>*</span></p>
-                                <input type="text" name="question" placeholder="Enter the question..." maxlength="400" required class="box">
-                                <p>Option 1<span>*</span></p>
-                                <input type="text" name="option1" placeholder="Enter the first option..." maxlength="400" required class="box">
-                                <p>Option 2<span>*</span></p>
-                                <input type="text" name="option2" placeholder="Enter the second option..." maxlength="400" required class="box">
-                                <p>Option 3<span>*</span></p>
-                                <input type="text" name="option3" placeholder="Enter the third option..." maxlength="400" required class="box">
-                                <p>Option 4<span>*</span></p>
-                                <input type="text" name="option4" placeholder="Enter the fourth option..." maxlength="400" required class="box">
-                                <p>Option 5<span>*</span></p>
-                                <input type="text" name="option5" placeholder="Enter the fifth option..." maxlength="400" required class="box">
-                                <p>Correct Answer<span>*</span></p>
-                                <select name="correct" class="box" required>
-                                    <option value="" disabled selected>-- Select the correct answer</option>
-                                    <option value="option1">Option 1</option>
-                                    <option value="option2">Option 2</option>
-                                    <option value="option3">Option 3</option>
-                                    <option value="option4">Option 4</option>
-                                    <option value="option5">Option 5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div style="display: flex; flex-direction:row-reverse">
-                            <button id="saveAddNew" class="btn" style="width: fit-content;">Save Question<i class="fa-solid fa-file-arrow-up"></i></button>
-                        </div>
-                        <div style="display:flex; flex-direction:row-reverse">
-                            <button id="remove" class="btn" style="width: fit-content; background-color:red;">Remove <i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                    </section>
-                </form>
-                <?php if ($mcqs) { ?>
-                    <?php foreach ($mcqs as $key => $mcq) : ?>
-                        <form action="" id="<?php echo $mcq->mcq_id; ?>" data-contains="backend" method="post" enctype="multipart/form-data">
-                            <!-- section for mcqs from the video -->
-                            <section style="display: block;">
-                                <h3>Question <?php echo $key + 1; ?></h3>
-                                <div class="flex">
-                                    <div class="col">
-                                        <p>Question<span>*</span></p>
-                                        <input type="text" name="question" placeholder="Enter the question..." maxlength="400" required class="box" value="<?php echo $mcq->question; ?>">
-                                        <p>Option 1<span>*</span></p>
-                                        <input type="text" name="option1" placeholder="Enter the first option..." maxlength="400" required class="box" value="<?php echo $mcq->option1; ?>">
-                                        <p>Option 2<span>*</span></p>
-                                        <input type="text" name="option2" placeholder="Enter the second option..." maxlength="400" required class="box" value="<?php echo $mcq->option2; ?>">
-                                        <p>Option 3<span>*</span></p>
-                                        <input type="text" name="option3" placeholder="Enter the third option..." maxlength="400" required class="box" value="<?php echo $mcq->option3; ?>">
-                                        <p>Option 4<span>*</span></p>
-                                        <input type="text" name="option4" placeholder="Enter the fourth option..." maxlength="400" required class="box" value="<?php echo $mcq->option4; ?>">
-                                        <p>Option 5<span>*</span></p>
-                                        <input type="text" name="option5" placeholder="Enter the fifth option..." maxlength="400" required class="box" value="<?php echo $mcq->option5; ?>">
-                                        <p>Correct Answer<span>*</span></p>
-                                        <select name="correct" class="box" required>
-                                            <option value="" disabled selected>-- Select the correct answer</option>
-                                            <option value="option1" <?php echo ($mcq->correct === 'option1') ? 'selected' : ''; ?>>Option 1</option>
-                                            <option value="option2" <?php echo ($mcq->correct === 'option2') ? 'selected' : ''; ?>>Option 2</option>
-                                            <option value="option3" <?php echo ($mcq->correct === 'option3') ? 'selected' : ''; ?>>Option 3</option>
-                                            <option value="option4" <?php echo ($mcq->correct === 'option4') ? 'selected' : ''; ?>>Option 4</option>
-                                            <option value="option5" <?php echo ($mcq->correct === 'option5') ? 'selected' : ''; ?>>Option 5</option>
-                                        </select>
+                                    <p>Description</p>
+                                    <textarea id="description" name="description" placeholder="Enter the description..." maxlength="400" required class="box"><?php echo $video->description; ?></textarea>
+                                    <div style="display: none; flex-direction:row-reverse" id="saveDescriptionDiv">
+                                        <button id="saveDescription" class="btn" style="width: fit-content; background-color:red;">Change Description <i class="fa-solid fa-file-alt"></i></button>
+                                    </div>
+                                    <p>Change Thumbnail</p>
+                                    <input id="thumbnail" type="file" name="thumbnail" class="box" accept="image/*">
+                                    <div style="display: none; flex-direction:row-reverse" id="saveThumbnailDiv">
+                                        <button id="saveThumbnail" class="btn" style="width: fit-content; background-color:red;">Change Thumbnail <i class="fa-solid fa-image"></i></button>
                                     </div>
                                 </div>
-                                <div style="display:none; flex-direction:row-reverse" id="savechangesdiv">
-                                    <button type="submit" id="save-mcq_<?php echo $mcq->mcq_id; ?>" class="btn" style="width: fit-content; background-color:red;">Save Changes <i class="fa-solid fa-file-arrow-up"></i></button>
+                            </div>
+
+                        </section>
+                    </form>
+                    <form id="new" style="display: none;">
+                        <!-- section for mcqs from the video -->
+                        <section style="display: block;">
+                            <h3>New Question</h3>
+                            <div class="flex">
+                                <div class="col">
+                                    <p>Question<span>*</span></p>
+                                    <input type="text" name="question" placeholder="Enter the question..." maxlength="400" required class="box">
+                                    <p>Option 1<span>*</span></p>
+                                    <input type="text" name="option1" placeholder="Enter the first option..." maxlength="400" required class="box">
+                                    <p>Option 2<span>*</span></p>
+                                    <input type="text" name="option2" placeholder="Enter the second option..." maxlength="400" required class="box">
+                                    <p>Option 3<span>*</span></p>
+                                    <input type="text" name="option3" placeholder="Enter the third option..." maxlength="400" required class="box">
+                                    <p>Option 4<span>*</span></p>
+                                    <input type="text" name="option4" placeholder="Enter the fourth option..." maxlength="400" required class="box">
+                                    <p>Option 5<span>*</span></p>
+                                    <input type="text" name="option5" placeholder="Enter the fifth option..." maxlength="400" required class="box">
+                                    <p>Correct Answer<span>*</span></p>
+                                    <select name="correct" class="box" required>
+                                        <option value="" disabled selected>-- Select the correct answer</option>
+                                        <option value="option1">Option 1</option>
+                                        <option value="option2">Option 2</option>
+                                        <option value="option3">Option 3</option>
+                                        <option value="option4">Option 4</option>
+                                        <option value="option5">Option 5</option>
+                                    </select>
                                 </div>
-                                <div style="display:flex; flex-direction:row-reverse">
-                                    <button type="btn" id="delete-mcq_<?php echo $mcq->mcq_id; ?>" class="btn" style="width: fit-content; background-color:red;">Delete Question <i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </section>
-                        </form>
-                    <?php endforeach; ?>
-                <?php } else { ?>
-                    <p>No questions found</p>
-                <?php } ?>
-                <div style="display: flex;" id="addnewbuttondiv">
-                    <button onclick="addNewQuestion()" class="btn" style="width: fit-content;">Add New Question <i class="fa-solid fa-circle-plus"></i></button>
-                </div>
+                            </div>
+                            <div style="display: flex; flex-direction:row-reverse">
+                                <button id="saveAddNew" class="btn" style="width: fit-content;">Save Question<i class="fa-solid fa-file-arrow-up"></i></button>
+                            </div>
+                            <div style="display:flex; flex-direction:row-reverse">
+                                <button id="remove" class="btn" style="width: fit-content; background-color:red;">Remove <i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </section>
+                    </form>
+                    <?php if ($mcqs) { ?>
+                        <?php foreach ($mcqs as $key => $mcq) : ?>
+                            <form action="" id="<?php echo $mcq->mcq_id; ?>" data-contains="backend" method="post" enctype="multipart/form-data">
+                                <!-- section for mcqs from the video -->
+                                <section style="display: block;">
+                                    <h3>Question <?php echo $key + 1; ?></h3>
+                                    <div class="flex">
+                                        <div class="col">
+                                            <p>Question<span>*</span></p>
+                                            <input type="text" name="question" placeholder="Enter the question..." maxlength="400" required class="box" value="<?php echo $mcq->question; ?>">
+                                            <p>Option 1<span>*</span></p>
+                                            <input type="text" name="option1" placeholder="Enter the first option..." maxlength="400" required class="box" value="<?php echo $mcq->option1; ?>">
+                                            <p>Option 2<span>*</span></p>
+                                            <input type="text" name="option2" placeholder="Enter the second option..." maxlength="400" required class="box" value="<?php echo $mcq->option2; ?>">
+                                            <p>Option 3<span>*</span></p>
+                                            <input type="text" name="option3" placeholder="Enter the third option..." maxlength="400" required class="box" value="<?php echo $mcq->option3; ?>">
+                                            <p>Option 4<span>*</span></p>
+                                            <input type="text" name="option4" placeholder="Enter the fourth option..." maxlength="400" required class="box" value="<?php echo $mcq->option4; ?>">
+                                            <p>Option 5<span>*</span></p>
+                                            <input type="text" name="option5" placeholder="Enter the fifth option..." maxlength="400" required class="box" value="<?php echo $mcq->option5; ?>">
+                                            <p>Correct Answer<span>*</span></p>
+                                            <select name="correct" class="box" required>
+                                                <option value="" disabled selected>-- Select the correct answer</option>
+                                                <option value="option1" <?php echo ($mcq->correct === 'option1') ? 'selected' : ''; ?>>Option 1</option>
+                                                <option value="option2" <?php echo ($mcq->correct === 'option2') ? 'selected' : ''; ?>>Option 2</option>
+                                                <option value="option3" <?php echo ($mcq->correct === 'option3') ? 'selected' : ''; ?>>Option 3</option>
+                                                <option value="option4" <?php echo ($mcq->correct === 'option4') ? 'selected' : ''; ?>>Option 4</option>
+                                                <option value="option5" <?php echo ($mcq->correct === 'option5') ? 'selected' : ''; ?>>Option 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display:none; flex-direction:row-reverse" id="savechangesdiv">
+                                        <button type="submit" id="save-mcq_<?php echo $mcq->mcq_id; ?>" class="btn" style="width: fit-content; background-color:red;">Save Changes <i class="fa-solid fa-file-arrow-up"></i></button>
+                                    </div>
+                                    <div style="display:flex; flex-direction:row-reverse">
+                                        <button type="btn" id="delete-mcq_<?php echo $mcq->mcq_id; ?>" class="btn" style="width: fit-content; background-color:red;">Delete Question <i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </section>
+                            </form>
+                        <?php endforeach; ?>
+                    <?php } else { ?>
+                        <p>No questions found</p>
+                    <?php } ?>
+                    <div style="display: flex;" id="addnewbuttondiv">
+                        <button onclick="addNewQuestion()" class="btn" style="width: fit-content;">Add New Question <i class="fa-solid fa-circle-plus"></i></button>
+                    </div>
+                </section>
             </section>
         </section>
     </section>
-</section>
 </section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

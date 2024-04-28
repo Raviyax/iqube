@@ -39,6 +39,10 @@ html {
 body {
    background-color: var(--light-bg);
    padding-left: 30rem;
+   background-image: url("../img/bg.svg");
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-attachment: fixed;
    /* padding-bottom: 7rem; */
 }
 body.dark {
@@ -161,14 +165,14 @@ section {
    margin-bottom: 2rem;
 }
 .header {
-   background-color: var(--white);
+   background-color: rgba(255, 255, 255, 0.753);
    border-bottom: var(--border);
    position: sticky;
    top: 0;
    left: 0;
    right: 0;
    z-index: 1000;
-   box-shadow: 0 1px 3px 0 rgba(54,74,99,.05);
+   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 .header .flex {
    padding: 0.5rem 2rem;
@@ -265,9 +269,10 @@ section {
    left: 0;
    height: 100vh;
    width: 30rem;
-   background-color: var(--white);
+   background-color: rgba(255, 255, 255, 0.815);
    border-right: var(--border);
    z-index: 1200;
+   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; 
 }
 .side-bar .close-side-bar {
    text-align: right;
@@ -288,6 +293,10 @@ section {
 }
 .side-bar .close-side-bar i:hover {
    background-color: var(--color4);
+}
+/* selected i */
+.side-bar .navbar li.active i {
+   color: var(--main-color);
 }
 #notifications {
    display: none;

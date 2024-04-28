@@ -112,44 +112,27 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-                <form action="search_page.php" method="post" class="search-form">
-                    <input type="text" name="search" placeholder="search here..." required maxlength="100">
-                    <button type="submit" class="fas fa-search" name="search_btn"></button>
-                </form>
-                <div class="icons">
-                    <a href="dashboard.php" class="logo"><?php echo  ucfirst($role); ?></a>
-                    <div id="search-btn" class="fas fa-search"></div>
-                    <div id="user-btn" class="fas fa-user"></div>
-                    <div id="toggle-btn" class="fas fa-sun"></div>
-                    <div id="notification-btn" class="fa-regular fa-bell"></div>
-                    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-                </div>
-                <div class="profile" id="profile">
-                    <img src="<?php echo URLROOT . "/tutor/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
-                    <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
-                    <span><?php echo  ucfirst($_SESSION['USER_DATA']['subject']); ?> Tutor</span>
-                    <a href="<?php echo URLROOT ?>/Tutor/profile" class="btn">View Profile</a>
-                    <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
-                </div>
+            
+          
             </section>
         </header>
         <!-- header section ends -->
         <!-- side bar section starts  -->
-        <div class="side-bar">
+        <div class="side-bar" >
             <div class="close-side-bar">
                 <i class="fas fa-times"></i>
             </div>
             <div class="profile">
                 <img src="<?php echo URLROOT . "/tutor/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
-                <h3></h3>
-                <span></span>
-                <a href="profile.php" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
+                
+                <h3><?php echo ucfirst($_SESSION['USER_DATA']['subject']);?></h3>
+                <a href="<?php echo URLROOT; ?>/Tutor/profile" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
             </div>
             <nav class="navbar">
                 <ul>
                     <li><a href="<?php echo URLROOT; ?>/Tutor/"><i class="fa-solid fa-chalkboard-user"></i><span>My Teaching</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_video"><i class="fa-brands fa-youtube"></i>New video</a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_model_paper"><i class="fa-regular fa-file-lines"></i>New Model Paper</a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_video"><i class="fa-brands fa-youtube"></i><span>New video</span></a></li>
+                    <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_model_paper"><i class="fa-regular fa-file-lines"></i><span>New Model Paper</span></a></li>
 
 
                 
@@ -157,6 +140,11 @@
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
+            <div class="profile" style=" box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                <img style="width: 20rem; height:20rem;" src="<?php echo URLROOT;?>/public/assets/img/iqube.png" alt="">
+                <h3>By Group 22</h3>
+
+            </div>
         </div>
     <?php } ?>
     <!-- free student header  -->
