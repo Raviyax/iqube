@@ -59,7 +59,9 @@ $unit_weights = $data['unit_weights'];
                 <?php foreach ($subjects as $subjectData) : ?>
                     <button id="<?php echo htmlspecialchars($subjectData[0]->subject); ?>" class="button-17" role="button"><?php echo ucfirst(htmlspecialchars($subjectData[0]->subject)); ?></button>
                 <?php endforeach; ?>
+               
             </div>
+           
             <?php
             foreach ($subjects as $subjectData) {
                 echo '<section class="courses" id="' . htmlspecialchars($subjectData[0]->subject) . '"  >';
@@ -181,7 +183,7 @@ $unit_weights = $data['unit_weights'];
                         <?php if ($subjects) : ?>
                             <?php foreach ($subjects as $subject) : ?> {
                                     y: 0,
-                                    label: "<?php echo $subject[0]->subject; ?>"
+                                    label: "<?php echo ucfirst($subject[0]->subject); ?>"
                                 },
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -196,7 +198,7 @@ $unit_weights = $data['unit_weights'];
                         <?php if ($subject_completions) : ?>
                             <?php foreach ($subject_completions as $completion) : ?> {
                                     y: <?php echo 100 - $completion->percentage; ?>,
-                                    label: "<?php echo $completion->subject; ?>"
+                                    label: "<?php echo ucfirst($completion->subject); ?>"
                                 },
                             <?php endforeach; ?>
                         <?php endif; ?>

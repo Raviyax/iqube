@@ -13,13 +13,13 @@
     <header class="header" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
         <section>
             <form class="search-form">
-                <input type="text" name="searchbar" placeholder="Search by subject..." id="tutorsearchbar" onkeyup="search('tutorlist', 'tutorsearchbar')" maxlength="100">
-                <select name="sort" id="sort" onchange="sortBoxes()" style="margin-right:10px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding:5px;">
+                <input type="text" name="searchbar" placeholder="Search name..." id="tutorsearchbar" maxlength="100">
+                <!-- <select name="sort" id="sort" style="margin-right:10px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding:5px;">
                     <option value="none" selected disabled>Sort by</option>
                     <option value="date">Rating</option>
                     <option value="price">Purchases</option>
-                </select>
-                <select name="content_type" id="content_type" onchange="filterContainer()" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding:5px;">
+                </select> -->
+                <select name="content_type" id="subject" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; padding:5px;">
                     <option value="all" selected>All subjects</option>
                     <?php foreach ($subjects as $subject) : ?>
                         <option value="<?php echo $subject; ?>"><?php echo $subject; ?></option>
@@ -76,44 +76,47 @@
 
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // JavaScript function to filter and show/hide the entire box-container based on the selected content type 
-    function filterContainer() {
-        var selectedType = document.getElementById("content_type").value;
-        var boxes = document.getElementsByClassName("box");
-        for (var i = 0; i < boxes.length; i++) {
-            var box = boxes[i];
-            var boxType = box.getAttribute("data-type");
-            if (selectedType === "all" || boxType === selectedType) {
-                box.style.display = "block";
-            } else {
-                box.style.display = "none";
+    $(document).ready(function() {
+   //search
+        $("#tutorsearchbar").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $(".box").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        //sort
+        $("#sort").on("change", function() {
+            var value = $(this).val().toLowerCase();
+            if (value == "date") {
+                var sorted = $(".box").sort(function(a, b) {
+                    return $(a).find("span").text().localeCompare($(b).find("span").text());
+                });
+                $(".box-container").html(sorted);
+            } else if (value == "price") {
+                var sorted = $(".box").sort(function(a, b) {
+                    return $(a).find("h3").text().localeCompare($(b).find("h3").text());
+                });
+                $(".box-container").html(sorted);
             }
-        }
-    }
+        });
 
-    function sortBoxes() {
-        var sortOption = document.getElementById("sort").value;
-        var container = document.querySelector('.box-container');
-        var boxes = Array.from(container.getElementsByClassName('box'));
-        boxes.sort(function(a, b) {
-            var aValue, bValue;
-            if (sortOption === "date") {
-                aValue = new Date(a.dataset.date);
-                bValue = new Date(b.dataset.date);
-            } else if (sortOption === "price") {
-                aValue = parseFloat(a.dataset.price);
-                bValue = parseFloat(b.dataset.price);
+        //filter
+        $("#subject").on("change", function() {
+            var value = $(this).val().toLowerCase();
+            $(".box").filter(function() {
+                $(this).toggle($(this).find("span").text().toLowerCase().indexOf(value) > -1)
+            });
+
+            //for all subjects
+            if (value == "all") {
+                $(".box").filter(function() {
+                    $(this).toggle(true);
+                });
             }
-            return aValue - bValue;
         });
-        // Clear the container
-        container.innerHTML = "";
-        // Append sorted boxes back to the container
-        boxes.forEach(function(box) {
-            container.appendChild(box);
-        });
-    }
+    });
 </script>
 <?php $this->view('inc/Footer'); ?>
 </body>

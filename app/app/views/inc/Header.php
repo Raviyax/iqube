@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <link href="<?php echo URLROOT; ?>/assets/css/Chat.css" rel="stylesheet" id="bootstrap-css">
     <meta charset="UTF-8">
@@ -28,6 +30,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
+
 <body>
     <!-- subject admin header  -->
     <?php if (Auth::is_logged_in() && Auth::is_subject_admin()) { ?>
@@ -36,7 +39,7 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-          
+
             </section>
         </header>
         <!-- header section ends -->
@@ -79,8 +82,8 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-          
-   
+
+
             </section>
         </header>
         <!-- header section ends -->
@@ -93,7 +96,7 @@
                 <img src="<?php echo URLROOT ?>/assets/img/landing/user.jpg" alt="">
                 <h3></h3>
                 <span></span>
-                <a href="<?php echo URLROOT;?>/admin/profile" class="btn">Howdy, iQubeAdmin!</a>
+                <a href="<?php echo URLROOT; ?>/admin/profile" class="btn">Howdy, iQubeAdmin!</a>
             </div>
             <nav class="navbar">
                 <ul>
@@ -112,20 +115,20 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-            
-          
+
+
             </section>
         </header>
         <!-- header section ends -->
         <!-- side bar section starts  -->
-        <div class="side-bar" >
+        <div class="side-bar">
             <div class="close-side-bar">
                 <i class="fas fa-times"></i>
             </div>
             <div class="profile">
                 <img src="<?php echo URLROOT . "/tutor/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
-                
-                <h3><?php echo ucfirst($_SESSION['USER_DATA']['subject']);?></h3>
+
+                <h3><?php echo ucfirst($_SESSION['USER_DATA']['subject']); ?></h3>
                 <a href="<?php echo URLROOT; ?>/Tutor/profile" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
             </div>
             <nav class="navbar">
@@ -135,13 +138,13 @@
                     <li><a href="<?php echo URLROOT; ?>/Tutor/add_new_model_paper"><i class="fa-regular fa-file-lines"></i><span>New Model Paper</span></a></li>
 
 
-                
+
                     </li>
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
             <div class="profile" style=" box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-                <img style="width: 20rem; height:20rem;" src="<?php echo URLROOT;?>/public/assets/img/iqube.png" alt="">
+                <img style="width: 20rem; height:20rem;" src="<?php echo URLROOT; ?>/public/assets/img/iqube.png" alt="">
                 <h3>By Group 22</h3>
 
             </div>
@@ -183,7 +186,7 @@
             </div>
             <div class="profile">
                 <img src="<?php echo URLROOT ?>/assets/img/Landing/iqube.png" alt="">
-      
+
                 <a href="#" class="btn">About Us</a>
             </div>
             <nav class="navbar">
@@ -208,25 +211,7 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-                <form action="search_page.php" method="post" class="search-form">
-                    <input type="text" name="search" placeholder="search here..." required maxlength="100">
-                    <button type="submit" class="fas fa-search" name="search_btn"></button>
-                </form>
-                <div class="icons">
-                    <div id="cart" class="fa-solid fa-cart-shopping"></div>
-                    <div id="fav" class="fa-regular fa-heart"></div>
-                    <div id="search-btn" class="fas fa-search"></div>
-                    <div id="user-btn" class="fas fa-user"></div>
-                    <div id="toggle-btn" class="fas fa-sun"></div>
-                    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-                </div>
-                <div class="profile" id="profile">
-                    <img src="<?php echo URLROOT . "/student/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
-                    <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
-                    <span>Premium Student</span>
-                    <a href="<?php echo URLROOT ?>/Tutor/profile" class="btn">View Profile</a>
-                    <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
-                </div>
+
             </section>
         </header>
         <!-- header section ends -->
@@ -243,18 +228,16 @@
             </div>
             <nav class="navbar">
                 <ul>
-                    <li><a href="<?php echo URLROOT; ?>/Student/dashboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
+                    <li class=""><a href="<?php echo URLROOT; ?>/Student/dashboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-bars-progress"></i><span>My Progress</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents"><i class="fa-solid fa-calendar"></i><span>My Study Plan</span></a></li>
                     <!-- iqube support chat -->
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
         </div>
         <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
-        <div class="chat-popup"  id="chat">
+        <div class="chat-popup" id="chat">
             <?php $this->view('Student/Support_chat'); ?>
         </div>
         <script>

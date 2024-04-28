@@ -12,7 +12,7 @@ $purchase_count = $data['purchase_count'];
          <img src="<?php echo URLROOT."/Student/userimage/". $data['tutor']->image;?>"alt="profile" >
          <h3><?php echo $tutor->fname." ".$tutor->lname;?></h3>
          <h3><?php echo  ucfirst($tutor->subject);?> Tutor</h3>
-         <h3>Bsc. University of colombo</h3>
+         <h3>Highest Qualification : <?php echo  ucfirst($tutor->qualification);?>  </h3>
             <span></span>
          <a href="" class="inline-btn"><i class="fa-regular fa-comments"></i> Talk to <?php echo $tutor->fname." ".$tutor->lname;?> </a>
       </div>

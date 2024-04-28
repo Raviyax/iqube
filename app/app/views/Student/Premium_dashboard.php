@@ -61,6 +61,8 @@ $unit_weights = $data['unit_weights'];
             <?php
             foreach ($subjects as $subjectData) {
                 echo '<section class="courses" id="' . htmlspecialchars($subjectData[0]->subject) . '">';
+                echo '<h2 class="heading" style="border:none; text-align:center;">' . htmlspecialchars($subjectData[0]->subject) . '</h2>';
+
                 $currentChapter = null;
                 foreach ($subjectData as $chapter) {
                     if ($currentChapter !== $chapter->chapter_level_1) {
