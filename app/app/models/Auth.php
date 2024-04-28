@@ -39,7 +39,9 @@
                     'premium' => $studentdata->premium,
                     'completed' => $studentdata->completed,
                     'verify' => $studentdata->verify,
-                    'chat_agent' => $studentdata->chat_agent
+                    'chat_agent' => $studentdata->chat_agent,
+                    'address' => $premiumdata->address,
+                    'city' => $premiumdata->city,
                 ];
             }
             return true;

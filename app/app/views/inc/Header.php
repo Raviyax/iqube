@@ -224,7 +224,7 @@
                 <img src="<?php echo URLROOT . "/student/userimage/" . $_SESSION['USER_DATA']['image']; ?>" alt="">
                 <h3></h3>
                 <span></span>
-                <a href="profile.php" class="btn"><i class="fa-solid fa-crown"></i> <?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
+                <a href="<?php echo URLROOT; ?>/Student/profile" class="btn"><i class="fa-solid fa-crown"></i> <?php echo  ucfirst($_SESSION['USER_DATA']['fname']) . " " . ucfirst($_SESSION['USER_DATA']['lname']); ?></a>
             </div>
             <nav class="navbar">
                 <ul>
@@ -235,6 +235,11 @@
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
+            <div class="profile" style=" box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                <img style="width: 20rem; height:20rem;" src="<?php echo URLROOT; ?>/public/assets/img/iqube.png" alt="">
+                <h3>By Group 22</h3>
+
+            </div>
         </div>
         <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
         <div class="chat-popup" id="chat">

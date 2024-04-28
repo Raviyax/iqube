@@ -503,6 +503,104 @@ if(isset($_POST['action'])) {
         }
     }
 
+    if($action == 'studentUpdateFname') {
+        // Sanitize input
+        $fname = $_POST['fname'];
+        // Perform insertion and echo response
+        if($students->updateFname($fname)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'studentUpdateLname') {
+        // Sanitize input
+        $lname = $_POST['lname'];
+        // Perform insertion and echo response
+        if($students->updateLname($lname)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'studentUpdateCno') {
+        // Sanitize input
+        $cno = $_POST['cno'];
+        // Perform insertion and echo response
+        if($students->updateCno($cno)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'studentUpdateAddress') {
+        // Sanitize input
+        $address = $_POST['address'];
+        // Perform insertion and echo response
+        if($students->updateAddress($address)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'studentUpdateCity') {
+        // Sanitize input
+        $city = $_POST['city'];
+        // Perform insertion and echo response
+        if($students->updateCity($city)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'studentUpdatePassword') {
+        // Sanitize input
+        $oldpassword = $_POST['oldpassword'];
+        $newpassword = $_POST['newpassword'];
+        // Perform insertion and echo response
+        if($students->updatePassword($oldpassword, $newpassword)) {
+            echo 'success';
+        } else {
+            echo 'error';
+        }
+    }
+
+    if($action == 'studentUpdateProfilePic') {
+        // Sanitize input (if necessary)
+        // Check if a file was uploaded
+        if (isset($_FILES['file'])) {
+            $profilepic = $_FILES['file'];
+    
+            // Validate file type, size, etc. (if necessary)
+    
+            // Move the uploaded file to the desired directory on the server
+            $uploadDir = ''.APPROOT.'/uploads/userimages/';
+     //rename the file with unique id
+            $uploadFilename = uniqid();
+            $uploadFile = $uploadDir . $uploadFilename;
+            
+    
+            if (move_uploaded_file($profilepic['tmp_name'], $uploadFile)) {
+                // The file has been successfully uploaded, update the database or perform any other necessary actions
+                if ($students->updateProfilePic($uploadFilename)) {
+                    echo 'success';
+                } else {
+                    echo 'error';
+                }
+            } else {
+                // Failed to move the uploaded file, handle the error
+                echo 'error';
+            }
+        } else {
+            // No file uploaded, handle the error
+            echo 'error';
+        }
+    }
     
 } else {
     // If action is not specified, return an error response

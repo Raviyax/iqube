@@ -10,6 +10,14 @@ if($_SERVER['SERVER_NAME'] == 'localhost'){
     define('DBDRIVER','mysql');
     define('URLROOT','http://localhost/iqube');
 }
+// define('PATH_MYSQLDUMP', 'C:\xampp\mysql\bin\mysqldump.exe');
+// define('BACKUP_DIRECTORY', APPROOT . '/site_backup');
+// define('DB_HOST','localhost');
+// define('DB_USER','root');
+// define('DB_PASS','');
+// define('DB_NAME','iqube');
+// define('DBDRIVER','mysql');
+// define('URLROOT','https://www.iqube.com');
 
 
 

@@ -1233,4 +1233,66 @@ class Students extends Model
         }
         return $purchase_count;
     }
+
+    public function updateFname($fname){
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $this->query("UPDATE premium_students SET fname = :fname WHERE student_id = :student_id", ['fname' => $fname, 'student_id' => $student_id]);
+        $_SESSION['USER_DATA']['fname'] = $fname;
+        return true;
+    }
+
+    public function updateLname($lname){
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $this->query("UPDATE premium_students SET lname = :lname WHERE student_id = :student_id", ['lname' => $lname, 'student_id' => $student_id]);
+        $_SESSION['USER_DATA']['lname'] = $lname;
+        return true;
+    }
+
+    public function updateCno($cno){
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $this->query("UPDATE premium_students SET cno = :cno WHERE student_id = :student_id", ['cno' => $cno, 'student_id' => $student_id]);
+        $_SESSION['USER_DATA']['cno'] = $cno;
+        return true;
+    }
+
+    public function updateAddress($address){
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $this->query("UPDATE premium_students SET address = :address WHERE student_id = :student_id", ['address' => $address, 'student_id' => $student_id]);
+        $_SESSION['USER_DATA']['address'] = $address;
+        return true;
+    }
+
+    public function updateCity($city){
+        $student_id = $_SESSION['USER_DATA']['student_id'];
+        $this->query("UPDATE premium_students SET city = :city WHERE student_id = :student_id", ['city' => $city, 'student_id' => $student_id]);
+        $_SESSION['USER_DATA']['city'] = $city;
+        return true;
+    }
+
+    public function updatePassword($oldpassword, $newpassword){
+        if($newpassword == null){
+            return false;
+        }
+  $user_id = $_SESSION['USER_DATA']['user_id'];
+    $result = $this->query("SELECT password FROM users WHERE user_id = :user_id", ['user_id' => $user_id]);
+    if ($result) {
+        if (password_verify($oldpassword, $result[0]->password)) {
+            $newpassword = password_hash($newpassword, PASSWORD_DEFAULT);
+            $this->query("UPDATE users SET password = :password WHERE user_id = :user_id", ['password' => $newpassword, 'user_id' => $user_id]);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+
+    }
+}
+
+public function updateProfilePic($profile_pic){
+    $student_id = $_SESSION['USER_DATA']['student_id'];
+    $this->query("UPDATE premium_students SET profile_pic = :profile_pic WHERE student_id = :student_id", ['profile_pic' => $profile_pic, 'student_id' => $student_id]);
+    $_SESSION['USER_DATA']['image'] = $profile_pic;
+    return true;
+}
 }
