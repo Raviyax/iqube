@@ -157,25 +157,7 @@
                 <div class="icons">
                     <div id="menu-btn" class="fas fa-bars"></div>
                 </div>
-                <form action="search_page.php" method="post" class="search-form">
-                    <input type="text" name="search" placeholder="search here..." required maxlength="100">
-                    <button type="submit" class="fas fa-search" name="search_btn"></button>
-                </form>
-                <div class="icons">
-                    <div id="cart" class="fa-solid fa-cart-shopping" style="opacity: 0.3;"></div>
-                    <div id="fav" class="fa-regular fa-heart" style="opacity: 0.3;"></div>
-                    <div id="search-btn" class="fas fa-search"></div>
-                    <div id="user-btn" class="fas fa-user"></div>
-                    <div id="toggle-btn" class="fas fa-sun"></div>
-                    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-                </div>
-                <div class="profile" id="profile">
-                    <img src="<?php echo "data:image/jpg;base64," . $_SESSION['USER_DATA']['image']; ?>" alt="">
-                    <h3><?php echo  $_SESSION['USER_DATA']['email']; ?></h3>
-                    <a href="<?php echo URLROOT ?>/Student/profile" class="btn">View Profile</a>
-                    <a href="<?php echo URLROOT ?>/Student/purchase_premium" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
-                    <a href="<?php echo URLROOT; ?>/Logout" class="delete-btn">logout</a>
-                </div>
+               
             </section>
         </header>
         <!-- header section ends -->
@@ -185,23 +167,26 @@
                 <i class="fas fa-times"></i>
             </div>
             <div class="profile">
-                <img src="<?php echo URLROOT ?>/assets/img/Landing/iqube.png" alt="">
+                <img src="<?php echo URLROOT ?>/student/userimage/<?php echo $_SESSION['USER_DATA']['image']; ?>" alt="">
 
-                <a href="#" class="btn">About Us</a>
+                <a href="<?php echo URLROOT; ?>/Student/profile" class="btn"><?php echo  ucfirst($_SESSION['USER_DATA']['username']); ?></a>
             </div>
             <nav class="navbar">
                 <ul>
                     <li><a href="<?php echo URLROOT; ?>/Student/dashboard"><i class="fa-solid fa-school"></i><span>My Learning</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/tutors"><i class="fa-solid fa-person-chalkboard"></i><span>Tutors</span></a></li>
                     <li><a href="<?php echo URLROOT; ?>/Student/study_materials"><i class="fa-solid fa-book-open"></i><span>Study Materials</span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-bars-progress"></i><span>My Progress<sup> (Pro)</sup></span></a></li>
-                    <li><a href="<?php echo URLROOT; ?>/Tutor/contents" style="opacity: 0.5;"><i class="fa-solid fa-calendar"></i><span>My Study Plan<sup> (Pro)</sup></span></a></li>
+
                     <li><a href="<?php echo URLROOT; ?>/Logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
                 </ul>
             </nav>
-            <div class="profile">
+            <div class="profile" style="padding:unset; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                <img style="width: 20rem; height:20rem;" src="<?php echo URLROOT; ?>/public/assets/img/iqube.png" alt="">
+                <h3>By Group 22</h3>
                 <a href="<?php echo URLROOT ?>/Student/purchase_premium" class="btn"><i class="fa-solid fa-crown"></i> Upgrade to Premium</a>
+
             </div>
+          
         </div>
     <?php } ?>
     <!-- premium student header  -->
@@ -241,7 +226,7 @@
 
             </div>
         </div>
-        <button class="open-chat" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
+        <button class="open-chat" style="z-index: 99999;" id="openchat"><i class="fa-solid fa-headset"></i> IQube Support</button>
         <div class="chat-popup" id="chat">
             <?php $this->view('Student/Support_chat'); ?>
         </div>

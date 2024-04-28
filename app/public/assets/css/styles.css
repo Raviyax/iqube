@@ -295,9 +295,7 @@ section {
    background-color: var(--color4);
 }
 /* selected i */
-.side-bar .navbar li.active {
-background-color: red;
-}
+
 #notifications {
    display: none;
 }

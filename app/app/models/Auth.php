@@ -20,7 +20,6 @@
                     'student_id' => $studentdata->student_id,
                     'completed' => $studentdata->completed,
                     'verify' => $studentdata->verify,
-                    'chat_agent' => $studentdata->chat_agent
                 ];
             }
             if(($row->role == 'student') && ($studentdata->premium == 1)){

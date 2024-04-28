@@ -5,8 +5,15 @@
     <div class="details">
         <div class="tutor">
             <img id="changeProfilePic" style="cursor: pointer" src=<?php echo URLROOT . "/Student/userimage/" . $_SESSION['USER_DATA']['image']; ?> alt="profile">
+
+            <?php if ($_SESSION['USER_DATA']['premium'] == 1) { ?>
+                
             <h3><?php echo ucwords($_SESSION['USER_DATA']['fname'] . " " . $_SESSION['USER_DATA']['lname']); ?></h3>
             <button class="button-34" style="background-color:red;"><i class="fa-solid fa-crown"></i> Premiun Student</button>
+            <?php } else { ?>
+                <h3><?php echo ucwords($_SESSION['USER_DATA']['username']); ?></h3>
+                <h3><?php echo ucwords($_SESSION['USER_DATA']['email']); ?></h3>
+            <?php } ?>
 
 
 
@@ -14,9 +21,10 @@
     </div>
 </section>
 
+    
 <section class="form-container" style="display: block;">
     <form>
-
+    <?php if ($_SESSION['USER_DATA']['premium'] == 1) { ?>
         <div class="flex">
             <div class="col">
                 <p>Username</p>
@@ -42,6 +50,7 @@
 
             </div>
         </div>
+        <?php } ?>
 
         <div style="display: flex;">
             <button id="changePassword" class="btn" style="width: fit-content; background-color:red;">Change Password <i class="fa-solid fa-key"></i></button>
@@ -76,25 +85,14 @@
 <script>
     const api_url = "<?php echo URLROOT ?>/api.php";
     $(document).ready(function() {
+
+        <?php if ($_SESSION['USER_DATA']['premium'] == 1) { ?>
         //on update input fields
         $("input").on('input', function() {
             $(this).next().show();
         });
 
-        //on click change password
-        $("#changePassword").click(function() {
-            event.preventDefault();
-            $("#changePasswordDiv").css("display", "block");
-            $('html, body').animate({
-                scrollTop: 0
-            }, 'fast');
-        });
-
-        //on click close change password
-        $("#closechangePassword").click(function() {
-            event.preventDefault();
-            $("#changePasswordDiv").css("display", "none");
-        });
+   
 
         //on click saveFname
         $("#saveFname").click(function() {
@@ -186,6 +184,24 @@
                 }
             });
         });
+
+        <?php } ?>
+
+             //on click change password
+             $("#changePassword").click(function() {
+            event.preventDefault();
+            $("#changePasswordDiv").css("display", "block");
+            $('html, body').animate({
+                scrollTop: 0
+            }, 'fast');
+        });
+
+        //on click close change password
+        $("#closechangePassword").click(function() {
+            event.preventDefault();
+            $("#changePasswordDiv").css("display", "none");
+        });
+        
 
         //on click savePassword
         $("#savePassword").click(function() {

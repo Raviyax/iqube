@@ -276,13 +276,7 @@ ORDER BY
         ]);
         return true;
     }
-    public function get_a_chat_agent()
-    {
-        $subjectadmins = $this->query("SELECT user_id FROM subject_admins WHERE 1");
-        //get a random subject admin
-        $user_id = $subjectadmins[array_rand($subjectadmins)]->user_id;
-        return $user_id;
-    }
+
     public function get_subunit($id)
     {
         return $this->first([

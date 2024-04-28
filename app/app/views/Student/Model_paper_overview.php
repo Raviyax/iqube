@@ -21,7 +21,6 @@ $chapters = $model_paper->chapters;
                 <img src="<?php echo URLROOT; ?>/student/userimage/<?php echo $data['model_paper']->tutor_image; ?>" alt="">
                 <div>
                     <h3><?php echo $data['model_paper']->tutor; ?></h3>
-                    <span><i class="fa-solid fa-star"></i> 4.2</span>
                 </div>
             </div>
             <div class="details">

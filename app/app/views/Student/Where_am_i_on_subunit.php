@@ -137,7 +137,7 @@ $score = $data['score'];
                $content_id = $material->video_content_id;
                $thumbnail_directory = 'video_thumbnail';
                ?>
-               <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>">
+               <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>" onclick="window.location.href='<?php echo URLROOT; ?>/Student/video_overview/<?php echo $content_id; ?>'">
                   <div class="flex">
                      <div><i class="fas fa-dot-circle" style="color: limegreen;"></i><span style="color: red;">Active</span></div>
                      <div><i class="fas fa-calendar"></i><span><?php echo $material->date; ?></span></div>
@@ -168,7 +168,7 @@ $score = $data['score'];
                $content_id = $material->model_paper_content_id;
                $thumbnail_directory = 'model_paper_thumbnail';
                ?>
-               <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>" >
+               <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>" onclick="window.location.href='<?php echo URLROOT; ?>/Student/model_paper_overview/<?php echo $content_id; ?>'">
                   <div class="flex">
                      <div><i class="fas fa-dot-circle" style="color: limegreen;"></i><span style="color: red;">Active</span></div>
                      <div><i class="fas fa-calendar"></i><span><?php echo $material->date; ?></span></div>

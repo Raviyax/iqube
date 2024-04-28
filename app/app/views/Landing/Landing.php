@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
 	<title>IQube</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="<?php echo URLROOT ?>/assets/css/Landing.css">
+	<link rel="stylesheet" href="<?php echo URLROOT ?>/assets/css/Landing.css">
 </head>
+
 <body class="landing is-preload">
 	<div id="page-wrapper">
 		<!-- Header -->
@@ -24,7 +26,7 @@
 		<!-- Banner -->
 		<section id="banner">
 			<div class="container">
-				<div class="box special" style="background-color:#00000888;">
+				<div class="box special" style="color:black; background-color: rgba(255, 255, 255, 0.815);">
 					<h2>iQUbe</h2>
 					<p>උසස් පෙළ සිසුන් සදහා ශ්‍රී ලංකාවේ අංක එකේ මාර්ගෝපදේශකත්ව අත්දැකීම!</p>
 					<p>Sri Lanka's number one guidance for Advanced Level students!</p>
@@ -37,83 +39,7 @@
 			</div>
 		</section>
 		<!-- Main -->
-		<section id="main" class="container">
-			<!-- <section class="box special">
-						<header class="major">
-							<h2>Introducing the ultimate Guidance
-							<br />
-							for doing stuff with your phone</h2>
-							<p>Blandit varius ut praesent nascetur eu penatibus nisi risus faucibus nunc ornare<br />
-							adipiscing nunc adipiscing. Condimentum turpis massa.</p>
-						</header>
-						<span class="image featured"><img src="images/pic01.jpg" alt="" /></span>
-					</section> -->
-			<section class="box special features">
-				<!-- iqube logo -->
-				<img src="<?php echo URLROOT ?>/assets/img/iqube.png" alt="iqube logo">
-			</section>
-			<div class="row">
-				<!-- <div class="col-6 col-12-narrower">
-					<section class="box special">
-						<span class="image featured"><img src="images/pic02.jpg" alt="" /></span>
-						<h3>Purchase the tutors 
-as you wish. </h3>
-						<p>Integer volutpat ante et accumsan commophasellus sed aliquam feugiat lorem aliquet ut enim rutrum phasellus iaculis accumsan dolore magna aliquam veroeros.</p>
-						<ul class="actions special">
-							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
-						</ul>
-					</section>
-				</div> -->
-				<div class="col-6 col-12-narrower">
-					<section class="box special">
-						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-						<h3>Purchase the tutors as you wish ! </h3>
-						<p> You are free to purchase any tutor in our system to recieve their subject contents. </p>
-						<ul class="actions special">
-							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
-						</ul>
-					</section>
-				</div>
-				<div class="col-6 col-12-narrower">
-					<section class="box special">
-						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-						<h3>Select the lessons as needed and only pay for that ! </h3>
-						<p>No need pay for the whole syllabus. You can just select the topics what you want and pay for it.</p>
-						<ul class="actions special">
-							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
-						</ul>
-					</section>
-				</div>
-				<div class="col-6 col-12-narrower">
-					<section class="box special">
-						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-						<h3>Connect with tutors !</h3>
-						<p> When you purchase a tutor, you can get assitance of that relevant tutor through the system. </p>
-						<ul class="actions special">
-							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
-						</ul>
-					</section>
-				</div>
 
-				<div class="col-6 col-12-narrower">
-					<section class="box special">
-						<span class="image featured"><img src="images/pic03.jpg" alt="" /></span>
-						<h3>Track your progress with the system !</h3>
-						<p> When you complete the tasks given in the system you can get an idea about your progress of that subject.</p>
-						<ul class="actions special">
-							<!-- <li><a href="#" class="button alt">Learn More</a></li> -->
-						</ul>
-					</section>	
-				</div>
-
-			</div>
-		</section>
-		<!-- CTA -->
-		<section id="cta">
-			<h2>Contact Us</h2>
-			<p><b>iQube</b> Online Learning Platform</p>
-			
-		</section>
 		<!-- Footer -->
 		<footer id="footer">
 			<ul class="icons">
@@ -126,10 +52,11 @@ as you wish. </h3>
 			</ul>
 			<ul class="copyright">
 				<li>&copy; 2024 © All rights reserved by iQube.</li>
-				
+
 			</ul>
 		</footer>
 	</div>
 	<!-- Scripts -->
 </body>
+
 </html>

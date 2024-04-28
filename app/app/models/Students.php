@@ -1392,4 +1392,18 @@ public function rate_model_paper($model_paper_content_id, $rating){
 
     return true;
 }
+
+public function get_a_chat_agent()
+{
+$my_subjects = $this->get_my_subject_names($_SESSION['USER_DATA']['student_id']);
+//select a random subject
+$subject = $my_subjects[array_rand($my_subjects)];
+//get all subject admins of the subject
+$subjectadmins = $this->query("SELECT user_id FROM subject_admins WHERE subject = :subject", ['subject' => $subject]);
+//get a random subject admin
+$user_id = $subjectadmins[array_rand($subjectadmins)]->user_id;
+return $user_id; 
+}
+
+
 }
