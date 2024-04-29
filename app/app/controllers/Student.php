@@ -339,6 +339,7 @@ class Student extends Controller
                     $data['payment'] = $this->payhere->purchase_material($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname, $video_data->price, $video_data->name);
                     $data['premiumdata'] = $premiumdata;
                     $data['video'] = $video_data;
+                    $data['view'] = 'Pay for video';
                     $this->view('Student/Pay_for_video', $data);
                     return;
                 }
@@ -378,6 +379,7 @@ class Student extends Controller
                     $data['payment'] = $this->payhere->purchase_material($premiumdata->cno, $premiumdata->address, $premiumdata->city, $premiumdata->fname, $premiumdata->lname, $model_paper_data->price, $model_paper_data->name);
                     $data['premiumdata'] = $premiumdata;
                     $data['model_paper'] = $model_paper_data;
+                    $data['view'] = 'Pay for model paper';
                     $this->view('Student/Pay_for_model_paper', $data);
                     return;
                 }

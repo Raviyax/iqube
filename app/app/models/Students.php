@@ -1106,49 +1106,60 @@ class Students extends Model
     }
     public function get_overall_completion_of_subject($subject)
     {
-        //get all subunits for the subject
-        $sub_units = $this->query("SELECT * FROM chapters WHERE subject = :subject", ['subject' => $subject]);
-        if ($sub_units) {
-            //add all weights together 
-            $total_weight = 0;
-            foreach ($sub_units as $sub_unit) {
-                $total_weight += $sub_unit->Weight;
-            }
-            //get all subunits that are completed
+        try {
             $student_id = $_SESSION['USER_DATA']['student_id'];
-            $completed_sub_units = $this->query("SELECT subunit_id FROM do_progress_tracking_paper WHERE student_id = :student_id AND subunit_id IN (SELECT id FROM chapters WHERE subject = :subject) AND completed = 1", ['student_id' => $student_id, 'subject' => $subject]);
-            if ($completed_sub_units) {
-                //add all weights of completed subunits together
-                $completed_weight = 0;
-                foreach ($completed_sub_units as $completed_sub_unit) {
-                    foreach ($sub_units as $sub_unit) {
-                        if ($sub_unit->id == $completed_sub_unit->subunit_id) {
-                            $completed_weight += $sub_unit->Weight;
-                        }
-                    }
-                }
-                //calculate the percentage
-                $percentage = ($completed_weight / $total_weight) * 100;
-                //create a object with subject and percentage
-                $subject_object = new stdClass();
-                $subject_object->subject = $subject;
-                $subject_object->percentage = $percentage;
-                return $subject_object;
-            } else {
-                //create a object with subject and percentage 0
-                $subject_object = new stdClass();
-                $subject_object->subject = $subject;
-                $subject_object->percentage = 0;
-                return $subject_object;
+    
+            // Get all subunits for the subject
+            $sub_units = $this->query("SELECT id, Weight FROM chapters WHERE subject = :subject", ['subject' => $subject]);
+            if (!$sub_units) {
+                throw new Exception("Failed to retrieve subunits for the subject.");
             }
-        } else {
-            //create a object with subject and percentage 0
-            $subject_object = new stdClass();
-            $subject_object->subject = $subject;
-            $subject_object->percentage = 0;
-            return $subject_object;
+    
+            // Initialize array to store completed subunits
+            $completed_sub_units = [];
+    
+            // Get completed subunits from both model papers and videos
+            $query = "SELECT mpc.covering_chapters AS covering_chapters 
+                      FROM purchased_model_papers pmp
+                      LEFT JOIN model_paper_content mpc ON pmp.model_paper_content_id = mpc.model_paper_content_id
+                      WHERE pmp.student_id = :student_id AND pmp.completed = 1
+                      UNION
+                      SELECT vc.covering_chapters AS covering_chapters 
+                      FROM purchased_videos pv
+                      LEFT JOIN video_content vc ON pv.video_content_id = vc.video_content_id
+                      WHERE pv.student_id = :student_id AND pv.completed = 1";
+    
+            $results = $this->query($query, ['student_id' => $student_id]);
+    
+            foreach ($results as $result) {
+                $covering_chapters = explode('][', $result->covering_chapters);
+                $completed_sub_units = array_merge($completed_sub_units, array_filter($sub_units, function($sub_unit) use ($covering_chapters) {
+                    return in_array($sub_unit->id, $covering_chapters);
+                }));
+            }
+    
+            // Calculate completion percentage
+            $total_weight = array_reduce($sub_units, function ($carry, $sub_unit) {
+                return $carry + $sub_unit->Weight;
+            }, 0);
+    
+            $completed_weight = array_reduce($completed_sub_units, function ($carry, $completed_sub_unit) {
+                return $carry + $completed_sub_unit->Weight;
+            }, 0);
+    
+            $percentage = ($total_weight > 0) ? ($completed_weight / $total_weight) * 100 : 0;
+    
+            // Return result
+            return (object) ['subject' => $subject, 'percentage' => $percentage];
+    
+        } catch (Exception $e) {
+            // Log the error or handle it appropriately
+            error_log($e->getMessage());
+            return (object) ['subject' => $subject, 'percentage' => 0];
         }
     }
+    
+    
     public function get_overall_completion_of_subjects()
     {
         //get my subject names

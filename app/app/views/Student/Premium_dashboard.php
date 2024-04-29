@@ -38,19 +38,35 @@ $unit_weights = $data['unit_weights'];
             </div>
             </div>
         </section>
-        <?php if ($not_completed_study_materials) { ?>
-            <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
-                <h1 class="heading">Ongoing Studies</h1>
-                <div class="box-container">
-                    <?php foreach ($not_completed_study_materials as $not_completed_study_material) : ?>
-                        <div class="box" id="<?php echo $not_completed_study_material->id; ?>" data-type="where_am_i">
-                            <h2><?php echo $not_completed_study_material->chapter_level_1; ?></h2>
-                            <p><?php echo $not_completed_study_material->chapter_level_2; ?></p>
-                        </div>
-                    <?php endforeach; ?>
+        <?php if (!empty($not_completed_study_materials)) { ?>
+    <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
+        <h1 class="heading">Ongoing Studies</h1>
+        <div class="box-container">
+            <?php foreach ($not_completed_study_materials as $not_completed_study_material) : ?>
+                <?php if ($not_completed_study_material->type == 'video') { 
+                    $id = $not_completed_study_material->video_content_id;
+                    $type = 'video';
+                    $level_1 = $not_completed_study_material->chapters[0]->chapter_level_1;
+                    $level_2 = $not_completed_study_material->chapters[0]->chapter_level_2;
+                } else {
+                    $id = $not_completed_study_material->model_paper_content_id;
+                    $type = 'model_paper';
+                    $level_1 = $not_completed_study_material->chapters[0]->chapter_level_1;
+                    $level_2 = $not_completed_study_material->chapters[0]->chapter_level_2;
+                } ?>
+                <div class="box" id="<?php echo $id; ?>" data-type="<?php echo $type;?>">
+                    <h2><?php echo $level_1; ?></h2>
+                    <p><?php echo $level_2; ?></p>
                 </div>
-            </section>
-        <?php } ?>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php } ?>
+
+
+
+
+
         <section class="contents unit-container" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;">
             <h1 class="heading">Where am I</h1>
             <div class="flex-btn" style="flex-direction: row; align-items: center; justify-content: center;">
