@@ -1,35 +1,46 @@
 <?php $this->view('inc/Header', $data) ?>
 <?php $model_paper = $data['model_paper'];
-    $result = $data['result'];
-    $questions = $data['questions'];
-    $student_answers = $data['students_answers'];
-    ?>
-<section class="courses">
-    <h1 class="heading">Study Materials / Model Papers / <?php echo $model_paper->name;?> / Answers</h1>
+$result = $data['result'];
+$questions = $data['questions'];
+$student_answers = $data['students_answers'];
+?>
+<section class="courses" >
+    <h1 class="heading">Study Materials / Model Papers / <?php echo $model_paper->name; ?> / Answers</h1>
     <section class="playlist">
-    <div class="row" style="margin-bottom: 10px;">
-<div class="col">
-    <div class="tutor" style="flex-direction: column;">
-        <div>
-            <!-- numver of correct answers out of number of questions -->
-            <h3>Result of the last attempt - <?php echo $result . ' / ' . count($questions); ?></h3>
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col">
+                <div class="tutor" style="flex-direction: column;">
+                    <div>
+                        <!-- numver of correct answers out of number of questions -->
+                        <h3>Result of the last attempt - <?php echo $result . ' / ' . count($questions); ?></h3>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-</div>
     </section>
-   <?php $i = 1; ?>
+    <?php $i = 1; ?>
     <?php foreach ($questions as $question) : ?>
-        <div class="chaptercontainer">
+        <div class="chaptercontainer" style="background-color: rgba(255, 255, 255, 0.9);">
             <ul>
                 <li>
-                    <p><b><?php echo $i; $i++;?>. <?php echo $question->question; ?></b></p>
+                    <p><b><?php echo $i;
+                            $i++; ?>. <?php echo $question->question; ?></b></p>
                     <ul>
-                        <li><p style="margin-left:5px;">I. <?php echo $question->option1; ?></p></li>
-                        <li><p style="margin-left:5px;">II. <?php echo $question->option2; ?></p></li>
-                        <li><p style="margin-left:5px;">III. <?php echo $question->option3; ?></p></li>
-                        <li><p style="margin-left:5px;">IV. <?php echo $question->option4; ?></p></li>
-                        <li><p style="margin-left:5px;">V. <?php echo $question->option5; ?></p></li>
+                        <li>
+                            <p style="margin-left:5px;">I. <?php echo $question->option1; ?></p>
+                        </li>
+                        <li>
+                            <p style="margin-left:5px;">II. <?php echo $question->option2; ?></p>
+                        </li>
+                        <li>
+                            <p style="margin-left:5px;">III. <?php echo $question->option3; ?></p>
+                        </li>
+                        <li>
+                            <p style="margin-left:5px;">IV. <?php echo $question->option4; ?></p>
+                        </li>
+                        <li>
+                            <p style="margin-left:5px;">V. <?php echo $question->option5; ?></p>
+                        </li>
                     </ul>
                 </li>
             </ul>

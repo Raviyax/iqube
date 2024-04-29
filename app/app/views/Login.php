@@ -44,11 +44,7 @@
                 <br>
             <div class="remember-me--forget-password">
                     <!-- Angular -->
-        <label>
-            <input type="checkbox" name="item" checked/>
-            <span class="text-checkbox">Remember me</span>
-        </label>
-                <p>forget password?</p>
+
             </div>
             <!-- <div class="g-recaptcha"
                 data-sitekey="6Lf_GGMpAAAAAEcRQIh1J6Yc8KkjyCNCrDbruOcd">

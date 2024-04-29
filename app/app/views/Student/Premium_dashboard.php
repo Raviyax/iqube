@@ -209,47 +209,53 @@ $unit_weights = $data['unit_weights'];
         });
         chart.render();
         var chart2 = new CanvasJS.Chart("subject_completions", {
-            animationEnabled: true,
-            title: {
-                text: 'My Overall Completion'
-            },
-            theme: "light2", //"light1", "dark1", "dark2"
-            axisY: {
-                interval: 20,
-                suffix: "%"
-            },
-            toolTip: {
-                shared: true,
-                content: "{label}: {y}% completed" // Updated tooltip content format
-            },
-            data: [{
-                    type: "stackedBar100",
-                    showInLegend: false,
-                    name: "Completion Percentage",
-                    color: "green", // Green color for completed percentage
-                    dataPoints: [
-                        <?php foreach ($subject_completions as $completion) : ?> {
-                                y: <?php echo $completion->percentage; ?>,
-                                label: "<?php echo $completion->subject; ?>"
-                            },
-                        <?php endforeach; ?>
-                    ]
-                },
-                {
-                    type: "stackedBar100",
-                    showInLegend: false,
-                    name: "Remaining Percentage",
-                    color: "red", // Red color for remaining percentage
-                    dataPoints: [
-                        <?php foreach ($subject_completions as $completion) : ?> {
-                                y: <?php echo 100 - $completion->percentage; ?>,
-                                label: "<?php echo $completion->subject; ?>"
-                            },
-                        <?php endforeach; ?>
-                    ]
-                }
+    animationEnabled: true,
+    title: {
+        text: 'My Overall Completion'
+    },
+    theme: "light2",
+    axisY: {
+        interval: 20,
+        suffix: "%"
+    },
+    toolTip: {
+        shared: true,
+        content: "{label}: {completed}<br>{percentage}%",
+    },
+    data: [{
+            type: "stackedBar100",
+            showInLegend: false,
+            name: "Completion Percentage",
+            color: "green",
+            dataPoints: [
+                <?php foreach ($subject_completions as $completion) : ?> {
+                        y: <?php echo $completion->percentage; ?>,
+                        label: "<?php echo $completion->subject; ?>",
+                        completed: "Completed",
+                        percentage: <?php echo $completion->percentage; ?>
+                    },
+                <?php endforeach; ?>
             ]
-        });
+        },
+        {
+            type: "stackedBar100",
+            showInLegend: false,
+            name: "Remaining Percentage",
+            color: "red",
+            dataPoints: [
+                <?php foreach ($subject_completions as $completion) : ?> {
+                        y: <?php echo 100 - $completion->percentage; ?>,
+                        label: "<?php echo $completion->subject; ?>",
+                        completed: "Not Completed",
+                        percentage: <?php echo 100 - $completion->percentage; ?>
+                    },
+                <?php endforeach; ?>
+            ]
+        }
+    ]
+});
+
+
         chart2.render();
         //kelawena eka
         function generateChart(subject, weights) {

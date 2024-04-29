@@ -298,6 +298,10 @@ class Student extends Controller
             echo "Invalid request";
             return;
         }
+        if(!$this->student->is_model_paper_available($id)){
+            echo "invalid request";
+            return;
+        }
         if (Auth::is_logged_in() && Auth::is_student()) {
             if (!Auth::is_completed()) {
                 redirect('/Student/more_details');

@@ -1415,5 +1415,16 @@ $user_id = $subjectadmins[array_rand($subjectadmins)]->user_id;
 return $user_id; 
 }
 
+public function is_model_paper_available($model_paper_content_id)
+{
+    $query = "SELECT * FROM model_paper_content WHERE model_paper_content_id = :model_paper_content_id";
+    $result = $this->query($query, ['model_paper_content_id' => $model_paper_content_id]);
+    if ($result) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 }

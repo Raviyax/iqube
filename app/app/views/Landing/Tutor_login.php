@@ -27,11 +27,7 @@
                 <?php if(isset($data['errors']['mismatch_err'])){echo '<p class="link"><a style="color: red;">'.$data['errors']['mismatch_err'].'</a></p>';}?>
             <div class="remember-me--forget-password">
                     <!-- Angular -->
-        <label>
-            <span class="text-checkbox">Remember me</span>
-            <input type="checkbox" name="item" checked>
-        </label>
-                <p>forget password?</p>
+     
                  <a href="<?php echo URLROOT;?>/Signup">Not registered as tutor?</a>
             </div>
                 <br>

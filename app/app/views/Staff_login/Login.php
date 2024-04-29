@@ -28,7 +28,7 @@
       <input type="password" name="password" placeholder="Enter your password" maxlength="50" required class="box">
       <?php if(isset($data['errors']['mismatch_err'])){echo '<p class="link"><a style="color: red;">'.$data['errors']['mismatch_err'].'</a></p>';}?>
       <?php if(isset($data['errors']['inactive_err'])){echo '<p class="link"><a style="color: red;">'.$data['errors']['inactive_err'].'</a></p>';}?>
-      <p class="link"><a href="">Lost your password?</a></p>
+    
       <a href="<?php echo URLROOT;?>"><p class="link" ><i class="fa-solid fa-arrow-left-long"></i> Go to IQube</p></a>
       <input type="submit" name="submit" value="login now" class="btn">
    </form>
