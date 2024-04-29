@@ -6,8 +6,7 @@ class Students extends Model
     {
         $student_id = $_SESSION['USER_DATA']['student_id'];
         $subjects = implode(',', $data['subject']);
-        $this->query("UPDATE students SET subjects = :subjects WHERE student_id = :student_id AND completed = 1", ['subjects' => $subjects, 'student_id' => $student_id]);
-        $_SESSION['USER_DATA']['subjects'] = $subjects;
+        $this->query("UPDATE students SET subjects = :subjects, completed = 1 WHERE student_id = :student_id", ['subjects' => $subjects, 'student_id' => $student_id]);        $_SESSION['USER_DATA']['subjects'] = $subjects;
         $_SESSION['USER_DATA']['completed'] = 1;
 
         return true;

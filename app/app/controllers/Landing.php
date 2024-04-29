@@ -28,7 +28,14 @@ class Landing extends Controller {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           if($this->user->validate_tutor_login($_POST)){
                 Auth::authenticate_tutor($this->user->validate_tutor_login($_POST), $this->user->load_tutor_data($_POST['email']));
-                redirect('/tutor');
+                if($this->user->is_tutor_active($_POST['email'])){
+                    redirect('/tutor');
+                    return;
+                }
+                else{
+                  echo "Your account deactivated";
+                  return;
+                }
             }
             else{
                 $data['errors'] = $this->user->login_errors;

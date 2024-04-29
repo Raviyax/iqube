@@ -44,6 +44,7 @@ $unit_weights = $data['unit_weights'];
                     <button id="" class="button-17">About My Subjects</button>
                 </div>
                 <div class="box-container" style="display:flex;">
+                <?print_r($unit_weights)?>
                     <?php foreach ($unit_weights as $subject => $weights) : ?>
                         <div class="box" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; width:400px;">
                             <div id="<?php echo $subject ?>Container" style="height: 200px; width: 100%;"></div>

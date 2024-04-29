@@ -203,9 +203,9 @@ class Tutors extends Model
             if (password_verify($password, $result[0]->password)) {
                 return true;
             }
-            echo 'Password incorrect';
+          
         }
-        echo 'Email incorrect';
+       echo 'Invalid verification link';
     }
     public function set_tutor_active($email)
     {
@@ -216,9 +216,13 @@ class Tutors extends Model
     {
         $query = "SELECT active FROM tutors WHERE email = :email";
         $result = $this->query($query, ['email' => $email]);
+        if(!$result){
+            return false;
+        }
         if ($result[0]->active == 1) {
             return true;
         }
+     
         return false;
     }
     public function validate_new_password($data)

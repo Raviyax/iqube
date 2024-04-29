@@ -156,4 +156,11 @@ class User extends Model
         // Check if the verification was successful
         return isset($responseKeys["success"]) && $responseKeys["success"];
     }
+
+    public function is_tutor_active($email)
+    {
+        $query = "SELECT active FROM tutors WHERE email = :email";
+        $active = $this->query($query, ['email' => $email]);
+        return $active[0]->active;
+    }
 }

@@ -149,7 +149,7 @@ class Student extends Controller
                             return;
                         }
                     } else {
-                        $data['errors'] = $this->student->get_errors();
+                        $data['errors'] = $this->student->errors;
                     }
                 }
                 $this->view('Student/More_details', $data);
