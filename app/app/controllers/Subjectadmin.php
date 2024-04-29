@@ -282,6 +282,18 @@ class Subjectadmin extends Controller
             $this->view('Noaccess');
         }
     }
+
+    public function cv($cv)
+    {
+        if (Auth::is_logged_in() && Auth::is_subject_admin()) {
+        //download cv
+        $this->Subjectadmin->download_cv($cv);
+        } else {
+            $this->view('Noaccess');
+     
+    }
+
+}
  
 
 }

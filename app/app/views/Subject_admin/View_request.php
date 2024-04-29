@@ -1,5 +1,6 @@
 <?php $this->view('inc/Header', $data) ?>
-<?php $tutor = $data['tutor']; ?>
+<?php $tutor = $data['tutor'];
+?>
 <form action="<?php echo URLROOT ?>/Subjectadmin/view_request/<?php echo $tutor->request_id; ?>" method="post" enctype="multipart/form-data">
 <section class="tutor-profile" style="min-height: calc(100vh - 19rem);">
     <h1 class="heading"><?php echo $_SESSION['USER_DATA']['subject']; ?> Tutor Requests / <?php echo $tutor->fname . " " . $tutor->lname; ?></h1>
@@ -37,7 +38,7 @@
             </div>
             <div class="box">
                 <span>Resume</span>
-                <a class="inline-btn"><i class="fa-solid fa-download"></i> Download CV</a>
+                <a href="<?php echo URLROOT;?>/Subjectadmin/cv/<?php echo  $tutor->cv; ?>" class="inline-btn"><i class="fa-solid fa-download"></i> Download CV</a>
             </div>
             <div class="box">
                 <span>Joined At</span>
