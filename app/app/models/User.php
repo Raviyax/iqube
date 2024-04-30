@@ -100,32 +100,40 @@ class User extends Model
     public function validate_subject_admin_login($data)
     {
         $this->login_errors = [];
-        $query = "SELECT * FROM users WHERE email = :email AND role = 'subject_admin'";
+    
         if (empty($data['email'])) {
             $this->login_errors['email_err'] = 'Please enter email*';
-        } elseif (!$this->query($query, ['email' => $data['email']])) {
-            $this->login_errors['mismatch_err'] = '*Wrong user credentials';
+        } else {
+            $query = "SELECT * FROM users WHERE email = :email AND role = 'subject_admin'";
+            $user = $this->query($query, ['email' => $data['email']]);
+            if (!$user) {
+                $this->login_errors['mismatch_err'] = '*Wrong user credentials';
+            }
         }
+    
         if (empty($data['password'])) {
             $this->login_errors['password_err'] = 'Please enter password*';
         }
-        if(!empty($data['email']) && !empty($data['password'])){
-            $row = $this->query($query, ['email' => $data['email']]);
-            $query = "SELECT active FROM subject_admins WHERE email = :email";
-            $active = $this->query($query, ['email' => $data['email']]);
-            $row[0]->active = $active[0]->active;
-            if(!empty($row) && !password_verify($data['password'], $row[0]->password)){
-                $this->login_errors['mismatch_err'] = 'Wrong user credentials*';
-            }
-            if(!empty($row) && $row[0]->active == 0){
-                $this->login_errors['inactive_err'] = 'Your account is inactive. Please contact the admin';
+    
+        if (!empty($data['email']) && !empty($data['password'])) {
+            if (isset($user[0])) {
+                $subject_admin_query = "SELECT active FROM subject_admins WHERE email = :email";
+                $subject_admin = $this->query($subject_admin_query, ['email' => $data['email']]);
+                
+                if (!password_verify($data['password'], $user[0]->password)) {
+                    $this->login_errors['mismatch_err'] = 'Wrong user credentials*';
+                } elseif (!empty($subject_admin) && $subject_admin[0]->active == 0) {
+                    $this->login_errors['inactive_err'] = 'Your account is inactive. Please contact the admin';
+                }
             }
         }
+    
         if (empty($this->login_errors)) {
-            return $row;
+            return $user;
         }
         return false;
     }
+    
     public function load_subject_admin_data($email)
     {
         $query = "SELECT * FROM subject_admins WHERE email = :email";

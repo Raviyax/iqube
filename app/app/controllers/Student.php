@@ -655,6 +655,7 @@ class Student extends Controller
                     'my_model_papers' => $this->student->get_my_purchased_model_papers_by_subunit_id($subunit_id),
                     'not_purchased_videos' => $this->student->get_videos_by_subunit_not_purchased($subunit_id),
                     'not_purchased_model_papers' => $this->student->get_model_papers_by_subunit_not_purchased($subunit_id),
+                    'is_24_hours_passed' => $this->student->is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id),
                 ];
                 $this->view('Student/Where_am_i_on_subunit', $data);
             } else {
@@ -692,7 +693,7 @@ class Student extends Controller
                 throw new Exception("You are not allowed to access this page.");
             }
             // Check if the last attempt date for progress tracking is more than 24 hours ago
-            if ($this->student->is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id)) {
+            if (!$this->student->is_last_attempt_date_more_than_24_hours_progress_tracking($subunit_id)) {
                 throw new Exception("You have already attempted this paper. You can attempt it again after 24 hours.");
             }
             // Check if 'start' parameter is provided in the URL

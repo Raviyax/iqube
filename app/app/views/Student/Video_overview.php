@@ -21,7 +21,7 @@ $chapters = $video->chapters;
                 <img src="<?php echo URLROOT; ?>/student/userimage/<?php echo $data['video']->tutor_image; ?>" alt="">
                 <div>
                     <h3><?php echo $data['video']->tutor; ?></h3>
-                    <span><i class="fa-solid fa-star"></i> 4.2</span>
+                    
                 </div>
             </div>
             <div class="details">

@@ -36,10 +36,10 @@ public function upload_media($file, $path)
         }
         // Check file type
         $FileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        if (!in_array($FileType, ["jpg", "jpeg", "png", "pdf", "mp4", "mov", "avi", "mkv", "webm", "flv", "3gp", "wmv", "mpeg", "mp3", "wav", "wma", "ogg", "aac", "flac", "alac", "aiff", "ape", "opus", "m4a"])) {
-            unlink($target_file); // Delete the uploaded file if it has an invalid file type
-            return false;
-        }
+        // if (!in_array($FileType, ["jpg", "jpeg", "png", "pdf", "mp4", "mov", "avi", "mkv", "webm", "flv", "3gp", "wmv", "mpeg", "mp3", "wav", "wma", "ogg", "aac", "flac", "alac", "aiff", "ape", "opus", "m4a"])) {
+        //     unlink($target_file); // Delete the uploaded file if it has an invalid file type
+        //     return false;
+        // }
         
         return $uniqueFilename; // All checks passed, return the unique filename
     } else {

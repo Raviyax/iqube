@@ -810,12 +810,12 @@ class Students extends Model
             $current_date = strtotime($current_date);
             $difference = $current_date - $last_attempted_time;
             if ($difference > 86400) {
-                return false;
-            } else {
                 return true;
+            } else {
+                return false;
             }
         } else {
-            return false;
+            return true;
         }
     }
     public function start_progress_tracking($subunit_id)
@@ -1130,6 +1130,9 @@ class Students extends Model
     
             $results = $this->query($query, ['student_id' => $student_id]);
     
+            if(!$results) {
+                throw new Exception("Failed to retrieve completed subunits.");
+            }
             foreach ($results as $result) {
                 $covering_chapters = explode('][', $result->covering_chapters);
                 $completed_sub_units = array_merge($completed_sub_units, array_filter($sub_units, function($sub_unit) use ($covering_chapters) {

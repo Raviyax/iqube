@@ -2,6 +2,8 @@
 <?php $subunit = $data['about_subunit'];
 $completed = $data['completed'];
 $score = $data['score'];
+$is_24_hours_passed = $data['is_24_hours_passed'];
+
 ?>
 <section>
    <section class="dashboard">
@@ -35,6 +37,12 @@ $score = $data['score'];
                         <p>Click to start</p>
                      </div>
                   <?php } else { ?>
+                     <?php if ($is_24_hours_passed) { ?>
+                        <div class="box" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; cursor:pointer;" onclick="window.location.href='<?php echo URLROOT; ?>/Student/do_progress_tracking_paper/<?php echo $subunit->id; ?>'">
+                        <span>Option</span>
+                           <p>Try Again</p>
+                        </div>
+                     <?php } ?>
                      <div class="box" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; cursor:pointer;">
                         <span>Chapter Status</span>
                         <p>Progress Tracked</p>
@@ -140,7 +148,7 @@ $score = $data['score'];
                <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>" onclick="window.location.href='<?php echo URLROOT; ?>/Student/video_overview/<?php echo $content_id; ?>'">
                   <div class="flex">
                      <div><i class="fas fa-dot-circle" style="color: limegreen;"></i><span style="color: red;">Active</span></div>
-                     <div><i class="fas fa-calendar"></i><span><?php echo $material->date; ?></span></div>
+                     <div><i class="fas fa-calendar"></i><span><?php $date = new DateTime($material->date); $rounded_date = $date->format('Y-m-d'); echo $rounded_date; ?></span></div>
                   </div>
                   <img src="<?php echo URLROOT; ?>/student/<?php echo $thumbnail_directory; ?>/<?php echo $material->thumbnail; ?>" class="thumb" alt="">
                   <h3 class="title"><?php echo $material->name; ?></h3>
@@ -171,7 +179,7 @@ $score = $data['score'];
                <div class="box"  style="cursor: pointer;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" id="<?php echo $content_id; ?>" data-type="<?php echo $type; ?>" onclick="window.location.href='<?php echo URLROOT; ?>/Student/model_paper_overview/<?php echo $content_id; ?>'">
                   <div class="flex">
                      <div><i class="fas fa-dot-circle" style="color: limegreen;"></i><span style="color: red;">Active</span></div>
-                     <div><i class="fas fa-calendar"></i><span><?php echo $material->date; ?></span></div>
+                     <div><i class="fas fa-calendar"></i><span><?php $date = new DateTime($material->date); $rounded_date = $date->format('Y-m-d'); echo $rounded_date; ?></span></div>
                   </div>
                   <img src="<?php echo URLROOT; ?>/student/<?php echo $thumbnail_directory; ?>/<?php echo $material->thumbnail; ?>" class="thumb" alt <h3 class="title"><?php echo $material->name; ?></h3>
                   <h2 class="type"><?php echo ucfirst($tutor); ?></h2>

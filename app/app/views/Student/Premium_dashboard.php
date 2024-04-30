@@ -54,8 +54,9 @@ $unit_weights = $data['unit_weights'];
                     $level_1 = $not_completed_study_material->chapters[0]->chapter_level_1;
                     $level_2 = $not_completed_study_material->chapters[0]->chapter_level_2;
                 } ?>
-                <div class="box" id="<?php echo $id; ?>" data-type="<?php echo $type;?>">
-                    <h2><?php echo $level_1; ?></h2>
+                <div class="box" style=" cursor:pointer; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" id="<?php echo $id; ?>" data-type="<?php echo $type;?>">
+                
+                    <h2 class="type"><?php echo $level_1; ?></h2>
                     <p><?php echo $level_2; ?></p>
                 </div>
             <?php endforeach; ?>
@@ -232,7 +233,7 @@ $unit_weights = $data['unit_weights'];
                         y: <?php echo $completion->percentage; ?>,
                         label: "<?php echo $completion->subject; ?>",
                         completed: "Completed",
-                        percentage: <?php echo $completion->percentage; ?>
+                        percentage: <?php echo round($completion->percentage, 2); ?>
                     },
                 <?php endforeach; ?>
             ]
@@ -247,7 +248,7 @@ $unit_weights = $data['unit_weights'];
                         y: <?php echo 100 - $completion->percentage; ?>,
                         label: "<?php echo $completion->subject; ?>",
                         completed: "Not Completed",
-                        percentage: <?php echo 100 - $completion->percentage; ?>
+                        percentage: <?php echo round(100 - $completion->percentage , 2); ?>
                     },
                 <?php endforeach; ?>
             ]

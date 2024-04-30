@@ -60,7 +60,10 @@ Not the correct method to verify payment. Notify url is not working in payhere
         .then(response => response.json())
         .then(data => {
             if(data.message == 'ok'){
-                window.location.href = "<?= URLROOT ?>/student";
+
+                alert('Payment Success. Please log in again');
+                window.location.href = "<?= URLROOT ?>/Logout";
+             
             }
         })
     };

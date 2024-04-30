@@ -128,8 +128,7 @@ $model_paper_analytics = $data['model_paper_analytics'];
             echo '<th>Status</th>';
             echo '</tr>';
             echo '</thead>';
-            echo '<tbody>';
-
+if($video_analytics){
             foreach ($video_analytics as $video) {
                 echo '<tr onclick="window.location=\'' . URLROOT . '/Tutor/video/' . $video->video_content_id . '\'">';
                 echo '<td>' . $video->name . '</td>';
@@ -139,6 +138,11 @@ $model_paper_analytics = $data['model_paper_analytics'];
                 echo '<td>' . ($video->active ? 'Active' : 'Inactive') . '</td>';
                 echo '</tr>';
             }
+        }else{
+            echo '<tr>';
+            echo '<td colspan="5">No videos uploaded</td>';
+            echo '</tr>';
+        }
 
             echo '</tbody>';
             echo '</table>';
@@ -166,6 +170,7 @@ $model_paper_analytics = $data['model_paper_analytics'];
             echo '</tr>';
             echo '</thead>';
             echo '<tbody>';
+            if($model_paper_analytics){
 
             foreach ($model_paper_analytics as $model_paper) {
                 $url = URLROOT . '/Tutor/model_paper/' . $model_paper->model_paper_content_id;
@@ -179,7 +184,11 @@ $model_paper_analytics = $data['model_paper_analytics'];
                 echo '<td>' . ($model_paper->active ? 'Active' : 'Inactive') . '</td>';
                 echo '</tr>';
             }
-
+        }else{
+            echo '<tr>';
+            echo '<td colspan="5">No model papers uploaded</td>';
+            echo '</tr>';
+        }
             echo '</tbody>';
             echo '</table>';
             ?>
