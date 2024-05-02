@@ -66,7 +66,7 @@ class Students extends Model
         $student_id = $_SESSION['USER_DATA']['student_id'];
         $this->query("UPDATE students SET premium = 1 WHERE student_id = $student_id");
         $_SESSION['USER_DATA']['premium'] = 1;
-        //set prAZ45\'ෛඬඞ]/emium data
+
         $premium_data = $this->query("SELECT * FROM premium_students WHERE student_id = $student_id");
         $_SESSION['USER_DATA']['fname'] = $premium_data[0]->fname;
         $_SESSION['USER_DATA']['lname'] = $premium_data[0]->lname;

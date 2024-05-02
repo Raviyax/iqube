@@ -25,7 +25,7 @@ $student_answers = $data['students_answers'];
 <section class="courses">
     <?php $i = 1; ?>
     <?php foreach ($questions as $question) : ?>
-        <div class="chaptercontainer">
+        <div class="chaptercontainer" style="background-color: white; ">
             <ul>
                 <li>
                     <p><b><?php echo $i;
@@ -72,13 +72,5 @@ $student_answers = $data['students_answers'];
         </div>
     <?php endforeach; ?>
     <a href="<?php echo URLROOT . '/student/video_overview/' . $video->video_content_id; ?>" class="btn" type="button" style="width: fit-content;" id="attemptAgain">Try again</a>
-</section>
-<section class="comments">
-    <h1 class="heading">add a comment</h1>
-    <form action="" method="post" class="add-comment">
-        <input type="hidden" name="content_id" value="<?= $get_id; ?>">
-        <textarea name="comment_box" required placeholder="write your comment..." maxlength="1000" cols="30" rows="10"></textarea>
-        <input type="submit" value="add comment" name="add_comment" class="inline-btn">
-    </form>
-</section>
+</section  >
 <?php $this->view('inc/Footer') ?>
