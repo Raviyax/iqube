@@ -11,7 +11,7 @@
   </header>
   <table id="table">
     <tr>
-      <th>Tutor ID</th>
+      <th>Tutor id</th>
       <th>Name</th>
       <th>Email</th>
       <th>Subject</th>
